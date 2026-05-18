@@ -19,7 +19,10 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased font-sans" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
+    <div
+      className="min-h-screen bg-background text-foreground antialiased font-sans"
+      style={{ fontFamily: "Inter, system-ui, sans-serif" }}
+    >
       <Navbar />
       <main>
         <Hero />
@@ -30,7 +33,9 @@ function Index() {
         <Services />
         <Testimonials />
         <Careers />
-        <section id="news"><News /></section>
+        <section id="news">
+          <News />
+        </section>
         <Contact />
       </main>
       <Footer />

@@ -1,12 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, TrendingUp, Users, Globe2 } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import heroBg from "@/assets/hero-tech.jpg";
-
-const metrics = [
-  { icon: Users, value: "10K+", label: "Talents Placed" },
-  { icon: Globe2, value: "5", label: "Countries" },
-  { icon: TrendingUp, value: "98%", label: "Client Retention" },
-];
 
 export function Hero() {
   return (
@@ -40,8 +34,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-foreground"
           >
-            Transforming Africa through{" "}
-            <span className="gradient-text-gold">Innovation</span>,{" "}
+            Transforming Africa through <span className="gradient-text-gold">Innovation</span>,{" "}
             <span className="gradient-text-red">Talent</span> &amp; Digital Solutions
           </motion.h1>
 
@@ -61,31 +54,27 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="mt-8 flex flex-wrap gap-3"
           >
-            <a href="#products" className="group inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[var(--joat-red)] text-primary-foreground font-semibold glow-red hover:brightness-110 transition-all">
-              Explore Solutions <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <a
+              href="#products"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-red) text-primary-foreground font-semibold glow-red hover:brightness-110 transition-all"
+            >
+              Explore Solutions{" "}
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[var(--joat-gold)] text-[var(--joat-navy-deep)] font-semibold hover:brightness-110 transition-all">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold hover:brightness-110 transition-all"
+            >
               Partner With Us
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-md glass text-foreground font-semibold hover:bg-white/[0.08] transition-all">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-md glass text-foreground font-semibold hover:bg-white/8 transition-all"
+            >
               Get Started
             </a>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.55 }}
-            className="mt-12 grid grid-cols-3 gap-4 max-w-lg"
-          >
-            {metrics.map((m) => (
-              <div key={m.label} className="glass rounded-xl p-4">
-                <m.icon className="w-5 h-5 text-gold mb-2" />
-                <div className="text-2xl font-bold text-foreground">{m.value}</div>
-                <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{m.label}</div>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         {/* Floating orbital metrics card */}
@@ -99,17 +88,19 @@ export function Hero() {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 rounded-full border border-[var(--joat-gold)]/30"
+              className="absolute inset-0 rounded-full border border-(--joat-gold)/30"
             />
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-8 rounded-full border border-[var(--joat-red)]/30"
+              className="absolute inset-8 rounded-full border border-(--joat-red)/30"
             />
             <div className="absolute inset-16 rounded-full glass flex items-center justify-center text-center p-6">
               <div>
                 <div className="text-5xl font-bold gradient-text-gold">42+</div>
-                <div className="text-xs uppercase tracking-widest text-muted-foreground mt-2">Years building Africa's future</div>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground mt-2">
+                  Years building Africa's future
+                </div>
               </div>
             </div>
 
@@ -123,7 +114,12 @@ export function Hero() {
                 key={b.t}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: [0, -8, 0] }}
-                transition={{ delay: 0.6 + i * 0.15, duration: 4, repeat: Infinity, repeatType: "loop" }}
+                transition={{
+                  delay: 0.6 + i * 0.15,
+                  duration: 4,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                }}
                 style={{ left: b.x, top: b.y }}
                 className="absolute glass px-3 py-1.5 rounded-full text-xs font-semibold text-foreground"
               >

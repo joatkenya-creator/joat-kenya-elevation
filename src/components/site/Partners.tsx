@@ -1,14 +1,43 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Award, Globe } from "lucide-react";
+import { ShieldCheck, Leaf, Receipt } from "lucide-react";
+import m1 from "@/assets/partners/marquee1.jpg";
+import m2 from "@/assets/partners/marquee2.png";
+import m3 from "@/assets/partners/marquee3.jpeg";
+import m4 from "@/assets/partners/marquee4.jpeg";
+import m5 from "@/assets/partners/marquee5.jpeg";
+import m6 from "@/assets/partners/marquee6.jpeg";
+import m7 from "@/assets/partners/marquee7.jpeg";
+import m8 from "@/assets/partners/marquee8.png";
+import m9 from "@/assets/partners/marquee9.jpeg";
 
-const partners = [
-  "Safaricom","KPMG East Africa","ICT Authority Kenya","Andela","KEPSA","UNDP","Microsoft Africa","Roblox EDU","Equity Group","Sama","Liquid Intelligent","African Union",
+const partners: { src: string; alt: string }[] = [
+  { src: m1, alt: "Partner 1" },
+  { src: m2, alt: "Partner 2" },
+  { src: m3, alt: "Partner 3" },
+  { src: m4, alt: "Partner 4" },
+  { src: m5, alt: "Partner 5" },
+  { src: m6, alt: "Partner 6" },
+  { src: m7, alt: "Partner 7" },
+  { src: m8, alt: "Partner 8" },
+  { src: m9, alt: "Partner 9" },
 ];
 
 const certs = [
-  { icon: ShieldCheck, title: "ISO 9001 Quality", text: "Quality management certified across recruitment and digital delivery." },
-  { icon: Award, title: "NITA Approved Trainer", text: "Accredited training provider for Kenya's National Industrial Training Authority." },
-  { icon: Globe, title: "Pan-African Network", text: "Active operations and partnerships across 5+ African markets." },
+  {
+    icon: ShieldCheck,
+    title: "ISO 9001",
+    text: "Quality management certified across recruitment and digital delivery.",
+  },
+  {
+    icon: Leaf,
+    title: "NEMA NCA-1",
+    text: "Environmental compliance under Kenya's National Environment Management Authority (Category 1).",
+  },
+  {
+    icon: Receipt,
+    title: "KRA Compliant",
+    text: "Fully compliant with Kenya Revenue Authority — tax-clean and audit-ready.",
+  },
 ];
 
 export function Partners() {
@@ -16,25 +45,34 @@ export function Partners() {
     <section className="relative py-20 lg:py-24 border-y border-white/5">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <div className="text-center mb-10">
-          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-3">Trusted Partners & Certifications</div>
-          <h2 className="text-2xl lg:text-3xl font-bold text-foreground">Backed by Africa's leading organizations</h2>
+          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-3">
+            Trusted Partners & Certifications
+          </div>
+          <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
+            Backed by Africa's leading organizations
+          </h2>
         </div>
 
         {/* Marquee */}
         <div className="relative overflow-hidden">
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[var(--joat-navy)] to-transparent z-10" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[var(--joat-navy)] to-transparent z-10" />
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-(--joat-navy) to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-(--joat-navy) to-transparent z-10" />
           <motion.div
-            className="flex gap-12 whitespace-nowrap py-4"
+            className="flex gap-10 whitespace-nowrap py-4 items-center"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
           >
             {[...partners, ...partners].map((p, i) => (
-              <div key={i} className="flex items-center gap-3 text-foreground/60 hover:text-gold transition-colors">
-                <div className="w-8 h-8 rounded-md glass flex items-center justify-center text-xs font-bold text-gold">
-                  {p.split(" ").map((w) => w[0]).slice(0, 2).join("")}
-                </div>
-                <span className="text-sm font-semibold">{p}</span>
+              <div
+                key={i}
+                className="shrink-0 h-20 w-40 rounded-xl glass flex items-center justify-center p-3 grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all"
+              >
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  loading="lazy"
+                  className="max-h-full max-w-full object-contain"
+                />
               </div>
             ))}
           </motion.div>
@@ -50,8 +88,8 @@ export function Partners() {
               transition={{ duration: 0.5, delay: i * 0.05 }}
               className="glass rounded-2xl p-6 flex items-start gap-4"
             >
-              <div className="w-11 h-11 rounded-xl bg-[var(--joat-gold)]/15 flex items-center justify-center">
-                <c.icon className="w-5 h-5 text-[var(--joat-gold)]" />
+              <div className="w-11 h-11 rounded-xl bg-(--joat-gold)/15 flex items-center justify-center">
+                <c.icon className="w-5 h-5 text-(--joat-gold)" />
               </div>
               <div>
                 <h3 className="font-bold text-foreground">{c.title}</h3>

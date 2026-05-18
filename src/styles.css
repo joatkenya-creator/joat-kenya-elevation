@@ -63,43 +63,52 @@
 
 :root {
   --radius: 0.75rem;
-  /* JOAT KENYA brand: deep navy, crimson red, warm gold */
-  --background: oklch(0.16 0.035 265);
-  --foreground: oklch(0.97 0.01 90);
-  --card: oklch(0.20 0.038 265);
-  --card-foreground: oklch(0.97 0.01 90);
-  --popover: oklch(0.20 0.038 265);
-  --popover-foreground: oklch(0.97 0.01 90);
-  --primary: oklch(0.58 0.20 27);            /* JOAT red */
-  --primary-foreground: oklch(0.98 0.005 90);
-  --secondary: oklch(0.78 0.10 80);          /* JOAT gold */
-  --secondary-foreground: oklch(0.18 0.035 265);
-  --muted: oklch(0.24 0.035 265);
-  --muted-foreground: oklch(0.72 0.02 90);
-  --accent: oklch(0.78 0.10 80);             /* gold accent */
-  --accent-foreground: oklch(0.16 0.035 265);
-  --destructive: oklch(0.60 0.245 27);
-  --destructive-foreground: oklch(0.98 0.005 90);
-  --border: oklch(0.30 0.04 265 / 60%);
-  --input: oklch(0.26 0.04 265);
-  --ring: oklch(0.78 0.10 80);
 
+  /* JOAT KENYA brand constants — same in light and dark */
   --joat-navy: oklch(0.16 0.035 265);
   --joat-navy-deep: oklch(0.11 0.03 265);
   --joat-red: oklch(0.58 0.20 27);
   --joat-gold: oklch(0.78 0.10 80);
   --joat-gold-soft: oklch(0.86 0.07 85);
 
-  --gradient-hero: radial-gradient(1200px 600px at 20% 0%, oklch(0.30 0.10 27 / 0.45), transparent 60%),
-                   radial-gradient(900px 500px at 90% 30%, oklch(0.40 0.10 80 / 0.30), transparent 60%),
-                   linear-gradient(180deg, oklch(0.11 0.03 265) 0%, oklch(0.16 0.035 265) 100%);
   --gradient-gold: linear-gradient(135deg, oklch(0.82 0.11 85), oklch(0.68 0.13 60));
   --gradient-red:  linear-gradient(135deg, oklch(0.62 0.21 27), oklch(0.45 0.18 25));
   --shadow-glow: 0 20px 60px -20px oklch(0.58 0.20 27 / 0.55);
   --shadow-gold: 0 20px 60px -20px oklch(0.78 0.10 80 / 0.45);
-  --shadow-card: 0 10px 40px -15px oklch(0 0 0 / 0.6);
-  --glass: oklch(1 0 0 / 0.04);
-  --glass-border: oklch(1 0 0 / 0.10);
+
+  /* === TEXT COLORS — LOCKED ACROSS THEMES ===
+     Per design: light/dark mode should NOT affect text. All foreground colors
+     are defined here at :root and never overridden by the .dark class. */
+  --foreground: oklch(0.97 0.01 90);
+  --card-foreground: oklch(0.97 0.01 90);
+  --popover-foreground: oklch(0.97 0.01 90);
+  --primary-foreground: oklch(0.98 0.005 90);
+  --secondary-foreground: oklch(0.18 0.035 265);
+  --accent-foreground: oklch(0.16 0.035 265);
+  --destructive-foreground: oklch(0.98 0.005 90);
+  --muted-foreground: oklch(0.72 0.02 90);
+
+  /* Brand accent surfaces (red/gold) stay the same in both themes */
+  --primary: oklch(0.58 0.20 27);
+  --secondary: oklch(0.78 0.10 80);
+  --accent: oklch(0.78 0.10 80);
+  --destructive: oklch(0.60 0.245 27);
+  --ring: oklch(0.78 0.10 80);
+
+  /* LIGHT MODE (default) — slightly lighter navy surfaces; locked text remains readable */
+  --background: oklch(0.26 0.045 265);
+  --card: oklch(0.30 0.045 265);
+  --popover: oklch(0.30 0.045 265);
+  --muted: oklch(0.34 0.045 265);
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(0.34 0.045 265);
+
+  --gradient-hero: radial-gradient(1200px 600px at 20% 0%, oklch(0.40 0.12 27 / 0.50), transparent 60%),
+                   radial-gradient(900px 500px at 90% 30%, oklch(0.50 0.10 80 / 0.35), transparent 60%),
+                   linear-gradient(180deg, oklch(0.22 0.04 265) 0%, oklch(0.26 0.045 265) 100%);
+  --shadow-card: 0 10px 40px -15px oklch(0 0 0 / 0.4);
+  --glass: oklch(1 0 0 / 0.06);
+  --glass-border: oklch(1 0 0 / 0.14);
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -116,39 +125,22 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
+/* DARK MODE — JOAT deep navy surfaces.
+   Text colors intentionally NOT redefined here — they stay locked from :root. */
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.16 0.035 265);
+  --card: oklch(0.20 0.038 265);
+  --popover: oklch(0.20 0.038 265);
+  --muted: oklch(0.24 0.035 265);
+  --border: oklch(0.30 0.04 265 / 60%);
+  --input: oklch(0.26 0.04 265);
+
+  --gradient-hero: radial-gradient(1200px 600px at 20% 0%, oklch(0.30 0.10 27 / 0.45), transparent 60%),
+                   radial-gradient(900px 500px at 90% 30%, oklch(0.40 0.10 80 / 0.30), transparent 60%),
+                   linear-gradient(180deg, oklch(0.11 0.03 265) 0%, oklch(0.16 0.035 265) 100%);
+  --shadow-card: 0 10px 40px -15px oklch(0 0 0 / 0.6);
+  --glass: oklch(1 0 0 / 0.04);
+  --glass-border: oklch(1 0 0 / 0.10);
 }
 
 @layer base {
@@ -204,3 +196,33 @@
     background-size: 48px 48px;
   }
 }
+
+/* Rich-text rendering for fetched blog post HTML */
+.news-content p { margin: 0 0 1rem; }
+.news-content h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--foreground);
+}
+.news-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+}
+.news-content ul,
+.news-content ol {
+  padding-left: 1.25rem;
+  margin: 0 0 1rem;
+}
+.news-content ul { list-style: disc; }
+.news-content ol { list-style: decimal; }
+.news-content li { margin-bottom: 0.35rem; }
+.news-content a {
+  color: var(--joat-gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.news-content strong { color: var(--foreground); font-weight: 600; }
+.news-content em { font-style: italic; }
+.news-content img { border-radius: 0.75rem; margin: 1rem 0; }

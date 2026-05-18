@@ -1,27 +1,95 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, ArrowUpRight, Calendar } from "lucide-react";
+import { ArrowUpRight, Calendar, Loader2, X } from "lucide-react";
+import { fetchNewsArticles, type BlogPost } from "@/lib/news.functions";
 
-const categories = ["All", "Company Updates", "Tech Insights", "Innovation Stories", "Educational Impact", "Product Announcements"];
+function formatDate(iso: string) {
+  try {
+    return new Date(iso).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+}
 
-const articles = [
-  { cat: "Product Announcements", title: "Biobiz launches offline-first inventory for kiosks across Kenya", date: "May 12, 2026", read: "5 min", featured: true },
-  { cat: "Innovation Stories", title: "Inside Amare's Big Planet: building African EdTech kids actually love", date: "May 4, 2026", read: "8 min" },
-  { cat: "Tech Insights", title: "How AI is reshaping talent matching across East Africa", date: "Apr 28, 2026", read: "6 min" },
-  { cat: "Educational Impact", title: "10,000 youth trained: a year of digital literacy programs", date: "Apr 12, 2026", read: "4 min" },
-  { cat: "Company Updates", title: "JOAT KENYA joins Microsoft Africa Innovation Network", date: "Apr 2, 2026", read: "3 min" },
-  { cat: "Tech Insights", title: "Roblox + classrooms: the new frontier of gamified learning", date: "Mar 22, 2026", read: "7 min" },
-];
+function stripHtml(html: string) {
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function readingTime(html: string) {
+  const words = stripHtml(html).split(" ").filter(Boolean).length;
+  return `${Math.max(1, Math.round(words / 220))} min`;
+}
+
+function PostCover({
+  src,
+  alt,
+  className,
+}: {
+  src: string | null;
+  alt: string;
+  className?: string;
+}) {
+  if (!src) {
+    return (
+      <div
+        className={`relative bg-linear-to-br from-(--joat-red)/30 via-(--joat-navy-deep) to-(--joat-gold)/30 ${className ?? ""}`}
+      >
+        <div className="absolute inset-0 grid-bg opacity-30" />
+      </div>
+    );
+  }
+  return <img src={src} alt={alt} loading="lazy" className={`object-cover ${className ?? ""}`} />;
+}
 
 export function News() {
-  const [cat, setCat] = useState("All");
-  const [q, setQ] = useState("");
-  const filtered = useMemo(
-    () => articles.filter((a) => (cat === "All" || a.cat === cat) && (q === "" || a.title.toLowerCase().includes(q.toLowerCase()))),
-    [cat, q]
-  );
-  const featured = filtered.find((a) => a.featured) ?? filtered[0];
-  const rest = filtered.filter((a) => a !== featured);
+  const [posts, setPosts] = useState<BlogPost[] | null>(null);
+  const [error, setError] = useState(false);
+  const [active, setActive] = useState<BlogPost | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchNewsArticles()
+      .then((res) => {
+        if (cancelled) return;
+        if (res.ok && res.posts.length > 0) setPosts(res.posts);
+        else setError(true);
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!active) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActive(null);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [active]);
+
+  const featured = posts?.[0];
+  const rest = posts?.slice(1) ?? [];
 
   return (
     <section className="relative py-24 lg:py-32">
@@ -31,91 +99,163 @@ export function News() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10"
+          className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12"
         >
-          <div className="max-w-2xl">
-            <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">News & Articles</div>
-            <h2 className="text-4xl lg:text-6xl font-bold text-foreground">Latest Insights</h2>
-            <p className="mt-4 text-muted-foreground">
-              Perspectives on talent, technology, education and Africa's innovation economy.
-            </p>
+          <div>
+            <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">Latest Insights</div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-foreground">News & Articles</h2>
           </div>
-          <div className="relative w-full lg:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search articles…"
-              className="w-full pl-10 pr-4 py-3 rounded-md glass text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[var(--joat-gold)]/50"
-            />
-          </div>
+          <p className="text-sm text-muted-foreground sm:text-right max-w-xs leading-relaxed">
+            Perspectives on talent, work culture, and the East African job market.
+          </p>
         </motion.div>
 
-        <div className="flex gap-2 overflow-x-auto pb-2 mb-8">
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => setCat(c)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                cat === c ? "bg-[var(--joat-red)] text-primary-foreground" : "glass text-foreground/80 hover:text-foreground"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-
-        {featured && (
-          <motion.a
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            href="#"
-            className="block glass rounded-3xl p-8 lg:p-12 mb-8 group hover:border-[var(--joat-gold)]/40 transition-all"
-          >
-            <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-end">
-              <div>
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--joat-gold)] uppercase tracking-wider">
-                  Featured · {featured.cat}
-                </div>
-                <h3 className="mt-3 text-2xl lg:text-4xl font-bold text-foreground leading-tight">
-                  {featured.title}
-                </h3>
-                <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
-                  <span className="inline-flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{featured.date}</span>
-                  <span>{featured.read} read</span>
-                </div>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-[var(--joat-gold)] text-[var(--joat-navy-deep)] flex items-center justify-center group-hover:rotate-45 transition-transform">
-                <ArrowUpRight className="w-5 h-5" />
-              </div>
-            </div>
-          </motion.a>
+        {posts === null && !error && (
+          <div className="flex items-center justify-center py-20 text-muted-foreground">
+            <Loader2 className="w-5 h-5 animate-spin mr-3 text-(--joat-gold)" />
+            Loading insights…
+          </div>
         )}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {rest.map((a, i) => (
-            <motion.a
-              key={a.title}
-              href="#"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: (i % 3) * 0.05 }}
-              className="glass rounded-2xl p-6 hover:border-[var(--joat-gold)]/40 transition-all group"
-            >
-              <div className="text-xs font-semibold text-[var(--joat-gold)] uppercase tracking-wider">{a.cat}</div>
-              <h3 className="mt-3 text-lg font-bold text-foreground leading-snug group-hover:text-[var(--joat-gold)] transition-colors">
-                {a.title}
-              </h3>
-              <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                <span>{a.date} · {a.read} read</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </div>
-            </motion.a>
-          ))}
-        </div>
+        {error && (
+          <div className="glass rounded-2xl p-10 text-center text-muted-foreground">
+            We couldn't load articles right now. Please refresh in a moment.
+          </div>
+        )}
+
+        {posts && posts.length > 0 && (
+          <>
+            {/* Featured article */}
+            {featured && (
+              <motion.button
+                type="button"
+                onClick={() => setActive(featured)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="block w-full text-left glass rounded-3xl overflow-hidden mb-8 group hover:border-(--joat-gold)/40 transition-all"
+              >
+                <div className="md:flex">
+                  <div className="md:w-2/5 relative">
+                    <PostCover
+                      src={featured.cover_image}
+                      alt={featured.title}
+                      className="w-full h-64 md:h-full"
+                    />
+                  </div>
+                  <div className="md:w-3/5 p-7 md:p-10 flex flex-col justify-center">
+                    <div className="inline-flex items-center gap-2 text-xs font-semibold text-(--joat-gold) uppercase tracking-wider">
+                      Featured · {featured.category}
+                    </div>
+                    <h3 className="mt-3 text-2xl lg:text-4xl font-bold text-foreground leading-tight">
+                      {featured.title}
+                    </h3>
+                    <p className="mt-4 text-muted-foreground leading-relaxed">{featured.excerpt}</p>
+                    <div className="mt-5 flex items-center justify-between gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-4">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {formatDate(featured.created_at)}
+                        </span>
+                        <span>{readingTime(featured.content)} read</span>
+                      </div>
+                      <div className="w-10 h-10 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) flex items-center justify-center group-hover:rotate-45 transition-transform">
+                        <ArrowUpRight className="w-4 h-4" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.button>
+            )}
+
+            {/* Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {rest.map((p, i) => (
+                <motion.button
+                  type="button"
+                  key={p.id}
+                  onClick={() => setActive(p)}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: (i % 3) * 0.05 }}
+                  className="text-left glass rounded-2xl overflow-hidden hover:border-(--joat-gold)/40 transition-all group"
+                >
+                  <PostCover src={p.cover_image} alt={p.title} className="w-full h-48" />
+                  <div className="p-6">
+                    <div className="text-xs font-semibold text-(--joat-gold) uppercase tracking-wider">
+                      {p.category}
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold text-foreground leading-snug group-hover:text-(--joat-gold) transition-colors">
+                      {p.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.excerpt}</p>
+                    <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                      <span>
+                        {formatDate(p.created_at)} · {readingTime(p.content)} read
+                      </span>
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </div>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
+
+      {/* Article modal */}
+      {active && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="article-title"
+          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto"
+          onClick={() => setActive(null)}
+        >
+          <motion.article
+            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.25 }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-3xl my-12 bg-card text-card-foreground rounded-3xl shadow-2xl overflow-hidden"
+          >
+            <button
+              type="button"
+              aria-label="Close article"
+              onClick={() => setActive(null)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 backdrop-blur flex items-center justify-center text-foreground"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <PostCover
+              src={active.cover_image}
+              alt={active.title}
+              className="w-full h-60 md:h-80"
+            />
+
+            <div className="p-7 md:p-10">
+              <div className="text-xs font-semibold text-(--joat-gold) uppercase tracking-widest">
+                {active.category}
+              </div>
+              <h1 id="article-title" className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
+                {active.title}
+              </h1>
+              <div className="mt-3 text-xs text-muted-foreground">
+                {formatDate(active.created_at)} · {readingTime(active.content)} read
+              </div>
+              <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
+                {active.excerpt}
+              </p>
+              <div
+                className="news-content mt-6 text-foreground leading-relaxed space-y-4"
+                dangerouslySetInnerHTML={{ __html: active.content }}
+              />
+            </div>
+          </motion.article>
+        </div>
+      )}
     </section>
   );
 }

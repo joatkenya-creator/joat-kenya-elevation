@@ -2,12 +2,36 @@ import { motion } from "framer-motion";
 import { Globe2, Layers, Users2, Briefcase, BadgeCheck, HeartHandshake } from "lucide-react";
 
 const reasons = [
-  { icon: Globe2, title: "African Innovation Leadership", text: "Born in Kenya, built for Africa — solutions that reflect local context and global ambition." },
-  { icon: Layers, title: "Scalable Digital Solutions", text: "From startups to enterprises, our platforms grow with you — built on modern, resilient stacks." },
-  { icon: Users2, title: "Youth Empowerment Focus", text: "Every product invests in the next generation through education, opportunity and representation." },
-  { icon: Briefcase, title: "Industry Expertise", text: "42+ years across talent, tech, media and education — deep networks across East Africa." },
-  { icon: BadgeCheck, title: "Global Standards", text: "Enterprise compliance, security and design quality benchmarked to international SaaS leaders." },
-  { icon: HeartHandshake, title: "Impact-Driven Technology", text: "We measure success by lives uplifted, businesses scaled, and futures unlocked." },
+  {
+    icon: Globe2,
+    title: "African Innovation Leadership",
+    text: "Solutions that reflect local context and global ambition — shipped with the cadence of a modern tech company.",
+  },
+  {
+    icon: Layers,
+    title: "Scalable Digital Solutions",
+    text: "From startups to enterprises, our platforms grow with you — built on modern, resilient stacks.",
+  },
+  {
+    icon: Users2,
+    title: "Youth Empowerment Focus",
+    text: "Every product invests in the next generation through education, opportunity and representation.",
+  },
+  {
+    icon: Briefcase,
+    title: "Industry Expertise",
+    text: "42+ years across talent, tech, media and education — deep networks across East Africa.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Global Standards",
+    text: "Enterprise compliance, security and design quality benchmarked to international SaaS leaders.",
+  },
+  {
+    icon: HeartHandshake,
+    title: "Impact-Driven Technology",
+    text: "We measure success by lives uplifted, businesses scaled, and futures unlocked.",
+  },
 ];
 
 export function WhyChoose() {
@@ -35,10 +59,10 @@ export function WhyChoose() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="group relative glass rounded-2xl p-6 hover:border-[var(--joat-gold)]/40 transition-all hover:-translate-y-1"
+              className="group relative glass rounded-2xl p-6 hover:border-(--joat-gold)/40 transition-all hover:-translate-y-1"
             >
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--joat-red)]/30 to-[var(--joat-gold)]/20 flex items-center justify-center mb-4">
-                <r.icon className="w-6 h-6 text-[var(--joat-gold)]" />
+              <div className="w-12 h-12 rounded-xl bg-linear-to-br from-(--joat-red)/30 to-(--joat-gold)/20 flex items-center justify-center mb-4">
+                <r.icon className="w-6 h-6 text-(--joat-gold)" />
               </div>
               <h3 className="text-lg font-bold text-foreground">{r.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.text}</p>
