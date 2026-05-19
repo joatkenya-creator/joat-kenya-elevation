@@ -78,10 +78,45 @@ async function dispatchWebhook(p: ContactPayload): Promise<boolean> {
   }
 }
 
+// Web3Forms — forwards submissions to whichever inbox you registered the access
+// key with. Free tier: 250 submissions/month. No DNS / domain verification.
+// Get a key at https://web3forms.com/ (enter your Gmail; key arrives by email).
+async function dispatchWeb3Forms(p: ContactPayload): Promise<boolean> {
+  const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
+  if (!accessKey) return false;
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify({
+        access_key: accessKey,
+        from_name: "JOAT KENYA Website",
+        subject: `JOAT contact · ${p.area} · ${p.first} ${p.last}`,
+        name: `${p.first} ${p.last}`,
+        email: p.email,
+        replyto: p.email,
+        message: p.message,
+        service_area: p.area,
+        source: p.source ?? "website",
+      }),
+    });
+    const json = (await res.json().catch(() => null)) as { success?: boolean; message?: string } | null;
+    if (!res.ok || !json?.success) {
+      console.error("Web3Forms error", res.status, json?.message ?? "");
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("Web3Forms transport error", err);
+    return false;
+  }
+}
+
 export const submitContact = createServerFn({ method: "POST" })
   .inputValidator(ContactInput)
   .handler(async ({ data }) => {
     const deliveredVia: string[] = [];
+    if (await dispatchWeb3Forms(data)) deliveredVia.push("web3forms");
     if (await dispatchResend(data)) deliveredVia.push("resend");
     if (await dispatchWebhook(data)) deliveredVia.push("webhook");
 

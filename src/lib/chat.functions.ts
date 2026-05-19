@@ -108,57 +108,96 @@ type ClaudeResponse = {
   error?: { message?: string };
 };
 
+type JackResponse = {
+  text?: string;
+  reply?: string;
+  message?: string;
+  error?: string;
+};
+
+// JOAT KENYA's own deployed assistant (Supabase Edge Function).
+// Same backend that powers the chatbot on the original joatkenya.com site.
+// The key is a public Supabase anon JWT — safe to embed.
+const JACK_URL = "https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/jack";
+const JACK_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBya2Rma2tocW5jeGt5ZWhva29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNjA3NzEsImV4cCI6MjA4OTkzNjc3MX0.401RvhF8C4D5K3J20m7vXLpKpBp39M6vn3TmRkHXe48";
+
+async function askJack(messages: ChatMessageT[]): Promise<string | null> {
+  try {
+    const res = await fetch(JACK_URL, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${JACK_KEY}`,
+        apikey: JACK_KEY,
+      },
+      body: JSON.stringify({ messages }),
+    });
+    if (!res.ok) {
+      console.error("JACK endpoint error", res.status, await res.text().catch(() => ""));
+      return null;
+    }
+    const json = (await res.json()) as JackResponse;
+    const reply = (json.text ?? json.reply ?? json.message ?? "").trim();
+    return reply || null;
+  } catch (err) {
+    console.error("JACK fetch error", err);
+    return null;
+  }
+}
+
+async function askAnthropic(messages: ChatMessageT[]): Promise<string | null> {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return null;
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: process.env.ANTHROPIC_MODEL ?? "claude-haiku-4-5-20251001",
+        max_tokens: 600,
+        system: SYSTEM_PROMPT,
+        messages: messages.map((m) => ({ role: m.role, content: m.content })),
+      }),
+    });
+    if (!res.ok) {
+      console.error("Anthropic API error", res.status, await res.text().catch(() => ""));
+      return null;
+    }
+    const json = (await res.json()) as ClaudeResponse;
+    return json.content?.find((c) => c.type === "text")?.text?.trim() ?? null;
+  } catch (err) {
+    console.error("Anthropic call error", err);
+    return null;
+  }
+}
+
 export const chatCompletion = createServerFn({ method: "POST" })
   .inputValidator(ChatInput)
   .handler(async ({ data }) => {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
     const lastUser = [...data.messages].reverse().find((m) => m.role === "user");
     const lastUserText = lastUser?.content ?? "";
 
-    if (!apiKey) {
-      return {
-        ok: true as const,
-        source: "fallback" as const,
-        reply: heuristicReply(lastUserText),
-      };
+    // 1. Primary: JOAT's own JACK assistant (same as original site)
+    const jackReply = await askJack(data.messages);
+    if (jackReply) {
+      return { ok: true as const, source: "jack" as const, reply: jackReply };
     }
 
-    try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-        },
-        body: JSON.stringify({
-          model: process.env.ANTHROPIC_MODEL ?? "claude-haiku-4-5-20251001",
-          max_tokens: 600,
-          system: SYSTEM_PROMPT,
-          messages: data.messages.map((m) => ({ role: m.role, content: m.content })),
-        }),
-      });
-
-      if (!res.ok) {
-        console.error("Anthropic API error", res.status, await res.text().catch(() => ""));
-        return {
-          ok: true as const,
-          source: "fallback" as const,
-          reply: heuristicReply(lastUserText),
-        };
-      }
-
-      const json = (await res.json()) as ClaudeResponse;
-      const reply =
-        json.content?.find((c) => c.type === "text")?.text?.trim() ?? heuristicReply(lastUserText);
-
-      return { ok: true as const, source: "claude" as const, reply };
-    } catch (err) {
-      console.error("Chat handler error", err);
-      return {
-        ok: true as const,
-        source: "fallback" as const,
-        reply: heuristicReply(lastUserText),
-      };
+    // 2. Optional fallback: Claude via Anthropic API (if ANTHROPIC_API_KEY is set)
+    const claudeReply = await askAnthropic(data.messages);
+    if (claudeReply) {
+      return { ok: true as const, source: "claude" as const, reply: claudeReply };
     }
+
+    // 3. Last resort: scripted heuristic reply
+    return {
+      ok: true as const,
+      source: "fallback" as const,
+      reply: heuristicReply(lastUserText),
+    };
   });

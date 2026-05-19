@@ -12,8 +12,10 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
-import { submitContact } from "@/lib/contact.functions";
-import { SOCIAL_LINKS, EXTERNAL } from "@/lib/links";
+import { submitContact, type ContactPayload } from "@/lib/contact.functions";
+import { deliverViaWeb3Forms } from "@/lib/web3forms";
+import { SOCIAL_LINKS } from "@/lib/links";
+import { openCalendly } from "@/lib/calendly";
 
 const services = [
   "General Inquiry",
@@ -58,25 +60,38 @@ export function Contact() {
     if (!validate() || status === "sending") return;
     setServerError(null);
     setStatus("sending");
-    try {
-      await submitContact({
-        data: {
-          first: form.first.trim(),
-          last: form.last.trim(),
-          email: form.email.trim(),
-          area: form.area,
-          message: form.message.trim(),
-          source: "website",
-        },
-      });
+
+    const payload: ContactPayload = {
+      first: form.first.trim(),
+      last: form.last.trim(),
+      email: form.email.trim(),
+      area: form.area,
+      message: form.message.trim(),
+      source: "website",
+    };
+
+    // Primary: Web3Forms direct from the browser (their free plan blocks server calls).
+    // Parallel: server function — handles optional Resend / webhook delivery + logs.
+    const [web3, server] = await Promise.allSettled([
+      deliverViaWeb3Forms(payload),
+      submitContact({ data: payload }).catch((err) => {
+        console.error("Server logging call failed", err);
+        return null;
+      }),
+    ]);
+
+    const web3Ok = web3.status === "fulfilled" && web3.value === true;
+    const serverOk = server.status === "fulfilled" && server.value !== null;
+
+    if (web3Ok || serverOk) {
       setStatus("sent");
-    } catch (err) {
-      console.error("Contact submission failed", err);
-      setStatus("error");
-      setServerError(
-        "We couldn't send that just now. Please try again, or email us directly at joatkenya120@gmail.com.",
-      );
+      return;
     }
+
+    setStatus("error");
+    setServerError(
+      "We couldn't send that just now. Please try again, or email us directly at joatkenya120@gmail.com.",
+    );
   };
 
   return (
@@ -153,14 +168,13 @@ export function Contact() {
                   Talk to our team about a solution that fits.
                 </div>
               </div>
-              <a
-                href={EXTERNAL.calendly}
-                target="_blank"
-                rel="noreferrer"
-                className="px-4 py-2 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold text-sm hover:brightness-110 transition-all"
+              <button
+                type="button"
+                onClick={() => void openCalendly()}
+                className="px-4 py-2 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold text-sm hover:brightness-110 transition-all cursor-pointer"
               >
                 Book
-              </a>
+              </button>
             </div>
 
             <div className="flex gap-3">

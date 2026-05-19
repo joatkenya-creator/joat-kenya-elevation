@@ -12,7 +12,7 @@ export const EXTERNAL = {
   majobo: "https://www.majobokenya.com/",
   amareYoutube: "https://www.youtube.com/@amaresbigplanet/featured",
   joatUsa: "https://myjackofalltrades.us/",
-  calendly: "https://calendly.com/joatkenya/30min-discovery",
+  calendly: "https://calendly.com/joatkenya120/30min",
 };
 
 export const LEGAL_LINKS = {

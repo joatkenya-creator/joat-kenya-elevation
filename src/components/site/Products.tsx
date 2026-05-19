@@ -215,9 +215,9 @@ const MajoboExtra = (
 
 const AmareVideos = [
   {
-    id: "Vz0nkXFQ6Xg",
-    label: "Channel highlights",
-    note: "Animated story episodes celebrating African identity",
+    id: "_cZMYWcZlNc",
+    label: "Featured episode",
+    note: "Our flagship Amare's Big Planet episode — open to brand sponsorship.",
   },
   {
     id: "Ye8ebNqBoYY",

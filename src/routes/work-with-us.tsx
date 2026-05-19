@@ -16,7 +16,7 @@ import {
   Phone,
   Sparkles,
 } from "lucide-react";
-import { EXTERNAL } from "@/lib/links";
+import { openCalendly } from "@/lib/calendly";
 
 export const Route = createFileRoute("/work-with-us")({
   component: WorkWithUsPage,
@@ -218,15 +218,14 @@ function WorkWithUsPage() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="mt-10 flex flex-wrap justify-center gap-3"
           >
-            <a
-              href={EXTERNAL.calendly}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-red) text-primary-foreground font-semibold glow-red hover:brightness-110 transition-all"
+            <button
+              type="button"
+              onClick={() => void openCalendly()}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-red) text-primary-foreground font-semibold glow-red hover:brightness-110 transition-all cursor-pointer"
             >
               Book a Strategy Call
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </button>
             <a
               href="#packages"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold hover:brightness-110 transition-all"
@@ -311,11 +310,10 @@ function WorkWithUsPage() {
                       </li>
                     ))}
                   </ul>
-                  <a
-                    href={EXTERNAL.calendly}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`mt-7 inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-md font-semibold transition-all hover:brightness-110 ${
+                  <button
+                    type="button"
+                    onClick={() => void openCalendly()}
+                    className={`mt-7 inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-md font-semibold transition-all hover:brightness-110 cursor-pointer ${
                       isPopular
                         ? "bg-(--joat-gold) text-(--joat-navy-deep)"
                         : "glass text-foreground hover:bg-white/8"
@@ -323,7 +321,7 @@ function WorkWithUsPage() {
                   >
                     Book Strategy Call
                     <ArrowRight className="w-4 h-4" />
-                  </a>
+                  </button>
                 </motion.div>
               );
             })}
@@ -450,15 +448,14 @@ function WorkWithUsPage() {
                 automation system would look like — no obligation.
               </p>
               <div className="mt-7 flex flex-wrap justify-center gap-3">
-                <a
-                  href={EXTERNAL.calendly}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold hover:brightness-110 transition-all"
+                <button
+                  type="button"
+                  onClick={() => void openCalendly()}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold hover:brightness-110 transition-all cursor-pointer"
                 >
                   Book Free Strategy Call
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </button>
                 <a
                   href="tel:+254142378150"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-md glass text-foreground font-semibold hover:bg-white/8 transition-all"
