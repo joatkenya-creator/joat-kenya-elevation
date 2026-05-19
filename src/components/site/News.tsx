@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Calendar, Loader2, X } from "lucide-react";
-import { fetchNewsArticles, type BlogPost } from "@/lib/news.functions";
+import { fetchNewsArticles, type BlogPost } from "@/lib/news";
 
 function formatDate(iso: string) {
   try {

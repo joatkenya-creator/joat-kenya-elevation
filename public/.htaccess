@@ -1,0 +1,66 @@
+# JOAT KENYA — Apache config for Truehost / cPanel static hosting.
+# Copy this file to public_html/.htaccess alongside the dist/ contents.
+
+# ─── 1. SPA fallback ──────────────────────────────────────────────────────────
+# Any request that doesn't match a real file or directory gets rewritten to
+# index.html so React Router's client-side routes (/privacy, /terms,
+# /work-with-us, etc.) work on direct hits and refreshes.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Skip rewrite for existing files and directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else → index.html (200 OK, not 301)
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# ─── 2. Custom error pages ────────────────────────────────────────────────────
+# Serve index.html for 404s so the React app renders the in-app NotFound page
+# rather than Apache's default. Sends 200 — if you want a hard 404 status, use
+# the alternative line below instead.
+ErrorDocument 404 /index.html
+
+# ─── 3. Compression ───────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json application/xml
+  AddOutputFilterByType DEFLATE application/x-javascript application/xhtml+xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ─── 4. Caching ───────────────────────────────────────────────────────────────
+# Vite emits content-hashed filenames for JS/CSS/images (e.g. index-Ce55rcBL.js).
+# Those can be cached forever. index.html must always revalidate so updates ship.
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Hashed assets — cache for a year
+  <FilesMatch "\.(js|css|woff2?|ttf|otf|eot|jpg|jpeg|png|gif|webp|avif|svg|ico|mp4|webm)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # HTML — always revalidate
+  <FilesMatch "\.html$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ─── 5. Security headers ──────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(self), geolocation=()"
+</IfModule>
+
+# ─── 6. Force HTTPS (uncomment after SSL is provisioned on Truehost) ──────────
+# <IfModule mod_rewrite.c>
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>

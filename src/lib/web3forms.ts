@@ -1,4 +1,4 @@
-import type { ContactPayload } from "./contact.functions";
+import type { ContactPayload } from "./contact";
 
 /**
  * Submit the contact form directly from the browser to Web3Forms.

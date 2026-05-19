@@ -441,7 +441,7 @@ const BlenderExtra = (
       <ul className="mt-4 space-y-1.5 text-sm">
         {[
           "Stroke-order recognition (A–Z)",
-          "Voice cues in Swahili + English",
+          "Voice cues",
           "Reward system tied to literacy milestones",
         ].map((f) => (
           <li key={f} className="flex items-start gap-2 text-foreground/90">

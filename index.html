@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JOAT KENYA — Transforming Africa Through Innovation, Talent & Digital Solutions</title>
+    <meta
+      name="description"
+      content="JOAT KENYA empowers businesses and communities through technology, digital education, talent outsourcing, and immersive digital experiences across Africa."
+    />
+    <meta name="author" content="JOAT KENYA" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="JOAT KENYA — Innovation, Talent & Digital Solutions" />
+    <meta
+      property="og:description"
+      content="Cutting-edge technology, digital education, talent outsourcing, and immersive experiences across Africa."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="J.O.A.T. Kenya" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Theme bootstrap — runs before React mounts so there's no light/dark flash -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("joat-theme");
+          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored === "light" || stored === "dark" ? stored : prefersDark ? "dark" : "dark";
+          var root = document.documentElement;
+          if (theme === "dark") root.classList.add("dark");
+          else root.classList.remove("dark");
+          root.dataset.theme = theme;
+        } catch (_) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

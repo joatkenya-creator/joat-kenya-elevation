@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
-import { chatCompletion, type ChatMessageT } from "@/lib/chat.functions";
+import { chatCompletion, type ChatMessageT } from "@/lib/chat";
 
 type Msg = { role: "bot" | "user"; text: string };
 
@@ -51,7 +51,7 @@ export function Chatbot() {
       }));
 
     try {
-      const result = await chatCompletion({ data: { messages: history } });
+      const result = await chatCompletion(history);
       setMsgs((m) => [...m, { role: "bot", text: result.reply }]);
     } catch (err) {
       console.error("Chat call failed", err);

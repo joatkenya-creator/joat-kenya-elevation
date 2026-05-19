@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Calendar, Check, Loader2, AlertCircle } from "lucide-react";
-import { submitContact, type ContactPayload } from "@/lib/contact.functions";
+import { type ContactPayload } from "@/lib/contact";
 import { deliverViaWeb3Forms } from "@/lib/web3forms";
 import { SOCIAL_LINKS } from "@/lib/links";
 import { openCalendly } from "@/lib/calendly";
@@ -59,20 +59,9 @@ export function Contact() {
       source: "website",
     };
 
-    // Primary: Web3Forms direct from the browser (their free plan blocks server calls).
-    // Parallel: server function — handles optional Resend / webhook delivery + logs.
-    const [web3, server] = await Promise.allSettled([
-      deliverViaWeb3Forms(payload),
-      submitContact({ data: payload }).catch((err) => {
-        console.error("Server logging call failed", err);
-        return null;
-      }),
-    ]);
-
-    const web3Ok = web3.status === "fulfilled" && web3.value === true;
-    const serverOk = server.status === "fulfilled" && server.value !== null;
-
-    if (web3Ok || serverOk) {
+    // Web3Forms direct from the browser — no server needed.
+    const ok = await deliverViaWeb3Forms(payload);
+    if (ok) {
       setStatus("sent");
       return;
     }
