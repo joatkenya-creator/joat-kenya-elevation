@@ -1,17 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Calendar,
-  Check,
-  Loader2,
-  AlertCircle,
-} from "lucide-react";
+import { MapPin, Phone, Mail, Calendar, Check, Loader2, AlertCircle } from "lucide-react";
 import { submitContact, type ContactPayload } from "@/lib/contact.functions";
 import { deliverViaWeb3Forms } from "@/lib/web3forms";
 import { SOCIAL_LINKS } from "@/lib/links";
@@ -175,36 +164,6 @@ export function Contact() {
               >
                 Book
               </button>
-            </div>
-
-            <div className="flex gap-3">
-              <a
-                href="https://www.linkedin.com/company/joat-kenya-jack-urban-services-ltd/posts/?feedView=all"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className="w-11 h-11 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors"
-              >
-                <Linkedin className="w-4 h-4 text-foreground" />
-              </a>
-              <a
-                href={SOCIAL_LINKS.twitter}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Twitter / X"
-                className="w-11 h-11 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors"
-              >
-                <Twitter className="w-4 h-4 text-foreground" />
-              </a>
-              <a
-                href="https://www.instagram.com/joat.kenya?igsh=MXZraTR5enF4OTVpaQ=="
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-                className="w-11 h-11 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors"
-              >
-                <Instagram className="w-4 h-4 text-foreground" />
-              </a>
             </div>
           </div>
 

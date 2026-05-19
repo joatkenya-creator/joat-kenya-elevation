@@ -115,10 +115,10 @@ function TermsPage() {
           <h2 className="text-xl font-bold text-foreground mb-2">9. Contact</h2>
           <p>
             Questions about these terms:{" "}
-            <a className="text-gold hover:underline" href="mailto:hello@joatkenya.com">
-              hello@joatkenya.com
+            <a className="text-gold hover:underline" href="mailto:joatkenya120@gmail.com">
+              joatkenya120@gmail.com
             </a>{" "}
-            · +254 729 265 333.
+            · +254 142 378150.
           </p>
         </section>
       </article>

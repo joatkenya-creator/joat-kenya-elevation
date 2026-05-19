@@ -100,7 +100,10 @@ async function dispatchWeb3Forms(p: ContactPayload): Promise<boolean> {
         source: p.source ?? "website",
       }),
     });
-    const json = (await res.json().catch(() => null)) as { success?: boolean; message?: string } | null;
+    const json = (await res.json().catch(() => null)) as {
+      success?: boolean;
+      message?: string;
+    } | null;
     if (!res.ok || !json?.success) {
       console.error("Web3Forms error", res.status, json?.message ?? "");
       return false;

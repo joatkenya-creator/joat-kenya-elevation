@@ -74,7 +74,6 @@ export function Hero() {
               Get Started
             </a>
           </motion.div>
-
         </div>
 
         {/* Floating orbital metrics card */}

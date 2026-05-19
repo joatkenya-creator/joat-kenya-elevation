@@ -38,11 +38,7 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-5 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
         <a href="#home" className="flex items-center gap-3 group">
-          <img
-            src={logo}
-            alt="JOAT KENYA"
-            className="h-10 lg:h-12 w-auto object-contain"
-          />
+          <img src={logo} alt="JOAT KENYA" className="h-10 lg:h-12 w-auto object-contain" />
           <div className="leading-tight">
             <div className="font-display font-bold text-xl md:text-2xl tracking-wide">
               <span className="gradient-text-red">J.O.A.T</span>{" "}

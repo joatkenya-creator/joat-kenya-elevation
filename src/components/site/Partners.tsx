@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Leaf, Receipt } from "lucide-react";
 import m1 from "@/assets/partners/marquee1.jpg";
 import m2 from "@/assets/partners/marquee2.png";
 import m3 from "@/assets/partners/marquee3.jpeg";
@@ -22,32 +21,12 @@ const partners: { src: string; alt: string }[] = [
   { src: m9, alt: "Partner 9" },
 ];
 
-const certs = [
-  {
-    icon: ShieldCheck,
-    title: "ISO 9001",
-    text: "Quality management certified across recruitment and digital delivery.",
-  },
-  {
-    icon: Leaf,
-    title: "NEMA NCA-1",
-    text: "Environmental compliance under Kenya's National Environment Management Authority (Category 1).",
-  },
-  {
-    icon: Receipt,
-    title: "KRA Compliant",
-    text: "Fully compliant with Kenya Revenue Authority — tax-clean and audit-ready.",
-  },
-];
-
 export function Partners() {
   return (
     <section className="relative py-20 lg:py-24 border-y border-white/5">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <div className="text-center mb-10">
-          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-3">
-            Trusted Partners & Certifications
-          </div>
+          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-3">Trusted Partners</div>
           <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
             Backed by Africa's leading organizations
           </h2>
@@ -76,27 +55,6 @@ export function Partners() {
               </div>
             ))}
           </motion.div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-4 mt-12">
-          {certs.map((c, i) => (
-            <motion.div
-              key={c.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="glass rounded-2xl p-6 flex items-start gap-4"
-            >
-              <div className="w-11 h-11 rounded-xl bg-(--joat-gold)/15 flex items-center justify-center">
-                <c.icon className="w-5 h-5 text-(--joat-gold)" />
-              </div>
-              <div>
-                <h3 className="font-bold text-foreground">{c.title}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{c.text}</p>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>

@@ -1,12 +1,57 @@
-import { Linkedin, Twitter, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import {
+  Linkedin,
+  Instagram,
+  Youtube,
+  Facebook,
+  MapPin,
+  Phone,
+  Mail,
+  ShieldCheck,
+  Leaf,
+  Receipt,
+} from "lucide-react";
 import logo from "@/assets/joat-logo.png";
-import { SOCIAL_LINKS, EXTERNAL, LEGAL_LINKS } from "@/lib/links";
+import { EXTERNAL, LEGAL_LINKS } from "@/lib/links";
 
 const socials: { Icon: typeof Linkedin; href: string; label: string }[] = [
-  { Icon: Linkedin, href: SOCIAL_LINKS.linkedin, label: "LinkedIn" },
-  { Icon: Twitter, href: SOCIAL_LINKS.twitter, label: "Twitter / X" },
-  { Icon: Instagram, href: SOCIAL_LINKS.instagram, label: "Instagram" },
-  { Icon: Youtube, href: SOCIAL_LINKS.youtube, label: "YouTube" },
+  {
+    Icon: Linkedin,
+    href: "https://www.linkedin.com/company/joat-kenya-jack-urban-services-ltd/posts/?feedView=all",
+    label: "LinkedIn",
+  },
+  {
+    Icon: Instagram,
+    href: "https://www.instagram.com/joat.kenya?igsh=MXZraTR5enF4OTVpaQ==",
+    label: "Instagram",
+  },
+  {
+    Icon: Facebook,
+    href: "https://www.facebook.com/profile.php?id=61581326003888",
+    label: "Facebook",
+  },
+  {
+    Icon: Youtube,
+    href: "https://www.youtube.com/results?search_query=joat+kenya",
+    label: "YouTube",
+  },
+];
+
+const certs = [
+  {
+    icon: ShieldCheck,
+    title: "ISO 9001",
+    text: "Quality management certified across recruitment and digital delivery.",
+  },
+  {
+    icon: Leaf,
+    title: "NEMA NCA-1",
+    text: "Environmental compliance under Kenya's National Environment Management Authority (Category 1).",
+  },
+  {
+    icon: Receipt,
+    title: "KRA Compliant",
+    text: "Fully compliant with Kenya Revenue Authority — tax-clean and audit-ready.",
+  },
 ];
 
 export function Footer() {
@@ -84,7 +129,27 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+        {/* Certifications */}
+        <div className="mt-12 pt-8 border-t border-white/5">
+          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4 text-center md:text-left">
+            Certifications & Compliance
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {certs.map((c) => (
+              <div key={c.title} className="glass rounded-2xl p-5 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-(--joat-gold)/15 flex items-center justify-center shrink-0">
+                  <c.icon className="w-5 h-5 text-(--joat-gold)" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-foreground text-sm">{c.title}</h3>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{c.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} J.O.A.T. Kenya. All rights reserved.</div>
           <div className="flex gap-5">
             <a href={LEGAL_LINKS.privacy} className="hover:text-gold transition-colors">

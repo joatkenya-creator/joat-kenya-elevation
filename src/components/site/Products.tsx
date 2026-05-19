@@ -13,13 +13,15 @@ import {
   Languages,
   Brush,
   Sparkles,
-  Wand2,
   Boxes,
-  Image as ImageIcon,
   Play,
 } from "lucide-react";
 import biobiz from "@/assets/biobiz-mock.jpg";
+import biobizShare from "@/assets/biobiz-share.jpg";
+import biobizFeatures from "@/assets/biobiz-features.jpg";
+import biobizRecordings from "@/assets/biobiz-recordings.jpg";
 import biobizLogo from "@/assets/biobiz-logo.jpeg";
+import { GermanSampleAudio } from "./GermanSampleAudio";
 import amare from "@/assets/amare-planet.jpg";
 import roblox from "@/assets/roblox-world.jpg";
 import talent from "@/assets/talent.jpg";
@@ -67,8 +69,8 @@ const BiobizExtra = (
         </div>
       </div>
       <p className="text-sm text-muted-foreground">
-        BioBiz records meetings, transcribes them, and returns a clean summary plus an action-item
-        checklist.
+        BioBiz records meetings, transcribes them, and returns a clean summary with key insights of
+        the recordings.
       </p>
       <div className="mt-4 rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-4 text-sm">
         <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
@@ -109,20 +111,23 @@ const BiobizExtra = (
         </div>
       </div>
       <p className="text-sm text-muted-foreground">
-        Capture a conversation in Swahili, French, Amharic, Mandarin or any supported language — get
+        Capture a conversation in German, French, Swahili, Mandarin or any supported language — get
         a clean English transcript instantly.
       </p>
       <div className="mt-4 grid grid-cols-2 gap-3">
         <div className="rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-3">
-          <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-            Recording · Swahili
+          <div className="flex items-center justify-between gap-2 mb-1">
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              Recording · German
+            </div>
+            <GermanSampleAudio />
           </div>
           <div className="flex items-center gap-2 mb-2">
             <span className="w-2 h-2 rounded-full bg-(--joat-red) animate-pulse" />
             <span className="text-xs text-foreground/80">00:42</span>
           </div>
           <p className="text-xs text-foreground/90 italic leading-relaxed">
-            "Tunahitaji kuongeza usambazaji wetu eneo la pwani kabla ya msimu wa likizo."
+            "Wir müssen unseren Vertrieb in der Küstenregion vor der Urlaubssaison ausbauen."
           </p>
         </div>
         <div className="rounded-xl bg-(--joat-gold)/10 border border-(--joat-gold)/30 p-3">
@@ -137,6 +142,67 @@ const BiobizExtra = (
             "We need to expand our distribution to the coastal region before the holiday season."
           </p>
         </div>
+      </div>
+    </div>
+
+    {/* Screenshots straight from the Play Store listing */}
+    <div className="md:col-span-2 mt-2">
+      <div className="flex items-end justify-between gap-3 mb-5 flex-wrap">
+        <div>
+          <div className="text-xs uppercase tracking-widest text-gold">Inside the BioBiz app</div>
+        </div>
+        <a
+          href="https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-(--joat-gold) hover:underline"
+        >
+          See on Play Store <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+        {[
+          {
+            src: biobiz,
+            label: "My Card",
+            note: "Your digital business card — live views, shares and saves.",
+          },
+          {
+            src: biobizShare,
+            label: "Share Card",
+            note: "QR + Copy link, Text, Email, WhatsApp, LinkedIn — share anywhere.",
+          },
+          {
+            src: biobizRecordings,
+            label: "AI Notetaker",
+            note: "Record meetings; instant AI summary + action items.",
+          },
+          {
+            src: biobizFeatures,
+            label: "All features",
+            note: "Card analytics, email signature, NFC, lead capture, CRM, and more.",
+          },
+        ].map((s) => (
+          <div
+            key={s.label}
+            className="glass rounded-2xl overflow-hidden border border-(--glass-border) hover:border-(--joat-gold)/40 transition-colors group"
+          >
+            <div className="aspect-[3/4] bg-(--joat-navy-deep) flex items-center justify-center overflow-hidden">
+              <img
+                src={s.src}
+                alt={`BioBiz · ${s.label} screen`}
+                loading="lazy"
+                className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+              />
+            </div>
+            <div className="p-4">
+              <div className="text-xs font-semibold text-gold uppercase tracking-wider">
+                {s.label}
+              </div>
+              <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{s.note}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </div>
@@ -159,7 +225,6 @@ const MajoboExtra = (
         {[
           "AI-driven category inference",
           "Hyper-local matching",
-          "Full compliance & payroll handling",
           "Flexible: gig, contract, permanent",
         ].map((f) => (
           <li key={f} className="flex items-start gap-2 text-foreground/90">
@@ -222,7 +287,7 @@ const AmareVideos = [
   {
     id: "Ye8ebNqBoYY",
     label: "Learning adventures",
-    note: "Curriculum-aligned activities for ages 4–12",
+    note: "Curriculum-aligned activities for ages 1–8",
   },
   {
     id: "ORDhzHxc7Dw",
@@ -288,68 +353,66 @@ const AmareExtra = (
   </div>
 );
 
+const featuredGames = [
+  {
+    src: "/videos/amares-big-planet.mp4",
+    title: "Amare's Big Planet",
+    tag: "Roblox · Open-world alphabet adventure",
+    description:
+      "Explore a vast world to collect all 26 letters of the alphabet while dodging deadly energy waves and mysterious Collectors. Use safe zones, earn fly charges, and climb the all-time leaderboard — full mobile support included.",
+  },
+  {
+    src: "/videos/abyss.mp4",
+    title: "Abyss",
+    tag: "Roblox · Underwater exploration",
+    description:
+      "Dive through evolving underwater zones — bright Coral Reefs, eerie Kelp Forests, the haunting Deep Sea and ancient Sunken Ruins — where each unlocked level reveals deeper, more dangerous waters. Collect items, manage oxygen and uncover what lies beneath the surface.",
+  },
+];
+
 const RobloxExtra = (
   <div className="mt-10">
     <div className="flex items-center gap-3 mb-4">
       <Gamepad2 className="w-5 h-5 text-gold" />
       <h4 className="text-xl font-bold text-foreground">Selected Roblox builds</h4>
     </div>
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {[
-        { title: "Pulse Arena", tag: "Multiplayer combat" },
-        { title: "Skyforge", tag: "Open-world adventure" },
-        { title: "Brand Worlds", tag: "Custom corporate activations" },
-        { title: "Drift Republic", tag: "Racing & customization" },
-      ].map((g) => (
-        <div key={g.title} className="glass rounded-2xl overflow-hidden group">
-          <div className="aspect-[4/3] relative bg-linear-to-br from-(--joat-navy-deep) via-(--joat-red)/30 to-(--joat-gold)/30">
-            <div className="absolute inset-0 grid-bg opacity-40 group-hover:opacity-60 transition-opacity" />
-            <div className="absolute bottom-2 left-2 text-[10px] uppercase tracking-widest text-foreground/70 px-2 py-0.5 rounded bg-black/40">
-              Screenshot
-            </div>
-          </div>
-          <div className="p-4">
-            <div className="font-semibold text-foreground">{g.title}</div>
-            <div className="text-xs text-muted-foreground">{g.tag}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-    <p className="mt-4 text-xs text-muted-foreground">
-      Gameplay screen-recordings will replace these placeholders as titles ship publicly.
-    </p>
-  </div>
-);
-
-const AIMarketingExtra = (
-  <div className="mt-10">
-    <div className="flex items-center gap-3 mb-4">
-      <Wand2 className="w-5 h-5 text-gold" />
-      <h4 className="text-xl font-bold text-foreground">A gallery built by prompts</h4>
-    </div>
-    <p className="text-sm text-muted-foreground max-w-3xl">
-      Every visual below is generated programmatically by piping prompts through Claude and
-      OpenRouter into image models. Campaigns ship in hours, not weeks, and brand voice stays
-      consistent across hundreds of assets.
-    </p>
-    <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-      {[
-        ["from-amber-500/40", "to-red-600/40"],
-        ["from-fuchsia-500/40", "to-indigo-600/40"],
-        ["from-emerald-500/40", "to-cyan-500/40"],
-        ["from-yellow-500/40", "to-orange-600/40"],
-        ["from-sky-500/40", "to-blue-700/40"],
-        ["from-rose-500/40", "to-purple-700/40"],
-      ].map(([a, b], i) => (
+    <div className="grid md:grid-cols-2 gap-5">
+      {featuredGames.map((g) => (
         <div
-          key={i}
-          className={`relative aspect-square rounded-xl overflow-hidden glass bg-linear-to-br ${a} ${b}`}
+          key={g.title}
+          className="glass rounded-2xl overflow-hidden group border border-(--joat-gold)/30"
         >
-          <div className="absolute inset-0 grid-bg opacity-30" />
-          <div className="absolute inset-0 flex items-end p-3">
-            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-foreground/80">
-              <ImageIcon className="w-3 h-3" /> AI-generated
+          <div className="aspect-video relative bg-(--joat-navy-deep) overflow-hidden">
+            <video
+              src={g.src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              controls={false}
+              disableRemotePlayback
+              ref={(el) => {
+                if (!el) return;
+                // Belt-and-suspenders mute: ensures muted DOM property + HTML
+                // attribute are both set before autoplay starts, across all browsers.
+                el.muted = true;
+                el.volume = 0;
+                el.setAttribute("muted", "");
+              }}
+              className="w-full h-full object-cover"
+              aria-label={`${g.title} gameplay preview (muted)`}
+            />
+            <div className="absolute top-2 left-2 text-[10px] uppercase tracking-widest text-(--joat-navy-deep) font-bold px-2 py-0.5 rounded bg-(--joat-gold)">
+              Live build · gameplay
             </div>
+          </div>
+          <div className="p-5">
+            <div className="font-bold text-foreground text-lg">{g.title}</div>
+            <div className="text-xs text-(--joat-gold) uppercase tracking-wider mt-0.5">
+              {g.tag}
+            </div>
+            <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{g.description}</p>
           </div>
         </div>
       ))}
@@ -366,23 +429,10 @@ const BlenderExtra = (
         We use Blender end-to-end — modeling, rigging, lighting, render — to ship film-quality
         assets that double as game characters, classroom explainers, and brand identity systems.
       </p>
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className="aspect-square rounded-xl glass bg-linear-to-br from-(--joat-gold)/20 to-(--joat-red)/30 relative overflow-hidden"
-          >
-            <div className="absolute inset-0 grid-bg opacity-40" />
-            <div className="absolute bottom-1.5 left-2 text-[10px] uppercase tracking-widest text-foreground/70">
-              Render #{i + 1}
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
     <div className="glass rounded-2xl p-6">
       <div className="text-xs uppercase tracking-widest text-gold mb-2">In production</div>
-      <h4 className="text-xl font-bold text-foreground">Letters & Lines — a kids' drawing game</h4>
+      <h4 className="text-xl font-bold text-foreground">Drawalette — a kids' drawing game</h4>
       <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
         A game we're building from Blender assets: children learn the alphabet by tracing each
         letter, the character cheers them on, and progress unlocks new worlds. Built for tablets,
@@ -445,7 +495,6 @@ const products: Product[] = [
       "AI-classified job categories (no manual tagging)",
       "Industries: Domestic, Events, Hospitality, Tech, Property, Pro Services",
       "Hyper-local matching by location & skill",
-      "Compliance, payroll & contract handling included",
     ],
     ctas: [
       { label: "Open Majobo Kenya", href: "https://www.majobokenya.com/", icon: "external" },
@@ -536,12 +585,11 @@ const products: Product[] = [
     icon: Sparkles,
     accent: "red",
     reverse: true,
-    extra: AIMarketingExtra,
   },
   {
     id: "blender",
     badge: "Animation · Blender",
-    title: "3D animation that teaches, plays, and sells.",
+    title: "3D animation that teaches and plays.",
     tagline: "Production-quality 3D in Blender, repurposed into games, ads and classrooms.",
     description:
       "Our Blender pipeline produces characters, sets and motion that flow into multiple products — most recently a kids' game where children learn the alphabet by drawing each letter alongside an animated Blender character that cheers them on.",

@@ -34,7 +34,6 @@ const skills = [
   { label: "AI Operations", level: "Claude · OpenRouter · agents" },
   { label: "Digital Marketing", level: "Generative · social · ads" },
   { label: "Game Development", level: "Roblox studio · live ops" },
-  { label: "Compliance & Ops", level: "ISO · NEMA · KRA · payroll" },
 ];
 
 const categories = [

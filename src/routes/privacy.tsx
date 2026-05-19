@@ -100,8 +100,8 @@ function PrivacyPage() {
           <p>
             You can ask us to access, correct or delete your data, withdraw consent, or object to
             processing. Email{" "}
-            <a className="text-gold hover:underline" href="mailto:hello@joatkenya.com">
-              hello@joatkenya.com
+            <a className="text-gold hover:underline" href="mailto:joatkenya120@gmail.com">
+              joatkenya120@gmail.com
             </a>{" "}
             and we'll respond within 14 days, in line with Kenya's Data Protection Act (2019).
           </p>
@@ -121,10 +121,10 @@ function PrivacyPage() {
           <h2 className="text-xl font-bold text-foreground mb-2">8. Contact</h2>
           <p>
             Privacy questions or requests:{" "}
-            <a className="text-gold hover:underline" href="mailto:hello@joatkenya.com">
-              hello@joatkenya.com
+            <a className="text-gold hover:underline" href="mailto:joatkenya120@gmail.com">
+              joatkenya120@gmail.com
             </a>{" "}
-            · +254 729 265 333.
+            · +254 142 378150.
           </p>
         </section>
       </article>
