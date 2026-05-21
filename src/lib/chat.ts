@@ -44,7 +44,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /contact|email|phone|call|reach/i,
     reply:
-      "You can reach us at +254 142 378150, email joatkenya120@gmail.com, or use the Contact form below.",
+      "You can reach us at +254142378150, email joatkenya120@gmail.com, or use the Contact form below.",
   },
   {
     match: /partner|invest|collaborat/i,
@@ -66,7 +66,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
 function heuristicReply(lastUserMessage: string): string {
   const hit = HEURISTIC_FALLBACKS.find((h) => h.match.test(lastUserMessage));
   if (hit) return hit.reply;
-  return "Great question — I'd love to connect you with the right team. Drop a quick note in the Contact form below or call +254 142 378150 and we'll respond within 24 hours.";
+  return "Great question — I'd love to connect you with the right team. Drop a quick note in the Contact form below or call +254142378150 and we'll respond within 24 hours.";
 }
 
 type JackResponse = {
@@ -75,6 +75,25 @@ type JackResponse = {
   message?: string;
   error?: string;
 };
+
+const CONTACT_EMAIL = "joatkenya120@gmail.com";
+const CONTACT_PHONE = "+254142378150";
+
+/**
+ * JACK's server-side prompt (which we can't edit without Supabase backend access)
+ * still quotes JOAT's older contact details. Rewrite them on the way out so the
+ * site always shows the current phone/email. Safe no-op if JACK is already correct.
+ */
+function sanitizeContactDetails(text: string): string {
+  return (
+    text
+      // Any @joatkenya.com address (careers@, hello@, info@, …) → current inbox
+      .replace(/[a-zA-Z0-9._%+-]+@joatkenya\.com/g, CONTACT_EMAIL)
+      // Old phone in any spacing/format → current number
+      .replace(/\+?254[\s-]?729[\s-]?265[\s-]?333/g, CONTACT_PHONE)
+      .replace(/\b0729[\s-]?265[\s-]?333\b/g, CONTACT_PHONE)
+  );
+}
 
 /**
  * Browser-side chat completion: hits JOAT's own JACK Supabase Edge Function
@@ -107,7 +126,7 @@ export async function chatCompletion(messages: ChatMessageT[]): Promise<{
 
     const json = (await res.json()) as JackResponse;
     const reply = (json.text ?? json.reply ?? json.message ?? "").trim();
-    if (reply) return { ok: true, source: "jack", reply };
+    if (reply) return { ok: true, source: "jack", reply: sanitizeContactDetails(reply) };
   } catch (err) {
     console.error("JACK fetch error", err);
   }

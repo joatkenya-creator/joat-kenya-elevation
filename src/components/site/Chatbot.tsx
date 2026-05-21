@@ -6,7 +6,7 @@ import { chatCompletion, type ChatMessageT } from "@/lib/chat";
 type Msg = { role: "bot" | "user"; text: string };
 
 const FALLBACK_REPLY =
-  "I'm having a moment — but our team isn't. Drop your question in the Contact form below or call +254 729 265 333 and we'll respond within 24 hours.";
+  "I'm having a moment — but our team isn't. Drop your question in the Contact form below or call +254142378150 and we'll respond within 24 hours.";
 
 const INITIAL_GREETING =
   "Hi there! I'm JACK, J.O.A.T. Kenya's assistant. I can help you apply for roles, explore representation, or connect your organisation with the right talent.";
@@ -81,7 +81,7 @@ export function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 z-50 w-[calc(100vw-3rem)] sm:w-96 h-120 glass rounded-2xl shadow-2xl flex flex-col overflow-hidden border-(--joat-gold)/30"
+            className="fixed bottom-24 right-6 z-50 w-[calc(100vw-3rem)] sm:w-96 h-120 glass-panel rounded-2xl shadow-2xl flex flex-col overflow-hidden border-(--joat-gold)/30"
           >
             <div className="p-4 border-b border-white/10 flex items-center gap-3 bg-linear-to-r from-(--joat-red)/20 to-(--joat-gold)/10">
               <div className="w-9 h-9 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) font-bold flex items-center justify-center">

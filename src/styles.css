@@ -172,6 +172,22 @@
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border: 1px solid var(--glass-border);
   }
+  /*
+   * Like .glass, but near-opaque on mobile for readability (the frosted blur over
+   * scrolling content hurts legibility on small screens) and full frosted glass
+   * from the lg breakpoint up. Use for overlay panels: mobile nav menu, chatbot.
+   */
+  .glass-panel {
+    background: oklch(0.12 0.03 265 / 0.97);
+    border: 1px solid var(--glass-border);
+  }
+  @media (min-width: 1024px) {
+    .glass-panel {
+      background: var(--glass);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+    }
+  }
   .text-gold { color: var(--joat-gold); }
   .bg-navy { background: var(--joat-navy); }
   .bg-navy-deep { background: var(--joat-navy-deep); }
