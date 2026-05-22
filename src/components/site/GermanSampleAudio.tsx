@@ -54,24 +54,14 @@ export function GermanSampleAudio() {
       onClick={toggle}
       disabled={!supported}
       aria-label={playing ? "Stop German sample playback" : "Play German sample"}
-      className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest px-2 py-1 rounded-full bg-(--joat-red)/15 text-(--joat-red) hover:bg-(--joat-red)/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-(--joat-red)/15 text-(--joat-red) hover:bg-(--joat-red)/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
       title={
         supported
           ? "Play the German sample using your browser's built-in voice"
           : "Speech synthesis isn't available in this browser"
       }
     >
-      {playing ? (
-        <>
-          <Pause className="w-3 h-3" />
-          Stop
-        </>
-      ) : (
-        <>
-          <Play className="w-3 h-3 fill-current" />
-          Play sample
-        </>
-      )}
+      {playing ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3 fill-current ml-px" />}
     </button>
   );
 }

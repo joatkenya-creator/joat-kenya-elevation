@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import m1 from "@/assets/partners/marquee1.jpg";
 import m2 from "@/assets/partners/marquee2.png";
@@ -22,6 +23,16 @@ const partners: { src: string; alt: string }[] = [
 ];
 
 export function Partners() {
+  // Marquee scrolls faster on mobile (narrower viewport made it feel sluggish).
+  const [marqueeDuration, setMarqueeDuration] = useState(45);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const apply = () => setMarqueeDuration(mq.matches ? 22 : 45);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   return (
     <section className="relative py-20 lg:py-24 border-y border-white/5">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
@@ -39,7 +50,7 @@ export function Partners() {
           <motion.div
             className="flex gap-10 whitespace-nowrap py-4 items-center"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: marqueeDuration, repeat: Infinity, ease: "linear" }}
           >
             {[...partners, ...partners].map((p, i) => (
               <div

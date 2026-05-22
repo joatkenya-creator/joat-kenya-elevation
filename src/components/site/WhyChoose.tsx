@@ -59,13 +59,17 @@ export function WhyChoose() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="group relative glass rounded-2xl p-6 hover:border-(--joat-gold)/40 transition-all hover:-translate-y-1"
+              className="group relative glass rounded-2xl p-4 sm:p-6 hover:border-(--joat-gold)/40 transition-all hover:-translate-y-1"
             >
-              <div className="w-12 h-12 rounded-xl bg-linear-to-br from-(--joat-red)/30 to-(--joat-gold)/20 flex items-center justify-center mb-4">
-                <r.icon className="w-6 h-6 text-(--joat-gold)" />
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-linear-to-br from-(--joat-red)/30 to-(--joat-gold)/20 flex items-center justify-center mb-2 sm:mb-4">
+                <r.icon className="w-5 h-5 sm:w-6 sm:h-6 text-(--joat-gold)" />
               </div>
-              <h3 className="text-lg font-bold text-foreground">{r.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.text}</p>
+              <h3 className="text-sm sm:text-lg font-bold text-foreground leading-tight">
+                {r.title}
+              </h3>
+              <p className="mt-1.5 sm:mt-2 text-[11px] sm:text-sm text-muted-foreground leading-relaxed">
+                {r.text}
+              </p>
             </motion.div>
           ))}
         </div>

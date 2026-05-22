@@ -159,6 +159,14 @@
     scroll-behavior: smooth;
   }
 
+  /* Prevent any stray wide element from creating horizontal scroll on mobile,
+     which shifts fixed elements (navbar controls, chatbot) and looks like overlap. */
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
   h1, h2, h3, h4 {
     font-family: "Playfair Display", "Cormorant Garamond", Georgia, serif;
     letter-spacing: -0.01em;

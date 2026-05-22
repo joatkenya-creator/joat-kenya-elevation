@@ -73,26 +73,26 @@ export function Careers() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-10 relative overflow-hidden rounded-3xl border border-(--glass-border) glass p-8 lg:p-12"
+          className="mt-10 relative overflow-hidden rounded-3xl border border-(--glass-border) glass p-4 sm:p-8 lg:p-12"
         >
           <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-(--joat-red)/20 blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-(--joat-gold)/20 blur-3xl pointer-events-none" />
 
-          <div className="relative grid lg:grid-cols-[1.4fr_1fr] gap-8 items-center">
+          <div className="relative grid grid-cols-[1.4fr_1fr] gap-3 sm:gap-8 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold mb-3">
-                <Sparkles className="w-3.5 h-3.5" />
-                Live opportunities · powered by Majobo Kenya
+              <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-gold mb-2 sm:mb-3">
+                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                Live opportunities · Majobo Kenya
               </div>
-              <h3 className="text-2xl lg:text-4xl font-bold text-foreground leading-tight">
+              <h3 className="text-lg sm:text-2xl lg:text-4xl font-bold text-foreground leading-tight">
                 1,000+ opportunities across East Africa, refreshed daily.
               </h3>
-              <p className="mt-4 text-muted-foreground">
+              <p className="mt-2 sm:mt-4 text-[11px] sm:text-base text-muted-foreground leading-relaxed">
                 Every open role flows through Majobo Kenya, where AI categorizes posts the moment
                 they go live and matches them to nearby workers. Browse, filter and apply on Majobo.
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-2">
+              <div className="mt-4 sm:mt-6 hidden sm:flex flex-wrap gap-2">
                 {categories.map((c) => (
                   <span
                     key={c}
@@ -104,21 +104,21 @@ export function Careers() {
                 ))}
               </div>
 
-              <div className="mt-7 flex flex-wrap gap-3">
+              <div className="mt-4 sm:mt-7 flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
                 <a
                   href="https://www.majobokenya.com/"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-red) text-primary-foreground font-semibold glow-red hover:brightness-110 transition-all"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-md bg-(--joat-red) text-primary-foreground text-sm font-semibold glow-red hover:brightness-110 transition-all"
                 >
-                  Browse jobs on Majobo
+                  Browse jobs
                   <ExternalLink className="w-4 h-4" />
                 </a>
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold hover:brightness-110 transition-all"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) text-sm font-semibold hover:brightness-110 transition-all"
                 >
-                  Join Talent Network
+                  Join Network
                 </a>
               </div>
             </div>

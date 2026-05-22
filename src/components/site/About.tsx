@@ -64,13 +64,15 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="glass rounded-2xl p-8 hover:border-(--joat-gold)/40 transition-colors"
+              className="glass rounded-2xl p-4 sm:p-8 hover:border-(--joat-gold)/40 transition-colors"
             >
-              <div className="w-12 h-12 rounded-xl bg-(--joat-red)/15 flex items-center justify-center mb-4">
-                <c.icon className="w-6 h-6 text-(--joat-gold)" />
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-(--joat-red)/15 flex items-center justify-center mb-2 sm:mb-4">
+                <c.icon className="w-5 h-5 sm:w-6 sm:h-6 text-(--joat-gold)" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground">{c.title}</h3>
-              <p className="mt-3 text-muted-foreground leading-relaxed">{c.text}</p>
+              <h3 className="text-base sm:text-2xl font-bold text-foreground">{c.title}</h3>
+              <p className="mt-1.5 sm:mt-3 text-xs sm:text-base text-muted-foreground leading-relaxed">
+                {c.text}
+              </p>
             </motion.div>
           ))}
         </div>

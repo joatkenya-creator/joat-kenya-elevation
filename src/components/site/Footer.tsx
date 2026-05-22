@@ -60,11 +60,11 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-10">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10">
           <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="JOAT KENYA" className="h-12 w-auto object-contain" />
-              <div className="font-display font-bold text-2xl md:text-3xl tracking-tight">
+              <img src={logo} alt="JOAT KENYA" className="h-10 sm:h-12 w-auto object-contain" />
+              <div className="font-display font-bold text-xl sm:text-2xl md:text-3xl tracking-tight">
                 <span className="text-white">J.O.A.T. </span>
                 <span className="text-gold">KENYA</span>
               </div>
@@ -88,46 +88,51 @@ export function Footer() {
             </div>
           </div>
 
-          <FooterCol
-            title="Company"
-            links={[
-              { l: "About Us", h: "#about" },
-              { l: "Services", h: "#services" },
-              { l: "Careers", h: "#careers" },
-              { l: "News & Articles", h: "#news" },
-              { l: "J.O.A.T. USA", h: EXTERNAL.joatUsa, external: true },
-            ]}
-          />
+          {/* Company / Solutions / Contact: 3-up on mobile, flow into the 12-col grid on desktop */}
+          <div className="grid grid-cols-3 gap-4 lg:contents">
+            <FooterCol
+              title="Company"
+              links={[
+                { l: "About Us", h: "#about" },
+                { l: "Services", h: "#services" },
+                { l: "Careers", h: "#careers" },
+                { l: "News & Articles", h: "#news" },
+                { l: "J.O.A.T. USA", h: EXTERNAL.joatUsa, external: true },
+              ]}
+            />
 
-          <FooterCol
-            title="Solutions"
-            links={[
-              { l: "BioBiz App", h: "#biobiz" },
-              { l: "Majobo Talent", h: "#majobo" },
-              { l: "Software Development", h: "#software" },
-              { l: "Amare's Big Planet", h: "#amare" },
-              { l: "Roblox Game Dev", h: "#games" },
-              { l: "AI Marketing", h: "#ai-marketing" },
-              { l: "Blender Animation", h: "#blender" },
-            ]}
-          />
+            <FooterCol
+              title="Solutions"
+              links={[
+                { l: "BioBiz App", h: "#biobiz" },
+                { l: "Majobo Talent", h: "#majobo" },
+                { l: "Software Development", h: "#software" },
+                { l: "Amare's Big Planet", h: "#amare" },
+                { l: "Roblox Game Dev", h: "#games" },
+                { l: "AI Marketing", h: "#ai-marketing" },
+                { l: "Blender Animation", h: "#blender" },
+              ]}
+            />
 
-          <div className="lg:col-span-3">
-            <h4 className="font-bold text-foreground">Contact</h4>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li className="flex gap-3">
-                <MapPin className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya
-              </li>
-              <li className="flex gap-3">
-                <Phone className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                +254 142 378 150
-              </li>
-              <li className="flex gap-3">
-                <Mail className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                joatkenya120@gmail.com
-              </li>
-            </ul>
+            <div className="lg:col-span-3">
+              <h4 className="font-bold text-foreground text-sm sm:text-base">Contact</h4>
+              <ul className="mt-3 sm:mt-4 space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted-foreground">
+                <li className="flex gap-2 sm:gap-3">
+                  <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0 mt-0.5" />
+                  <span className="break-words">
+                    Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya
+                  </span>
+                </li>
+                <li className="flex gap-2 sm:gap-3">
+                  <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0 mt-0.5" />
+                  <span className="break-words">+254 142 378 150</span>
+                </li>
+                <li className="flex gap-2 sm:gap-3">
+                  <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0 mt-0.5" />
+                  <span className="break-all">joatkenya120@gmail.com</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -159,15 +164,15 @@ function FooterCol({
 }) {
   return (
     <div className="lg:col-span-2">
-      <h4 className="font-bold text-foreground">{title}</h4>
-      <ul className="mt-4 space-y-2 text-sm">
+      <h4 className="font-bold text-foreground text-sm sm:text-base">{title}</h4>
+      <ul className="mt-3 sm:mt-4 space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
         {links.map((x) => (
           <li key={x.l}>
             <a
               href={x.h}
               target={x.external ? "_blank" : undefined}
               rel={x.external ? "noreferrer" : undefined}
-              className="text-muted-foreground hover:text-gold transition-colors"
+              className="text-muted-foreground hover:text-gold transition-colors break-words"
             >
               {x.l}
             </a>

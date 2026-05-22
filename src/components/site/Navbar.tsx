@@ -36,11 +36,11 @@ export function Navbar() {
         scrolled ? "glass-solid shadow-[0_8px_30px_-15px_oklch(0_0_0/0.6)]" : ""
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-5 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
-        <a href="#home" className="flex items-center gap-3 group">
-          <img src={logo} alt="JOAT KENYA" className="h-10 lg:h-12 w-auto object-contain" />
-          <div className="leading-tight">
-            <div className="font-display font-bold text-xl md:text-2xl tracking-wide">
+      <nav className="max-w-7xl mx-auto px-5 lg:px-8 h-16 lg:h-20 flex items-center justify-between gap-2">
+        <a href="#home" className="flex items-center gap-2 lg:gap-3 group min-w-0">
+          <img src={logo} alt="JOAT KENYA" className="h-9 lg:h-12 w-auto object-contain shrink-0" />
+          <div className="leading-tight min-w-0">
+            <div className="font-display font-bold text-base sm:text-lg md:text-2xl tracking-wide whitespace-nowrap">
               <span className="gradient-text-red">J.O.A.T</span>{" "}
               <span className="text-gold">Kenya</span>
             </div>
@@ -90,7 +90,7 @@ export function Navbar() {
           </Link>
         </div>
 
-        <div className="lg:hidden flex items-center gap-2">
+        <div className="lg:hidden flex items-center gap-1 shrink-0">
           <button
             type="button"
             onClick={toggle}

@@ -113,19 +113,27 @@ export function Contact() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <a
                 href="tel:+254142378150"
-                className="glass rounded-2xl p-6 hover:border-(--joat-gold)/40 transition-colors"
+                className="glass rounded-2xl p-4 sm:p-6 hover:border-(--joat-gold)/40 transition-colors"
               >
                 <Phone className="w-5 h-5 text-(--joat-gold) mb-2" />
-                <div className="text-xs uppercase tracking-widest text-gold">Direct Line</div>
-                <div className="font-bold text-foreground mt-1">+254 142 378150</div>
+                <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold">
+                  Direct Line
+                </div>
+                <div className="font-bold text-foreground mt-1 text-xs sm:text-base break-words">
+                  +254 142 378150
+                </div>
               </a>
               <a
                 href="mailto:joatkenya120@gmail.com"
-                className="glass rounded-2xl p-6 hover:border-(--joat-gold)/40 transition-colors"
+                className="glass rounded-2xl p-4 sm:p-6 hover:border-(--joat-gold)/40 transition-colors"
               >
                 <Mail className="w-5 h-5 text-(--joat-gold) mb-2" />
-                <div className="text-xs uppercase tracking-widest text-gold">Email</div>
-                <div className="font-bold text-foreground mt-1">joatkenya120@gmail.com</div>
+                <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold">
+                  Email
+                </div>
+                <div className="font-bold text-foreground mt-1 text-xs sm:text-base break-all">
+                  joatkenya120@gmail.com
+                </div>
               </a>
             </div>
 
@@ -157,7 +165,11 @@ export function Contact() {
           </div>
 
           {/* Form */}
-          <form onSubmit={submit} className="glass rounded-3xl p-6 lg:p-8 space-y-5" noValidate>
+          <form
+            onSubmit={submit}
+            className="glass rounded-3xl p-4 sm:p-6 lg:p-8 space-y-3 sm:space-y-5"
+            noValidate
+          >
             {status === "sent" ? (
               <div className="text-center py-10">
                 <div className="w-14 h-14 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) mx-auto flex items-center justify-center mb-4">
@@ -219,7 +231,7 @@ export function Contact() {
                     id="area"
                     value={form.area}
                     onChange={(e) => setForm({ ...form, area: e.target.value })}
-                    className="mt-2 w-full px-4 py-3 rounded-md bg-white/5 border border-white/10 text-foreground focus:outline-none focus:border-(--joat-gold)/50"
+                    className="mt-1.5 sm:mt-2 w-full px-4 py-2.5 sm:py-3 rounded-md bg-white/5 border border-white/10 text-foreground focus:outline-none focus:border-(--joat-gold)/50"
                   >
                     {services.map((s) => (
                       <option key={s} value={s} className="bg-(--joat-navy-deep)">
@@ -236,8 +248,8 @@ export function Contact() {
                     id="message"
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    rows={5}
-                    className="mt-2 w-full px-4 py-3 rounded-md bg-white/5 border border-white/10 text-foreground focus:outline-none focus:border-(--joat-gold)/50 resize-none"
+                    rows={4}
+                    className="mt-2 w-full px-4 py-2.5 sm:py-3 rounded-md bg-white/5 border border-white/10 text-foreground focus:outline-none focus:border-(--joat-gold)/50 resize-none"
                   />
                   {errs.message && (
                     <div className="text-xs text-(--joat-red) mt-1">{errs.message}</div>
@@ -310,7 +322,7 @@ function Field({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-2 w-full px-4 py-3 rounded-md bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-(--joat-gold)/50"
+        className="mt-1.5 sm:mt-2 w-full px-4 py-2.5 sm:py-3 rounded-md bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-(--joat-gold)/50"
       />
       {error && <div className="text-xs text-(--joat-red) mt-1">{error}</div>}
     </div>

@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Download,
   Users,
@@ -15,6 +16,7 @@ import {
   Sparkles,
   Boxes,
   Play,
+  ChevronDown,
 } from "lucide-react";
 import biobiz from "@/assets/biobiz-mock.jpg";
 import biobizShare from "@/assets/biobiz-share.jpg";
@@ -68,6 +70,8 @@ type Product = {
    * as an image; otherwise `logoLetter` renders a gradient placeholder square. */
   logoMark?: string;
   logoLetter?: string;
+  /** On mobile, place the product image beside the text (2-col) instead of stacked. */
+  mobileInlineImage?: boolean;
 };
 
 function CTAIcon({ kind }: { kind?: CTA["icon"] }) {
@@ -78,33 +82,37 @@ function CTAIcon({ kind }: { kind?: CTA["icon"] }) {
 }
 
 const BiobizExtra = (
-  <div className="mt-10 grid md:grid-cols-2 gap-5">
+  <div className="mt-10 grid grid-cols-2 gap-2 sm:gap-5">
     {/* AI summary of recordings */}
-    <div className="glass rounded-2xl p-6">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 rounded-xl bg-(--joat-gold)/15 flex items-center justify-center">
-          <Mic className="w-5 h-5 text-(--joat-gold)" />
+    <div className="glass rounded-2xl p-3 sm:p-6">
+      <div className="flex items-center gap-2 sm:gap-3 mb-3">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-(--joat-gold)/15 flex items-center justify-center shrink-0">
+          <Mic className="w-4 h-4 sm:w-5 sm:h-5 text-(--joat-gold)" />
         </div>
         <div>
-          <div className="text-xs uppercase tracking-widest text-gold">AI Meeting Notes</div>
-          <div className="font-semibold text-foreground">Record → Summarize → Action</div>
+          <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold">
+            AI Meeting Notes
+          </div>
+          <div className="text-sm sm:text-base font-semibold text-foreground">
+            Record → Summarize → Action
+          </div>
         </div>
       </div>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-xs sm:text-sm text-muted-foreground">
         BioBiz records meetings, transcribes them, and returns a clean summary with key insights of
         the recordings.
       </p>
-      <div className="mt-4 rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-4 text-sm">
-        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+      <div className="mt-3 sm:mt-4 rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-3 sm:p-4 text-sm">
+        <div className="flex items-center gap-2 text-[10px] sm:text-xs text-muted-foreground mb-2">
           <span className="w-2 h-2 rounded-full bg-(--joat-red) animate-pulse" />
           Sample summary
         </div>
-        <p className="text-foreground/90 leading-relaxed">
+        <p className="text-[11px] sm:text-sm text-foreground/90 leading-relaxed">
           <span className="text-gold font-semibold">Topic:</span> Q3 inventory sync with Westlands
           branch. <span className="text-gold font-semibold">Decisions:</span> reorder cycle
           shortened to weekly; M-Pesa float increased.
         </p>
-        <ul className="mt-3 space-y-1.5 text-xs text-foreground/80">
+        <ul className="mt-3 space-y-1.5 text-[11px] sm:text-xs text-foreground/80">
           <li className="flex gap-2">
             <Check className="w-3.5 h-3.5 text-(--joat-gold) mt-0.5 shrink-0" />
             James to push new stock-alert thresholds by Fri
@@ -122,33 +130,35 @@ const BiobizExtra = (
     </div>
 
     {/* Foreign language → English translation */}
-    <div className="glass rounded-2xl p-6">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 rounded-xl bg-(--joat-red)/15 flex items-center justify-center">
-          <Languages className="w-5 h-5 text-(--joat-red)" />
+    <div className="glass rounded-2xl p-3 sm:p-6">
+      <div className="flex items-center gap-2 sm:gap-3 mb-3">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-(--joat-red)/15 flex items-center justify-center shrink-0">
+          <Languages className="w-4 h-4 sm:w-5 sm:h-5 text-(--joat-red)" />
         </div>
         <div>
-          <div className="text-xs uppercase tracking-widest text-gold">Live Translation</div>
-          <div className="font-semibold text-foreground">Speak any language → read English</div>
+          <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold">
+            Live Translation
+          </div>
+          <div className="text-sm sm:text-base font-semibold text-foreground">
+            Speak any language → read English
+          </div>
         </div>
       </div>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-xs sm:text-sm text-muted-foreground">
         Capture a conversation in German, French, Swahili, Mandarin or any supported language. Get a
         clean English transcript instantly.
       </p>
-      <div className="mt-4 grid grid-cols-2 gap-3">
+      <div className="mt-3 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
         <div className="rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-3">
-          <div className="flex items-center justify-between gap-2 mb-1">
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Recording · German
-            </div>
-            <GermanSampleAudio />
+          <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
+            Recording · German
           </div>
           <div className="flex items-center gap-2 mb-2">
             <span className="w-2 h-2 rounded-full bg-(--joat-red) animate-pulse" />
             <span className="text-xs text-foreground/80">00:42</span>
+            <GermanSampleAudio />
           </div>
-          <p className="text-xs text-foreground/90 italic leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-foreground/90 italic leading-relaxed">
             "Wir müssen unseren Vertrieb in der Küstenregion vor der Urlaubssaison ausbauen."
           </p>
         </div>
@@ -160,7 +170,7 @@ const BiobizExtra = (
             <Languages className="w-3 h-3 text-(--joat-gold)" />
             <span className="text-xs text-foreground/80">Auto-translated</span>
           </div>
-          <p className="text-xs text-foreground/95 leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-foreground/95 leading-relaxed">
             "We need to expand our distribution to the coastal region before the holiday season."
           </p>
         </div>
@@ -168,7 +178,7 @@ const BiobizExtra = (
     </div>
 
     {/* Screenshots straight from the Play Store listing */}
-    <div className="md:col-span-2 mt-2">
+    <div className="col-span-2 mt-2">
       <div className="flex items-end justify-between gap-3 mb-5 flex-wrap">
         <div>
           <div className="text-xs uppercase tracking-widest text-gold">Inside the BioBiz app</div>
@@ -182,7 +192,7 @@ const BiobizExtra = (
           See on Play Store <ExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
         {[
           {
             src: biobiz,
@@ -209,7 +219,7 @@ const BiobizExtra = (
             key={s.label}
             className="glass rounded-2xl overflow-hidden border border-(--glass-border) hover:border-(--joat-gold)/40 transition-colors group"
           >
-            <div className="aspect-[3/4] bg-(--joat-navy-deep) flex items-center justify-center overflow-hidden">
+            <div className="aspect-square sm:aspect-[3/4] bg-(--joat-navy-deep) flex items-center justify-center overflow-hidden">
               <img
                 src={s.src}
                 alt={`BioBiz · ${s.label} screen`}
@@ -217,11 +227,13 @@ const BiobizExtra = (
                 className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
               />
             </div>
-            <div className="p-4">
-              <div className="text-xs font-semibold text-gold uppercase tracking-wider">
+            <div className="p-3 sm:p-4">
+              <div className="text-[11px] sm:text-xs font-semibold text-gold uppercase tracking-wider">
                 {s.label}
               </div>
-              <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{s.note}</p>
+              <p className="text-[11px] sm:text-sm text-muted-foreground mt-1 sm:mt-1.5 leading-relaxed">
+                {s.note}
+              </p>
             </div>
           </div>
         ))}
@@ -231,31 +243,33 @@ const BiobizExtra = (
 );
 
 const MajoboExtra = (
-  <div className="mt-10 grid md:grid-cols-5 gap-5 items-stretch">
-    <div className="md:col-span-3 glass rounded-2xl p-6">
-      <div className="text-xs uppercase tracking-widest text-gold mb-2">How AI powers Majobo</div>
-      <h4 className="text-xl font-bold text-foreground">
+  <div className="mt-10 grid grid-cols-5 gap-2 sm:gap-5 items-stretch">
+    <div className="col-span-3 glass rounded-2xl p-3 sm:p-6">
+      <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold mb-2">
+        How AI powers Majobo
+      </div>
+      <h4 className="text-sm sm:text-xl font-bold text-foreground leading-tight">
         From free-form posts to structured opportunity.
       </h4>
-      <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+      <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 sm:mt-3 leading-relaxed">
         Anyone can post work (cleaning, photography, web dev, brand ambassadorship) in plain
         language. Majobo's AI reads each post, infers the role, skills required and location, then
         auto-classifies it into the right category and surfaces it to nearby workers. The result:
         1,000+ active opportunities, searchable like a structured job board, with no manual tagging.
       </p>
-      <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm">
+      <ul className="mt-3 sm:mt-4 grid sm:grid-cols-2 gap-1.5 sm:gap-2 text-[11px] sm:text-sm">
         {[
           "AI-driven category inference",
           "Hyper-local matching",
           "Flexible: gig, contract, permanent",
         ].map((f) => (
           <li key={f} className="flex items-start gap-2 text-foreground/90">
-            <Check className="w-4 h-4 mt-0.5 shrink-0 text-(--joat-red)" />
+            <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 mt-0.5 shrink-0 text-(--joat-red)" />
             <span>{f}</span>
           </li>
         ))}
       </ul>
-      <div className="mt-5 flex flex-wrap gap-2">
+      <div className="mt-4 sm:mt-5 hidden sm:flex flex-wrap gap-2">
         {[
           "Cleaning & Laundry",
           "Events & Entertainment",
@@ -271,30 +285,32 @@ const MajoboExtra = (
       </div>
     </div>
 
-    <div className="md:col-span-2 relative">
+    <div className="col-span-2 relative">
       <div className="absolute -inset-2 rounded-3xl bg-linear-to-br from-(--joat-red)/20 via-transparent to-(--joat-gold)/20 blur-2xl" />
       <div className="relative glass rounded-2xl overflow-hidden border border-(--glass-border)">
-        <div className="px-4 py-2 bg-(--joat-navy-deep) flex items-center gap-1.5 border-b border-white/5">
-          <span className="w-2.5 h-2.5 rounded-full bg-(--joat-red)" />
-          <span className="w-2.5 h-2.5 rounded-full bg-(--joat-gold)" />
-          <span className="w-2.5 h-2.5 rounded-full bg-foreground/30" />
-          <span className="ml-3 text-xs text-muted-foreground">majobokenya.com</span>
+        <div className="px-2 sm:px-4 py-2 bg-(--joat-navy-deep) flex items-center gap-1.5 border-b border-white/5">
+          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-red)" />
+          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-gold)" />
+          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-foreground/30" />
+          <span className="ml-2 sm:ml-3 text-[9px] sm:text-xs text-muted-foreground truncate">
+            majobokenya.com
+          </span>
         </div>
         <iframe
           src="https://www.majobokenya.com/"
           title="Majobo Kenya live preview"
           loading="lazy"
           referrerPolicy="no-referrer"
-          className="w-full h-[420px] bg-white"
+          className="w-full h-64 sm:h-[420px] bg-white"
         />
       </div>
       <a
         href="https://www.majobokenya.com/"
         target="_blank"
         rel="noreferrer"
-        className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-(--joat-gold) hover:underline"
+        className="mt-2 sm:mt-3 inline-flex items-center gap-1.5 text-[11px] sm:text-sm font-semibold text-(--joat-gold) hover:underline"
       >
-        Open Majobo Kenya <ExternalLink className="w-3.5 h-3.5" />
+        Open Majobo Kenya <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
       </a>
     </div>
   </div>
@@ -392,82 +408,127 @@ const featuredGames = [
   },
 ];
 
-const RobloxExtra = (
-  <div className="mt-10">
-    <div className="flex items-center gap-3 mb-4">
-      <Gamepad2 className="w-5 h-5 text-gold" />
-      <h4 className="text-xl font-bold text-foreground">Selected Roblox builds</h4>
-    </div>
-    <div className="grid grid-cols-2 gap-3 sm:gap-5">
-      {featuredGames.map((g) => (
-        <div
-          key={g.title}
-          className="glass rounded-2xl overflow-hidden group border border-(--joat-gold)/30"
-        >
-          <div className="aspect-video relative bg-(--joat-navy-deep) overflow-hidden">
-            <video
-              src={g.src}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              controls={false}
-              disableRemotePlayback
-              ref={(el) => {
-                if (!el) return;
-                // Belt-and-suspenders mute: ensures muted DOM property + HTML
-                // attribute are both set before autoplay starts, across all browsers.
-                el.muted = true;
-                el.volume = 0;
-                el.setAttribute("muted", "");
-              }}
-              className="w-full h-full object-cover"
-              aria-label={`${g.title} gameplay preview (muted)`}
-            />
-            <div className="absolute top-2 left-2 text-[10px] uppercase tracking-widest text-(--joat-navy-deep) font-bold px-2 py-0.5 rounded bg-(--joat-gold)">
-              Live build · gameplay
+function RobloxBuilds() {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  return (
+    <div className="mt-10">
+      <div className="flex items-center gap-3 mb-4">
+        <Gamepad2 className="w-5 h-5 text-gold" />
+        <h4 className="text-xl font-bold text-foreground">Selected Roblox builds</h4>
+      </div>
+      <div className="grid grid-cols-2 gap-3 sm:gap-5">
+        {featuredGames.map((g, idx) => {
+          const isOpen = openIdx === idx;
+          return (
+            <div
+              key={g.title}
+              className="glass rounded-2xl overflow-hidden group border border-(--joat-gold)/30"
+            >
+              <div className="aspect-video relative bg-(--joat-navy-deep) overflow-hidden">
+                <video
+                  src={g.src}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  controls={false}
+                  disableRemotePlayback
+                  ref={(el) => {
+                    if (!el) return;
+                    // Belt-and-suspenders mute: ensures muted DOM property + HTML
+                    // attribute are both set before autoplay starts, across all browsers.
+                    el.muted = true;
+                    el.volume = 0;
+                    el.setAttribute("muted", "");
+                  }}
+                  className="w-full h-full object-cover"
+                  aria-label={`${g.title} gameplay preview (muted)`}
+                />
+                <div className="absolute top-2 left-2 text-[10px] uppercase tracking-widest text-(--joat-navy-deep) font-bold px-2 py-0.5 rounded bg-(--joat-gold)">
+                  Live build
+                </div>
+              </div>
+              <div className="p-3 sm:p-5">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="font-bold text-foreground text-sm sm:text-lg leading-tight">
+                      {g.title}
+                    </div>
+                    <div className="text-[10px] sm:text-xs text-(--joat-gold) uppercase tracking-wider mt-0.5">
+                      {g.tag}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setOpenIdx(isOpen ? null : idx)}
+                    aria-expanded={isOpen}
+                    aria-label={isOpen ? `Hide ${g.title} description` : `Read about ${g.title}`}
+                    className="shrink-0 w-7 h-7 rounded-full glass flex items-center justify-center text-(--joat-gold) hover:bg-white/10"
+                  >
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 leading-relaxed">
+                        {g.description}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
-          </div>
-          <div className="p-5">
-            <div className="font-bold text-foreground text-lg">{g.title}</div>
-            <div className="text-xs text-(--joat-gold) uppercase tracking-wider mt-0.5">
-              {g.tag}
-            </div>
-            <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{g.description}</p>
-          </div>
-        </div>
-      ))}
+          );
+        })}
+      </div>
     </div>
-  </div>
-);
+  );
+}
 
 const BlenderExtra = (
   <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5">
-    <div className="glass rounded-2xl p-6">
-      <div className="text-xs uppercase tracking-widest text-gold mb-2">3D pipeline</div>
-      <h4 className="text-xl font-bold text-foreground">Animations built in Blender</h4>
-      <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+    <div className="glass rounded-2xl p-3 sm:p-6">
+      <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold mb-2">
+        3D pipeline
+      </div>
+      <h4 className="text-sm sm:text-xl font-bold text-foreground leading-tight">
+        Animations built in Blender
+      </h4>
+      <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 leading-relaxed">
         We use Blender end-to-end (modeling, rigging, lighting, render) to ship film-quality assets
         that double as game characters, classroom explainers, and brand identity systems.
       </p>
     </div>
-    <div className="glass rounded-2xl p-6">
-      <div className="text-xs uppercase tracking-widest text-gold mb-2">In production</div>
-      <h4 className="text-xl font-bold text-foreground">Drawalette: a kids' drawing game</h4>
-      <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+    <div className="glass rounded-2xl p-3 sm:p-6">
+      <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold mb-2">
+        In production
+      </div>
+      <h4 className="text-sm sm:text-xl font-bold text-foreground leading-tight">
+        Drawalette: a kids' drawing game
+      </h4>
+      <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 leading-relaxed">
         A game we're building from Blender assets: children learn the alphabet by tracing each
         letter, the character cheers them on, and progress unlocks new worlds. Built for tablets,
         designed for African early-years curricula.
       </p>
-      <ul className="mt-4 space-y-1.5 text-sm">
+      <ul className="mt-3 sm:mt-4 space-y-1.5 text-[11px] sm:text-sm">
         {[
           "Stroke-order recognition (A–Z)",
           "Voice cues",
           "Reward system tied to literacy milestones",
         ].map((f) => (
           <li key={f} className="flex items-start gap-2 text-foreground/90">
-            <Check className="w-4 h-4 mt-0.5 shrink-0 text-(--joat-gold)" />
+            <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 mt-0.5 shrink-0 text-(--joat-gold)" />
             <span>{f}</span>
           </li>
         ))}
@@ -562,6 +623,7 @@ const products: Product[] = [
     icon: GraduationCap,
     accent: "red",
     extra: AmareExtra,
+    mobileInlineImage: true,
   },
   {
     id: "games",
@@ -580,7 +642,8 @@ const products: Product[] = [
     image: roblox,
     icon: Gamepad2,
     accent: "gold",
-    extra: RobloxExtra,
+    extra: <RobloxBuilds />,
+    mobileInlineImage: true,
   },
   {
     id: "ai-marketing",
@@ -661,8 +724,12 @@ export function Products() {
                 transition={{ duration: 0.7 }}
               >
                 <div
-                  className={`grid gap-10 lg:gap-16 items-center ${
-                    p.image ? "lg:grid-cols-2" : "lg:grid-cols-1"
+                  className={`grid items-center lg:gap-16 lg:grid-cols-2 ${
+                    p.image
+                      ? p.mobileInlineImage
+                        ? "grid-cols-[1.5fr_1fr] gap-4 sm:gap-10"
+                        : "gap-10"
+                      : "gap-10 lg:grid-cols-1"
                   } ${p.reverse && p.image ? "lg:[&>*:first-child]:order-2" : ""}`}
                 >
                   <div>
@@ -692,11 +759,13 @@ export function Products() {
                         <Icon className="w-3.5 h-3.5" /> {p.badge}
                       </div>
                     </div>
-                    <h3 className="mt-5 text-3xl lg:text-5xl font-bold text-foreground leading-tight">
+                    <h3 className="mt-5 text-2xl sm:text-3xl lg:text-5xl font-bold text-foreground leading-tight">
                       {p.title}
                     </h3>
-                    <p className="mt-4 text-lg text-muted-foreground">{p.tagline}</p>
-                    <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
+                    <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground">
+                      {p.tagline}
+                    </p>
+                    <p className="mt-3 sm:mt-4 text-sm text-muted-foreground leading-relaxed">
                       {p.description}
                     </p>
                     <ul className="mt-6 space-y-2">
@@ -748,14 +817,16 @@ export function Products() {
                   {p.image && (
                     <div className="relative">
                       <div className="absolute -inset-4 rounded-3xl bg-linear-to-br from-(--joat-gold)/20 via-transparent to-(--joat-red)/20 blur-2xl" />
-                      <div className="relative glass rounded-3xl overflow-hidden border border-(--glass-border) shadow-(--shadow-card)">
+                      <div className="relative glass rounded-2xl sm:rounded-3xl overflow-hidden border border-(--glass-border) shadow-(--shadow-card)">
                         <img
                           src={p.image}
                           alt={`${p.badge} preview`}
                           loading="lazy"
                           width={1200}
                           height={900}
-                          className="w-full h-auto object-cover aspect-[4/3]"
+                          className={`w-full h-auto object-cover ${
+                            p.mobileInlineImage ? "aspect-square sm:aspect-[4/3]" : "aspect-[4/3]"
+                          }`}
                         />
                       </div>
                     </div>

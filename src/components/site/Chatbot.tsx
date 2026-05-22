@@ -69,7 +69,7 @@ export function Chatbot() {
         transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-linear-to-br from-(--joat-red) to-(--joat-gold) shadow-2xl flex items-center justify-center text-white glow-red"
+        className="fixed bottom-6 right-6 z-60 w-14 h-14 rounded-full bg-linear-to-br from-(--joat-red) to-(--joat-gold) shadow-2xl flex items-center justify-center text-white glow-red"
       >
         {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
       </motion.button>
@@ -81,7 +81,7 @@ export function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 z-50 w-[calc(100vw-3rem)] sm:w-96 h-120 glass-solid rounded-2xl shadow-2xl flex flex-col overflow-hidden border-(--joat-gold)/30"
+            className="fixed bottom-24 right-6 z-60 w-[calc(100vw-3rem)] sm:w-96 h-120 glass-solid rounded-2xl shadow-2xl flex flex-col overflow-hidden border-(--joat-gold)/30"
           >
             <div className="p-4 border-b border-white/10 flex items-center gap-3 bg-linear-to-r from-(--joat-red)/20 to-(--joat-gold)/10">
               <div className="w-9 h-9 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) font-bold flex items-center justify-center">

@@ -129,7 +129,7 @@ export function Services() {
         </motion.div>
 
         {/* Single auto-rotating service card */}
-        <div className="mt-14 relative glass rounded-3xl p-8 lg:p-12 min-h-96">
+        <div className="mt-10 sm:mt-14 relative glass rounded-3xl p-5 sm:p-8 lg:p-12 min-h-80 sm:min-h-96">
           <AnimatePresence mode="wait">
             <motion.div
               key={s.title}

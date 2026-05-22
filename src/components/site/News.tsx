@@ -181,20 +181,22 @@ export function News() {
                   transition={{ duration: 0.4, delay: (i % 3) * 0.05 }}
                   className="text-left glass rounded-2xl overflow-hidden hover:border-(--joat-gold)/40 transition-all group"
                 >
-                  <PostCover src={p.cover_image} alt={p.title} className="w-full h-48" />
-                  <div className="p-6">
-                    <div className="text-xs font-semibold text-(--joat-gold) uppercase tracking-wider">
+                  <PostCover src={p.cover_image} alt={p.title} className="w-full h-28 sm:h-48" />
+                  <div className="p-3 sm:p-6">
+                    <div className="text-[10px] sm:text-xs font-semibold text-(--joat-gold) uppercase tracking-wider">
                       {p.category}
                     </div>
-                    <h3 className="mt-3 text-lg font-bold text-foreground leading-snug group-hover:text-(--joat-gold) transition-colors">
+                    <h3 className="mt-1.5 sm:mt-3 text-sm sm:text-lg font-bold text-foreground leading-snug line-clamp-2 group-hover:text-(--joat-gold) transition-colors">
                       {p.title}
                     </h3>
-                    <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.excerpt}</p>
-                    <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                    <p className="mt-1.5 sm:mt-2 text-[11px] sm:text-sm text-muted-foreground line-clamp-2 sm:line-clamp-3">
+                      {p.excerpt}
+                    </p>
+                    <div className="mt-2.5 sm:mt-4 flex items-center justify-between text-[10px] sm:text-xs text-muted-foreground">
                       <span>
                         {formatDate(p.created_at)} · {readingTime(p.content)} read
                       </span>
-                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform shrink-0" />
                     </div>
                   </div>
                 </motion.button>
