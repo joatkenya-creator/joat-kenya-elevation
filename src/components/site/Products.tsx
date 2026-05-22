@@ -475,7 +475,11 @@ const products: Product[] = [
         href: "https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile",
         icon: "download",
       },
-      { label: "App Store · Coming soon", href: "https://biobiz.app/", icon: "apple" },
+      {
+        label: "Get on App Store",
+        href: "https://apps.apple.com/ke/app/biobiz/id6762440603",
+        icon: "apple",
+      },
       { label: "biobiz.app", href: "https://biobiz.app/", icon: "external" },
     ],
     image: biobiz,

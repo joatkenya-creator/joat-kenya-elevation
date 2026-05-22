@@ -14,7 +14,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /biobiz/i,
     reply:
-      "BioBiz is JOAT's digital business-card app with AI meeting notes and live foreign-language → English transcription. It's free on Google Play; iOS is on the way. Grab it from biobiz.app or tell us what you'd use it for in the Contact form and we'll route you.",
+      "BioBiz is JOAT's digital business-card app with AI meeting notes and live foreign-language → English transcription. It's free on Google Play and the Apple App Store. Grab it from biobiz.app or tell us what you'd use it for in the Contact form and we'll route you.",
   },
   {
     match: /majobo|talent|hir(e|ing)|recruit|job/i,

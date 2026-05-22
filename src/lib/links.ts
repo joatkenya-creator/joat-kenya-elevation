@@ -8,6 +8,7 @@ export const SOCIAL_LINKS = {
 export const EXTERNAL = {
   biobiz: "https://biobiz.app/",
   biobizPlayStore: "https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile",
+  biobizAppStore: "https://apps.apple.com/ke/app/biobiz/id6762440603",
   biobizApkRelease: "https://github.com/Katiechi/biobiz/releases/latest/download/app-release.apk",
   majobo: "https://www.majobokenya.com/",
   amareYoutube: "https://www.youtube.com/@amaresbigplanet/featured",
