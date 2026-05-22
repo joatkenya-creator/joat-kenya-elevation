@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -39,8 +39,16 @@ export function Testimonials() {
   const prev = () => setI((v) => (v - 1 + testimonials.length) % testimonials.length);
   const t = testimonials[i];
 
+  // Auto-rotate one testimonial at a time. Timer resets on manual interaction.
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setI((v) => (v + 1) % testimonials.length);
+    }, 5000);
+    return () => clearTimeout(id);
+  }, [i]);
+
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative py-14 lg:py-20">
       <div className="max-w-6xl mx-auto px-5 lg:px-8">
         <div className="text-center mb-12">
           <div className="text-xs uppercase tracking-[0.3em] text-gold mb-3">Testimonials</div>

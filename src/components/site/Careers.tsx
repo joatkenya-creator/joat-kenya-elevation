@@ -26,16 +26,6 @@ const culture = [
   },
 ];
 
-const skills = [
-  { label: "Software Engineering", level: "Full-stack · mobile · AI" },
-  { label: "Product Design", level: "UX · UI · brand systems" },
-  { label: "Talent Acquisition", level: "Tech · creative · executive" },
-  { label: "3D & Animation", level: "Blender · Roblox · motion" },
-  { label: "AI Operations", level: "Claude · OpenRouter · agents" },
-  { label: "Digital Marketing", level: "Generative · social · ads" },
-  { label: "Game Development", level: "Roblox studio · live ops" },
-];
-
 const categories = [
   "Tech & Software",
   "Talent Outsourcing",
@@ -47,7 +37,7 @@ const categories = [
 
 export function Careers() {
   return (
-    <section id="careers" className="relative py-24 lg:py-32 bg-navy-deep">
+    <section id="careers" className="relative py-14 lg:py-20 bg-navy-deep">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -103,24 +93,6 @@ export function Careers() {
                   </span>
                 ))}
               </div>
-
-              <div className="mt-4 sm:mt-7 flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
-                <a
-                  href="https://www.majobokenya.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-md bg-(--joat-red) text-primary-foreground text-sm font-semibold glow-red hover:brightness-110 transition-all"
-                >
-                  Browse jobs
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) text-sm font-semibold hover:brightness-110 transition-all"
-                >
-                  Join Network
-                </a>
-              </div>
             </div>
 
             {/* Mock browser preview of Majobo */}
@@ -162,6 +134,25 @@ export function Careers() {
               </div>
             </div>
           </div>
+
+          {/* CTAs below the grid, side by side */}
+          <div className="relative mt-6 sm:mt-8 flex flex-row flex-wrap justify-center gap-3">
+            <a
+              href="https://www.majobokenya.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-md bg-(--joat-red) text-primary-foreground text-sm font-semibold glow-red hover:brightness-110 transition-all"
+            >
+              Browse jobs
+              <ExternalLink className="w-4 h-4" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) text-sm font-semibold hover:brightness-110 transition-all"
+            >
+              Join Network
+            </a>
+          </div>
         </motion.div>
 
         {/* Internships highlight */}
@@ -202,36 +193,6 @@ export function Careers() {
                 <c.icon className="w-5 h-5 text-(--joat-gold) mb-3" />
                 <div className="font-bold text-foreground">{c.title}</div>
                 <p className="text-sm text-muted-foreground mt-1">{c.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Skills the team brings */}
-        <div className="mt-16">
-          <div className="flex items-end justify-between gap-4 mb-6 flex-wrap">
-            <div>
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold mb-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                Skills on the team
-              </div>
-              <h3 className="text-2xl font-bold text-foreground">
-                Every discipline you need to ship.
-              </h3>
-            </div>
-            <p className="text-sm text-muted-foreground max-w-md">
-              We've built JOAT around the kind of multi-skilled team that the name promises; every
-              project lands with the right specialists in the room.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {skills.map((s) => (
-              <div
-                key={s.label}
-                className="glass rounded-xl p-4 hover:border-(--joat-gold)/40 transition-colors"
-              >
-                <div className="font-semibold text-foreground text-sm">{s.label}</div>
-                <div className="text-[11px] uppercase tracking-wider text-gold mt-1">{s.level}</div>
               </div>
             ))}
           </div>

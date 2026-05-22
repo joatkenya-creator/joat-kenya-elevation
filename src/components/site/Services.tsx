@@ -111,7 +111,7 @@ export function Services() {
   }, [i]);
 
   return (
-    <section id="services" className="relative py-24 lg:py-32 bg-navy-deep">
+    <section id="services" className="relative py-14 lg:py-20 bg-navy-deep">
       <div className="max-w-5xl mx-auto px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -129,7 +129,7 @@ export function Services() {
         </motion.div>
 
         {/* Single auto-rotating service card */}
-        <div className="mt-10 sm:mt-14 relative glass rounded-3xl p-5 sm:p-8 lg:p-12 min-h-80 sm:min-h-96">
+        <div className="mt-10 sm:mt-14 relative glass rounded-3xl p-5 sm:p-8 lg:p-12 min-h-80 sm:min-h-96 bg-white/8 border border-(--joat-gold)/20">
           <AnimatePresence mode="wait">
             <motion.div
               key={s.title}

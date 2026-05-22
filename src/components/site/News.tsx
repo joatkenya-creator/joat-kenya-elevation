@@ -92,7 +92,7 @@ export function News() {
   const rest = posts?.slice(1) ?? [];
 
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative py-14 lg:py-20">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

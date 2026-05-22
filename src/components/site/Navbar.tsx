@@ -77,7 +77,9 @@ export function Navbar() {
             )}
           </button>
           <a
-            href="#careers"
+            href="https://www.majobokenya.com/"
+            target="_blank"
+            rel="noreferrer"
             className="px-4 py-2 rounded-md text-sm font-semibold text-primary-foreground bg-(--joat-red) hover:brightness-110 transition-all glow-red"
           >
             Apply Now
@@ -131,7 +133,9 @@ export function Navbar() {
             ))}
             <li className="flex flex-col gap-2 pt-2">
               <a
-                href="#careers"
+                href="https://www.majobokenya.com/"
+                target="_blank"
+                rel="noreferrer"
                 onClick={() => setOpen(false)}
                 className="text-center px-4 py-2 rounded-md text-sm font-semibold text-primary-foreground bg-(--joat-red)"
               >

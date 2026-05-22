@@ -72,6 +72,8 @@ type Product = {
   logoLetter?: string;
   /** On mobile, place the product image beside the text (2-col) instead of stacked. */
   mobileInlineImage?: boolean;
+  /** Hide the product hero image on mobile (e.g. when the extra block already shows it). */
+  hideImageOnMobile?: boolean;
 };
 
 function CTAIcon({ kind }: { kind?: CTA["icon"] }) {
@@ -179,18 +181,8 @@ const BiobizExtra = (
 
     {/* Screenshots straight from the Play Store listing */}
     <div className="col-span-2 mt-2">
-      <div className="flex items-end justify-between gap-3 mb-5 flex-wrap">
-        <div>
-          <div className="text-xs uppercase tracking-widest text-gold">Inside the BioBiz app</div>
-        </div>
-        <a
-          href="https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-(--joat-gold) hover:underline"
-        >
-          See on Play Store <ExternalLink className="w-3.5 h-3.5" />
-        </a>
+      <div className="mb-5">
+        <div className="text-xs uppercase tracking-widest text-gold">Inside the BioBiz app</div>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
         {[
@@ -243,21 +235,26 @@ const BiobizExtra = (
 );
 
 const MajoboExtra = (
-  <div className="mt-10 grid grid-cols-5 gap-2 sm:gap-5 items-stretch">
-    <div className="col-span-3 glass rounded-2xl p-3 sm:p-6">
-      <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold mb-2">
-        How AI powers Majobo
-      </div>
-      <h4 className="text-sm sm:text-xl font-bold text-foreground leading-tight">
+  <div className="mt-10 grid lg:grid-cols-5 gap-5 lg:items-stretch">
+    <div className="lg:col-span-3 glass rounded-2xl p-4 sm:p-6">
+      <div className="text-xs uppercase tracking-widest text-gold mb-2">How AI powers Majobo</div>
+      <h4 className="text-lg sm:text-xl font-bold text-foreground leading-tight">
         From free-form posts to structured opportunity.
       </h4>
-      <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 sm:mt-3 leading-relaxed">
+      {/* talent.jpg floats inside the paragraph on mobile/tablet so the text wraps around it */}
+      <img
+        src={talent}
+        alt="Majobo talent"
+        loading="lazy"
+        className="lg:hidden float-right w-2/5 ml-3 mb-2 rounded-xl object-cover aspect-square border border-(--glass-border)"
+      />
+      <p className="text-sm text-muted-foreground mt-2 sm:mt-3 leading-relaxed">
         Anyone can post work (cleaning, photography, web dev, brand ambassadorship) in plain
         language. Majobo's AI reads each post, infers the role, skills required and location, then
         auto-classifies it into the right category and surfaces it to nearby workers. The result:
         1,000+ active opportunities, searchable like a structured job board, with no manual tagging.
       </p>
-      <ul className="mt-3 sm:mt-4 grid sm:grid-cols-2 gap-1.5 sm:gap-2 text-[11px] sm:text-sm">
+      <ul className="clear-both mt-3 sm:mt-4 grid sm:grid-cols-2 gap-1.5 sm:gap-2 text-[11px] sm:text-sm">
         {[
           "AI-driven category inference",
           "Hyper-local matching",
@@ -269,7 +266,7 @@ const MajoboExtra = (
           </li>
         ))}
       </ul>
-      <div className="mt-4 sm:mt-5 hidden sm:flex flex-wrap gap-2">
+      <div className="mt-4 sm:mt-5 flex flex-wrap gap-2">
         {[
           "Cleaning & Laundry",
           "Events & Entertainment",
@@ -278,14 +275,17 @@ const MajoboExtra = (
           "Tech & Web",
           "Property Management",
         ].map((c) => (
-          <span key={c} className="text-xs px-3 py-1 rounded-full glass text-foreground/80">
+          <span
+            key={c}
+            className="text-[11px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full glass text-foreground/80"
+          >
             {c}
           </span>
         ))}
       </div>
     </div>
 
-    <div className="col-span-2 relative">
+    <div className="lg:col-span-2 relative">
       <div className="absolute -inset-2 rounded-3xl bg-linear-to-br from-(--joat-red)/20 via-transparent to-(--joat-gold)/20 blur-2xl" />
       <div className="relative glass rounded-2xl overflow-hidden border border-(--glass-border)">
         <div className="px-2 sm:px-4 py-2 bg-(--joat-navy-deep) flex items-center gap-1.5 border-b border-white/5">
@@ -581,6 +581,7 @@ const products: Product[] = [
     accent: "red",
     extra: MajoboExtra,
     logoMark: majoboLogo,
+    hideImageOnMobile: true,
   },
   {
     id: "software",
@@ -685,7 +686,7 @@ const products: Product[] = [
 
 export function Products() {
   return (
-    <section id="products" className="relative py-24 lg:py-32 bg-navy-deep">
+    <section id="products" className="relative pt-24 lg:pt-32 pb-14 lg:pb-20 bg-navy-deep">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -724,15 +725,20 @@ export function Products() {
                 transition={{ duration: 0.7 }}
               >
                 <div
-                  className={`grid items-center lg:gap-16 lg:grid-cols-2 ${
-                    p.image
-                      ? p.mobileInlineImage
-                        ? "grid-cols-[1.5fr_1fr] gap-4 sm:gap-10"
-                        : "gap-10"
-                      : "gap-10 lg:grid-cols-1"
+                  className={`grid gap-8 lg:gap-16 items-start lg:items-center ${
+                    p.image ? "lg:grid-cols-2" : "lg:grid-cols-1"
                   } ${p.reverse && p.image ? "lg:[&>*:first-child]:order-2" : ""}`}
                 >
                   <div>
+                    {/* Floated image so the paragraph wraps around it (mobile/tablet only) */}
+                    {p.image && p.mobileInlineImage && (
+                      <img
+                        src={p.image}
+                        alt={`${p.badge} preview`}
+                        loading="lazy"
+                        className="lg:hidden float-right w-2/5 ml-3 mb-2 rounded-xl object-cover aspect-square border border-(--glass-border) shadow-(--shadow-card)"
+                      />
+                    )}
                     <div className="flex items-center gap-3">
                       {p.logoMark ? (
                         <img
@@ -768,7 +774,7 @@ export function Products() {
                     <p className="mt-3 sm:mt-4 text-sm text-muted-foreground leading-relaxed">
                       {p.description}
                     </p>
-                    <ul className="mt-6 space-y-2">
+                    <ul className="clear-both mt-6 space-y-2">
                       {p.features.map((f) => (
                         <li key={f} className="flex items-start gap-2 text-sm text-foreground/90">
                           <Check className={`w-4 h-4 mt-0.5 shrink-0 ${accentText}`} />
@@ -780,9 +786,11 @@ export function Products() {
                       {p.ctas.map((c, idx) => {
                         const primary = idx === 0;
                         const external = c.href.startsWith("http");
-                        const cls = `inline-flex items-center gap-2 px-5 py-3 rounded-md font-semibold transition-all hover:brightness-110 cursor-pointer ${
-                          primary ? accentBg : "glass text-foreground hover:bg-white/8"
-                        }`;
+                        const cls = `inline-flex items-center gap-2 rounded-md font-semibold transition-all hover:brightness-110 cursor-pointer ${
+                          p.mobileInlineImage
+                            ? "px-4 py-2 text-sm sm:px-5 sm:py-3 sm:text-base"
+                            : "px-5 py-3"
+                        } ${primary ? accentBg : "glass text-foreground hover:bg-white/8"}`;
                         if (c.action === "download-biobiz") {
                           return (
                             <button
@@ -815,7 +823,11 @@ export function Products() {
                   </div>
 
                   {p.image && (
-                    <div className="relative">
+                    <div
+                      className={`relative ${
+                        p.hideImageOnMobile || p.mobileInlineImage ? "hidden lg:block" : ""
+                      }`}
+                    >
                       <div className="absolute -inset-4 rounded-3xl bg-linear-to-br from-(--joat-gold)/20 via-transparent to-(--joat-red)/20 blur-2xl" />
                       <div className="relative glass rounded-2xl sm:rounded-3xl overflow-hidden border border-(--glass-border) shadow-(--shadow-card)">
                         <img
