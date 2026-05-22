@@ -22,7 +22,7 @@ const culture = [
   {
     icon: Wrench,
     title: "Equipped for the Work",
-    text: "A multi-skilled team — engineers, designers, marketers, recruiters — armed with the tools and training to ship any project end-to-end.",
+    text: "A multi-skilled team (engineers, designers, marketers, recruiters) armed with the tools and training to ship any project end-to-end.",
   },
 ];
 
@@ -63,7 +63,7 @@ export function Careers() {
           <p className="mt-6 text-lg text-muted-foreground">
             We're always looking for creative minds, problem solvers and innovators who want to make
             a real impact across industries. Every open role at JOAT, our partners and the wider
-            East African market lives on one platform — Majobo Kenya.
+            East African market lives on one platform: Majobo Kenya.
           </p>
         </motion.div>
 
@@ -85,7 +85,7 @@ export function Careers() {
                 Live opportunities · powered by Majobo Kenya
               </div>
               <h3 className="text-2xl lg:text-4xl font-bold text-foreground leading-tight">
-                1,000+ opportunities across East Africa — refreshed daily.
+                1,000+ opportunities across East Africa, refreshed daily.
               </h3>
               <p className="mt-4 text-muted-foreground">
                 Every open role flows through Majobo Kenya, where AI categorizes posts the moment
@@ -181,7 +181,7 @@ export function Careers() {
               Whatever you do, we want to know you.
             </h3>
             <p className="text-sm text-muted-foreground mt-1">
-              Nurse, driver, developer, designer, accountant — no matter your field, submit your
+              Nurse, driver, developer, designer, accountant, no matter your field, submit your
               profile and let us connect you with the right opportunity across the JOAT ecosystem.
             </p>
           </div>
@@ -196,7 +196,7 @@ export function Careers() {
         {/* Culture */}
         <div className="mt-16">
           <h3 className="text-2xl font-bold text-foreground mb-6">Why work with us</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {culture.map((c) => (
               <div key={c.title} className="glass rounded-2xl p-5">
                 <c.icon className="w-5 h-5 text-(--joat-gold) mb-3" />
@@ -220,7 +220,7 @@ export function Careers() {
               </h3>
             </div>
             <p className="text-sm text-muted-foreground max-w-md">
-              We've built JOAT around the kind of multi-skilled team that the name promises — every
+              We've built JOAT around the kind of multi-skilled team that the name promises; every
               project lands with the right specialists in the room.
             </p>
           </div>

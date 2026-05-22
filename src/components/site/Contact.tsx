@@ -87,7 +87,7 @@ export function Contact() {
             Let's build <span className="gradient-text-gold">something great.</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Whether you're hiring top talent, exploring our products, or partnering on innovation —
+            Whether you're hiring top talent, exploring our products, or partnering on innovation,
             our team is ready to help.
           </p>
         </motion.div>
@@ -110,9 +110,9 @@ export function Contact() {
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <a
-                href="tel:+254729265333"
+                href="tel:+254142378150"
                 className="glass rounded-2xl p-6 hover:border-(--joat-gold)/40 transition-colors"
               >
                 <Phone className="w-5 h-5 text-(--joat-gold) mb-2" />
@@ -187,7 +187,7 @@ export function Contact() {
               </div>
             ) : (
               <>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <Field
                     label="First Name"
                     name="first"

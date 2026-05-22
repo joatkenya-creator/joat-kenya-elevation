@@ -19,12 +19,12 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /majobo|talent|hir(e|ing)|recruit|job/i,
     reply:
-      "Majobo Kenya is JOAT's hyper-local talent marketplace — 1,000+ AI-categorized jobs across East Africa. Hire at majobokenya.com, or drop a brief in the Contact section and pick 'Talent Sourcing'.",
+      "Majobo Kenya is JOAT's hyper-local talent marketplace with 1,000+ AI-categorized jobs across East Africa. Hire at majobokenya.com, or drop a brief in the Contact section and pick 'Talent Sourcing'.",
   },
   {
     match: /amare|kids|children|story|youtube/i,
     reply:
-      "Amare's Big Planet is our flagship YouTube series for African kids aged 4–12 — story-led learning rooted in African identity. Watch on youtube.com/@amaresbigplanet.",
+      "Amare's Big Planet is our flagship YouTube series for African kids aged 4–12, with story-led learning rooted in African identity. Watch on youtube.com/@amaresbigplanet.",
   },
   {
     match: /roblox|game/i,
@@ -34,12 +34,12 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /ai|marketing|content|generate|image/i,
     reply:
-      "Our AI Marketing service orchestrates Claude + OpenRouter into brand-tuned image and copy pipelines — campaigns ship in hours. Tell us about your brand via the Contact form.",
+      "Our AI Marketing service orchestrates Claude + OpenRouter into brand-tuned image and copy pipelines, so campaigns ship in hours. Tell us about your brand via the Contact form.",
   },
   {
     match: /career|apply|intern/i,
     reply:
-      "Every live JOAT and partner role flows through Majobo Kenya — head to majobokenya.com to filter and apply, or join our always-open talent network via the Contact form.",
+      "Every live JOAT and partner role flows through Majobo Kenya. Head to majobokenya.com to filter and apply, or join our always-open talent network via the Contact form.",
   },
   {
     match: /contact|email|phone|call|reach/i,
@@ -49,7 +49,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /partner|invest|collaborat/i,
     reply:
-      "Love that. Pick 'Partner With Us' in the nav (or use the Contact form) — we'll connect you with the right team within one business day.",
+      "Love that. Pick 'Partner With Us' in the nav (or use the Contact form) and we'll connect you with the right team within one business day.",
   },
   {
     match: /price|cost|quote|budget/i,
@@ -66,7 +66,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
 function heuristicReply(lastUserMessage: string): string {
   const hit = HEURISTIC_FALLBACKS.find((h) => h.match.test(lastUserMessage));
   if (hit) return hit.reply;
-  return "Great question — I'd love to connect you with the right team. Drop a quick note in the Contact form below or call +254142378150 and we'll respond within 24 hours.";
+  return "Great question. I'd love to connect you with the right team. Drop a quick note in the Contact form below or call +254142378150 and we'll respond within 24 hours.";
 }
 
 type JackResponse = {

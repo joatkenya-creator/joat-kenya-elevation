@@ -47,19 +47,18 @@ function PrivacyPage() {
           <h2 className="text-xl font-bold text-foreground mb-2">2. What we collect</h2>
           <ul className="list-disc pl-5 space-y-1.5">
             <li>
-              <strong>Contact form submissions</strong> — your name, email, service area and
-              message.
+              <strong>Contact form submissions</strong>: your name, email, service area and message.
             </li>
             <li>
               <strong>Account & profile data</strong> for products you sign up for (BioBiz cards,
               Majobo applications, JOAT Academy enrolments).
             </li>
             <li>
-              <strong>Technical data</strong> — IP address, browser, device type and basic analytics
+              <strong>Technical data</strong>: IP address, browser, device type and basic analytics
               events to keep the site healthy.
             </li>
             <li>
-              <strong>AI chat transcripts</strong> — questions you send to our website assistant
+              <strong>AI chat transcripts</strong>: questions you send to our website assistant
               (JACK) so we can answer them and improve the assistant.
             </li>
           </ul>
@@ -72,7 +71,7 @@ function PrivacyPage() {
             <li>To deliver products and services you've requested.</li>
             <li>To keep the platform safe, available and compliant with Kenyan law.</li>
             <li>
-              To improve our products and content — never to sell your information to third parties.
+              To improve our products and content; never to sell your information to third parties.
             </li>
           </ul>
         </section>
@@ -111,9 +110,9 @@ function PrivacyPage() {
           <h2 className="text-xl font-bold text-foreground mb-2">7. Compliance</h2>
           <p>JOAT KENYA holds the following certifications and registrations:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1.5">
-            <li>ISO 9001 — Quality management.</li>
-            <li>NEMA NCA-1 — Environmental compliance, Category 1.</li>
-            <li>KRA Compliant — Kenya Revenue Authority tax compliance.</li>
+            <li>ISO 9001: Quality management.</li>
+            <li>NEMA NCA-1: Environmental compliance, Category 1.</li>
+            <li>KRA Compliant: Kenya Revenue Authority tax compliance.</li>
           </ul>
         </section>
 

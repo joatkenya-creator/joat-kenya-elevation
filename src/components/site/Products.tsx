@@ -27,7 +27,29 @@ import roblox from "@/assets/roblox-world.jpg";
 import talent from "@/assets/talent.jpg";
 import majoboLogo from "@/assets/majobo-logo.jpeg";
 
-type CTA = { label: string; href: string; icon?: "download" | "apple" | "external" };
+type CTA = {
+  label: string;
+  href: string;
+  icon?: "download" | "apple" | "external";
+  /** When set, the CTA renders as a button that runs this action instead of a link. */
+  action?: "download-biobiz";
+};
+
+const BIOBIZ_PLAY_STORE = "https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile";
+const BIOBIZ_APP_STORE = "https://apps.apple.com/ke/app/biobiz/id6762440603";
+
+// Detect the visitor's platform and open the matching BioBiz store listing.
+// iOS → Apple App Store; Android and desktop → Google Play.
+function downloadBioBiz() {
+  if (typeof navigator === "undefined") return;
+  const ua = navigator.userAgent || navigator.vendor || "";
+  const isIOS =
+    /iPad|iPhone|iPod/.test(ua) ||
+    // iPadOS 13+ reports as a Mac; disambiguate via touch points
+    (/Macintosh/.test(ua) && typeof document !== "undefined" && "ontouchend" in document);
+  const url = isIOS ? BIOBIZ_APP_STORE : BIOBIZ_PLAY_STORE;
+  window.open(url, "_blank", "noreferrer");
+}
 
 type Product = {
   id: string;
@@ -111,8 +133,8 @@ const BiobizExtra = (
         </div>
       </div>
       <p className="text-sm text-muted-foreground">
-        Capture a conversation in German, French, Swahili, Mandarin or any supported language — get
-        a clean English transcript instantly.
+        Capture a conversation in German, French, Swahili, Mandarin or any supported language. Get a
+        clean English transcript instantly.
       </p>
       <div className="mt-4 grid grid-cols-2 gap-3">
         <div className="rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-3">
@@ -165,12 +187,12 @@ const BiobizExtra = (
           {
             src: biobiz,
             label: "My Card",
-            note: "Your digital business card — live views, shares and saves.",
+            note: "Your digital business card; live views, shares and saves.",
           },
           {
             src: biobizShare,
             label: "Share Card",
-            note: "QR + Copy link, Text, Email, WhatsApp, LinkedIn — share anywhere.",
+            note: "QR + Copy link, Text, Email, WhatsApp, LinkedIn; share anywhere.",
           },
           {
             src: biobizRecordings,
@@ -216,7 +238,7 @@ const MajoboExtra = (
         From free-form posts to structured opportunity.
       </h4>
       <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
-        Anyone can post work — cleaning, photography, web dev, brand ambassadorship — in plain
+        Anyone can post work (cleaning, photography, web dev, brand ambassadorship) in plain
         language. Majobo's AI reads each post, infers the role, skills required and location, then
         auto-classifies it into the right category and surfaces it to nearby workers. The result:
         1,000+ active opportunities, searchable like a structured job board, with no manual tagging.
@@ -280,9 +302,9 @@ const MajoboExtra = (
 
 const AmareVideos = [
   {
-    id: "_cZMYWcZlNc",
+    id: "Vz0nkXFQ6Xg",
     label: "Featured episode",
-    note: "Our flagship Amare's Big Planet episode — open to brand sponsorship.",
+    note: "Learn Letter Y with Yak, Yacht & Yo-Yo, an ABC phonics adventure.",
   },
   {
     id: "Ye8ebNqBoYY",
@@ -312,7 +334,7 @@ const AmareExtra = (
         Open the channel <ExternalLink className="w-3.5 h-3.5" />
       </a>
     </div>
-    <div className="grid md:grid-cols-3 gap-5">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
       {AmareVideos.map((v) => (
         <a
           key={v.id}
@@ -359,14 +381,14 @@ const featuredGames = [
     title: "Amare's Big Planet",
     tag: "Roblox · Open-world alphabet adventure",
     description:
-      "Explore a vast world to collect all 26 letters of the alphabet while dodging deadly energy waves and mysterious Collectors. Use safe zones, earn fly charges, and climb the all-time leaderboard — full mobile support included.",
+      "Explore a vast world to collect all 26 letters of the alphabet while dodging deadly energy waves and mysterious Collectors. Use safe zones, earn fly charges, and climb the all-time leaderboard. Full mobile support included.",
   },
   {
     src: "/videos/abyss.mp4",
     title: "Abyss",
     tag: "Roblox · Underwater exploration",
     description:
-      "Dive through evolving underwater zones — bright Coral Reefs, eerie Kelp Forests, the haunting Deep Sea and ancient Sunken Ruins — where each unlocked level reveals deeper, more dangerous waters. Collect items, manage oxygen and uncover what lies beneath the surface.",
+      "Dive through evolving underwater zones (bright Coral Reefs, eerie Kelp Forests, the haunting Deep Sea and ancient Sunken Ruins) where each unlocked level reveals deeper, more dangerous waters. Collect items, manage oxygen and uncover what lies beneath the surface.",
   },
 ];
 
@@ -376,7 +398,7 @@ const RobloxExtra = (
       <Gamepad2 className="w-5 h-5 text-gold" />
       <h4 className="text-xl font-bold text-foreground">Selected Roblox builds</h4>
     </div>
-    <div className="grid md:grid-cols-2 gap-5">
+    <div className="grid grid-cols-2 gap-3 sm:gap-5">
       {featuredGames.map((g) => (
         <div
           key={g.title}
@@ -421,18 +443,18 @@ const RobloxExtra = (
 );
 
 const BlenderExtra = (
-  <div className="mt-10 grid lg:grid-cols-2 gap-5">
+  <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5">
     <div className="glass rounded-2xl p-6">
       <div className="text-xs uppercase tracking-widest text-gold mb-2">3D pipeline</div>
       <h4 className="text-xl font-bold text-foreground">Animations built in Blender</h4>
       <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-        We use Blender end-to-end — modeling, rigging, lighting, render — to ship film-quality
-        assets that double as game characters, classroom explainers, and brand identity systems.
+        We use Blender end-to-end (modeling, rigging, lighting, render) to ship film-quality assets
+        that double as game characters, classroom explainers, and brand identity systems.
       </p>
     </div>
     <div className="glass rounded-2xl p-6">
       <div className="text-xs uppercase tracking-widest text-gold mb-2">In production</div>
-      <h4 className="text-xl font-bold text-foreground">Drawalette — a kids' drawing game</h4>
+      <h4 className="text-xl font-bold text-foreground">Drawalette: a kids' drawing game</h4>
       <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
         A game we're building from Blender assets: children learn the alphabet by tracing each
         letter, the character cheers them on, and progress unlocks new worlds. Built for tablets,
@@ -458,7 +480,7 @@ const products: Product[] = [
   {
     id: "biobiz",
     badge: "BioBiz App",
-    title: "Your business card, reimagined — with AI in your pocket.",
+    title: "Your business card, reimagined, with AI in your pocket.",
     tagline: "Digital business cards, instant networking, AI meeting notes and live translation.",
     description:
       "BioBiz turns a phone into a complete networking toolkit. Build a digital business card in under 60 seconds, exchange it by QR, and let our AI capture meetings, summarize them, and translate foreign-language conversations into English on the fly.",
@@ -469,19 +491,7 @@ const products: Product[] = [
       "Foreign-language → English transcription",
       "Card analytics: views, shares, follow-ups",
     ],
-    ctas: [
-      {
-        label: "Get on Play Store",
-        href: "https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile",
-        icon: "download",
-      },
-      {
-        label: "Get on App Store",
-        href: "https://apps.apple.com/ke/app/biobiz/id6762440603",
-        icon: "apple",
-      },
-      { label: "biobiz.app", href: "https://biobiz.app/", icon: "external" },
-    ],
+    ctas: [{ label: "Download BioBiz", href: "#", icon: "download", action: "download-biobiz" }],
     image: biobiz,
     icon: Rocket,
     accent: "gold",
@@ -515,9 +525,9 @@ const products: Product[] = [
     id: "software",
     badge: "Software Development",
     title: "Built by an engineering team that ships.",
-    tagline: "Production-grade mobile, web and AI products — built in-house.",
+    tagline: "Production-grade mobile, web and AI products, built in-house.",
     description:
-      "BioBiz is a proof point of how we work: real product, real users, real shipping cadence. From native mobile (Flutter, React Native) to AI integrations (Claude, OpenRouter) to backend (Supabase, Cloudflare Workers), we build software the way modern tech companies do — and we partner with organizations who want the same engineering culture without hiring a full team.",
+      "BioBiz is a proof point of how we work: real product, real users, real shipping cadence. From native mobile (Flutter, React Native) to AI integrations (Claude, OpenRouter) to backend (Supabase, Cloudflare Workers), we build software the way modern tech companies do, and we partner with organizations who want the same engineering culture without hiring a full team.",
     features: [
       "Native mobile + web with shared design systems",
       "AI integrations: transcription, translation, agentic flows",
@@ -534,7 +544,7 @@ const products: Product[] = [
     title: "A story-driven world where African kids learn to dream big.",
     tagline: "Animated YouTube series for ages 1–8 celebrating African culture & curiosity.",
     description:
-      "Amare's Big Planet is our flagship educational property — a colorful, story-led YouTube universe that turns reading, science and life skills into adventures rooted in African identity. Watch on YouTube; the production pipeline feeds directly into our games and classroom programs.",
+      "Amare's Big Planet is our flagship educational property, a colorful, story-led YouTube universe that turns reading, science and life skills into adventures rooted in African identity. Watch on YouTube; the production pipeline feeds directly into our games and classroom programs.",
     features: [
       "Animated episodes + interactive learning activities",
       "Ages 1–8, aligned to early-years curricula",
@@ -556,10 +566,10 @@ const products: Product[] = [
   {
     id: "games",
     badge: "Game Development · Roblox",
-    title: "Professional game studios — built for Roblox.",
+    title: "Professional game studios, built using Roblox.",
     tagline: "Original Roblox titles and bespoke worlds, shipped end-to-end by the tech team.",
     description:
-      "We are professional game developers. Our Roblox studio designs, builds and ships original titles, brand-activated worlds and custom multiplayer experiences — from concept and 3D art through scripting, monetization and live ops.",
+      "We are professional game developers. Our Roblox studio designs, builds and ships original titles, brand-activated worlds and custom multiplayer experiences, from concept and 3D art through scripting, monetization and live ops.",
     features: [
       "Original Roblox titles + bespoke client builds",
       "Full studio pipeline: 3D art, scripting, FX, audio",
@@ -578,7 +588,7 @@ const products: Product[] = [
     title: "Campaigns at the speed of prompts.",
     tagline: "Generative imagery and copy pipelines powered by Claude + OpenRouter.",
     description:
-      "We orchestrate Claude, OpenRouter and image models into production marketing pipelines: brand-consistent posts, multi-format campaigns and on-trend creative — generated in hours rather than weeks. Perfect for product launches, social-first brands and budget-conscious growth teams.",
+      "We orchestrate Claude, OpenRouter and image models into production marketing pipelines: brand-consistent posts, multi-format campaigns and on-trend creative, generated in hours rather than weeks. Perfect for product launches, social-first brands and budget-conscious growth teams.",
     features: [
       "Brand-tuned image generation",
       "AI-written captions, hooks & ad variants",
@@ -596,7 +606,7 @@ const products: Product[] = [
     title: "3D animation that teaches and plays.",
     tagline: "Production-quality 3D in Blender, repurposed into games, ads and classrooms.",
     description:
-      "Our Blender pipeline produces characters, sets and motion that flow into multiple products — most recently a kids' game where children learn the alphabet by drawing each letter alongside an animated Blender character that cheers them on.",
+      "Our Blender pipeline produces characters, sets and motion that flow into multiple products, most recently a kids' game where children learn the alphabet by drawing each letter alongside an animated Blender character that cheers them on.",
     features: [
       "Character modeling, rigging & animation",
       "Render pipelines feeding into Roblox / game engines",
@@ -628,7 +638,7 @@ export function Products() {
             One ecosystem. <span className="gradient-text-gold">Seven engines</span> of impact.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Technology, education, talent, immersive experiences and AI — designed for African
+            Technology, education, talent, immersive experiences and AI, designed for African
             context, built to global standards.
           </p>
         </motion.div>
@@ -701,15 +711,30 @@ export function Products() {
                       {p.ctas.map((c, idx) => {
                         const primary = idx === 0;
                         const external = c.href.startsWith("http");
+                        const cls = `inline-flex items-center gap-2 px-5 py-3 rounded-md font-semibold transition-all hover:brightness-110 cursor-pointer ${
+                          primary ? accentBg : "glass text-foreground hover:bg-white/8"
+                        }`;
+                        if (c.action === "download-biobiz") {
+                          return (
+                            <button
+                              key={c.label}
+                              type="button"
+                              onClick={downloadBioBiz}
+                              className={cls}
+                            >
+                              <CTAIcon kind={c.icon} />
+                              {c.label}
+                              {primary && <ArrowRight className="w-4 h-4" />}
+                            </button>
+                          );
+                        }
                         return (
                           <a
                             key={c.label}
                             href={c.href}
                             target={external ? "_blank" : undefined}
                             rel={external ? "noreferrer" : undefined}
-                            className={`inline-flex items-center gap-2 px-5 py-3 rounded-md font-semibold transition-all hover:brightness-110 ${
-                              primary ? accentBg : "glass text-foreground hover:bg-white/8"
-                            }`}
+                            className={cls}
                           >
                             <CTAIcon kind={c.icon} />
                             {c.label}

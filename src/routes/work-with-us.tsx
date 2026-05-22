@@ -26,7 +26,7 @@ export const Route = createFileRoute("/work-with-us")({
       {
         name: "description",
         content:
-          "Run your business content from a single chat. JOAT Kenya connects your website and social channels to an AI-powered Telegram bot — Foundation, Growth and Scale packages, all month-to-month.",
+          "Run your business content from a single chat. JOAT Kenya connects your website and social channels to an AI-powered Telegram bot, with Foundation, Growth and Scale packages, all month-to-month.",
       },
     ],
   }),
@@ -98,7 +98,7 @@ const services = [
   {
     icon: Globe,
     title: "Website CMS Integration",
-    text: "Live updates for products, menus, pricing and page sections — works with JOAT-built sites or existing WordPress, Webflow and custom stacks.",
+    text: "Live updates for products, menus, pricing and page sections. Works with JOAT-built sites or existing WordPress, Webflow and custom stacks.",
   },
   {
     icon: Share2,
@@ -118,7 +118,7 @@ const services = [
   {
     icon: Rocket,
     title: "Onboarding & Setup",
-    text: "Bot creation, website integration, social connection and guided setup — your system goes live in 3 to 5 business days.",
+    text: "Bot creation, website integration, social connection and guided setup. Your system goes live in 3 to 5 business days.",
   },
 ];
 
@@ -134,7 +134,7 @@ const testimonials = [
     name: "Samuel Kariuki",
     role: "CEO, Apex Logistics",
     quote:
-      "We went from barely getting calls to having a consistent stream of new business inquiries every week. JOAT built us a real system — not just a website.",
+      "We went from barely getting calls to having a consistent stream of new business inquiries every week. JOAT built us a real system, not just a website.",
   },
   {
     name: "Naomi Wanjiru",
@@ -151,7 +151,7 @@ const faqs = [
   },
   {
     q: "Can my existing website connect?",
-    a: "Yes. We connect to existing sites via REST API or webhook — WordPress, Webflow, custom — without rebuilding anything.",
+    a: "Yes. We connect to existing sites via REST API or webhook (WordPress, Webflow, custom) without rebuilding anything.",
   },
   {
     q: "What if the bot misunderstands me?",
@@ -163,7 +163,7 @@ const faqs = [
   },
   {
     q: "Can I upgrade or downgrade packages?",
-    a: "Yes — changes take effect from your next billing cycle.",
+    a: "Yes. Changes take effect from your next billing cycle.",
   },
   {
     q: "Is this only available in Kenya?",
@@ -210,7 +210,7 @@ function WorkWithUsPage() {
             className="mt-6 text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
           >
             JOAT Kenya connects your website and social channels to an AI-powered Telegram bot.
-            Update prices, publish posts, upload media — just send a message. We handle the rest.
+            Update prices, publish posts, upload media; just send a message. We handle the rest.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -445,7 +445,7 @@ function WorkWithUsPage() {
               </h2>
               <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
                 Walk through your current setup with our team. We'll map exactly what your
-                automation system would look like — no obligation.
+                automation system would look like, no obligation.
               </p>
               <div className="mt-7 flex flex-wrap justify-center gap-3">
                 <button

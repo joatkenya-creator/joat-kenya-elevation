@@ -30,12 +30,12 @@ export function About() {
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
             Jack of All Trades was founded on a simple truth: the right person in the right role
             changes everything. We saw organizations struggling to find professionals who could
-            truly deliver — and talented individuals unable to reach the opportunities they
-            deserved. We built JOAT to close that gap.
+            truly deliver, and talented individuals unable to reach the opportunities they deserved.
+            We built JOAT to close that gap.
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
             Today, we operate as a talent recruitment agency, a talent management house and a
-            digital innovation studio — sourcing professionals, building products, and shaping
+            digital innovation studio, sourcing professionals, building products, and shaping
             Africa's next generation of innovators.
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
@@ -45,7 +45,7 @@ export function About() {
         </motion.div>
 
         {/* Mission / Vision */}
-        <div className="grid md:grid-cols-2 gap-6 mt-14">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 mt-14">
           {[
             {
               icon: Target,
@@ -55,7 +55,7 @@ export function About() {
             {
               icon: Eye,
               title: "Our Vision",
-              text: "To be Africa's most trusted innovation ecosystem — where talent, education and digital solutions converge.",
+              text: "To be Africa's most trusted innovation ecosystem, where talent, education and digital solutions converge.",
             },
           ].map((c, i) => (
             <motion.div

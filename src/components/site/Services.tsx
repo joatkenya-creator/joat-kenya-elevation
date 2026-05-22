@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Briefcase,
@@ -7,7 +7,8 @@ import {
   Crown,
   Megaphone,
   GraduationCap,
-  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 const services = [
@@ -15,7 +16,7 @@ const services = [
     icon: Briefcase,
     title: "Talent Sourcing & Headhunting",
     summary:
-      "Identify and attract top-tier professionals across industries — from entry-level to senior leadership.",
+      "Identify and attract top-tier professionals across industries, from entry-level to senior leadership.",
     detail:
       "Our regional sourcing engines and curated talent network give us unmatched reach. Every candidate is screened, referenced, and culturally matched before we present them.",
     industries: ["Tech & Engineering", "Healthcare", "Finance", "Hospitality", "Logistics"],
@@ -29,9 +30,9 @@ const services = [
     icon: Sparkles,
     title: "Talent Management & Representation",
     summary:
-      "Manage and represent individual talent — connecting them with opportunities, partnerships and support.",
+      "Manage and represent individual talent, connecting them with opportunities, partnerships and support.",
     detail:
-      "We act as agents and managers — handling deals, brand alignment, career planning and PR for the professionals and creators we represent.",
+      "We act as agents and managers, handling deals, brand alignment, career planning and PR for the professionals and creators we represent.",
     industries: ["Creative", "Media", "Sports", "Executive"],
     outcomes: [
       "Brand partnership pipelines",
@@ -70,7 +71,7 @@ const services = [
     icon: Megaphone,
     title: "Creative & Influencer Management",
     summary:
-      "Represent content creators, influencers, and media personalities — managing brand deals and growth strategy.",
+      "Represent content creators, influencers, and media personalities, managing brand deals and growth strategy.",
     detail:
       "We grow audiences, structure deals, and protect brands. Our creators benefit from strategy, legal, finance and PR under one roof.",
     industries: ["Beauty & Lifestyle", "Sports", "Music", "Tech & Gaming"],
@@ -93,10 +94,25 @@ const services = [
 ];
 
 export function Services() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [i, setI] = useState(0);
+  const s = services[i];
+  const Icon = s.icon;
+
+  const next = () => setI((v) => (v + 1) % services.length);
+  const prev = () => setI((v) => (v - 1 + services.length) % services.length);
+
+  // Auto-rotate one service at a time, like the testimonials carousel.
+  // Timer resets whenever `i` changes, so a manual click pauses-then-resumes.
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setI((v) => (v + 1) % services.length);
+    }, 5000);
+    return () => clearTimeout(id);
+  }, [i]);
+
   return (
     <section id="services" className="relative py-24 lg:py-32 bg-navy-deep">
-      <div className="max-w-7xl mx-auto px-5 lg:px-8">
+      <div className="max-w-5xl mx-auto px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -108,82 +124,95 @@ export function Services() {
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground">What We Do</h2>
           <p className="mt-6 text-lg text-muted-foreground">
             From executive search and workforce staffing to talent representation and creative
-            management — we match the right people with the right opportunities across East Africa.
+            management, we match the right people with the right opportunities across East Africa.
           </p>
         </motion.div>
 
-        <div className="mt-14 grid lg:grid-cols-2 gap-4">
-          {services.map((s, i) => {
-            const isOpen = open === i;
-            return (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: (i % 2) * 0.05 }}
-                className="glass rounded-2xl overflow-hidden"
-              >
-                <button
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="w-full p-6 flex items-start gap-4 text-left"
-                  aria-expanded={isOpen}
-                >
-                  <div className="w-11 h-11 rounded-xl bg-(--joat-red)/15 flex items-center justify-center shrink-0">
-                    <s.icon className="w-5 h-5 text-(--joat-gold)" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-foreground">{s.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{s.summary}</p>
-                  </div>
-                  <ChevronDown
-                    className={`w-5 h-5 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
+        {/* Single auto-rotating service card */}
+        <div className="mt-14 relative glass rounded-3xl p-8 lg:p-12 min-h-96">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={s.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-(--joat-red)/15 flex items-center justify-center shrink-0">
+                  <Icon className="w-6 h-6 text-(--joat-gold)" />
+                </div>
+                <div>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-foreground">{s.title}</h3>
+                  <p className="mt-2 text-base text-muted-foreground">{s.summary}</p>
+                </div>
+              </div>
 
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-6 pb-6 pl-[5.25rem] space-y-4">
-                        <p className="text-sm text-foreground/90 leading-relaxed">{s.detail}</p>
-                        <div>
-                          <div className="text-[11px] uppercase tracking-wider text-gold mb-2">
-                            Industries served
-                          </div>
-                          <div className="flex flex-wrap gap-2">
-                            {s.industries.map((x) => (
-                              <span
-                                key={x}
-                                className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-foreground/80 border border-white/10"
-                              >
-                                {x}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-[11px] uppercase tracking-wider text-gold mb-2">
-                            Outcomes delivered
-                          </div>
-                          <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-                            {s.outcomes.map((o) => (
-                              <li key={o}>{o}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
+              <p className="mt-6 text-sm lg:text-base text-foreground/90 leading-relaxed">
+                {s.detail}
+              </p>
+
+              <div className="mt-6 grid sm:grid-cols-2 gap-6">
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-gold mb-2">
+                    Industries served
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {s.industries.map((x) => (
+                      <span
+                        key={x}
+                        className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-foreground/80 border border-white/10"
+                      >
+                        {x}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-gold mb-2">
+                    Outcomes delivered
+                  </div>
+                  <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                    {s.outcomes.map((o) => (
+                      <li key={o}>{o}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Controls */}
+          <div className="absolute bottom-6 right-6 flex gap-2">
+            <button
+              onClick={prev}
+              aria-label="Previous service"
+              className="w-10 h-10 rounded-full glass hover:bg-white/10 flex items-center justify-center"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={next}
+              aria-label="Next service"
+              className="w-10 h-10 rounded-full bg-(--joat-red) hover:brightness-110 flex items-center justify-center"
+            >
+              <ChevronRight className="w-4 h-4 text-white" />
+            </button>
+          </div>
+        </div>
+
+        {/* Dots */}
+        <div className="flex justify-center gap-2 mt-6">
+          {services.map((sv, k) => (
+            <button
+              key={sv.title}
+              aria-label={`Go to ${sv.title}`}
+              onClick={() => setI(k)}
+              className={`h-1.5 rounded-full transition-all ${
+                k === i ? "w-8 bg-(--joat-gold)" : "w-1.5 bg-white/20"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>

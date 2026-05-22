@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonials = [
   {
@@ -15,21 +15,21 @@ const testimonials = [
     name: "Ericca J. Ricketts",
     role: "Founder, JustRightJerk",
     quote:
-      "JOAT didn't just find me a job — they managed my entire career transition. Their representation opened doors I didn't even know existed.",
+      "JOAT didn't just find me a job; they managed my entire career transition. Their representation opened doors I didn't even know existed.",
   },
   {
     initials: "MK",
     name: "Michael Kamau",
     role: "Managing Director, Apex Ltd",
     quote:
-      "We've used several agencies across East Africa. JOAT is the only one that truly understands what a great executive hire looks like — and delivers.",
+      "We've used several agencies across East Africa. JOAT is the only one that truly understands what a great executive hire looks like, and delivers.",
   },
   {
     initials: "AN",
     name: "Amara Njoroge",
     role: "Content Creator & Influencer",
     quote:
-      "As a creative, finding the right representation felt impossible — until JOAT. They understood my brand, negotiated better deals, and actually cared about my growth.",
+      "As a creative, finding the right representation felt impossible, until JOAT. They understood my brand, negotiated better deals, and actually cared about my growth.",
   },
 ];
 
@@ -47,9 +47,9 @@ export function Testimonials() {
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground">What Our Clients Say</h2>
         </div>
 
-        <div className="relative grid lg:grid-cols-[1fr_auto_1fr] gap-6 items-stretch">
+        <div className="relative">
           {/* Main quote */}
-          <div className="lg:col-span-3 relative glass rounded-3xl p-8 lg:p-12 min-h-[280px]">
+          <div className="relative glass rounded-3xl p-8 lg:p-12 min-h-[280px]">
             <div className="absolute top-6 left-8 text-7xl font-serif text-(--joat-gold)/30 select-none">
               "
             </div>
@@ -99,24 +99,6 @@ export function Testimonials() {
               </button>
             </div>
           </div>
-
-          {/* Video testimonial placeholder */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-3 glass rounded-3xl p-6 flex items-center gap-5"
-          >
-            <div className="relative w-32 h-20 rounded-xl bg-linear-to-br from-(--joat-navy-deep) to-(--joat-red)/40 flex items-center justify-center shrink-0">
-              <Play className="w-7 h-7 text-white fill-white" />
-            </div>
-            <div>
-              <div className="font-bold text-foreground">Watch client stories</div>
-              <div className="text-sm text-muted-foreground">
-                Video testimonials from partners across East Africa — coming soon.
-              </div>
-            </div>
-          </motion.div>
         </div>
 
         {/* Dots */}

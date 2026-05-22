@@ -37,27 +37,29 @@ const socials: { Icon: typeof Linkedin; href: string; label: string }[] = [
 ];
 
 const certs = [
-  {
-    icon: ShieldCheck,
-    title: "ISO 9001",
-    text: "Quality management certified across recruitment and digital delivery.",
-  },
-  {
-    icon: Leaf,
-    title: "NEMA NCA-1",
-    text: "Environmental compliance under Kenya's National Environment Management Authority (Category 1).",
-  },
-  {
-    icon: Receipt,
-    title: "KRA Compliant",
-    text: "Fully compliant with Kenya Revenue Authority — tax-clean and audit-ready.",
-  },
+  { icon: ShieldCheck, title: "ISO 9001" },
+  { icon: Leaf, title: "NEMA NCA-1" },
+  { icon: Receipt, title: "KRA Compliant" },
 ];
 
 export function Footer() {
   return (
-    <footer className="relative bg-navy-deep border-t border-white/5 pt-16 pb-10">
+    <footer className="relative bg-navy-deep border-t border-white/5 pt-12 pb-10">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
+        {/* Certifications — titles only, top of footer */}
+        <div className="flex flex-wrap items-center justify-center gap-3 pb-10 mb-10 border-b border-white/5">
+          <span className="text-[11px] uppercase tracking-[0.3em] text-gold mr-1">Certified</span>
+          {certs.map((c) => (
+            <span
+              key={c.title}
+              className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm font-semibold text-foreground"
+            >
+              <c.icon className="w-4 h-4 text-(--joat-gold)" />
+              {c.title}
+            </span>
+          ))}
+        </div>
+
         <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
@@ -129,27 +131,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Certifications */}
-        <div className="mt-12 pt-8 border-t border-white/5">
-          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4 text-center md:text-left">
-            Certifications & Compliance
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            {certs.map((c) => (
-              <div key={c.title} className="glass rounded-2xl p-5 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-(--joat-gold)/15 flex items-center justify-center shrink-0">
-                  <c.icon className="w-5 h-5 text-(--joat-gold)" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-foreground text-sm">{c.title}</h3>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{c.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-10 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+        <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} J.O.A.T. Kenya. All rights reserved.</div>
           <div className="flex gap-5">
             <a href={LEGAL_LINKS.privacy} className="hover:text-gold transition-colors">

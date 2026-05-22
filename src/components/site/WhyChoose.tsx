@@ -5,12 +5,12 @@ const reasons = [
   {
     icon: Globe2,
     title: "African Innovation Leadership",
-    text: "Solutions that reflect local context and global ambition — shipped with the cadence of a modern tech company.",
+    text: "Solutions that reflect local context and global ambition, shipped with the cadence of a modern tech company.",
   },
   {
     icon: Layers,
     title: "Scalable Digital Solutions",
-    text: "From startups to enterprises, our platforms grow with you — built on modern, resilient stacks.",
+    text: "From startups to enterprises, our platforms grow with you, built on modern, resilient stacks.",
   },
   {
     icon: Users2,
@@ -20,7 +20,7 @@ const reasons = [
   {
     icon: Briefcase,
     title: "Industry Expertise",
-    text: "42+ years across talent, tech, media and education — deep networks across East Africa.",
+    text: "42+ years across talent, tech, media and education, with deep networks across East Africa.",
   },
   {
     icon: BadgeCheck,
@@ -51,7 +51,7 @@ export function WhyChoose() {
           </h2>
         </motion.div>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-14 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {reasons.map((r, i) => (
             <motion.div
               key={r.title}

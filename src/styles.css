@@ -188,6 +188,15 @@
       -webkit-backdrop-filter: blur(14px) saturate(140%);
     }
   }
+  /*
+   * Fully opaque navy at every screen size — no blur, no translucency.
+   * Use where the frosted effect hurts readability on ALL devices
+   * (scrolled navbar, chatbot window).
+   */
+  .glass-solid {
+    background: oklch(0.12 0.03 265 / 0.98);
+    border: 1px solid var(--glass-border);
+  }
   .text-gold { color: var(--joat-gold); }
   .bg-navy { background: var(--joat-navy); }
   .bg-navy-deep { background: var(--joat-navy-deep); }

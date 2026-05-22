@@ -71,8 +71,8 @@ function TermsPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">4. Intellectual property</h2>
           <p>
-            All content on this site — text, design, code, logos, illustrations and the J.O.A.T.
-            Kenya brand — belongs to JOAT or our licensors and is protected by Kenyan and
+            All content on this site (text, design, code, logos, illustrations and the J.O.A.T.
+            Kenya brand) belongs to JOAT or our licensors and is protected by Kenyan and
             international copyright law. You may not reuse, redistribute or train AI models on this
             material without prior written consent.
           </p>
