@@ -9,6 +9,9 @@
   RewriteEngine On
   RewriteBase /
 
+  # SEO files must be served as static files, not routed into React.
+  RewriteRule ^(sitemap\.xml|robots\.txt|site\.webmanifest)$ - [L]
+
   # Skip rewrite for existing files and directories
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
