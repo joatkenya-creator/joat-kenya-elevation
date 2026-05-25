@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { Sun, Moon } from "lucide-react";
 import logo from "@/assets/joat-logo.png";
-import { useTheme } from "@/hooks/use-theme";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -16,7 +14,6 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { theme, toggle, mounted } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -24,8 +21,6 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const ThemeIcon = theme === "dark" ? Sun : Moon;
 
   return (
     <motion.header
@@ -64,18 +59,6 @@ export function Navbar() {
         </ul>
 
         <div className="hidden lg:flex items-center gap-3">
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            className="w-10 h-10 rounded-full glass flex items-center justify-center text-foreground hover:bg-white/10 transition-colors"
-          >
-            {mounted ? (
-              <ThemeIcon className="w-4 h-4" />
-            ) : (
-              <Sun className="w-4 h-4 opacity-0" aria-hidden="true" />
-            )}
-          </button>
           <a
             href="https://www.majobokenya.com/"
             target="_blank"
@@ -93,18 +76,6 @@ export function Navbar() {
         </div>
 
         <div className="lg:hidden flex items-center gap-1 shrink-0">
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            className="w-10 h-10 rounded-full glass flex items-center justify-center text-foreground"
-          >
-            {mounted ? (
-              <ThemeIcon className="w-4 h-4" />
-            ) : (
-              <Sun className="w-4 h-4 opacity-0" aria-hidden="true" />
-            )}
-          </button>
           <button
             aria-label="Open menu"
             onClick={() => setOpen((v) => !v)}

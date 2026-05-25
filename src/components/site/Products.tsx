@@ -17,6 +17,8 @@ import {
   Boxes,
   Play,
   ChevronDown,
+  Search,
+  MapPin,
 } from "lucide-react";
 import biobiz from "@/assets/biobiz-mock.jpg";
 import biobizShare from "@/assets/biobiz-share.jpg";
@@ -234,6 +236,103 @@ const BiobizExtra = (
   </div>
 );
 
+// Sample rows shown in the preview placeholder before the live site is loaded.
+const majoboJobs = [
+  { t: "Web Developer", loc: "Thindigua", tag: "Tech" },
+  { t: "Professional Photographer", loc: "Thindigua", tag: "Creative" },
+  { t: "Brand Ambassador", loc: "Nairobi", tag: "Marketing" },
+  { t: "House Cleaning Services", loc: "Nairobi", tag: "Services" },
+];
+
+// Open Majobo in a centered first-party popup window. Login cookies work here
+// even in browsers that block third-party cookies inside iframes, while the
+// JOAT tab stays open behind the popup.
+function openMajoboLogin() {
+  if (typeof window === "undefined") return;
+  const w = 480;
+  const h = 720;
+  const left = window.screenX + Math.max(0, (window.outerWidth - w) / 2);
+  const top = window.screenY + Math.max(0, (window.outerHeight - h) / 2);
+  window.open(
+    "https://www.majobokenya.com/",
+    "majobo-login",
+    `popup,noreferrer,width=${w},height=${h},left=${left},top=${top}`,
+  );
+}
+
+// Majobo embedded inside JOAT. The live iframe is click-to-load (a facade) so the
+// heavy Majobo app never auto-loads on page visit. Until the visitor clicks, we
+// show a lightweight static job-board mock. Sign-in routes through a popup
+// (openMajoboLogin) because cross-origin iframes can't keep a login session.
+function MajoboLiveFrame() {
+  const [active, setActive] = useState(false);
+  return (
+    <div className="relative glass rounded-2xl overflow-hidden border border-(--glass-border)">
+      <div className="px-2 sm:px-4 py-2 bg-(--joat-navy-deep) flex items-center gap-1.5 border-b border-white/5">
+        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-red)" />
+        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-gold)" />
+        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-foreground/30" />
+        <span className="ml-2 sm:ml-3 text-[9px] sm:text-xs text-muted-foreground truncate">
+          majobokenya.com
+        </span>
+        <button
+          type="button"
+          onClick={openMajoboLogin}
+          className="ml-auto shrink-0 text-[10px] sm:text-xs font-semibold text-(--joat-gold) hover:underline"
+        >
+          Sign in
+        </button>
+      </div>
+
+      {active ? (
+        <iframe
+          src="https://www.majobokenya.com/"
+          title="Majobo Kenya live"
+          referrerPolicy="no-referrer"
+          className="w-full h-72 sm:h-[440px] bg-white"
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setActive(true)}
+          aria-label="Load the live Majobo Kenya site"
+          className="relative block w-full text-left"
+        >
+          <div className="p-3 sm:p-4 space-y-2" aria-hidden="true">
+            <div className="flex items-center gap-2 rounded-md bg-white/5 px-3 py-2 text-[11px] sm:text-xs text-muted-foreground">
+              <Search className="w-3 h-3 shrink-0" /> Search 1,177 opportunities…
+            </div>
+            {majoboJobs.map((j) => (
+              <div
+                key={j.t}
+                className="rounded-md bg-white/3 px-3 py-2 flex items-center justify-between gap-2 text-[11px] sm:text-xs"
+              >
+                <div className="min-w-0">
+                  <div className="font-semibold text-foreground truncate">{j.t}</div>
+                  <div className="flex items-center gap-1 text-muted-foreground mt-0.5">
+                    <MapPin className="w-2.5 h-2.5 shrink-0" /> {j.loc}
+                  </div>
+                </div>
+                <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-gold shrink-0">
+                  {j.tag}
+                </span>
+              </div>
+            ))}
+          </div>
+          <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-(--joat-navy-deep)/75 backdrop-blur-[1px] text-center px-5">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) text-sm font-semibold">
+              <Play className="w-4 h-4 fill-current" /> Open live Majobo
+            </span>
+            <span className="text-[11px] text-foreground/85 max-w-[16rem] leading-relaxed">
+              Loads only when you click, so this page stays fast.
+            </span>
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
+
 const MajoboExtra = (
   <div className="mt-10 grid lg:grid-cols-5 gap-5 lg:items-stretch">
     <div className="lg:col-span-3 glass rounded-2xl p-4 sm:p-6">
@@ -287,31 +386,7 @@ const MajoboExtra = (
 
     <div className="lg:col-span-2 relative">
       <div className="absolute -inset-2 rounded-3xl bg-linear-to-br from-(--joat-red)/20 via-transparent to-(--joat-gold)/20 blur-2xl" />
-      <div className="relative glass rounded-2xl overflow-hidden border border-(--glass-border)">
-        <div className="px-2 sm:px-4 py-2 bg-(--joat-navy-deep) flex items-center gap-1.5 border-b border-white/5">
-          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-red)" />
-          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-gold)" />
-          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-foreground/30" />
-          <span className="ml-2 sm:ml-3 text-[9px] sm:text-xs text-muted-foreground truncate">
-            majobokenya.com
-          </span>
-        </div>
-        <iframe
-          src="https://www.majobokenya.com/"
-          title="Majobo Kenya live preview"
-          loading="lazy"
-          referrerPolicy="no-referrer"
-          className="w-full h-64 sm:h-[420px] bg-white"
-        />
-      </div>
-      <a
-        href="https://www.majobokenya.com/"
-        target="_blank"
-        rel="noreferrer"
-        className="mt-2 sm:mt-3 inline-flex items-center gap-1.5 text-[11px] sm:text-sm font-semibold text-(--joat-gold) hover:underline"
-      >
-        Open Majobo Kenya <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-      </a>
+      <MajoboLiveFrame />
     </div>
   </div>
 );
@@ -336,19 +411,9 @@ const AmareVideos = [
 
 const AmareExtra = (
   <div className="mt-10">
-    <div className="flex items-end justify-between gap-3 mb-4 flex-wrap">
-      <div>
-        <div className="text-xs uppercase tracking-widest text-gold">Featured on YouTube</div>
-        <h4 className="text-xl font-bold text-foreground">Watch Amare's Big Planet</h4>
-      </div>
-      <a
-        href="https://www.youtube.com/@amaresbigplanet/featured"
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-2 text-sm font-semibold text-(--joat-gold) hover:underline"
-      >
-        Open the channel <ExternalLink className="w-3.5 h-3.5" />
-      </a>
+    <div className="mb-4">
+      <div className="text-xs uppercase tracking-widest text-gold">Featured on YouTube</div>
+      <h4 className="text-xl font-bold text-foreground">Watch Amare's Big Planet</h4>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
       {AmareVideos.map((v) => (
@@ -409,16 +474,18 @@ const featuredGames = [
 ];
 
 function RobloxBuilds() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  // Each card tracks its own open state so the arrows act independently —
+  // expanding one build never opens or resizes the other.
+  const [open, setOpen] = useState<Record<number, boolean>>({});
   return (
     <div className="mt-10">
       <div className="flex items-center gap-3 mb-4">
         <Gamepad2 className="w-5 h-5 text-gold" />
         <h4 className="text-xl font-bold text-foreground">Selected Roblox builds</h4>
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:gap-5">
+      <div className="grid grid-cols-2 items-start gap-3 sm:gap-5">
         {featuredGames.map((g, idx) => {
-          const isOpen = openIdx === idx;
+          const isOpen = !!open[idx];
           return (
             <div
               key={g.title}
@@ -461,7 +528,7 @@ function RobloxBuilds() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => setOpenIdx(isOpen ? null : idx)}
+                    onClick={() => setOpen((o) => ({ ...o, [idx]: !o[idx] }))}
                     aria-expanded={isOpen}
                     aria-label={isOpen ? `Hide ${g.title} description` : `Read about ${g.title}`}
                     className="shrink-0 w-7 h-7 rounded-full glass flex items-center justify-center text-(--joat-gold) hover:bg-white/10"
