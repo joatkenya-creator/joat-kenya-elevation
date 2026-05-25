@@ -4,8 +4,8 @@ import { Globe2, Layers, Users2, Briefcase, BadgeCheck, HeartHandshake } from "l
 const reasons = [
   {
     icon: Globe2,
-    title: "African Innovation Leadership",
-    text: "Solutions that reflect local context and global ambition, shipped with the cadence of a modern tech company.",
+    title: "Global Innovation Leadership",
+    text: "Solutions engineered to global standards and built for worldwide ambition, shipped with the cadence of a modern tech company.",
   },
   {
     icon: Layers,
@@ -20,7 +20,7 @@ const reasons = [
   {
     icon: Briefcase,
     title: "Industry Expertise",
-    text: "42+ years across talent, tech, media and education, with deep networks across East Africa.",
+    text: "Cross-disciplinary depth in software, digital marketing, media and education, with networks that span markets.",
   },
   {
     icon: BadgeCheck,

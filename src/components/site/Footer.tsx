@@ -105,10 +105,7 @@ export function Footer() {
               title="Solutions"
               links={[
                 { l: "BioBiz App", h: "#biobiz" },
-                { l: "Majobo Talent", h: "#majobo" },
                 { l: "Software Development", h: "#software" },
-                { l: "Amare's Big Planet", h: "#amare" },
-                { l: "Roblox Game Dev", h: "#games" },
                 { l: "AI Marketing", h: "#ai-marketing" },
                 { l: "Blender Animation", h: "#blender" },
               ]}

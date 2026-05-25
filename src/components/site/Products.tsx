@@ -626,6 +626,7 @@ const products: Product[] = [
     extra: BiobizExtra,
     logoMark: biobizLogo,
   },
+  /* Majobo Kenya (talent outsourcing) — disabled; kept for easy re-enabling.
   {
     id: "majobo",
     badge: "Majobo Kenya · Talent Outsourcing",
@@ -650,6 +651,7 @@ const products: Product[] = [
     logoMark: majoboLogo,
     hideImageOnMobile: true,
   },
+  */
   {
     id: "software",
     badge: "Software Development",
@@ -667,6 +669,8 @@ const products: Product[] = [
     icon: Boxes,
     accent: "gold",
   },
+  /* Amare's Big Planet — repositioned as a "Selected client" section (see render below); full product card disabled.
+     Game Development · Roblox — disabled; kept for easy re-enabling.
   {
     id: "amare",
     badge: "Amare's Big Planet · Digital Education",
@@ -713,6 +717,7 @@ const products: Product[] = [
     extra: <RobloxBuilds />,
     mobileInlineImage: true,
   },
+  */
   {
     id: "ai-marketing",
     badge: "AI Marketing",
@@ -766,11 +771,10 @@ export function Products() {
             Products & Solutions
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground">
-            One ecosystem. <span className="gradient-text-gold">Seven engines</span> of impact.
+            One ecosystem. <span className="gradient-text-gold">Many engines</span> of impact.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Technology, education, talent, immersive experiences and AI, designed for African
-            context, built to global standards.
+            Software, AI, digital marketing and media content, engineered to global standards.
           </p>
         </motion.div>
 
@@ -917,6 +921,44 @@ export function Products() {
             );
           })}
         </div>
+
+        {/* Selected client — Amare's Big Planet (compact) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-24 lg:mt-32 max-w-3xl mx-auto"
+        >
+          <div className="text-center mb-6">
+            <div className="text-xs uppercase tracking-[0.3em] text-gold mb-2">Selected Client</div>
+            <h3 className="text-2xl lg:text-3xl font-bold text-foreground">Amare's Big Planet</h3>
+          </div>
+          <div className="glass rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-6">
+            <img
+              src={amare}
+              alt="Amare's Big Planet"
+              loading="lazy"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border border-(--glass-border) shrink-0"
+            />
+            <div className="min-w-0">
+              <div className="text-[11px] uppercase tracking-wider text-gold">
+                Children's Digital Education
+              </div>
+              <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
+                An animated children's series we partner with on content and production.
+              </p>
+              <a
+                href="https://www.youtube.com/@amaresbigplanet/featured"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-(--joat-gold) hover:underline"
+              >
+                Watch on YouTube <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

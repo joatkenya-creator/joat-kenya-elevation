@@ -1,13 +1,5 @@
 import { motion } from "framer-motion";
-import { Target, Eye, TrendingUp } from "lucide-react";
-
-const stats = [
-  { v: "40+", l: "Years Experience" },
-  { v: "500+", l: "Placements Made" },
-  { v: "50+", l: "Partner Organizations" },
-  { v: "98%", l: "Client Retention" },
-  { v: "100%", l: "Compliance" },
-];
+import { Target, Eye } from "lucide-react";
 
 export function About() {
   return (
@@ -25,22 +17,21 @@ export function About() {
             Our Story · Since 1983
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
-            Built on relationships. <span className="gradient-text-gold">Powered by talent.</span>
+            Built to build. <span className="gradient-text-gold">Powered by technology.</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-            Jack of All Trades was founded on a simple truth: the right person in the right role
-            changes everything. We saw organizations struggling to find professionals who could
-            truly deliver, and talented individuals unable to reach the opportunities they deserved.
-            We built JOAT to close that gap.
+            Jack of All Trades began with a simple conviction: great technology, thoughtfully built,
+            changes how people live, learn and do business. We set out to design and ship digital
+            products of genuine quality, from the ground up.
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-            Today, we operate as a talent recruitment agency, a talent management house and a
-            digital innovation studio, sourcing professionals, building products, and shaping
-            Africa's next generation of innovators.
+            Today we operate as a digital innovation studio, developing software and products,
+            creating children's digital education content, and powering brands with digital
+            marketing and media.
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-            At JOAT, we don't just fill roles. We build careers and transform organizations one
-            great hire at a time.
+            We don't just deliver projects. We build products people love, stories that teach, and
+            campaigns that move, shipped with the cadence of a modern tech company.
           </p>
         </motion.div>
 
@@ -50,12 +41,12 @@ export function About() {
             {
               icon: Target,
               title: "Our Mission",
-              text: "Bridge talent, technology and opportunity to transform organizations and uplift communities across Africa.",
+              text: "Build world-class software and digital products, create children's digital education content, and power brands with modern digital marketing and media.",
             },
             {
               icon: Eye,
               title: "Our Vision",
-              text: "To be Africa's most trusted innovation ecosystem, where talent, education and digital solutions converge.",
+              text: "To be a globally trusted technology studio where software, education and digital media converge to shape the future.",
             },
           ].map((c, i) => (
             <motion.div
@@ -73,28 +64,6 @@ export function About() {
               <p className="mt-1.5 sm:mt-3 text-xs sm:text-base text-muted-foreground leading-relaxed">
                 {c.text}
               </p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Impact metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-14">
-          {stats.map((s) => (
-            <motion.div
-              key={s.l}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="glass rounded-xl p-6 text-center"
-            >
-              <div className="text-3xl lg:text-4xl font-bold gradient-text-gold flex items-center justify-center gap-1">
-                {s.v}
-                <TrendingUp className="w-4 h-4 text-gold" />
-              </div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground mt-2">
-                {s.l}
-              </div>
             </motion.div>
           ))}
         </div>

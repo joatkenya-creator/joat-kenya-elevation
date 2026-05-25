@@ -12,7 +12,11 @@ import {
 } from "lucide-react";
 
 const culture = [
-  { icon: Heart, title: "People First", text: "We invest in growth, mentorship, and well-being." },
+  {
+    icon: Heart,
+    title: "People First",
+    text: "We invest in our engineers, designers and marketers, their growth, their craft and their well-being.",
+  },
   { icon: Rocket, title: "Real Ownership", text: "Ship work that touches millions of lives." },
   {
     icon: Coffee,
@@ -22,13 +26,12 @@ const culture = [
   {
     icon: Wrench,
     title: "Equipped for the Work",
-    text: "A multi-skilled team (engineers, designers, marketers, recruiters) armed with the tools and training to ship any project end-to-end.",
+    text: "A multi-skilled team of engineers, designers and digital marketers, armed with the tools and training to ship any product, campaign or piece of content end-to-end.",
   },
 ];
 
 const categories = [
   "Tech & Software",
-  "Talent Outsourcing",
   "Creative & Influencer",
   "Operations",
   "EdTech & Curriculum",
@@ -153,35 +156,6 @@ export function Careers() {
               Join Network
             </a>
           </div>
-        </motion.div>
-
-        {/* Internships highlight */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-10 glass rounded-2xl p-6 lg:p-8 flex flex-col lg:flex-row lg:items-center gap-6"
-        >
-          <div className="flex-1">
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold mb-2">
-              <span className="w-2 h-2 rounded-full bg-(--joat-gold) animate-pulse" />
-              Internships & talent network
-            </div>
-            <h3 className="text-xl font-bold text-foreground">
-              Whatever you do, we want to know you.
-            </h3>
-            <p className="text-sm text-muted-foreground mt-1">
-              Nurse, driver, developer, designer, accountant, no matter your field, submit your
-              profile and let us connect you with the right opportunity across the JOAT ecosystem.
-            </p>
-          </div>
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-(--joat-red) text-primary-foreground font-semibold glow-red hover:brightness-110"
-          >
-            Join Talent Network
-          </a>
         </motion.div>
 
         {/* Culture */}

@@ -4,11 +4,10 @@ import { Sparkles } from "lucide-react";
 const skills = [
   { label: "Software Engineering", level: "Full-stack · mobile · AI" },
   { label: "Product Design", level: "UX · UI · brand systems" },
-  { label: "Talent Acquisition", level: "Tech · creative · executive" },
-  { label: "3D & Animation", level: "Blender · Roblox · motion" },
   { label: "AI Operations", level: "Claude · OpenRouter · agents" },
   { label: "Digital Marketing", level: "Generative · social · ads" },
-  { label: "Game Development", level: "Roblox studio · live ops" },
+  { label: "Media & Content", level: "Video · motion · brand" },
+  { label: "Children's Digital Education", level: "Content · curriculum · play" },
 ];
 
 export function TeamSkills() {

@@ -1,20 +1,14 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
-import heroBg from "@/assets/hero-tech.jpg";
+// Globe graphic hidden per request — kept here for easy re-enabling.
+// import { GlobeGraphic } from "./GlobeGraphic";
 
 export function Hero() {
   return (
     <section id="home" className="relative pt-28 lg:pt-36 pb-20 lg:pb-32 overflow-hidden">
       <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
       <div className="absolute inset-0 grid-bg opacity-40" />
-      <img
-        src={heroBg}
-        alt=""
-        aria-hidden="true"
-        width={1920}
-        height={1080}
-        className="absolute right-0 top-10 w-[55%] max-w-[820px] opacity-50 mix-blend-screen pointer-events-none select-none hidden md:block"
-      />
+      {/* Globe graphic hidden per request */}
 
       <div className="relative max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-12 gap-10 items-center">
         <div className="lg:col-span-7">
@@ -25,7 +19,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-gold mb-6"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            Africa's Digital Transformation Partner
+            Your Digital Transformation Partner
           </motion.div>
 
           <motion.h1
@@ -34,8 +28,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-foreground"
           >
-            Transforming Africa through <span className="gradient-text-gold">Innovation</span>,{" "}
-            <span className="gradient-text-red">Talent</span> &amp; Digital Solutions
+            Transforming the world through <span className="gradient-text-gold">Innovation</span>,{" "}
+            <span className="gradient-text-red">Technology</span> &amp; Digital Solutions
           </motion.h1>
 
           <motion.p
@@ -45,7 +39,7 @@ export function Hero() {
             className="mt-6 text-base lg:text-lg text-muted-foreground max-w-2xl leading-relaxed"
           >
             Empowering businesses, communities, and future innovators through cutting-edge
-            technology, digital education, talent outsourcing, and immersive digital experiences.
+            technology, digital education, and immersive digital experiences.
           </motion.p>
 
           <motion.div
@@ -98,7 +92,7 @@ export function Hero() {
               <div>
                 <div className="text-5xl font-bold gradient-text-gold">42+</div>
                 <div className="text-xs uppercase tracking-widest text-muted-foreground mt-2">
-                  Years building Africa's future
+                  Years building the digital future
                 </div>
               </div>
             </div>
@@ -106,8 +100,8 @@ export function Hero() {
             {[
               { t: "AI & Cloud", x: "-10%", y: "10%" },
               { t: "EdTech", x: "85%", y: "20%" },
-              { t: "Talent", x: "-5%", y: "75%" },
-              { t: "Game Dev", x: "80%", y: "78%" },
+              { t: "Marketing", x: "-5%", y: "75%" },
+              { t: "Media", x: "80%", y: "78%" },
             ].map((b, i) => (
               <motion.div
                 key={b.t}

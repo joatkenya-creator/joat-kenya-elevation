@@ -1,95 +1,67 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Briefcase,
-  Sparkles,
-  UsersRound,
-  Crown,
+  Code2,
   Megaphone,
+  Clapperboard,
   GraduationCap,
+  Sparkles,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 
 const services = [
   {
-    icon: Briefcase,
-    title: "Talent Sourcing & Headhunting",
+    icon: Code2,
+    title: "Software Development",
     summary:
-      "Identify and attract top-tier professionals across industries, from entry-level to senior leadership.",
+      "Custom mobile, web and AI products, designed, built and shipped end-to-end by our in-house engineering team.",
     detail:
-      "Our regional sourcing engines and curated talent network give us unmatched reach. Every candidate is screened, referenced, and culturally matched before we present them.",
-    industries: ["Tech & Engineering", "Healthcare", "Finance", "Hospitality", "Logistics"],
+      "From discovery to launch we build production-grade software (native mobile, web apps, AI integrations and edge backends) the way modern tech companies do.",
+    industries: ["Mobile apps", "Web platforms", "AI integrations", "APIs & backends"],
     outcomes: [
-      "Time-to-hire under 21 days",
-      "92% offer acceptance",
-      "12-month retention guarantees",
-    ],
-  },
-  {
-    icon: Sparkles,
-    title: "Talent Management & Representation",
-    summary:
-      "Manage and represent individual talent, connecting them with opportunities, partnerships and support.",
-    detail:
-      "We act as agents and managers, handling deals, brand alignment, career planning and PR for the professionals and creators we represent.",
-    industries: ["Creative", "Media", "Sports", "Executive"],
-    outcomes: [
-      "Brand partnership pipelines",
-      "Long-term career roadmaps",
-      "Negotiated compensation uplift",
-    ],
-  },
-  {
-    icon: UsersRound,
-    title: "Staffing & Workforce Solutions",
-    summary:
-      "Flexible staffing for short-term, contract, and permanent roles with pre-vetted, ready-to-deploy professionals.",
-    detail:
-      "From single contractors to fully managed teams, we handle sourcing, onboarding, payroll and compliance so you scale without overhead.",
-    industries: ["BPO", "Field operations", "Project teams", "Seasonal workforce"],
-    outcomes: [
-      "Onboarding in 48 hours",
-      "100% statutory compliance",
-      "Single point of accountability",
-    ],
-  },
-  {
-    icon: Crown,
-    title: "Executive Search",
-    summary: "Specialized recruitment for C-suite, director, and senior leadership roles.",
-    detail:
-      "Confidential, research-led executive search powered by our deep regional networks and rigorous leadership assessment frameworks.",
-    industries: ["Enterprise", "Family-owned business", "Government", "NGO"],
-    outcomes: [
-      "Confidential mandates",
-      "Executive shortlists in 30 days",
-      "12-month transition support",
+      "Launch in weeks, not quarters",
+      "Production-grade quality",
+      "Scalable modern stacks",
     ],
   },
   {
     icon: Megaphone,
-    title: "Creative & Influencer Management",
-    summary:
-      "Represent content creators, influencers, and media personalities, managing brand deals and growth strategy.",
+    title: "Digital Marketing",
+    summary: "Generative campaigns, content and ads that grow brands across every major platform.",
     detail:
-      "We grow audiences, structure deals, and protect brands. Our creators benefit from strategy, legal, finance and PR under one roof.",
-    industries: ["Beauty & Lifestyle", "Sports", "Music", "Tech & Gaming"],
-    outcomes: [
-      "3x average revenue uplift",
-      "Long-term brand partnerships",
-      "Cross-platform audience growth",
-    ],
+      "We orchestrate AI and creative talent into brand-consistent campaigns, social content and paid ads, generated and optimized in hours rather than weeks.",
+    industries: ["Social media", "Paid ads", "Brand campaigns", "Product launches"],
+    outcomes: ["Faster creative cycles", "Multi-platform reach", "Performance-driven growth"],
+  },
+  {
+    icon: Clapperboard,
+    title: "Media & Content Production",
+    summary:
+      "Animation, video and visual content, from 3D in Blender to brand explainers, produced in-house.",
+    detail:
+      "Our media pipeline turns ideas into film-quality assets: character animation, motion graphics, explainers and content series that work across products, classrooms and brands.",
+    industries: ["Animation & 3D", "Explainers", "Brand films", "Content series"],
+    outcomes: ["Film-quality output", "Reusable asset libraries", "Consistent brand worlds"],
   },
   {
     icon: GraduationCap,
-    title: "Training & Career Development",
-    summary:
-      "Skills development, onboarding support and coaching so professionals thrive in their roles.",
+    title: "Children's Digital Education",
+    summary: "Story-led educational content and learning experiences for young audiences.",
     detail:
-      "Bespoke learning journeys, leadership coaching and continuous upskilling for both the talent we place and corporate clients we serve.",
-    industries: ["All sectors", "Tech upskilling", "Leadership development"],
-    outcomes: ["Measurable skill uplift", "Onboarding success > 95%", "Career mobility programs"],
+      "We design and produce curriculum-aligned digital content (animated series, interactive activities and learning games) that make early learning joyful and effective.",
+    industries: ["Animated series", "Interactive learning", "Learning games", "Curriculum content"],
+    outcomes: ["Curriculum-aligned", "Engaging for ages 1–8", "Literacy & STEM outcomes"],
+  },
+  {
+    icon: Sparkles,
+    title: "AI Solutions",
+    summary:
+      "AI features and automations, transcription, translation and agents, built into real products.",
+    detail:
+      "We integrate Claude, OpenRouter and image models into production workflows: meeting summaries, live translation, content generation and agentic automation.",
+    industries: ["AI features", "Automation", "Transcription & translation", "Agents"],
+    outcomes: ["Smarter products", "Automated workflows", "Cutting-edge capabilities"],
   },
 ];
 
@@ -123,8 +95,9 @@ export function Services() {
           <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">Services</div>
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground">What We Do</h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            From executive search and workforce staffing to talent representation and creative
-            management, we match the right people with the right opportunities across East Africa.
+            From software development and AI to digital marketing, media production and children's
+            digital education, we design and ship the products, content and campaigns that move
+            modern brands forward.
           </p>
         </motion.div>
 

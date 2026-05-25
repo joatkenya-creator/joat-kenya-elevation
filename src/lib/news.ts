@@ -12,6 +12,19 @@ export type BlogPost = {
   created_at: string;
 };
 
+// Articles to hide from the website (matched against the title, case-insensitive
+// substring). Used to drop talent-outsourcing-era posts that no longer fit.
+const HIDDEN_TITLE_PATTERNS = [
+  "transforming employment",
+  "talent outsourcing",
+  "kenyans are unemployed",
+];
+
+function isHidden(post: BlogPost): boolean {
+  const title = post.title.toLowerCase();
+  return HIDDEN_TITLE_PATTERNS.some((q) => title.includes(q));
+}
+
 /**
  * Browser-side fetch of blog/news articles from JOAT's Supabase. The anon key is
  * public (designed to be embedded). Read access is governed by Supabase RLS.
@@ -31,7 +44,7 @@ export async function fetchNewsArticles(): Promise<
       console.error("News fetch error", res.status);
       return { ok: false, posts: [] };
     }
-    const posts = (await res.json()) as BlogPost[];
+    const posts = ((await res.json()) as BlogPost[]).filter((p) => !isHidden(p));
     return { ok: true, posts };
   } catch (err) {
     console.error("News fetch transport error", err);

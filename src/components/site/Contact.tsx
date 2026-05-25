@@ -8,15 +8,12 @@ import { openCalendly } from "@/lib/calendly";
 
 const services = [
   "General Inquiry",
-  "Talent Sourcing & Headhunting",
-  "Staffing & Workforce Solutions",
-  "Executive Search",
-  "Talent Management & Representation",
-  "Creative & Influencer Management",
+  "Software Development",
+  "Digital Marketing",
+  "Media & Content Production",
+  "Children's Digital Education",
+  "AI Solutions",
   "Biobiz / Product Inquiry",
-  "Digital Education & Training",
-  "Game Development (Roblox)",
-  "AI Marketing",
   "Animation / Blender",
 ];
 
@@ -87,8 +84,8 @@ export function Contact() {
             Let's build <span className="gradient-text-gold">something great.</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Whether you're hiring top talent, exploring our products, or partnering on innovation,
-            our team is ready to help.
+            Whether you need software development, are exploring our products, or partnering on
+            innovation, our team is ready to help.
           </p>
         </motion.div>
 
