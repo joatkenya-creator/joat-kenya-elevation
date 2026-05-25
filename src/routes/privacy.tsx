@@ -1,17 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
   component: PrivacyPage,
-  head: () => ({
-    meta: [
-      { title: "Privacy Policy · JOAT KENYA" },
-      {
-        name: "description",
-        content:
-          "How J.O.A.T. Kenya collects, uses, stores and protects information shared through joatkenya.com and our products.",
-      },
-    ],
+  head: () =>
+    seo({
+      title: "Privacy Policy | JOAT KENYA",
+      description:
+        "How J.O.A.T. Kenya collects, uses, stores, and protects information shared through joatkenya.com and our products.",
+      path: "/privacy",
   }),
 });
 
