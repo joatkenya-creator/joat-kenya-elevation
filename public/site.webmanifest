@@ -1,0 +1,16 @@
+{
+  "name": "J.O.A.T. Kenya",
+  "short_name": "JOAT Kenya",
+  "description": "Talent, technology, AI automation, digital education, and immersive digital solutions in Kenya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "/joat-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

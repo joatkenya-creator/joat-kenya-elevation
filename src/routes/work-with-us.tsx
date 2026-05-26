@@ -17,18 +17,16 @@ import {
   Sparkles,
 } from "lucide-react";
 import { openCalendly } from "@/lib/calendly";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/work-with-us")({
   component: WorkWithUsPage,
-  head: () => ({
-    meta: [
-      { title: "Work With Us · JOAT KENYA" },
-      {
-        name: "description",
-        content:
-          "Run your business content from a single chat. JOAT Kenya connects your website and social channels to an AI-powered Telegram bot, with Foundation, Growth and Scale packages, all month-to-month.",
-      },
-    ],
+  head: () =>
+    seo({
+      title: "AI Automation Services in Kenya | Work With JOAT KENYA",
+      description:
+        "Run your business content from a single chat. JOAT Kenya connects your website and social channels to an AI-powered Telegram bot with flexible automation packages.",
+      path: "/work-with-us",
   }),
 });
 

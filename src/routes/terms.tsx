@@ -1,17 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/terms")({
   component: TermsPage,
-  head: () => ({
-    meta: [
-      { title: "Terms of Use · JOAT KENYA" },
-      {
-        name: "description",
-        content:
-          "The terms under which you may use joatkenya.com and the products offered by J.O.A.T. Kenya.",
-      },
-    ],
+  head: () =>
+    seo({
+      title: "Terms of Use | JOAT KENYA",
+      description:
+        "The terms under which you may use joatkenya.com and the products offered by J.O.A.T. Kenya.",
+      path: "/terms",
   }),
 });
 

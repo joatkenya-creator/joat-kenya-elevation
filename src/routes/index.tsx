@@ -14,9 +14,27 @@ import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 import { Chatbot } from "@/components/site/Chatbot";
 import { BackToTop } from "@/components/site/BackToTop";
+import { localBusinessJsonLd, organizationJsonLd, seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    ...seo({
+      title: "JOAT KENYA | Talent, Technology & Digital Solutions in Kenya",
+      description:
+        "J.O.A.T. Kenya helps businesses grow through talent sourcing, staffing, software development, AI automation, digital education, and immersive game experiences across Africa.",
+    }),
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(organizationJsonLd),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(localBusinessJsonLd),
+      },
+    ],
+  }),
 });
 
 function Index() {
