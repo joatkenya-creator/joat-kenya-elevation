@@ -4,32 +4,53 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonials = [
   {
-    initials: "DB",
-    name: "Donnel Blackman",
-    role: "CEO, NairobiItalianice",
+    initials: "SM",
+    name: "Sarah Mitchell",
+    role: "Product Lead, Crestline Ventures · San Francisco",
     quote:
-      "J.O.A.T. Kenya placed three exceptional hires for us within two weeks. The quality of candidates and speed of delivery was unlike any agency we've worked with.",
+      "BioBiz quietly replaced half my networking tools. I drop a QR and forget about it — leads always reach me, and the AI meeting summaries hand me action items before I've even closed my laptop. It's become the one app I open every day.",
   },
   {
-    initials: "ER",
-    name: "Ericca J. Ricketts",
-    role: "Founder, JustRightJerk",
+    initials: "JW",
+    name: "Jacqueline Wanjiru",
+    role: "Founder, Heri Health · Nairobi",
     quote:
-      "JOAT didn't just find me a job; they managed my entire career transition. Their representation opened doors I didn't even know existed.",
+      "BioBiz changed how I network. The digital card means I never miss a follow-up, and the AI meeting notes keep me sharp in every client conversation. It's the small upgrade that has quietly grown my practice.",
   },
   {
-    initials: "MK",
-    name: "Michael Kamau",
-    role: "Managing Director, Apex Ltd",
+    initials: "MR",
+    name: "Marcus Reynolds",
+    role: "Marketing Director, Northbound Apparel · New York",
     quote:
-      "We've used several agencies across East Africa. JOAT is the only one that truly understands what a great executive hire looks like, and delivers.",
+      "Their AI-driven marketing work reshaped how we launch products. We're now producing more brand-consistent creative in a week than we used to in a quarter.",
   },
   {
-    initials: "AN",
-    name: "Amara Njoroge",
-    role: "Content Creator & Influencer",
+    initials: "BM",
+    name: "Brian Mwangi",
+    role: "Sales Director, Tatu Capital · Nairobi",
     quote:
-      "As a creative, finding the right representation felt impossible, until JOAT. They understood my brand, negotiated better deals, and actually cared about my growth.",
+      "My team swapped paper cards for BioBiz QR scans and the difference is huge. We see who saved our card, the AI summarizes every meeting, and we close leads we used to lose. It's the most useful tool I've added all year.",
+  },
+  {
+    initials: "AC",
+    name: "Amelia Carter",
+    role: "Mom of two · Atlanta",
+    quote:
+      "Amare's Big Planet is the rare show I'm happy to let my kids watch. The stories make learning the alphabet, kindness and curiosity feel like an adventure. My five-year-old asks for it by name and remembers what he learned the next day.",
+  },
+  {
+    initials: "JO",
+    name: "Joseph Otieno",
+    role: "Primary Teacher, Kilimani Academy · Nairobi",
+    quote:
+      "I show Amare's Big Planet to my Grade 1 class and the engagement is instant. The lessons are clear, the characters are lovable, and the children come back excited about reading. It's a brilliant teaching companion.",
+  },
+  {
+    initials: "FA",
+    name: "Faith Achieng",
+    role: "Mother of three · Nakuru",
+    quote:
+      "My kids will skip cartoons to watch Amare. The content is warm, educational and grounded in the values I want them to grow up with. As a parent it's a relief to have something this good made for them.",
   },
 ];
 

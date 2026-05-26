@@ -5,7 +5,7 @@ const reasons = [
   {
     icon: Globe2,
     title: "Global Innovation Leadership",
-    text: "Solutions engineered to global standards and built for worldwide ambition, shipped with the cadence of a modern tech company.",
+    text: "Solutions engineered to global standards and built for worldwide ambition, delivered with the cadence of a modern tech company.",
   },
   {
     icon: Layers,

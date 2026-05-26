@@ -10,63 +10,98 @@ export type ChatMessageT = {
   content: string;
 };
 
+// Chatbot is intentionally scripted (no JACK round-trip). JACK's server-side
+// training still positions JOAT as a talent-outsourcing agency, which conflicts
+// with the current direction (software, digital marketing, media, children's
+// education, AI). Order of patterns matters — first match wins, so put specific
+// intents above general ones.
 const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
-    match: /biobiz/i,
+    match: /^(hi|hello|hey|howdy|greetings|good\s+(morning|afternoon|evening))\b/i,
     reply:
-      "BioBiz is JOAT's digital business-card app with AI meeting notes and live foreign-language → English transcription. It's free on Google Play and the Apple App Store. Grab it from biobiz.app or tell us what you'd use it for in the Contact form and we'll route you.",
+      "Hi! I'm JACK, J.O.A.T. Kenya's assistant. I can walk you through our services, explain our packages, or set up a meeting with the team. What are you looking to do?",
   },
   {
-    match: /majobo|talent|hir(e|ing)|recruit|job/i,
+    match: /biobiz|business card|networking app|meeting notes|transcription app/i,
     reply:
-      "Majobo Kenya is JOAT's hyper-local talent marketplace with 1,000+ AI-categorized jobs across East Africa. Hire at majobokenya.com, or drop a brief in the Contact section and pick 'Talent Sourcing'.",
+      "BioBiz is our digital business-card app with AI meeting notes and live foreign-language → English transcription. It's free on Google Play and the Apple App Store. Want a quick walkthrough? Book a 30-min demo from the Contact section.",
   },
   {
-    match: /amare|kids|children|story|youtube/i,
+    match: /amare|kids|children|young|early.?year|literacy|alphabet|edutainment|youtube series/i,
     reply:
-      "Amare's Big Planet is our flagship YouTube series for African kids aged 4–12, with story-led learning rooted in African identity. Watch on youtube.com/@amaresbigplanet.",
+      "We design children's digital education content, including Amare's Big Planet — our partnered animated YouTube series. Watch it on youtube.com/@amaresbigplanet, or message us about custom learning content via the Contact form (pick \"Children's Digital Education\").",
   },
   {
-    match: /roblox|game/i,
+    match: /software|mobile app|web app|\bweb(site|app)?\b|develop|engineer(ing)?|backend|frontend|api\b|saas|platform/i,
     reply:
-      "We design educational Roblox experiences and custom gamified learning systems. Tell us about your audience via the Contact form.",
+      "We build production-grade mobile apps, websites and AI-integrated products end-to-end. Tell us about your project in the Contact form (pick \"Software Development\") and we'll respond within one business day — or book a 30-min meeting from the Contact section.",
   },
   {
-    match: /ai|marketing|content|generate|image/i,
+    match: /marketing|campaign|social media|\bads?\b|brand|seo|paid media|growth/i,
     reply:
-      "Our AI Marketing service orchestrates Claude + OpenRouter into brand-tuned image and copy pipelines, so campaigns ship in hours. Tell us about your brand via the Contact form.",
+      "Our Digital Marketing service runs AI-powered campaigns, social content and paid ads across every major platform. Use the Contact form (pick \"Digital Marketing\") to start, or book a 30-min meeting from the Contact section.",
   },
   {
-    match: /career|apply|intern/i,
+    match: /media|animation|\bvideo\b|blender|3d|motion|explainer|content production/i,
     reply:
-      "Every live JOAT and partner role flows through Majobo Kenya. Head to majobokenya.com to filter and apply, or join our always-open talent network via the Contact form.",
+      "Our Media & Content team produces animation, video and 3D in Blender — film-quality work for products, classrooms and brands. Share the project via the Contact form (pick \"Media & Content Production\").",
   },
   {
-    match: /contact|email|phone|call|reach/i,
+    match: /\bai\b|claude|openrouter|automation|\bllm\b|agent|chatbot for|generative/i,
     reply:
-      "You can reach us at +254142378150, email joatkenya120@gmail.com, or use the Contact form below.",
+      "Our AI Solutions team integrates Claude, OpenRouter and image models into real products — meeting summaries, live translation, content generation and agentic automation. Tell us what you want to build via the Contact form (pick \"AI Solutions\").",
   },
   {
-    match: /partner|invest|collaborat/i,
+    match: /package|tier|plan\b|pricing|price|cost|quote|budget|foundation|growth|scale/i,
     reply:
-      "Love that. Pick 'Partner With Us' in the nav (or use the Contact form) and we'll connect you with the right team within one business day.",
+      "Our Telegram CMS + Social packages are Foundation, Growth and Scale — all month-to-month with no lock-in. See the full feature breakdown on our Work With Us page, or book a 30-min demo from the Contact section to walk through which one fits.",
   },
   {
-    match: /price|cost|quote|budget/i,
+    match: /meeting|\bbook\b|\bdemo\b|schedule|appointment|consult|calendly|talk to|speak to|set.?up.+call/i,
     reply:
-      "Pricing depends on scope. Share the project in the Contact form and we'll send tailored options within 24 hours.",
+      "Happy to set that up. Book a 30-min meeting with our team via Calendly — there's a \"Book\" button in the Contact section. Prefer to talk now? Call +254142378150 or email joatkenya120@gmail.com.",
   },
   {
-    match: /cert|iso|nema|kra/i,
+    match: /contact|\bemail\b|\bphone\b|\bcall\b|reach (out|us)|get in touch/i,
     reply:
-      "JOAT KENYA is ISO 9001 quality-certified, NEMA NCA-1 (environmental) compliant and fully KRA tax-compliant.",
+      "Reach us at +254142378150, email joatkenya120@gmail.com, or use the Contact form on this page. We respond within one business day.",
+  },
+  {
+    match: /partner|collaborat|invest|alliance/i,
+    reply:
+      "We love partnerships. Share what you have in mind via the Contact form and we'll connect you with the right team within one business day.",
+  },
+  {
+    match: /\bcareer|\bapply\b|\bintern|join your team|work for you|work at joat|open role|open position/i,
+    reply:
+      "Interested in working at JOAT? (1) Register on Majobo Kenya (majobokenya.com) to browse and apply for open positions. (2) Download BioBiz and create your digital business card so we can find you. We'll reach out when a role matches your skills.",
+  },
+  {
+    match: /\bhire\b|\bhiring\b|recruit|outsourc|staffing|find (a |me )?talent|need talent|workforce/i,
+    reply:
+      "J.O.A.T. is a digital innovation studio — we deliver software, digital marketing, media production, AI solutions and children's digital education. If you'd like us to build something with you, share your goals via the Contact form. Browsing open jobs? See majobokenya.com.",
+  },
+  {
+    match: /cert|\biso\b|nema|\bkra\b|compliance|compliant/i,
+    reply:
+      "J.O.A.T. Kenya is ISO 9001 quality-certified, NEMA NCA-1 (environmental) compliant and fully KRA tax-compliant.",
+  },
+  {
+    match: /service|what.+(do|offer)|capabilit|expertise|help me|how can you/i,
+    reply:
+      "We deliver five core services: Software Development, Digital Marketing, Media & Content Production, Children's Digital Education and AI Solutions. We also build our own products — BioBiz (digital business cards) and Majobo Kenya (jobs board). Which area interests you?",
+  },
+  {
+    match: /about|who are you|tell me about joat|history|founded|year/i,
+    reply:
+      "J.O.A.T. (Jack of All Trades) Kenya is a digital innovation studio operating since 1983. We design and deliver software, digital marketing, media, AI products and children's educational content for clients worldwide. Want to talk to the team? Book a 30-min meeting from the Contact section.",
   },
 ];
 
 function heuristicReply(lastUserMessage: string): string {
   const hit = HEURISTIC_FALLBACKS.find((h) => h.match.test(lastUserMessage));
   if (hit) return hit.reply;
-  return "Great question. I'd love to connect you with the right team. Drop a quick note in the Contact form below or call +254142378150 and we'll respond within 24 hours.";
+  return "I can help with our services (software, digital marketing, media, children's education, AI), our packages, or setting up a meeting. Which would you like to explore? You can also call +254142378150 or use the Contact form anytime.";
 }
 
 type JackResponse = {
@@ -96,9 +131,14 @@ function sanitizeContactDetails(text: string): string {
 }
 
 /**
- * Browser-side chat completion: hits JOAT's own JACK Supabase Edge Function
- * (same backend the original joatkenya.com site uses). Falls back to scripted
- * heuristic replies if the network call fails.
+ * Browser-side chat completion. We deliberately do NOT call JACK (the legacy
+ * Supabase Edge Function) because its server-side prompt still positions JOAT
+ * as a talent-outsourcing agency, which conflicts with our current direction.
+ * The bot is fully scripted via HEURISTIC_FALLBACKS above so every reply leads
+ * the visitor toward our services, packages, or a meeting with the team.
+ *
+ * To re-enable JACK later, uncomment the fetch block and the imports/constants
+ * referenced below.
  */
 export async function chatCompletion(messages: ChatMessageT[]): Promise<{
   ok: true;
@@ -108,6 +148,8 @@ export async function chatCompletion(messages: ChatMessageT[]): Promise<{
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   const lastUserText = lastUser?.content ?? "";
 
+  /*
+  // Preserved for re-enabling: round-trip to JACK with sanitization on the way out.
   try {
     const res = await fetch(JACK_URL, {
       method: "POST",
@@ -118,18 +160,19 @@ export async function chatCompletion(messages: ChatMessageT[]): Promise<{
       },
       body: JSON.stringify({ messages }),
     });
-
     if (!res.ok) {
       console.error("JACK endpoint error", res.status);
       return { ok: true, source: "fallback", reply: heuristicReply(lastUserText) };
     }
-
     const json = (await res.json()) as JackResponse;
     const reply = (json.text ?? json.reply ?? json.message ?? "").trim();
     if (reply) return { ok: true, source: "jack", reply: sanitizeContactDetails(reply) };
   } catch (err) {
     console.error("JACK fetch error", err);
   }
+  */
 
+  // Small artificial delay so the UI's "Thinking…" indicator reads naturally.
+  await new Promise((r) => setTimeout(r, 350));
   return { ok: true, source: "fallback", reply: heuristicReply(lastUserText) };
 }

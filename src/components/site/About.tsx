@@ -21,7 +21,7 @@ export function About() {
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
             Jack of All Trades began with a simple conviction: great technology, thoughtfully built,
-            changes how people live, learn and do business. We set out to design and ship digital
+            changes how people live, learn and do business. We set out to design and deliver digital
             products of genuine quality, from the ground up.
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
@@ -31,7 +31,7 @@ export function About() {
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
             We don't just deliver projects. We build products people love, stories that teach, and
-            campaigns that move, shipped with the cadence of a modern tech company.
+            campaigns that move, delivered with the cadence of a modern tech company.
           </p>
         </motion.div>
 

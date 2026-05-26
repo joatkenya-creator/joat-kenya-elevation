@@ -17,7 +17,7 @@ const culture = [
     title: "People First",
     text: "We invest in our engineers, designers and marketers, their growth, their craft and their well-being.",
   },
-  { icon: Rocket, title: "Real Ownership", text: "Ship work that touches millions of lives." },
+  { icon: Rocket, title: "Real Ownership", text: "Deliver work that touches millions of lives." },
   {
     icon: Coffee,
     title: "Hybrid by Design",
@@ -26,7 +26,7 @@ const culture = [
   {
     icon: Wrench,
     title: "Equipped for the Work",
-    text: "A multi-skilled team of engineers, designers and digital marketers, armed with the tools and training to ship any product, campaign or piece of content end-to-end.",
+    text: "A multi-skilled team of engineers, designers and digital marketers, armed with the tools and training to deliver any product, campaign or piece of content end-to-end.",
   },
 ];
 
@@ -56,7 +56,7 @@ export function Careers() {
           <p className="mt-6 text-lg text-muted-foreground">
             We're always looking for creative minds, problem solvers and innovators who want to make
             a real impact across industries. Every open role at JOAT, our partners and the wider
-            East African market lives on one platform: Majobo Kenya.
+            wider market lives on one platform: Majobo Kenya.
           </p>
         </motion.div>
 
@@ -78,7 +78,7 @@ export function Careers() {
                 Live opportunities · Majobo Kenya
               </div>
               <h3 className="text-lg sm:text-2xl lg:text-4xl font-bold text-foreground leading-tight">
-                1,000+ opportunities across East Africa, refreshed daily.
+                1,000+ opportunities, refreshed daily.
               </h3>
               <p className="mt-2 sm:mt-4 text-[11px] sm:text-base text-muted-foreground leading-relaxed">
                 Every open role flows through Majobo Kenya, where AI categorizes posts the moment

@@ -572,8 +572,8 @@ const BlenderExtra = (
         Animations built in Blender
       </h4>
       <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 leading-relaxed">
-        We use Blender end-to-end (modeling, rigging, lighting, render) to ship film-quality assets
-        that double as game characters, classroom explainers, and brand identity systems.
+        We use Blender end-to-end (modeling, rigging, lighting, render) to deliver film-quality
+        assets that double as game characters, classroom explainers, and brand identity systems.
       </p>
     </div>
     <div className="glass rounded-2xl p-3 sm:p-6">
@@ -586,7 +586,7 @@ const BlenderExtra = (
       <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 leading-relaxed">
         A game we're building from Blender assets: children learn the alphabet by tracing each
         letter, the character cheers them on, and progress unlocks new worlds. Built for tablets,
-        designed for African early-years curricula.
+        designed for early-years curricula worldwide.
       </p>
       <ul className="mt-3 sm:mt-4 space-y-1.5 text-[11px] sm:text-sm">
         {[
@@ -655,10 +655,10 @@ const products: Product[] = [
   {
     id: "software",
     badge: "Software Development",
-    title: "Built by an engineering team that ships.",
+    title: "Built by an engineering team that delivers.",
     tagline: "Production-grade mobile, web and AI products, built in-house.",
     description:
-      "BioBiz is a proof point of how we work: real product, real users, real shipping cadence. From native mobile (Flutter, React Native) to AI integrations (Claude, OpenRouter) to backend (Supabase, Cloudflare Workers), we build software the way modern tech companies do, and we partner with organizations who want the same engineering culture without hiring a full team.",
+      "BioBiz is a proof point of how we work: real product, real users, real delivery cadence. From native mobile (Flutter, React Native) to AI integrations (Claude, OpenRouter) to backend (Supabase, Cloudflare Workers), we build software the way modern tech companies do, and we partner with organizations who want the same engineering culture without hiring a full team.",
     features: [
       "Native mobile + web with shared design systems",
       "AI integrations: transcription, translation, agentic flows",

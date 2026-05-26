@@ -15,7 +15,7 @@ const services = [
     icon: Code2,
     title: "Software Development",
     summary:
-      "Custom mobile, web and AI products, designed, built and shipped end-to-end by our in-house engineering team.",
+      "Custom mobile, web and AI products, designed, built and delivered end-to-end by our in-house engineering team.",
     detail:
       "From discovery to launch we build production-grade software (native mobile, web apps, AI integrations and edge backends) the way modern tech companies do.",
     industries: ["Mobile apps", "Web platforms", "AI integrations", "APIs & backends"],
@@ -96,7 +96,7 @@ export function Services() {
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground">What We Do</h2>
           <p className="mt-6 text-lg text-muted-foreground">
             From software development and AI to digital marketing, media production and children's
-            digital education, we design and ship the products, content and campaigns that move
+            digital education, we design and deliver the products, content and campaigns that move
             modern brands forward.
           </p>
         </motion.div>

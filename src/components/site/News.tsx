@@ -106,7 +106,7 @@ export function News() {
             <h2 className="text-4xl lg:text-5xl font-bold text-foreground">News & Articles</h2>
           </div>
           <p className="text-sm text-muted-foreground sm:text-right max-w-xs leading-relaxed">
-            Perspectives on talent, work culture, and the East African job market.
+            Perspectives on technology, work culture and the modern digital workplace.
           </p>
         </motion.div>
 

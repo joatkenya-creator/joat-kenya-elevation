@@ -70,7 +70,7 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-sm">
-              Transforming Africa through innovation, talent and digital solutions. Since 1983.
+              Transforming the world through innovation and digital solutions. Since 1983.
             </p>
             <div className="mt-5 flex gap-3">
               {socials.map(({ Icon, href, label }) => (

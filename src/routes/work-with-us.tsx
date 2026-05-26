@@ -257,7 +257,7 @@ function WorkWithUsPage() {
               Three Automation Packages
             </div>
             <h2 className="text-4xl lg:text-5xl font-bold text-foreground">
-              Pick the tier that fits how you ship.
+              Pick the tier that fits how you deliver.
             </h2>
             <p className="mt-4 text-muted-foreground">
               All packages are month-to-month with no long-term contracts. Upgrade or downgrade from
@@ -371,7 +371,7 @@ function WorkWithUsPage() {
               From Real Clients
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-              Built for businesses that ship.
+              Built for businesses that deliver.
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-5">

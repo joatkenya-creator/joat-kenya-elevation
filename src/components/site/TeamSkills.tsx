@@ -27,7 +27,7 @@ export function TeamSkills() {
               Skills on the team
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold">
-              Every discipline you need to ship.
+              Every discipline you need to deliver.
             </h2>
           </div>
           <p className="text-sm sm:text-base text-[oklch(0.35_0.03_265)] max-w-md">

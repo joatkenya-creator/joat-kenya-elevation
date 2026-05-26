@@ -15,6 +15,7 @@ const services = [
   "AI Solutions",
   "Biobiz / Product Inquiry",
   "Animation / Blender",
+  "Other",
 ];
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -27,6 +28,7 @@ export function Contact() {
     last: "",
     email: "",
     area: "General Inquiry",
+    areaOther: "",
     message: "",
   });
   const [errs, setErrs] = useState<Record<string, string>>({});
@@ -36,6 +38,8 @@ export function Contact() {
     if (!form.first.trim()) e.first = "Required";
     if (!form.last.trim()) e.last = "Required";
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) e.email = "Valid email required";
+    if (form.area === "Other" && !form.areaOther.trim())
+      e.areaOther = "Please describe your inquiry";
     if (form.message.trim().length < 10) e.message = "Tell us a bit more (10+ chars)";
     setErrs(e);
     return Object.keys(e).length === 0;
@@ -47,11 +51,13 @@ export function Contact() {
     setServerError(null);
     setStatus("sending");
 
+    const effectiveArea = form.area === "Other" ? `Other: ${form.areaOther.trim()}` : form.area;
+
     const payload: ContactPayload = {
       first: form.first.trim(),
       last: form.last.trim(),
       email: form.email.trim(),
-      area: form.area,
+      area: effectiveArea,
       message: form.message.trim(),
       source: "website",
     };
@@ -159,6 +165,50 @@ export function Contact() {
                 Book
               </button>
             </div>
+
+            {/* Career interest — how to apply to JOAT roles */}
+            <div className="glass rounded-2xl p-6">
+              <div className="text-xs uppercase tracking-widest text-gold mb-3">
+                Want to work with JOAT?
+              </div>
+              <ol className="space-y-3 text-sm text-foreground/90">
+                <li className="flex gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) font-bold flex items-center justify-center text-xs">
+                    1
+                  </span>
+                  <span>
+                    Register on{" "}
+                    <a
+                      href="https://www.majobokenya.com/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-gold hover:underline"
+                    >
+                      Majobo Kenya
+                    </a>{" "}
+                    to browse and apply for open positions at JOAT and our partners.
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) font-bold flex items-center justify-center text-xs">
+                    2
+                  </span>
+                  <span>
+                    Download{" "}
+                    <a href="#biobiz" className="text-gold hover:underline">
+                      BioBiz
+                    </a>{" "}
+                    and create your digital business card to share your profile with our team.
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) font-bold flex items-center justify-center text-xs">
+                    3
+                  </span>
+                  <span>We&apos;ll reach out when a role matches your skills.</span>
+                </li>
+              </ol>
+            </div>
           </div>
 
           {/* Form */}
@@ -186,6 +236,7 @@ export function Contact() {
                       last: "",
                       email: "",
                       area: "General Inquiry",
+                      areaOther: "",
                       message: "",
                     });
                   }}
@@ -237,6 +288,15 @@ export function Contact() {
                     ))}
                   </select>
                 </div>
+                {form.area === "Other" && (
+                  <Field
+                    label="Tell us what your inquiry is about"
+                    name="areaOther"
+                    value={form.areaOther}
+                    onChange={(v) => setForm({ ...form, areaOther: v })}
+                    error={errs.areaOther}
+                  />
+                )}
                 <div>
                   <label htmlFor="message" className="text-xs uppercase tracking-widest text-gold">
                     Your Message
