@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Calendar, Check, Loader2, AlertCircle } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Calendar,
+  Check,
+  Loader2,
+  AlertCircle,
+  Paperclip,
+  X,
+} from "lucide-react";
 import { type ContactPayload } from "@/lib/contact";
 import { deliverViaWeb3Forms } from "@/lib/web3forms";
 import { SOCIAL_LINKS } from "@/lib/links";
@@ -32,6 +42,11 @@ export function Contact() {
     message: "",
   });
   const [errs, setErrs] = useState<Record<string, string>>({});
+  const [files, setFiles] = useState<File[]>([]);
+
+  // Web3Forms free plan: up to 5 attachments, ~10 MB total per submission.
+  const MAX_FILES = 5;
+  const MAX_TOTAL_BYTES = 10 * 1024 * 1024;
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -41,8 +56,29 @@ export function Contact() {
     if (form.area === "Other" && !form.areaOther.trim())
       e.areaOther = "Please describe your inquiry";
     if (form.message.trim().length < 10) e.message = "Tell us a bit more (10+ chars)";
+    if (files.length > MAX_FILES) e.files = `Up to ${MAX_FILES} files allowed`;
+    if (files.reduce((s, f) => s + f.size, 0) > MAX_TOTAL_BYTES)
+      e.files = "Total attachment size must be 10 MB or less";
     setErrs(e);
     return Object.keys(e).length === 0;
+  };
+
+  const addFiles = (incoming: FileList | null) => {
+    if (!incoming || incoming.length === 0) return;
+    const merged = [...files, ...Array.from(incoming)].slice(0, MAX_FILES);
+    setFiles(merged);
+    setErrs((prev) => {
+      const { files: _drop, ...rest } = prev;
+      void _drop;
+      return rest;
+    });
+  };
+  const removeFile = (idx: number) => setFiles(files.filter((_, i) => i !== idx));
+
+  const formatBytes = (n: number) => {
+    if (n < 1024) return `${n} B`;
+    if (n < 1024 * 1024) return `${Math.round(n / 102.4) / 10} KB`;
+    return `${Math.round(n / (1024 * 102.4)) / 10} MB`;
   };
 
   const submit = async (ev: React.FormEvent) => {
@@ -63,7 +99,7 @@ export function Contact() {
     };
 
     // Web3Forms direct from the browser — no server needed.
-    const ok = await deliverViaWeb3Forms(payload);
+    const ok = await deliverViaWeb3Forms(payload, files);
     if (ok) {
       setStatus("sent");
       return;
@@ -122,7 +158,7 @@ export function Contact() {
                 <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gold">
                   Direct Line
                 </div>
-                <div className="font-bold text-foreground mt-1 text-xs sm:text-base break-words">
+                <div className="font-bold text-foreground mt-1 text-xs sm:text-base wrap-break-word">
                   +254 142 378150
                 </div>
               </a>
@@ -195,7 +231,7 @@ export function Contact() {
                   </span>
                   <span>
                     Download{" "}
-                    <a href="#biobiz" className="text-gold hover:underline">
+                    <a href="/products#biobiz" className="text-gold hover:underline">
                       BioBiz
                     </a>{" "}
                     and create your digital business card to share your profile with our team.
@@ -239,6 +275,7 @@ export function Contact() {
                       areaOther: "",
                       message: "",
                     });
+                    setFiles([]);
                   }}
                   className="mt-6 text-sm text-gold underline"
                 >
@@ -311,6 +348,53 @@ export function Contact() {
                   {errs.message && (
                     <div className="text-xs text-(--joat-red) mt-1">{errs.message}</div>
                   )}
+
+                  {/* Attachments */}
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <input
+                      id="attachments"
+                      type="file"
+                      multiple
+                      onChange={(e) => {
+                        addFiles(e.target.files);
+                        e.target.value = "";
+                      }}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="attachments"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 text-xs font-semibold text-foreground hover:border-(--joat-gold)/50 cursor-pointer"
+                    >
+                      <Paperclip className="w-3.5 h-3.5 text-(--joat-gold)" />
+                      Attach files
+                    </label>
+                    <span className="text-[11px] text-muted-foreground">
+                      Up to {MAX_FILES} files, 10 MB total
+                    </span>
+                  </div>
+                  {files.length > 0 && (
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {files.map((f, i) => (
+                        <li
+                          key={`${f.name}-${i}`}
+                          className="inline-flex items-center gap-1.5 rounded-md bg-white/5 border border-white/10 px-2 py-1 text-xs text-foreground/90"
+                        >
+                          <Paperclip className="w-3 h-3 text-(--joat-gold) shrink-0" />
+                          <span className="max-w-40 truncate">{f.name}</span>
+                          <span className="text-muted-foreground">{formatBytes(f.size)}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeFile(i)}
+                            aria-label={`Remove ${f.name}`}
+                            className="ml-1 text-muted-foreground hover:text-foreground"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {errs.files && <div className="text-xs text-(--joat-red) mt-1">{errs.files}</div>}
                 </div>
 
                 {status === "error" && serverError && (

@@ -4,11 +4,12 @@ import { Link } from "@tanstack/react-router";
 import logo from "@/assets/joat-logo.png";
 
 const links = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "About Us", href: "#about" },
-  { label: "Careers", href: "#careers" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Home", to: "/" as const },
+  { label: "About Us", to: "/about" as const },
+  { label: "Services", to: "/services" as const },
+  { label: "Products", to: "/products" as const },
+  { label: "Careers", to: "/careers" as const },
+  { label: "Contact Us", to: "/contact" as const },
 ];
 
 export function Navbar() {
@@ -32,7 +33,7 @@ export function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-5 lg:px-8 h-16 lg:h-20 flex items-center justify-between gap-2">
-        <a href="#home" className="flex items-center gap-2 lg:gap-3 group min-w-0">
+        <Link to="/" className="flex items-center gap-2 lg:gap-3 group min-w-0">
           <img src={logo} alt="JOAT KENYA" className="h-9 lg:h-12 w-auto object-contain shrink-0" />
           <div className="leading-tight min-w-0">
             <div className="font-display font-bold text-base sm:text-lg md:text-2xl tracking-wide whitespace-nowrap">
@@ -40,20 +41,22 @@ export function Navbar() {
               <span className="text-gold">Kenya</span>
             </div>
             <div className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground hidden lg:block">
-              Since 1983 • Talent. Tech. Impact.
+              Since 1983 • Software. Media. AI.
             </div>
           </div>
-        </a>
+        </Link>
 
         <ul className="hidden lg:flex items-center gap-8">
           {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
+            <li key={l.to}>
+              <Link
+                to={l.to}
+                activeProps={{ className: "text-gold" }}
+                activeOptions={{ exact: true }}
                 className="text-sm font-medium text-foreground/80 hover:text-gold transition-colors relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-(--joat-gold) after:transition-all hover:after:w-full"
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -92,14 +95,16 @@ export function Navbar() {
         <div className="lg:hidden glass-panel border-t border-(--glass-border)">
           <ul className="px-5 py-4 space-y-2">
             {links.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
+              <li key={l.to}>
+                <Link
+                  to={l.to}
                   onClick={() => setOpen(false)}
+                  activeProps={{ className: "block py-2 text-gold" }}
+                  activeOptions={{ exact: true }}
                   className="block py-2 text-foreground/90"
                 >
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
             <li className="flex flex-col gap-2 pt-2">

@@ -20,16 +20,16 @@ import {
   Search,
   MapPin,
 } from "lucide-react";
-import biobiz from "@/assets/biobiz-mock.jpg";
-import biobizShare from "@/assets/biobiz-share.jpg";
-import biobizFeatures from "@/assets/biobiz-features.jpg";
-import biobizRecordings from "@/assets/biobiz-recordings.jpg";
-import biobizLogo from "@/assets/biobiz-logo.jpeg";
+import biobiz from "@/assets/biobiz-mock.webp";
+import biobizShare from "@/assets/biobiz-share.webp";
+import biobizFeatures from "@/assets/biobiz-features.webp";
+import biobizRecordings from "@/assets/biobiz-recordings.webp";
+import biobizLogo from "@/assets/biobiz-logo.webp";
 import { GermanSampleAudio } from "./GermanSampleAudio";
-import amare from "@/assets/amare-planet.jpg";
-import roblox from "@/assets/roblox-world.jpg";
-import talent from "@/assets/talent.jpg";
-import majoboLogo from "@/assets/majobo-logo.jpeg";
+import amare from "@/assets/amare-planet.webp";
+import roblox from "@/assets/roblox-world.webp";
+import talent from "@/assets/talent.webp";
+import majoboLogo from "@/assets/majobo-logo.webp";
 
 type CTA = {
   label: string;
@@ -665,7 +665,7 @@ const products: Product[] = [
       "Edge backends on Cloudflare Workers + Supabase",
       "From discovery to launch in weeks, not quarters",
     ],
-    ctas: [{ label: "Talk to Engineering Team", href: "#contact" }],
+    ctas: [{ label: "Talk to Engineering Team", href: "/contact" }],
     icon: Boxes,
     accent: "gold",
   },
@@ -710,7 +710,7 @@ const products: Product[] = [
       "Multiplayer architecture and live operations",
       "Brand-activated immersive worlds for partners",
     ],
-    ctas: [{ label: "Commission a build", href: "#contact" }],
+    ctas: [{ label: "Commission a build", href: "/contact" }],
     image: roblox,
     icon: Gamepad2,
     accent: "gold",
@@ -731,7 +731,7 @@ const products: Product[] = [
       "Multi-platform output (IG, TikTok, LinkedIn, X)",
       "Performance loops: regenerate from what's working",
     ],
-    ctas: [{ label: "See campaigns", href: "#contact" }],
+    ctas: [{ label: "See campaigns", href: "/contact" }],
     icon: Sparkles,
     accent: "red",
     reverse: true,
@@ -749,7 +749,7 @@ const products: Product[] = [
       "Brand explainers and product motion",
       "Tablet-ready letter-drawing game in production",
     ],
-    ctas: [{ label: "Commission a build", href: "#contact" }],
+    ctas: [{ label: "Commission a build", href: "/contact" }],
     icon: Brush,
     accent: "gold",
     extra: BlenderExtra,

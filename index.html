@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>JOAT KENYA | Talent, Technology & Digital Solutions in Kenya</title>
+    <title>JOAT Kenya | Software, Digital Marketing, Media & AI Studio</title>
     <meta
       name="description"
-      content="J.O.A.T. Kenya helps businesses grow through talent sourcing, staffing, software development, AI automation, digital education, and immersive game experiences across Africa."
+      content="J.O.A.T. Kenya is a digital innovation studio delivering software development, digital marketing, media production, AI solutions and children's digital education for clients worldwide."
     />
     <meta
       name="keywords"
-      content="JOAT Kenya, Kenya digital solutions, talent outsourcing Kenya, recruitment Kenya, BioBiz, Majobo Kenya, AI automation Kenya, digital education Africa"
+      content="JOAT Kenya, J.O.A.T. Kenya, digital innovation studio, software development, mobile app development, web development, digital marketing, AI solutions, media production, animation studio, children's digital education, BioBiz, Majobo Kenya"
     />
     <meta name="author" content="JOAT KENYA" />
     <meta name="robots" content="index, follow" />
@@ -21,10 +21,10 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="JOAT KENYA | Talent, Technology & Digital Solutions in Kenya" />
+    <meta property="og:title" content="JOAT Kenya | Software, Digital Marketing, Media & AI Studio" />
     <meta
       property="og:description"
-      content="Talent sourcing, staffing, software development, AI automation, digital education, and immersive game experiences built from Kenya for Africa."
+      content="A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="J.O.A.T. Kenya" />
@@ -34,29 +34,42 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="JOAT KENYA | Talent, Technology & Digital Solutions in Kenya" />
+    <meta name="twitter:title" content="JOAT Kenya | Software, Digital Marketing, Media & AI Studio" />
     <meta
       name="twitter:description"
-      content="Talent sourcing, staffing, software development, AI automation, digital education, and immersive game experiences built from Kenya for Africa."
+      content="A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide."
     />
     <meta name="twitter:image" content="https://joatkenya.com/joat-logo.png" />
 
-    <!-- Theme bootstrap runs before React mounts so there's no light/dark flash. -->
+    <!-- Lock the site to the dark-blue theme before React mounts (no light/dark flash). -->
     <script>
       (function () {
-        try {
-          var stored = localStorage.getItem("joat-theme");
-          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-          var theme = stored === "light" || stored === "dark" ? stored : prefersDark ? "dark" : "dark";
-          var root = document.documentElement;
-          if (theme === "dark") root.classList.add("dark");
-          else root.classList.remove("dark");
-          root.dataset.theme = theme;
-        } catch (_) {
-          document.documentElement.classList.add("dark");
-        }
+        var root = document.documentElement;
+        root.classList.add("dark");
+        root.dataset.theme = "dark";
       })();
     </script>
+
+    <!--
+      Google Analytics 4 — enabled by setting your Measurement ID below.
+      ─────────────────────────────────────────────────────────────────
+      1. Go to https://analytics.google.com/ → Admin → Data Streams → Web
+         → create a stream for joatkenya.com.
+      2. Copy the Measurement ID (looks like G-XXXXXXXXXX).
+      3. Replace BOTH occurrences of G-XXXXXXXXXX below with your ID,
+         then uncomment the <script> block.
+      4. In GA4 Admin → Data Streams → your web stream → Enhanced
+         measurement: turn ON "Page changes based on browser history events"
+         so SPA route navigations are tracked automatically.
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+      </script>
+    -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

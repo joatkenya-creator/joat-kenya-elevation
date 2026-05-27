@@ -17,16 +17,27 @@ import {
   Sparkles,
 } from "lucide-react";
 import { openCalendly } from "@/lib/calendly";
-import { seo } from "@/lib/seo";
+import { breadcrumbJsonLd, faqPageJsonLd, seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/work-with-us")({
   component: WorkWithUsPage,
-  head: () =>
-    seo({
+  head: () => ({
+    ...seo({
       title: "AI Automation Services in Kenya | Work With JOAT KENYA",
       description:
         "Run your business content from a single chat. JOAT Kenya connects your website and social channels to an AI-powered Telegram bot with flexible automation packages.",
       path: "/work-with-us",
+    }),
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(breadcrumbJsonLd("Work With Us", "/work-with-us")),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(faqPageJsonLd(faqs)),
+      },
+    ],
   }),
 });
 

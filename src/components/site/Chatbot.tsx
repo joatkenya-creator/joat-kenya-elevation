@@ -9,12 +9,12 @@ const FALLBACK_REPLY =
   "I'm having a moment, but our team isn't. Drop your question in the Contact form below or call +254142378150 and we'll respond within 24 hours.";
 
 const INITIAL_GREETING =
-  "Hi there! I'm JACK, J.O.A.T. Kenya's assistant. I can help you apply for roles, explore representation, or connect your organisation with the right talent.";
+  "Hi! I'm JACK, J.O.A.T. Kenya's assistant. I can walk you through our services, explain our packages, or set up a meeting with the team. How can I help?";
 
 const QUICK_REPLIES = [
-  { label: "I want to apply", message: "I want to apply for a role" },
-  { label: "My company wants to hire", message: "My company is looking to hire" },
-  { label: "Tell me about JOAT", message: "Tell me about J.O.A.T. Kenya" },
+  { label: "Our services", message: "What services do you offer?" },
+  { label: "Packages & pricing", message: "Tell me about your packages and pricing" },
+  { label: "Book a meeting", message: "I'd like to book a meeting" },
 ];
 
 export function Chatbot() {

@@ -21,7 +21,7 @@ export function seo({ title, description, path = "/", image = DEFAULT_IMAGE, noi
       {
         name: "keywords",
         content:
-          "JOAT Kenya, Kenya digital solutions, talent outsourcing Kenya, recruitment Kenya, BioBiz, Majobo Kenya, AI automation Kenya, digital education Africa, Roblox game development Kenya",
+          "JOAT Kenya, J.O.A.T. Kenya, digital innovation studio, software development, mobile app development, web development, digital marketing, AI solutions, media production, animation studio, children's digital education, BioBiz, Majobo Kenya",
       },
       { name: "author", content: "J.O.A.T. Kenya" },
       { name: "robots", content: noindex ? "noindex, nofollow" : "index, follow" },
@@ -49,6 +49,9 @@ export const organizationJsonLd = {
   logo: DEFAULT_IMAGE,
   email: "joatkenya120@gmail.com",
   telephone: "+254142378150",
+  description:
+    "A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide.",
+  foundingDate: "1983",
   address: {
     "@type": "PostalAddress",
     streetAddress: "The Brick Mall, 2nd Floor, Kiambu Road, Thindigua",
@@ -56,19 +59,141 @@ export const organizationJsonLd = {
     addressCountry: "KE",
   },
   sameAs: [
-    "https://twitter.com/JOATKenya",
-    "https://www.youtube.com/@amaresbigplanet/featured",
+    "https://www.linkedin.com/company/joat-kenya-jack-urban-services-ltd/",
+    "https://www.instagram.com/joat.kenya",
+    "https://www.facebook.com/profile.php?id=61581326003888",
+    "https://www.youtube.com/results?search_query=joat+kenya",
     "https://www.majobokenya.com/",
+    "https://biobiz.app",
   ],
   knowsAbout: [
-    "Talent sourcing",
-    "Staffing",
     "Software development",
-    "AI automation",
-    "Digital education",
-    "Game development",
+    "Mobile app development",
+    "Web development",
+    "Digital marketing",
+    "Media and content production",
+    "Animation and 3D",
+    "AI solutions",
+    "Children's digital education",
   ],
 };
+
+/**
+ * Build a BreadcrumbList JSON-LD payload for a sub-page. Search engines use it
+ * to render breadcrumb trails under your result in the SERP.
+ */
+export function breadcrumbJsonLd(name: string, path: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${SITE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name,
+        item: `${SITE_URL}${path}`,
+      },
+    ],
+  };
+}
+
+/**
+ * Catalog of our five services + two products as schema.org "Service" entries —
+ * gives Google a structured view of what JOAT actually offers.
+ */
+export const servicesCatalogJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "J.O.A.T. Kenya — Services & Products",
+  itemListElement: [
+    {
+      "@type": "Service",
+      position: 1,
+      name: "Software Development",
+      description:
+        "Custom mobile apps, websites and AI-integrated products, designed, built and delivered end-to-end.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "Service",
+      position: 2,
+      name: "Digital Marketing",
+      description:
+        "Generative campaigns, content and paid ads across IG, TikTok, LinkedIn and Facebook.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "Service",
+      position: 3,
+      name: "Media & Content Production",
+      description:
+        "Animation, video and 3D in Blender — film-quality work for products, classrooms and brands.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "Service",
+      position: 4,
+      name: "Children's Digital Education",
+      description:
+        "Curriculum-aligned animated content, learning games and interactive activities for ages 1–8.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "Service",
+      position: 5,
+      name: "AI Solutions",
+      description:
+        "Claude/OpenRouter integrations, meeting summaries, live translation, content generation and agentic automation.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "SoftwareApplication",
+      position: 6,
+      name: "BioBiz",
+      description:
+        "Digital business-card app with AI meeting notes and live foreign-language to English transcription.",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "iOS, Android",
+      url: "https://biobiz.app",
+    },
+    {
+      "@type": "WebSite",
+      position: 7,
+      name: "Majobo Kenya",
+      description: "Jobs marketplace with 1,000+ AI-classified listings.",
+      url: "https://www.majobokenya.com/",
+    },
+  ],
+};
+
+/**
+ * Build an FAQPage JSON-LD payload from an array of Q/A pairs.
+ */
+export function faqPageJsonLd(items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((it) => ({
+      "@type": "Question",
+      name: it.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: it.a,
+      },
+    })),
+  };
+}
 
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
@@ -78,8 +203,10 @@ export const localBusinessJsonLd = {
   image: DEFAULT_IMAGE,
   email: "joatkenya120@gmail.com",
   telephone: "+254142378150",
+  description:
+    "A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide.",
   priceRange: "$$",
-  areaServed: ["Kenya", "East Africa", "Africa"],
+  areaServed: "Worldwide",
   address: {
     "@type": "PostalAddress",
     streetAddress: "The Brick Mall, 2nd Floor, Kiambu Road, Thindigua",
@@ -87,11 +214,13 @@ export const localBusinessJsonLd = {
     addressCountry: "KE",
   },
   serviceType: [
-    "Talent sourcing and headhunting",
-    "Staffing and workforce solutions",
-    "Executive search",
     "Software development",
-    "AI marketing and automation",
-    "Digital education",
+    "Mobile app development",
+    "Web development",
+    "Digital marketing",
+    "Media and content production",
+    "Animation and 3D",
+    "AI solutions",
+    "Children's digital education",
   ],
 };

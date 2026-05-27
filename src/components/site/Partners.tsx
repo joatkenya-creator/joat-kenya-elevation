@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import m1 from "@/assets/partners/marquee1.jpg";
-import m2 from "@/assets/partners/marquee2.png";
-import m3 from "@/assets/partners/marquee3.jpeg";
-import m4 from "@/assets/partners/marquee4.jpeg";
-import m5 from "@/assets/partners/marquee5.jpeg";
-import m6 from "@/assets/partners/marquee6.jpeg";
-import m7 from "@/assets/partners/marquee7.jpeg";
-import m8 from "@/assets/partners/marquee8.png";
-import m9 from "@/assets/partners/marquee9.jpeg";
+import m1 from "@/assets/partners/marquee1.webp";
+import m2 from "@/assets/partners/marquee2.webp";
+import m3 from "@/assets/partners/marquee3.webp";
+import m4 from "@/assets/partners/marquee4.webp";
+import m5 from "@/assets/partners/marquee5.webp";
+import m6 from "@/assets/partners/marquee6.webp";
+import m7 from "@/assets/partners/marquee7.webp";
+import m8 from "@/assets/partners/marquee8.webp";
+import m9 from "@/assets/partners/marquee9.webp";
 
 const partners: { src: string; alt: string }[] = [
   { src: m1, alt: "Partner 1" },

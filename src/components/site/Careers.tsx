@@ -150,7 +150,7 @@ export function Careers() {
               <ExternalLink className="w-4 h-4" />
             </a>
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) text-sm font-semibold hover:brightness-110 transition-all"
             >
               Join Network

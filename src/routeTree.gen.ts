@@ -11,7 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkWithUsRouteImport } from './routes/work-with-us'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const WorkWithUsRoute = WorkWithUsRouteImport.update({
@@ -24,9 +30,39 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,34 +73,89 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
+  '/products': typeof ProductsRoute
+  '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
+  '/products': typeof ProductsRoute
+  '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
+  '/products': typeof ProductsRoute
+  '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/terms' | '/work-with-us'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/news'
+    | '/privacy'
+    | '/products'
+    | '/services'
+    | '/terms'
+    | '/work-with-us'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/terms' | '/work-with-us'
-  id: '__root__' | '/' | '/privacy' | '/terms' | '/work-with-us'
+  to:
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/news'
+    | '/privacy'
+    | '/products'
+    | '/services'
+    | '/terms'
+    | '/work-with-us'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/news'
+    | '/privacy'
+    | '/products'
+    | '/services'
+    | '/terms'
+    | '/work-with-us'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CareersRoute: typeof CareersRoute
+  ContactRoute: typeof ContactRoute
+  NewsRoute: typeof NewsRoute
   PrivacyRoute: typeof PrivacyRoute
+  ProductsRoute: typeof ProductsRoute
+  ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
   WorkWithUsRoute: typeof WorkWithUsRoute
 }
@@ -85,11 +176,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,7 +237,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CareersRoute: CareersRoute,
+  ContactRoute: ContactRoute,
+  NewsRoute: NewsRoute,
   PrivacyRoute: PrivacyRoute,
+  ProductsRoute: ProductsRoute,
+  ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
   WorkWithUsRoute: WorkWithUsRoute,
 }

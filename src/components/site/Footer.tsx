@@ -93,10 +93,11 @@ export function Footer() {
             <FooterCol
               title="Company"
               links={[
-                { l: "About Us", h: "#about" },
-                { l: "Services", h: "#services" },
-                { l: "Careers", h: "#careers" },
-                { l: "News & Articles", h: "#news" },
+                { l: "About Us", h: "/about" },
+                { l: "Services", h: "/services" },
+                { l: "Careers", h: "/careers" },
+                { l: "News & Articles", h: "/news" },
+                { l: "Contact", h: "/contact" },
                 { l: "J.O.A.T. USA", h: EXTERNAL.joatUsa, external: true },
               ]}
             />
@@ -116,13 +117,13 @@ export function Footer() {
               <ul className="mt-3 sm:mt-4 space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted-foreground">
                 <li className="flex gap-2 sm:gap-3">
                   <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0 mt-0.5" />
-                  <span className="break-words">
+                  <span className="wrap-break-word">
                     Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya
                   </span>
                 </li>
                 <li className="flex gap-2 sm:gap-3">
                   <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0 mt-0.5" />
-                  <span className="break-words">+254 142 378 150</span>
+                  <span className="wrap-break-word">+254 142 378 150</span>
                 </li>
                 <li className="flex gap-2 sm:gap-3">
                   <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0 mt-0.5" />
@@ -169,7 +170,7 @@ function FooterCol({
               href={x.h}
               target={x.external ? "_blank" : undefined}
               rel={x.external ? "noreferrer" : undefined}
-              className="text-muted-foreground hover:text-gold transition-colors break-words"
+              className="text-muted-foreground hover:text-gold transition-colors wrap-break-word"
             >
               {x.l}
             </a>
