@@ -43,10 +43,10 @@ function TermsPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">2. Our services</h2>
           <p>
-            JOAT provides talent recruitment, talent management, staffing, training, software
-            products (including BioBiz and Majobo Kenya), educational content (Amare's Big Planet),
-            game development and AI-marketing services. Specific products may have additional terms
-            surfaced at sign-up.
+            JOAT provides software development, digital marketing, media and animation production,
+            AI solutions and children's digital education content, plus our own products (BioBiz
+            and Majobo Kenya) and partnered content (Amare's Big Planet). Specific products may
+            have additional terms surfaced at sign-up.
           </p>
         </section>
 

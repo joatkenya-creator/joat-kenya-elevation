@@ -15,6 +15,7 @@ import { type ContactPayload } from "@/lib/contact";
 import { deliverViaWeb3Forms } from "@/lib/web3forms";
 import { SOCIAL_LINKS } from "@/lib/links";
 import { openCalendly } from "@/lib/calendly";
+import { supabase, UPLOADS_BUCKET } from "@/lib/supabase";
 
 const services = [
   "General Inquiry",
@@ -44,9 +45,10 @@ export function Contact() {
   const [errs, setErrs] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<File[]>([]);
 
-  // Web3Forms free plan: up to 5 attachments, ~10 MB total per submission.
+  // Attachments: PDF only, up to 5 files, 10 MB total.
   const MAX_FILES = 5;
   const MAX_TOTAL_BYTES = 10 * 1024 * 1024;
+  const isPdf = (f: File) => f.type === "application/pdf" || f.name.toLowerCase().endsWith(".pdf");
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -56,16 +58,26 @@ export function Contact() {
     if (form.area === "Other" && !form.areaOther.trim())
       e.areaOther = "Please describe your inquiry";
     if (form.message.trim().length < 10) e.message = "Tell us a bit more (10+ chars)";
-    if (files.length > MAX_FILES) e.files = `Up to ${MAX_FILES} files allowed`;
+    if (files.length > MAX_FILES) e.files = `Up to ${MAX_FILES} PDFs allowed`;
     if (files.reduce((s, f) => s + f.size, 0) > MAX_TOTAL_BYTES)
       e.files = "Total attachment size must be 10 MB or less";
+    if (files.some((f) => !isPdf(f))) e.files = "Only PDF files are accepted";
     setErrs(e);
     return Object.keys(e).length === 0;
   };
 
   const addFiles = (incoming: FileList | null) => {
     if (!incoming || incoming.length === 0) return;
-    const merged = [...files, ...Array.from(incoming)].slice(0, MAX_FILES);
+    const incomingArr = Array.from(incoming);
+    const nonPdf = incomingArr.find((f) => !isPdf(f));
+    if (nonPdf) {
+      setErrs((prev) => ({
+        ...prev,
+        files: `"${nonPdf.name}" is not a PDF. Only PDF documents are accepted.`,
+      }));
+      return;
+    }
+    const merged = [...files, ...incomingArr].slice(0, MAX_FILES);
     setFiles(merged);
     setErrs((prev) => {
       const { files: _drop, ...rest } = prev;
@@ -89,17 +101,67 @@ export function Contact() {
 
     const effectiveArea = form.area === "Other" ? `Other: ${form.areaOther.trim()}` : form.area;
 
+    // 1. Upload PDFs to Supabase Storage (public bucket; URLs use random UUIDs
+    //    so they're not enumerable). We collect public URLs to embed in both
+    //    the database row and the notification email.
+    const uploadedUrls: { name: string; url: string }[] = [];
+    for (const file of files) {
+      const safeName = file.name.replace(/[^\w.-]+/g, "_");
+      const objectPath = `${new Date().toISOString().slice(0, 10)}/${crypto.randomUUID()}-${safeName}`;
+      const { error: uploadError } = await supabase.storage
+        .from(UPLOADS_BUCKET)
+        .upload(objectPath, file, {
+          contentType: "application/pdf",
+          upsert: false,
+        });
+      if (uploadError) {
+        console.error("Supabase upload failed", uploadError);
+        setStatus("error");
+        setServerError(
+          `We couldn't upload "${file.name}". Please try again, or email us directly at joatkenya120@gmail.com.`,
+        );
+        return;
+      }
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from(UPLOADS_BUCKET).getPublicUrl(objectPath);
+      uploadedUrls.push({ name: file.name, url: publicUrl });
+    }
+
+    // 2. Persist the submission to the database (form metadata + file URLs).
+    const { error: insertError } = await supabase.from("contact_submissions").insert({
+      first_name: form.first.trim(),
+      last_name: form.last.trim(),
+      email: form.email.trim(),
+      service_area: effectiveArea,
+      message: form.message.trim(),
+      source: "website",
+      attachment_paths: uploadedUrls,
+    });
+    if (insertError) {
+      console.error("Supabase insert failed", insertError);
+      // Don't block the user — still try the email so the team gets notified.
+    }
+
+    // 3. Send notification email via Web3Forms. Files were uploaded to storage,
+    //    so we embed URLs in the message body (no email attachments).
+    const messageWithUrls =
+      uploadedUrls.length === 0
+        ? form.message.trim()
+        : `${form.message.trim()}\n\n──── Attached PDFs ────\n${uploadedUrls
+            .map((u, i) => `${i + 1}. ${u.name}\n   ${u.url}`)
+            .join("\n")}`;
+
     const payload: ContactPayload = {
       first: form.first.trim(),
       last: form.last.trim(),
       email: form.email.trim(),
       area: effectiveArea,
-      message: form.message.trim(),
+      message: messageWithUrls,
       source: "website",
     };
 
-    // Web3Forms direct from the browser — no server needed.
-    const ok = await deliverViaWeb3Forms(payload, files);
+    const ok = await deliverViaWeb3Forms(payload);
     if (ok) {
       setStatus("sent");
       return;
@@ -349,12 +411,13 @@ export function Contact() {
                     <div className="text-xs text-(--joat-red) mt-1">{errs.message}</div>
                   )}
 
-                  {/* Attachments */}
+                  {/* Attachments — PDF only */}
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     <input
                       id="attachments"
                       type="file"
                       multiple
+                      accept=".pdf,application/pdf"
                       onChange={(e) => {
                         addFiles(e.target.files);
                         e.target.value = "";
@@ -369,7 +432,7 @@ export function Contact() {
                       Attach files
                     </label>
                     <span className="text-[11px] text-muted-foreground">
-                      Up to {MAX_FILES} files, 10 MB total
+                      PDF only · up to {MAX_FILES} files · 10 MB total
                     </span>
                   </div>
                   {files.length > 0 && (

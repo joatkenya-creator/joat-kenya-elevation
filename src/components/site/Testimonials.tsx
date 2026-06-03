@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
-const testimonials = [
+type TItem = { initials: string; name: string; role: string; quote: string };
+
+// Hard-coded fallback — used if the Supabase fetch fails or returns empty so
+// the carousel never goes blank for a visitor.
+const FALLBACK_TESTIMONIALS: TItem[] = [
   {
     initials: "SM",
     name: "Sarah Mitchell",
@@ -54,19 +59,64 @@ const testimonials = [
   },
 ];
 
+function makeInitials(name: string) {
+  return name
+    .split(/\s+/)
+    .map((p) => p[0]?.toUpperCase() ?? "")
+    .slice(0, 2)
+    .join("");
+}
+
+function formatRole(row: {
+  author_role: string | null;
+  company: string | null;
+  location: string | null;
+}) {
+  const left = [row.author_role, row.company].filter(Boolean).join(", ");
+  return [left, row.location].filter(Boolean).join(" · ");
+}
+
 export function Testimonials() {
+  const [list, setList] = useState<TItem[]>(FALLBACK_TESTIMONIALS);
   const [i, setI] = useState(0);
-  const next = () => setI((v) => (v + 1) % testimonials.length);
-  const prev = () => setI((v) => (v - 1 + testimonials.length) % testimonials.length);
-  const t = testimonials[i];
+  const next = () => setI((v) => (v + 1) % list.length);
+  const prev = () => setI((v) => (v - 1 + list.length) % list.length);
+  const t = list[i];
+
+  // Pull testimonials from Supabase on mount. If the network call fails or the
+  // table is empty, the hard-coded fallback stays in place so the section is
+  // never blank.
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .from("testimonials")
+      .select("author_name, author_role, company, location, quote, display_order")
+      .eq("featured", true)
+      .order("display_order", { ascending: true })
+      .then(({ data, error }) => {
+        if (cancelled || error || !data || data.length === 0) return;
+        setList(
+          data.map((d) => ({
+            initials: makeInitials(d.author_name),
+            name: d.author_name,
+            role: formatRole(d),
+            quote: d.quote,
+          })),
+        );
+        setI(0);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Auto-rotate one testimonial at a time. Timer resets on manual interaction.
   useEffect(() => {
     const id = setTimeout(() => {
-      setI((v) => (v + 1) % testimonials.length);
+      setI((v) => (v + 1) % list.length);
     }, 5000);
     return () => clearTimeout(id);
-  }, [i]);
+  }, [i, list.length]);
 
   return (
     <section className="relative py-14 lg:py-20">
@@ -132,7 +182,7 @@ export function Testimonials() {
 
         {/* Dots */}
         <div className="flex justify-center gap-2 mt-6">
-          {testimonials.map((_, k) => (
+          {list.map((_, k) => (
             <button
               key={k}
               aria-label={`Go to testimonial ${k + 1}`}

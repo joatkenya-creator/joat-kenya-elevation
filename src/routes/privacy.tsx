@@ -34,10 +34,10 @@ function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">1. Who we are</h2>
           <p>
-            J.O.A.T. Kenya ("JOAT", "we", "us") is a Kenyan talent and innovation company operating
-            from The Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya. This policy explains what
-            we do with personal information we collect through joatkenya.com and our products
-            (BioBiz, Majobo Kenya, JOAT Academy, our YouTube and game channels).
+            J.O.A.T. Kenya ("JOAT", "we", "us") is a Kenyan digital innovation studio operating
+            from The Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya. This policy explains
+            what we do with personal information we collect through joatkenya.com and our products
+            (BioBiz, Majobo Kenya, and the Amare's Big Planet YouTube channel).
           </p>
         </section>
 
@@ -77,18 +77,16 @@ function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">4. Who we share it with</h2>
           <p>
-            We share information only with service providers that help us run the business (hosting,
-            email, payments, analytics), with employers/candidates you've explicitly asked us to
-            connect you to, and with authorities where required by law.
+            We share information only with service providers that help us run the business
+            (hosting, email, payments, analytics) and with authorities where required by law.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">5. How long we keep it</h2>
           <p>
-            We keep contact enquiries for up to 24 months, talent profiles for as long as you keep
-            your account active, and AI chat transcripts for up to 90 days unless you ask us to
-            delete sooner.
+            We keep contact-form enquiries (including any attached documents) for up to 24 months
+            and AI chat transcripts for up to 90 days, unless you ask us to delete sooner.
           </p>
         </section>
 

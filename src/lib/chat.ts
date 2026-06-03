@@ -345,8 +345,9 @@ export async function chatCompletion(messages: ChatMessageT[]): Promise<{
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   const lastUserText = lastUser?.content ?? "";
 
-  /*
-  // Preserved for re-enabling: round-trip to JACK with sanitization on the way out.
+  // Round-trip to JACK with sanitization on the way out. If the call fails for
+  // any reason we fall back to the scripted heuristics below so the chatbot
+  // always answers something useful.
   try {
     const res = await fetch(JACK_URL, {
       method: "POST",
@@ -367,9 +368,8 @@ export async function chatCompletion(messages: ChatMessageT[]): Promise<{
   } catch (err) {
     console.error("JACK fetch error", err);
   }
-  */
 
-  // Small artificial delay so the UI's "Thinking…" indicator reads naturally.
-  await new Promise((r) => setTimeout(r, 350));
+  // Fallback: scripted heuristic reply with a tiny "Thinking…" delay.
+  await new Promise((r) => setTimeout(r, 250));
   return { ok: true, source: "fallback", reply: heuristicReply(lastUserText) };
 }

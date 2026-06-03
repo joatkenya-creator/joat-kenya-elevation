@@ -9,8 +9,30 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
-const services = [
+// Map the `icon_name` string returned from Supabase → lucide-react component.
+// New icons need to be imported above and added here.
+const ICONS: Record<string, typeof Code2> = {
+  Code2,
+  Megaphone,
+  Clapperboard,
+  GraduationCap,
+  Sparkles,
+};
+
+type SvcItem = {
+  icon: typeof Code2;
+  title: string;
+  summary: string;
+  detail: string;
+  industries: string[];
+  outcomes: string[];
+};
+
+// Hard-coded fallback — same content as the seeded rows in Supabase. Used if
+// the DB fetch fails or returns empty so the carousel never goes blank.
+const FALLBACK_SERVICES: SvcItem[] = [
   {
     icon: Code2,
     title: "Software Development",
@@ -30,7 +52,7 @@ const services = [
     title: "Digital Marketing",
     summary: "Generative campaigns, content and ads that grow brands across every major platform.",
     detail:
-      "We orchestrate AI and creative talent into brand-consistent campaigns, social content and paid ads, generated and optimized in hours rather than weeks.",
+      "We orchestrate AI and creative teams into brand-consistent campaigns, social content and paid ads, generated and optimized in hours rather than weeks.",
     industries: ["Social media", "Paid ads", "Brand campaigns", "Product launches"],
     outcomes: ["Faster creative cycles", "Multi-platform reach", "Performance-driven growth"],
   },
@@ -66,21 +88,52 @@ const services = [
 ];
 
 export function Services() {
+  const [list, setList] = useState<SvcItem[]>(FALLBACK_SERVICES);
   const [i, setI] = useState(0);
-  const s = services[i];
+  const s = list[i];
   const Icon = s.icon;
 
-  const next = () => setI((v) => (v + 1) % services.length);
-  const prev = () => setI((v) => (v - 1 + services.length) % services.length);
+  const next = () => setI((v) => (v + 1) % list.length);
+  const prev = () => setI((v) => (v - 1 + list.length) % list.length);
+
+  // Fetch services from Supabase on mount. Falls back silently to the
+  // hard-coded list if the network call fails or the table is empty.
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .from("services")
+      .select(
+        "name, short_summary, full_description, icon_name, outcomes, industries, display_order",
+      )
+      .eq("published", true)
+      .order("display_order", { ascending: true })
+      .then(({ data, error }) => {
+        if (cancelled || error || !data || data.length === 0) return;
+        setList(
+          data.map((row) => ({
+            icon: ICONS[row.icon_name] ?? Sparkles,
+            title: row.name,
+            summary: row.short_summary,
+            detail: row.full_description,
+            industries: row.industries ?? [],
+            outcomes: row.outcomes ?? [],
+          })),
+        );
+        setI(0);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Auto-rotate one service at a time, like the testimonials carousel.
   // Timer resets whenever `i` changes, so a manual click pauses-then-resumes.
   useEffect(() => {
     const id = setTimeout(() => {
-      setI((v) => (v + 1) % services.length);
+      setI((v) => (v + 1) % list.length);
     }, 5000);
     return () => clearTimeout(id);
-  }, [i]);
+  }, [i, list.length]);
 
   return (
     <section id="services" className="relative py-14 lg:py-20 bg-navy-deep">
@@ -176,7 +229,7 @@ export function Services() {
 
         {/* Dots */}
         <div className="flex justify-center gap-2 mt-6">
-          {services.map((sv, k) => (
+          {list.map((sv, k) => (
             <button
               key={sv.title}
               aria-label={`Go to ${sv.title}`}

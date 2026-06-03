@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="3D animation pipeline visualization">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2236"/>
+      <stop offset="50%" stop-color="#101830"/>
+      <stop offset="100%" stop-color="#070d18"/>
+    </linearGradient>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4d68a"/>
+      <stop offset="55%" stop-color="#e7c97a"/>
+      <stop offset="100%" stop-color="#d63c2c"/>
+    </linearGradient>
+    <linearGradient id="cubeSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d63c2c"/>
+      <stop offset="100%" stop-color="#8a2418"/>
+    </linearGradient>
+    <linearGradient id="cubeTop" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#f4d68a"/>
+      <stop offset="100%" stop-color="#d4a14e"/>
+    </linearGradient>
+    <linearGradient id="cubeShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glowL" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e7c97a" stop-opacity="0.42"/>
+      <stop offset="60%" stop-color="#d4a14e" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="glowC" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f4d68a" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#d63c2c" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="glowR" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e7c97a" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#d63c2c" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="ambientGlow" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#d4a14e" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky / ambient -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="600" cy="240" rx="650" ry="320" fill="url(#ambientGlow)"/>
+
+  <!-- Subtle horizon line -->
+  <line x1="0" y1="470" x2="1200" y2="470" stroke="#d4a14e" stroke-width="1" opacity="0.18"/>
+
+  <!-- Big cinematic glows at the three node positions -->
+  <circle cx="240" cy="320" r="200" fill="url(#glowL)"/>
+  <circle cx="600" cy="290" r="250" fill="url(#glowC)"/>
+  <circle cx="960" cy="320" r="200" fill="url(#glowR)"/>
+
+  <!-- Flowing connector curve through all three -->
+  <path d="M 200 380 Q 410 200, 600 320 T 1000 380"
+        stroke="url(#ag)" stroke-width="3.5" fill="none" opacity="0.55" stroke-linecap="round"/>
+  <path d="M 200 380 Q 410 200, 600 320 T 1000 380"
+        stroke="#f4d68a" stroke-width="1.8" fill="none" opacity="0.35"
+        stroke-dasharray="10,16" stroke-linecap="round"/>
+
+  <!-- ─── NODE 1: BRIEF (left) ─── -->
+  <g transform="translate(240, 320)">
+    <!-- outer halo rings -->
+    <circle r="106" fill="none" stroke="url(#ag)" stroke-width="1" opacity="0.18"/>
+    <circle r="86" fill="none" stroke="url(#ag)" stroke-width="1.5" opacity="0.32"/>
+    <!-- inner hub -->
+    <circle r="62" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <circle r="62" fill="url(#glowL)" opacity="0.5"/>
+    <!-- Document / brief icon -->
+    <g transform="translate(-22, -28)" stroke="url(#ag)" stroke-width="2.6" fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M 0 0 L 30 0 L 44 14 L 44 56 L 0 56 Z"/>
+      <path d="M 30 0 L 30 14 L 44 14"/>
+    </g>
+    <g stroke="#e7c97a" stroke-width="2.2" opacity="0.85" stroke-linecap="round">
+      <line x1="-14" y1="-6" x2="14" y2="-6"/>
+      <line x1="-14" y1="4" x2="18" y2="4"/>
+      <line x1="-14" y1="14" x2="10" y2="14"/>
+    </g>
+  </g>
+
+  <!-- ─── NODE 2: CUBE TRANSFORMATION (center) ─── -->
+  <g transform="translate(600, 290)">
+    <!-- outer halo rings -->
+    <circle r="130" fill="none" stroke="url(#ag)" stroke-width="1" opacity="0.15"/>
+    <circle r="110" fill="none" stroke="url(#ag)" stroke-width="1.5" opacity="0.28"/>
+    <!-- inner hub (wider — fits both cubes) -->
+    <ellipse rx="120" ry="86" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <ellipse rx="120" ry="86" fill="url(#glowC)" opacity="0.5"/>
+
+    <!-- Wireframe cube (left side, slightly faded) -->
+    <g transform="translate(-50, 0)">
+      <g stroke="url(#ag)" stroke-width="2" fill="none" stroke-linejoin="round" opacity="0.95">
+        <path d="M 0 -40 L -34 -22 L -34 18 L 0 36 L 34 18 L 34 -22 Z"/>
+        <line x1="0" y1="-40" x2="0" y2="0"/>
+        <line x1="-34" y1="-22" x2="0" y2="0"/>
+        <line x1="34" y1="-22" x2="0" y2="0"/>
+        <line x1="-34" y1="18" x2="0" y2="0" stroke-dasharray="3,3" opacity="0.55"/>
+        <line x1="34" y1="18" x2="0" y2="0" stroke-dasharray="3,3" opacity="0.55"/>
+        <line x1="0" y1="36" x2="0" y2="0" stroke-dasharray="3,3" opacity="0.55"/>
+      </g>
+      <g fill="#f4d68a">
+        <circle cx="0" cy="-40" r="3.2"/>
+        <circle cx="-34" cy="-22" r="3.2"/>
+        <circle cx="34" cy="-22" r="3.2"/>
+        <circle cx="-34" cy="18" r="3.2"/>
+        <circle cx="34" cy="18" r="3.2"/>
+        <circle cx="0" cy="36" r="3.2"/>
+      </g>
+    </g>
+
+    <!-- Arrow showing transformation -->
+    <g stroke="url(#ag)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="-6" y1="0" x2="6" y2="0"/>
+      <polyline points="-1,-7 6,0 -1,7"/>
+    </g>
+
+    <!-- Rendered solid cube (right side) -->
+    <g transform="translate(50, 0)">
+      <!-- right face -->
+      <path d="M 0 0 L 34 -22 L 34 18 L 0 40 Z" fill="url(#cubeSide)"/>
+      <!-- left face -->
+      <path d="M 0 0 L -34 -22 L -34 18 L 0 40 Z" fill="#9d2a1c"/>
+      <!-- top face -->
+      <path d="M 0 -40 L -34 -22 L 0 0 L 34 -22 Z" fill="url(#cubeTop)"/>
+      <path d="M 0 -40 L -34 -22 L 0 0 L 34 -22 Z" fill="url(#cubeShine)"/>
+      <!-- outline -->
+      <g stroke="#070d18" stroke-width="1.4" fill="none" opacity="0.55" stroke-linejoin="round">
+        <path d="M 0 -40 L -34 -22 L -34 18 L 0 40 L 34 18 L 34 -22 Z"/>
+        <line x1="0" y1="-40" x2="0" y2="0"/>
+        <line x1="-34" y1="-22" x2="0" y2="0"/>
+        <line x1="34" y1="-22" x2="0" y2="0"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ─── NODE 3: PLAY (right) ─── -->
+  <g transform="translate(960, 320)">
+    <!-- outer halo rings -->
+    <circle r="106" fill="none" stroke="url(#ag)" stroke-width="1" opacity="0.18"/>
+    <circle r="86" fill="none" stroke="url(#ag)" stroke-width="1.5" opacity="0.32"/>
+    <!-- inner hub (solid gradient — this is the "rendered/delivered" state) -->
+    <circle r="62" fill="url(#ag)"/>
+    <circle r="62" fill="url(#cubeShine)"/>
+    <!-- Play triangle -->
+    <path d="M -16 -22 L 26 0 L -16 22 Z" fill="#070d18"/>
+  </g>
+
+  <!-- ─── Timeline frames at the bottom ─── -->
+  <g transform="translate(0, 540)">
+    <rect x="170"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.4"/>
+    <rect x="230"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.5"/>
+    <rect x="290"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.6"/>
+    <rect x="350"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.7"/>
+    <rect x="410"  y="0" width="46" height="42" rx="4" fill="url(#ag)" opacity="0.85"/>
+    <rect x="470"  y="0" width="46" height="42" rx="4" fill="url(#ag)"/>
+    <rect x="530"  y="0" width="46" height="42" rx="4" fill="url(#ag)"/>
+    <rect x="590"  y="0" width="46" height="42" rx="4" fill="url(#ag)"/>
+    <rect x="650"  y="0" width="46" height="42" rx="4" fill="url(#ag)"/>
+    <rect x="710"  y="0" width="46" height="42" rx="4" fill="url(#ag)" opacity="0.85"/>
+    <rect x="770"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.7"/>
+    <rect x="830"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.6"/>
+    <rect x="890"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.5"/>
+    <rect x="950"  y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.4"/>
+    <rect x="1010" y="0" width="46" height="42" rx="4" fill="none" stroke="#d4a14e" stroke-width="1.4" opacity="0.3"/>
+  </g>
+
+  <!-- Background stars / particles -->
+  <g fill="#f4d68a">
+    <circle cx="80"   cy="120" r="2.5" opacity="0.55"/>
+    <circle cx="130"  cy="160" r="1.8" opacity="0.5"/>
+    <circle cx="200"  cy="90"  r="2.2" opacity="0.55"/>
+    <circle cx="1080" cy="100" r="2.8" opacity="0.55"/>
+    <circle cx="1130" cy="160" r="2"   opacity="0.5"/>
+    <circle cx="1020" cy="60"  r="2.2" opacity="0.55"/>
+    <circle cx="60"   cy="430" r="2.5" opacity="0.45"/>
+    <circle cx="1110" cy="450" r="2.5" opacity="0.45"/>
+    <circle cx="90"   cy="500" r="2"   opacity="0.4"/>
+    <circle cx="1080" cy="510" r="2"   opacity="0.4"/>
+  </g>
+</svg>
