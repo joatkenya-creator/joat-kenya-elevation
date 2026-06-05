@@ -7,7 +7,7 @@
 
 update public.blog_posts
    set title = 'How to Build a Mobile App in 2026 (Complete Step-by-Step Guide)',
-       excerpt = 'A founder''s roadmap to shipping a mobile app in 2026 — from defining the one thing your app must do, through choosing a partner, designing, building, launching and maintaining it. No pricing in the article; pricing varies entirely by scope.',
+       excerpt = 'A founder''s roadmap to launching a mobile app in 2026 — from defining the one thing your app must do, through choosing a partner, designing, building, going live and maintaining it. No pricing in the article; pricing varies entirely by scope.',
        content = $body$
 <p>Most "how to build an app" guides online are written for Silicon Valley founders with venture capital. They're not useful in Kenya, where the market is faster-moving, payment expectations are different (M-Pesa is non-negotiable), and the audience is mostly on Android. This guide is the roadmap we wish every Kenyan founder had before they spoke to their first developer — the nine steps from idea to launched app, in the order they actually matter.</p>
 
@@ -19,7 +19,7 @@ update public.blog_posts
 
 <p>Before any developer enters the picture, finish this sentence: <em>"My app helps [who] do [what] in a way that [the existing option] can't."</em> If the sentence is fuzzy, the build will be fuzzy. If the sentence is sharp, every later decision (which platform, which features, which design) gets easier.</p>
 
-<p>Resist the urge to list ten features in step one. You will be tempted. Don't. Founders who name one job their app does well, and only one, ship faster and spend less.</p>
+<p>Resist the urge to list ten features in step one. You will be tempted. Don't. Founders who name one job their app does well, and only one, launch faster and spend less.</p>
 
 <h2>Step 2 — Sketch the user journey</h2>
 
@@ -32,8 +32,8 @@ update public.blog_posts
 <p>Three viable options in Kenya in 2026:</p>
 
 <ul>
-<li><strong>Android-first.</strong> The default for the Kenyan mass market. Cheaper to ship, faster to launch, reaches the majority of Kenyan smartphone users.</li>
-<li><strong>Cross-platform (Flutter or React Native).</strong> One codebase, ships to both iOS and Android. The right choice for most paying products serving both Kenyan and international users.</li>
+<li><strong>Android-first.</strong> The default for the Kenyan mass market. Cheaper to build, faster to launch, reaches the majority of Kenyan smartphone users.</li>
+<li><strong>Cross-platform (Flutter or React Native).</strong> One codebase, launches on both iOS and Android. The right choice for most paying products serving both Kenyan and international users.</li>
 <li><strong>Native iOS + native Android.</strong> Two separate codebases. Reserve for apps where performance is critical — heavy gaming, AR, hardware-intensive media.</li>
 </ul>
 
@@ -49,7 +49,7 @@ update public.blog_posts
 <li><strong>Future (v2 and later):</strong> Worth doing eventually, but not in the first release. Most founders should aggressively move things here.</li>
 </ol>
 
-<p>This single exercise typically halves the build budget. Founders who try to ship v2 features in v1 end up shipping nothing.</p>
+<p>This single exercise typically halves the build budget. Founders who try to launch v2 features in v1 end up launching nothing.</p>
 
 <h2>Step 5 — Choose a delivery model</h2>
 
@@ -71,7 +71,7 @@ update public.blog_posts
 <li><strong>Will they sign a contract with named deliverables and a timeline?</strong> If "we'll figure it out as we go" is the answer, walk away.</li>
 <li><strong>Who owns the code?</strong> The default in the Kenyan market is "the studio keeps it." Make sure your contract says <em>you</em> own the codebase, the design files and the deployment credentials.</li>
 <li><strong>What happens after launch?</strong> A handover document, source code in your repository, deployment credentials handed over, and a clear support window are the bare minimum.</li>
-<li><strong>Have they shipped on iOS?</strong> Many Kenyan freelancers only do Android. If you need both platforms, confirm App Store submission experience upfront.</li>
+<li><strong>Have they launched on iOS?</strong> Many Kenyan freelancers only do Android. If you need both platforms, confirm App Store submission experience upfront.</li>
 <li><strong>How do they break down their quote?</strong> A studio that itemises discovery, design, development, QA and launch is one you can negotiate with. A lump-sum-only quote is one you can't optimise.</li>
 </ul>
 
@@ -115,7 +115,7 @@ update public.blog_posts
 <li><strong>The complexity of features.</strong> Apps with AI integrations (see our list of <a href="/news?article=best-ai-tools-small-business-2026">15 AI tools every small business should use</a>), real-time chat, video, live transcription or AR sit higher in the range than apps without them.</li>
 <li><strong>The payments stack.</strong> M-Pesa Daraja adds work. Card payments (Pesapal, Flutterwave, DPO) add more. International cards (Stripe) add the most.</li>
 <li><strong>Compliance needs.</strong> Fintech apps subject to CBK oversight, health apps subject to Kenya's DPA 2019, or apps targeting EU users under GDPR carry significant compliance work that informational apps don't.</li>
-<li><strong>The quality of design.</strong> Templated UI ships fast and cheap. Custom illustration and animation pushes the budget upward but defines the brand.</li>
+<li><strong>The quality of design.</strong> Templated UI launches fast and cheap. Custom illustration and animation pushes the budget upward but defines the brand.</li>
 <li><strong>Who builds it.</strong> Freelancer, small studio, large studio and enterprise vendor occupy four very different brackets.</li>
 </ul>
 

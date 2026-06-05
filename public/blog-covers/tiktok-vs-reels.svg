@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="TikTok vs Instagram Reels for Small Business 2026">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a2236"/><stop offset="100%" stop-color="#0d1320"/></linearGradient>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e7c97a"/><stop offset="100%" stop-color="#d63c2c"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#e7c97a" stop-opacity="0.22"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="600" cy="315" rx="500" ry="280" fill="url(#glow)"/>
+  <!-- Two phone-shaped vertical video frames -->
+  <g transform="translate(380, 315)">
+    <rect x="-90" y="-180" width="180" height="360" rx="22" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <rect x="-78" y="-158" width="156" height="296" rx="6" fill="url(#ag)" opacity="0.12"/>
+    <!-- Play triangle -->
+    <g transform="translate(0, -20)">
+      <circle r="42" fill="#e7c97a"/>
+      <polygon points="-12,-16 -12,16 18,0" fill="#0d1320"/>
+    </g>
+    <!-- Musical note -->
+    <g transform="translate(0, 80)" fill="#e7c97a" stroke="#e7c97a" stroke-width="2.5">
+      <line x1="-8" y1="-20" x2="-8" y2="20"/>
+      <ellipse cx="-13" cy="22" rx="9" ry="6"/>
+      <line x1="-8" y1="-20" x2="22" y2="-26"/>
+      <line x1="22" y1="-26" x2="22" y2="14"/>
+      <ellipse cx="17" cy="16" rx="9" ry="6"/>
+    </g>
+    <text x="0" y="135" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#e7c97a" text-anchor="middle">TIKTOK</text>
+  </g>
+  <g transform="translate(820, 315)">
+    <rect x="-90" y="-180" width="180" height="360" rx="22" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <rect x="-78" y="-158" width="156" height="296" rx="6" fill="url(#ag)" opacity="0.12"/>
+    <!-- IG-style square inside -->
+    <g transform="translate(0, -10)" fill="none" stroke="#d63c2c" stroke-width="4" stroke-linejoin="round">
+      <rect x="-44" y="-44" width="88" height="88" rx="22"/>
+      <circle cx="0" cy="0" r="22"/>
+      <circle cx="26" cy="-26" r="5" fill="#d63c2c"/>
+    </g>
+    <!-- Play triangle -->
+    <g transform="translate(0, 80)">
+      <polygon points="-12,-16 -12,16 18,0" fill="#e7c97a"/>
+    </g>
+    <text x="0" y="135" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#e7c97a" text-anchor="middle">REELS</text>
+  </g>
+  <text x="600" y="335" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="900" fill="#e7c97a" text-anchor="middle" opacity="0.55">vs</text>
+  <g transform="translate(60, 60)"><rect width="280" height="44" rx="22" fill="#e7c97a"/><text x="140" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#0d1320" text-anchor="middle" letter-spacing="3">SHORT-FORM · VIDEO</text></g>
+  <g transform="translate(1080, 60)"><rect width="60" height="44" rx="22" fill="#d63c2c"/><text x="30" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">2026</text></g>
+</svg>

@@ -10,7 +10,8 @@ import {
   Leaf,
   Receipt,
 } from "lucide-react";
-import logo from "@/assets/joat-logo.png";
+// Shared with the Navbar import and index.html preload — single download.
+const logo = "/joat-logo.png";
 import { EXTERNAL, LEGAL_LINKS } from "@/lib/links";
 
 const socials: { Icon: typeof Linkedin; href: string; label: string }[] = [
@@ -63,7 +64,15 @@ export function Footer() {
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-10">
           <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="JOAT KENYA" className="h-10 sm:h-12 w-auto object-contain" />
+              <img
+                src={logo}
+                alt="JOAT KENYA"
+                width="500"
+                height="500"
+                loading="lazy"
+                decoding="async"
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
               <div className="font-display font-bold text-xl sm:text-2xl md:text-3xl tracking-tight">
                 <span className="text-white">J.O.A.T. </span>
                 <span className="text-gold">KENYA</span>
@@ -95,6 +104,8 @@ export function Footer() {
               links={[
                 { l: "About Us", h: "/about" },
                 { l: "Services", h: "/services" },
+                { l: "Products", h: "/products" },
+                { l: "Work With Us", h: "/work-with-us" },
                 { l: "Careers", h: "/careers" },
                 { l: "News & Articles", h: "/articles" },
                 { l: "Contact", h: "/contact" },

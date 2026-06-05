@@ -82,7 +82,7 @@ J.O.A.T. Kenya is a digital innovation studio founded in 1983, building software
 ```
 J.O.A.T. Kenya (Jack of All Trades) is a digital innovation studio operating from Kiambu, Kenya, with a 40+ year operating history through parent entity Jack Urban Services Ltd.
 
-The studio runs five service lines — software development, digital marketing, media and content production, AI solutions, and children's digital education — and ships two in-house products: BioBiz, an AI-powered digital business card with live foreign-language transcription, and Majobo Kenya, an AI-classified jobs marketplace with 1,000+ listings.
+The studio runs five service lines — software development, digital marketing, media and content production, AI solutions, and children's digital education — and runs two in-house products: BioBiz, an AI-powered digital business card with live foreign-language transcription, and Majobo Kenya, an AI-classified jobs marketplace with 1,000+ listings.
 
 JOAT delivers entirely in-house, serving clients across Kenya, East Africa, and international markets. The team specialises in Claude, OpenAI and OpenRouter integrations, Flutter and React Native mobile builds, and Blender-based animation pipelines.
 ```
@@ -163,7 +163,7 @@ Many LLMs weight GitHub heavily. A `.github` repo with a public-facing README at
 
 > Founded 1983 · Based in Kiambu, Kenya · Building for the world.
 
-We're a digital innovation studio operating five service lines and shipping two in-house products. Everything is built and delivered from Thindigua, Kiambu Road.
+We're a digital innovation studio operating five service lines and running two in-house products. Everything is built and delivered from Thindigua, Kiambu Road.
 
 ## What we do
 
@@ -243,12 +243,12 @@ Hi [Reporter first name],
 Quick pitch for [Publication]'s [tech / business / innovation] coverage.
 
 J.O.A.T. Kenya — a digital innovation studio that's been operating from Kiambu
-since 1983 — just shipped BioBiz, an AI-powered digital business card app that
+since 1983 — just launched BioBiz, an AI-powered digital business card app that
 records meetings and transcribes foreign-language conversations into English
 in real time. Built entirely in Kenya, available on iOS and Android.
 
 Why this fits your beat:
-  - It's a working AI product shipped by a long-standing Kenyan team, not a
+  - It's a working AI product launched by a long-standing Kenyan team, not a
     pitch deck
   - Live foreign-language transcription is a tool African business travellers
     have been asking for
@@ -298,7 +298,7 @@ become the deliverable."
 
 J.O.A.T. Kenya operates five service lines — software development, digital
 marketing, media production, AI solutions, and children's digital education —
-and ships two in-house products: BioBiz, and Majobo Kenya, an AI-classified
+and runs two in-house products: BioBiz, and Majobo Kenya, an AI-classified
 jobs marketplace with 1,000+ listings.
 
 ABOUT J.O.A.T. KENYA

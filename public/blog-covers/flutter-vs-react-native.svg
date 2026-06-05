@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Flutter vs React Native 2026">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a2236"/><stop offset="100%" stop-color="#0d1320"/></linearGradient>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e7c97a"/><stop offset="100%" stop-color="#d63c2c"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#e7c97a" stop-opacity="0.22"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="600" cy="315" rx="500" ry="280" fill="url(#glow)"/>
+  <!-- Two phone outlines facing center -->
+  <g transform="translate(380, 315)">
+    <rect x="-80" y="-150" width="160" height="300" rx="22" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <rect x="-68" y="-130" width="136" height="240" rx="6" fill="url(#ag)" opacity="0.12"/>
+    <line x1="-22" y1="-140" x2="22" y2="-140" stroke="#d4b157" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <!-- Flutter logo glyph -->
+    <g transform="translate(0, -10)" fill="#e7c97a">
+      <polygon points="-22,40 -2,20 38,-20 18,-40 -22,0 -42,20" opacity="0.95"/>
+      <polygon points="2,40 22,20 42,40 22,60" opacity="0.7"/>
+    </g>
+    <text x="0" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#e7c97a" text-anchor="middle">FLUTTER</text>
+  </g>
+  <g transform="translate(820, 315)">
+    <rect x="-80" y="-150" width="160" height="300" rx="22" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <rect x="-68" y="-130" width="136" height="240" rx="6" fill="url(#ag)" opacity="0.12"/>
+    <line x1="-22" y1="-140" x2="22" y2="-140" stroke="#d4b157" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+    <!-- React logo glyph -->
+    <g transform="translate(0, -10)" fill="none" stroke="#d63c2c" stroke-width="3.5">
+      <ellipse cx="0" cy="0" rx="42" ry="16"/>
+      <ellipse cx="0" cy="0" rx="42" ry="16" transform="rotate(60)"/>
+      <ellipse cx="0" cy="0" rx="42" ry="16" transform="rotate(-60)"/>
+      <circle cx="0" cy="0" r="6" fill="#d63c2c"/>
+    </g>
+    <text x="0" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#e7c97a" text-anchor="middle">REACT NATIVE</text>
+  </g>
+  <text x="600" y="335" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="900" fill="#e7c97a" text-anchor="middle" opacity="0.55">vs</text>
+  <g transform="translate(60, 60)"><rect width="280" height="44" rx="22" fill="#e7c97a"/><text x="140" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#0d1320" text-anchor="middle" letter-spacing="3">FRAMEWORKS</text></g>
+  <g transform="translate(1080, 60)"><rect width="60" height="44" rx="22" fill="#d63c2c"/><text x="30" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">2026</text></g>
+</svg>

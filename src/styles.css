@@ -64,11 +64,20 @@
 :root {
   --radius: 0.75rem;
 
-  /* JOAT KENYA brand constants — same in light and dark */
+  /* JOAT KENYA brand constants — same in light and dark.
+     Each variable declares an sRGB hex fallback FIRST, then overrides with
+     oklch. Browsers that don't understand oklch (older Safari, Opera Mini,
+     legacy Android WebView) silently discard the oklch declaration and use
+     the hex — the page renders correctly, just without the wider gamut. */
+  --joat-navy: #1a2236;
   --joat-navy: oklch(0.16 0.035 265);
+  --joat-navy-deep: #0d1320;
   --joat-navy-deep: oklch(0.11 0.03 265);
+  --joat-red: #d63c2c;
   --joat-red: oklch(0.58 0.20 27);
+  --joat-gold: #e7c97a;
   --joat-gold: oklch(0.78 0.10 80);
+  --joat-gold-soft: #efd7a0;
   --joat-gold-soft: oklch(0.86 0.07 85);
 
   --gradient-gold: linear-gradient(135deg, oklch(0.82 0.11 85), oklch(0.68 0.13 60));
@@ -78,7 +87,9 @@
 
   /* === TEXT COLORS — LOCKED ACROSS THEMES ===
      Per design: light/dark mode should NOT affect text. All foreground colors
-     are defined here at :root and never overridden by the .dark class. */
+     are defined here at :root and never overridden by the .dark class.
+     Hex fallback first, oklch override second — same pattern as brand vars. */
+  --foreground: #fafaf2;
   --foreground: oklch(0.97 0.01 90);
   --card-foreground: oklch(0.97 0.01 90);
   --popover-foreground: oklch(0.97 0.01 90);
@@ -96,6 +107,7 @@
   --ring: oklch(0.78 0.10 80);
 
   /* LIGHT MODE (default) — slightly lighter navy surfaces; locked text remains readable */
+  --background: #2b3349;
   --background: oklch(0.26 0.045 265);
   --card: oklch(0.30 0.045 265);
   --popover: oklch(0.30 0.045 265);
@@ -126,8 +138,10 @@
 }
 
 /* DARK MODE — JOAT deep navy surfaces.
-   Text colors intentionally NOT redefined here — they stay locked from :root. */
+   Text colors intentionally NOT redefined here — they stay locked from :root.
+   Same fallback-then-oklch pattern for older browsers. */
 .dark {
+  --background: #1a2236;
   --background: oklch(0.16 0.035 265);
   --card: oklch(0.20 0.038 265);
   --popover: oklch(0.20 0.038 265);

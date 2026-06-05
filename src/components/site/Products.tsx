@@ -701,9 +701,9 @@ const products: Product[] = [
     id: "games",
     badge: "Game Development · Roblox",
     title: "Professional game studios, built using Roblox.",
-    tagline: "Original Roblox titles and bespoke worlds, shipped end-to-end by the tech team.",
+    tagline: "Original Roblox titles and bespoke worlds, delivered end-to-end by the tech team.",
     description:
-      "We are professional game developers. Our Roblox studio designs, builds and ships original titles, brand-activated worlds and custom multiplayer experiences, from concept and 3D art through scripting, monetization and live ops.",
+      "We are professional game developers. Our Roblox studio designs, builds and launches original titles, brand-activated worlds and custom multiplayer experiences, from concept and 3D art through scripting, monetization and live ops.",
     features: [
       "Original Roblox titles + bespoke client builds",
       "Full studio pipeline: 3D art, scripting, FX, audio",

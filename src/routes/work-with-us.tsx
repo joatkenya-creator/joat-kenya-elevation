@@ -25,7 +25,7 @@ export const Route = createFileRoute("/work-with-us")({
     ...seo({
       title: "AI Automation Services in Kenya | Work With JOAT KENYA",
       description:
-        "Run your business content from a single chat. JOAT Kenya connects your website and social channels to an AI-powered Telegram bot with flexible automation packages.",
+        "Run your business content from a single chat. JOAT Kenya connects your site and socials to an AI Telegram bot via Foundation, Growth and Scale packages.",
       path: "/work-with-us",
     }),
     scripts: [

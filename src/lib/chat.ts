@@ -113,7 +113,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /\b(ios|iphone|ipad|apple store|app store|android|google play|play store)\b/i,
     reply:
-      "We build native iOS and Android apps (Flutter and React Native), publish to the Apple App Store and Google Play, and handle store optimization. BioBiz is one of our shipped apps — free on both stores. Share your project via the Contact form or book a 30-min meeting.",
+      "We build native iOS and Android apps (Flutter and React Native), publish to the Apple App Store and Google Play, and handle store optimization. BioBiz is one of our launched apps — free on both stores. Share your project via the Contact form or book a 30-min meeting.",
   },
   {
     match:
@@ -172,7 +172,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(process|how do you (work|engage|operate)|how it works|workflow|methodology|approach|discovery|kickoff|stages|phases)\b/i,
     reply:
-      "We start with a short, free 30-min discovery call, then send a tailored proposal within one business day. From there it's iterative delivery in weekly check-ins — production-grade work shipped in weeks, not quarters. Book a meeting from the Contact section to kick off.",
+      "We start with a short, free 30-min discovery call, then send a tailored proposal within one business day. From there it's iterative delivery in weekly check-ins — production-grade work delivered in weeks, not quarters. Book a meeting from the Contact section to kick off.",
   },
   {
     match:

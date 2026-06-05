@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Claude vs ChatGPT vs Gemini 2026 comparison">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a2236"/><stop offset="100%" stop-color="#0d1320"/></linearGradient>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e7c97a"/><stop offset="100%" stop-color="#d63c2c"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#e7c97a" stop-opacity="0.2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="600" cy="315" rx="500" ry="280" fill="url(#glow)"/>
+  <!-- Three columns - left/center/right -->
+  <g font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">
+    <g transform="translate(300, 340)">
+      <rect x="-110" y="-130" width="220" height="260" rx="20" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+      <circle cx="0" cy="-60" r="34" fill="#d4b157"/>
+      <text x="0" y="-52" font-size="32" font-weight="800" fill="#0d1320">C</text>
+      <text x="0" y="20" font-size="22" font-weight="800" fill="#e7c97a">Claude</text>
+      <text x="0" y="50" font-size="13" font-weight="500" fill="#e7c97a" opacity="0.8">Anthropic</text>
+    </g>
+    <g transform="translate(600, 340)">
+      <rect x="-110" y="-150" width="220" height="300" rx="20" fill="#0d1320" stroke="url(#ag)" stroke-width="3.5"/>
+      <circle cx="0" cy="-80" r="38" fill="url(#ag)"/>
+      <text x="0" y="-72" font-size="36" font-weight="800" fill="#0d1320">G</text>
+      <text x="0" y="10" font-size="24" font-weight="800" fill="#e7c97a">ChatGPT</text>
+      <text x="0" y="40" font-size="13" font-weight="500" fill="#e7c97a" opacity="0.8">OpenAI</text>
+      <g transform="translate(0, 80)"><polygon points="-22,0 22,0 0,-30" fill="#d63c2c"/></g>
+    </g>
+    <g transform="translate(900, 340)">
+      <rect x="-110" y="-130" width="220" height="260" rx="20" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+      <circle cx="0" cy="-60" r="34" fill="#d63c2c"/>
+      <text x="0" y="-52" font-size="32" font-weight="800" fill="#ffffff">G</text>
+      <text x="0" y="20" font-size="22" font-weight="800" fill="#e7c97a">Gemini</text>
+      <text x="0" y="50" font-size="13" font-weight="500" fill="#e7c97a" opacity="0.8">Google</text>
+    </g>
+    <text x="450" y="345" font-size="40" font-weight="900" fill="#e7c97a" opacity="0.5">vs</text>
+    <text x="750" y="345" font-size="40" font-weight="900" fill="#e7c97a" opacity="0.5">vs</text>
+  </g>
+  <g transform="translate(60, 60)"><rect width="280" height="44" rx="22" fill="#e7c97a"/><text x="140" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#0d1320" text-anchor="middle" letter-spacing="3">AI · COMPARISON</text></g>
+  <g transform="translate(1080, 60)"><rect width="60" height="44" rx="22" fill="#d63c2c"/><text x="30" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">2026</text></g>
+</svg>

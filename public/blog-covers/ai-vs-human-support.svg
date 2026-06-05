@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="AI vs Human Customer Support">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a2236"/><stop offset="100%" stop-color="#0d1320"/></linearGradient>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e7c97a"/><stop offset="100%" stop-color="#d63c2c"/></linearGradient>
+    <radialGradient id="glowL" cx="30%" cy="50%" r="40%"><stop offset="0%" stop-color="#e7c97a" stop-opacity="0.32"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+    <radialGradient id="glowR" cx="70%" cy="50%" r="40%"><stop offset="0%" stop-color="#d63c2c" stop-opacity="0.28"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="600" height="630" fill="url(#glowL)"/>
+  <rect x="600" y="0" width="600" height="630" fill="url(#glowR)"/>
+  <line x1="600" y1="120" x2="600" y2="520" stroke="url(#ag)" stroke-width="2" opacity="0.4" stroke-dasharray="8 8"/>
+  <!-- AI side (left) -->
+  <g transform="translate(350, 340)">
+    <rect x="-90" y="-100" width="180" height="160" rx="22" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <rect x="-70" y="-78" width="140" height="100" rx="6" fill="url(#ag)" opacity="0.12"/>
+    <circle cx="-30" cy="-30" r="10" fill="#e7c97a"/>
+    <circle cx="30" cy="-30" r="10" fill="#e7c97a"/>
+    <path d="M -22 6 Q 0 20 22 6" stroke="#e7c97a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <line x1="0" y1="-120" x2="0" y2="-100" stroke="url(#ag)" stroke-width="3"/>
+    <circle cx="0" cy="-126" r="6" fill="#e7c97a"/>
+    <text x="0" y="95" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#e7c97a" text-anchor="middle">AI</text>
+  </g>
+  <!-- Human side (right) -->
+  <g transform="translate(850, 340)">
+    <circle cx="0" cy="-50" r="42" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <circle cx="-12" cy="-58" r="5" fill="#e7c97a"/>
+    <circle cx="12" cy="-58" r="5" fill="#e7c97a"/>
+    <path d="M -14 -38 Q 0 -28 14 -38" stroke="#e7c97a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M -70 60 Q -70 0 0 0 Q 70 0 70 60 L 70 90 L -70 90 Z" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <text x="0" y="135" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#e7c97a" text-anchor="middle">HUMAN</text>
+  </g>
+  <text x="600" y="350" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="900" fill="#e7c97a" opacity="0.55" text-anchor="middle">vs</text>
+  <g transform="translate(60, 60)"><rect width="280" height="44" rx="22" fill="#e7c97a"/><text x="140" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#0d1320" text-anchor="middle" letter-spacing="3">AI · SUPPORT</text></g>
+  <g transform="translate(1080, 60)"><rect width="60" height="44" rx="22" fill="#d63c2c"/><text x="30" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">2026</text></g>
+</svg>

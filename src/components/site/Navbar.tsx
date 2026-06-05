@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/joat-logo.png";
+// Served from /public so it shares the same URL with the index.html preload
+// and the favicon — single download instead of bundled-plus-favicon duplicate.
+const logo = "/joat-logo.png";
 
 const links = [
   { label: "Home", to: "/" as const },
@@ -35,7 +37,15 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-5 lg:px-8 h-16 lg:h-20 flex items-center justify-between gap-2">
         <Link to="/" className="flex items-center gap-2 lg:gap-3 group min-w-0">
-          <img src={logo} alt="JOAT KENYA" className="h-9 lg:h-12 w-auto object-contain shrink-0" />
+          <img
+            src={logo}
+            alt="JOAT KENYA"
+            width="500"
+            height="500"
+            fetchPriority="high"
+            decoding="async"
+            className="h-9 lg:h-12 w-auto object-contain shrink-0"
+          />
           <div className="leading-tight min-w-0">
             <div className="font-display font-bold text-base sm:text-lg md:text-2xl tracking-wide whitespace-nowrap">
               <span className="gradient-text-red">J.O.A.T</span>{" "}

@@ -10,7 +10,14 @@
   RewriteBase /
 
   # SEO files must be served as static files, not routed into React.
-  RewriteRule ^(sitemap\.xml|robots\.txt|site\.webmanifest)$ - [L]
+  RewriteRule ^(sitemap\.xml|robots\.txt|site\.webmanifest|llms\.txt|llms-full\.txt)$ - [L]
+
+  # Redirect /index.html to / so direct hits land on the homepage, not the
+  # in-app NotFound page. TanStack Router has no route defined for the literal
+  # path /index.html so without this rule the SPA's 404 component renders.
+  # 301 also consolidates SEO link equity onto the canonical /. Must run
+  # before the file-exists check below, since index.html exists as a file.
+  RewriteRule ^index\.html$ / [R=301,L]
 
   # Skip rewrite for existing files and directories
   RewriteCond %{REQUEST_FILENAME} -f [OR]

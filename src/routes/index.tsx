@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
@@ -11,8 +12,14 @@ import { Testimonials } from "@/components/site/Testimonials";
 import { Careers } from "@/components/site/Careers";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
-import { Chatbot } from "@/components/site/Chatbot";
-import { BackToTop } from "@/components/site/BackToTop";
+// Chatbot and BackToTop are decorative UI that don't need to block first paint
+// or initial interaction. Lazy-loading frees ~40KB from the initial bundle.
+const Chatbot = lazy(() =>
+  import("@/components/site/Chatbot").then((m) => ({ default: m.Chatbot })),
+);
+const BackToTop = lazy(() =>
+  import("@/components/site/BackToTop").then((m) => ({ default: m.BackToTop })),
+);
 import {
   aggregateRatingJsonLd,
   localBusinessJsonLd,
@@ -61,7 +68,7 @@ export const Route = createFileRoute("/")({
     ...seo({
       title: "JOAT Kenya | Software, Digital Marketing, Media & AI Studio",
       description:
-        "J.O.A.T. Kenya is a digital innovation studio delivering software development, digital marketing, media production, AI solutions and children's digital education for clients worldwide.",
+        "JOAT Kenya is a digital innovation studio. We build software, run AI marketing, produce media and launch in-house products (BioBiz, Majobo) worldwide.",
     }),
     scripts: [
       {
@@ -108,8 +115,10 @@ function Index() {
         <Contact />
       </main>
       <Footer />
-      <Chatbot />
-      <BackToTop />
+      <Suspense fallback={null}>
+        <Chatbot />
+        <BackToTop />
+      </Suspense>
     </div>
   );
 }

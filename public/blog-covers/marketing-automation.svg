@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Marketing Automation for Small Business — 8 Tools">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a2236"/><stop offset="100%" stop-color="#0d1320"/></linearGradient>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e7c97a"/><stop offset="100%" stop-color="#d63c2c"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#e7c97a" stop-opacity="0.22"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="600" cy="315" rx="500" ry="280" fill="url(#glow)"/>
+  <!-- Workflow nodes -->
+  <g stroke="url(#ag)" stroke-width="2.5" opacity="0.5" fill="none">
+    <line x1="240" y1="220" x2="420" y2="320"/>
+    <line x1="240" y1="420" x2="420" y2="320"/>
+    <line x1="420" y1="320" x2="600" y2="220"/>
+    <line x1="420" y1="320" x2="600" y2="420"/>
+    <line x1="600" y1="220" x2="780" y2="320"/>
+    <line x1="600" y1="420" x2="780" y2="320"/>
+    <line x1="780" y1="320" x2="960" y2="320"/>
+  </g>
+  <g font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">
+    <g transform="translate(240, 220)"><circle r="38" fill="#0d1320" stroke="url(#ag)" stroke-width="2.5"/><text y="6" font-size="14" font-weight="700" fill="#e7c97a">LEAD</text></g>
+    <g transform="translate(240, 420)"><circle r="38" fill="#0d1320" stroke="url(#ag)" stroke-width="2.5"/><text y="6" font-size="13" font-weight="700" fill="#e7c97a">EMAIL</text></g>
+    <g transform="translate(420, 320)"><circle r="44" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/><text y="6" font-size="14" font-weight="700" fill="#e7c97a">CRM</text></g>
+    <g transform="translate(600, 220)"><circle r="38" fill="#0d1320" stroke="url(#ag)" stroke-width="2.5"/><text y="6" font-size="13" font-weight="700" fill="#e7c97a">SMS</text></g>
+    <g transform="translate(600, 420)"><circle r="38" fill="#0d1320" stroke="url(#ag)" stroke-width="2.5"/><text y="6" font-size="13" font-weight="700" fill="#e7c97a">SOCIAL</text></g>
+    <g transform="translate(780, 320)"><circle r="44" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/><text y="6" font-size="13" font-weight="700" fill="#e7c97a">AI</text></g>
+    <g transform="translate(960, 320)"><circle r="46" fill="url(#ag)" stroke="url(#ag)" stroke-width="3"/><text y="7" font-size="15" font-weight="800" fill="#0d1320">SALE</text></g>
+  </g>
+  <!-- Gear icon top-left -->
+  <g transform="translate(600, 130)" fill="none" stroke="url(#ag)" stroke-width="3" stroke-linejoin="round">
+    <circle r="22" fill="#0d1320"/>
+    <circle r="9" fill="url(#ag)"/>
+    <g stroke-linecap="round">
+      <line x1="0" y1="-30" x2="0" y2="-38"/>
+      <line x1="0" y1="30" x2="0" y2="38"/>
+      <line x1="-30" y1="0" x2="-38" y2="0"/>
+      <line x1="30" y1="0" x2="38" y2="0"/>
+      <line x1="-22" y1="-22" x2="-28" y2="-28"/>
+      <line x1="22" y1="-22" x2="28" y2="-28"/>
+      <line x1="-22" y1="22" x2="-28" y2="28"/>
+      <line x1="22" y1="22" x2="28" y2="28"/>
+    </g>
+  </g>
+  <g transform="translate(60, 60)"><rect width="320" height="44" rx="22" fill="#e7c97a"/><text x="160" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#0d1320" text-anchor="middle" letter-spacing="3">MARKETING · AUTOMATION</text></g>
+  <g transform="translate(1080, 60)"><rect width="60" height="44" rx="22" fill="#d63c2c"/><text x="30" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">8</text></g>
+</svg>
