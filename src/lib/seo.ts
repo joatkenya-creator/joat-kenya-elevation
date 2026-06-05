@@ -44,20 +44,52 @@ export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "J.O.A.T. Kenya",
-  alternateName: ["JOAT KENYA", "Jack of All Trades Kenya"],
+  alternateName: ["JOAT Kenya", "JOAT", "Jack of All Trades Kenya"],
+  legalName: "Jack Urban Services Ltd",
   url: SITE_URL,
   logo: DEFAULT_IMAGE,
+  image: DEFAULT_IMAGE,
   email: "joatkenya120@gmail.com",
   telephone: "+254142378150",
+  slogan: "Digital innovation studio. Built in-house. Delivered worldwide.",
   description:
     "A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide.",
   foundingDate: "1983",
+  foundingLocation: {
+    "@type": "Place",
+    name: "Kiambu, Kenya",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Kiambu",
+      addressCountry: "KE",
+    },
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: "The Brick Mall, 2nd Floor, Kiambu Road, Thindigua",
     addressLocality: "Kiambu",
     addressCountry: "KE",
   },
+  areaServed: "Worldwide",
+  knowsLanguage: ["en", "sw"],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      email: "joatkenya120@gmail.com",
+      telephone: "+254142378150",
+      areaServed: "Worldwide",
+      availableLanguage: ["English", "Swahili"],
+    },
+    {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: "joatkenya120@gmail.com",
+      url: `${SITE_URL}/contact`,
+      areaServed: "Worldwide",
+      availableLanguage: ["English", "Swahili"],
+    },
+  ],
   sameAs: [
     "https://www.linkedin.com/company/joat-kenya-jack-urban-services-ltd/",
     "https://www.instagram.com/joat.kenya",
@@ -65,6 +97,10 @@ export const organizationJsonLd = {
     "https://www.youtube.com/results?search_query=joat+kenya",
     "https://www.majobokenya.com/",
     "https://biobiz.app",
+  ],
+  subjectOf: [
+    { "@type": "CreativeWork", name: "LLM index", url: `${SITE_URL}/llms.txt` },
+    { "@type": "CreativeWork", name: "Full knowledge file", url: `${SITE_URL}/llms-full.txt` },
   ],
   knowsAbout: [
     "Software development",
@@ -77,6 +113,66 @@ export const organizationJsonLd = {
     "Children's digital education",
   ],
 };
+
+/**
+ * WebSite JSON-LD with SearchAction — unlocks the Google "sitelinks search
+ * box" (a search input under the joatkenya.com result in SERPs). Even though
+ * we don't have a search route yet, the `?q=` template gives Google enough.
+ */
+export const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "J.O.A.T. Kenya",
+  url: SITE_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
+/**
+ * AggregateRating + Review JSON-LD built from the testimonials table. Gives
+ * Google's rich-result engine the data it needs to show a star rating beside
+ * a JOAT search result. Pass the testimonials array from your DB or fallback.
+ */
+export function aggregateRatingJsonLd(
+  reviews: Array<{ author_name: string; quote: string; rating?: number | null }>,
+) {
+  if (!reviews || reviews.length === 0) return null;
+  const ratings = reviews
+    .map((r) => (typeof r.rating === "number" ? r.rating : 5))
+    .filter((n) => n >= 1 && n <= 5);
+  const avg =
+    ratings.length === 0 ? 5 : ratings.reduce((s, n) => s + n, 0) / ratings.length;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "J.O.A.T. Kenya",
+    url: SITE_URL,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: avg.toFixed(1),
+      reviewCount: reviews.length,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    review: reviews.map((r) => ({
+      "@type": "Review",
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: typeof r.rating === "number" ? r.rating : 5,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      author: { "@type": "Person", name: r.author_name },
+      reviewBody: r.quote,
+    })),
+  };
+}
 
 /**
  * Build a BreadcrumbList JSON-LD payload for a sub-page. Search engines use it

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mobile app development cost breakdown">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a2236"/><stop offset="100%" stop-color="#0d1320"/></linearGradient>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e7c97a"/><stop offset="100%" stop-color="#d63c2c"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#e7c97a" stop-opacity="0.22"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="315" r="340" fill="url(#glow)"/>
+  <!-- Subtle grid -->
+  <g stroke="#d4b157" stroke-width="0.5" opacity="0.07" fill="none">
+    <path d="M0,158 L1200,158 M0,316 L1200,316 M0,474 L1200,474 M300,0 L300,630 M600,0 L600,630 M900,0 L900,630"/>
+  </g>
+  <!-- Stylized phone in center -->
+  <g transform="translate(480, 315)">
+    <rect x="-90" y="-180" width="180" height="360" rx="26" fill="#0d1320" stroke="url(#ag)" stroke-width="3"/>
+    <rect x="-78" y="-156" width="156" height="296" rx="6" fill="url(#ag)" opacity="0.12"/>
+    <line x1="-22" y1="-168" x2="22" y2="-168" stroke="#d4b157" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+    <circle cx="0" cy="158" r="6" fill="none" stroke="#d4b157" stroke-width="1.5" opacity="0.6"/>
+    <!-- App icon grid on screen -->
+    <g>
+      <rect x="-58" y="-128" width="40" height="40" rx="8" fill="url(#ag)"/>
+      <rect x="-10" y="-128" width="40" height="40" rx="8" fill="#d4b157" opacity="0.85"/>
+      <rect x="38"  y="-128" width="40" height="40" rx="8" fill="#d63c2c" opacity="0.85"/>
+      <rect x="-58" y="-72" width="40" height="40" rx="8" fill="#d63c2c" opacity="0.85"/>
+      <rect x="-10" y="-72" width="40" height="40" rx="8" fill="url(#ag)"/>
+      <rect x="38"  y="-72" width="40" height="40" rx="8" fill="#d4b157" opacity="0.85"/>
+      <rect x="-58" y="-16" width="40" height="40" rx="8" fill="#d4b157" opacity="0.85"/>
+      <rect x="-10" y="-16" width="40" height="40" rx="8" fill="#d63c2c" opacity="0.85"/>
+      <rect x="38"  y="-16" width="40" height="40" rx="8" fill="url(#ag)"/>
+    </g>
+    <!-- Cost meter at bottom of screen -->
+    <rect x="-58" y="56" width="116" height="8" rx="4" fill="#0d1320" stroke="#d4b157" stroke-width="0.5" opacity="0.7"/>
+    <rect x="-58" y="56" width="78" height="8" rx="4" fill="url(#ag)"/>
+  </g>
+  <!-- Tier bars on the right -->
+  <g transform="translate(750, 200)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#d4b157" letter-spacing="3">SIMPLE</text>
+    <rect x="0" y="12" width="80" height="22" rx="4" fill="#d4b157" opacity="0.7"/>
+    <text x="0" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#d4b157" letter-spacing="3">MEDIUM</text>
+    <rect x="0" y="76" width="200" height="22" rx="4" fill="#d63c2c" opacity="0.85"/>
+    <text x="0" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#e7c97a" letter-spacing="3">COMPLEX</text>
+    <rect x="0" y="140" width="340" height="22" rx="4" fill="url(#ag)"/>
+  </g>
+  <!-- Top-left badge -->
+  <g transform="translate(60, 60)">
+    <rect width="280" height="44" rx="22" fill="#e7c97a"/>
+    <text x="140" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#0d1320" text-anchor="middle" letter-spacing="3">SOFTWARE · COST</text>
+  </g>
+  <!-- Top-right $ badge -->
+  <g transform="translate(1060, 60)">
+    <circle cx="22" cy="22" r="22" fill="#0d1320" stroke="url(#ag)" stroke-width="2"/>
+    <text x="22" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="800" fill="#e7c97a" text-anchor="middle">$</text>
+  </g>
+  <g fill="#e7c97a"><circle cx="100" cy="500" r="3" opacity="0.5"/><circle cx="1080" cy="540" r="3" opacity="0.5"/></g>
+</svg>

@@ -50,26 +50,30 @@
       })();
     </script>
 
-    <!--
-      Google Analytics 4 — enabled by setting your Measurement ID below.
-      ─────────────────────────────────────────────────────────────────
-      1. Go to https://analytics.google.com/ → Admin → Data Streams → Web
-         → create a stream for joatkenya.com.
-      2. Copy the Measurement ID (looks like G-XXXXXXXXXX).
-      3. Replace BOTH occurrences of G-XXXXXXXXXX below with your ID,
-         then uncomment the <script> block.
-      4. In GA4 Admin → Data Streams → your web stream → Enhanced
-         measurement: turn ON "Page changes based on browser history events"
-         so SPA route navigations are tracked automatically.
+    <!-- Google Analytics 4 (gtag.js) — Measurement ID G-XBWFZR7M3V.
+         Because the site is a single-page app, this tag loads once on
+         /index.html and tracks every subsequent client-side route change
+         automatically when "Page changes based on browser history events"
+         is enabled in GA4 Admin → Data Streams → Enhanced measurement. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XBWFZR7M3V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-XBWFZR7M3V', { anonymize_ip: true });
+    </script>
 
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
-      </script>
-    -->
+    <!-- Microsoft Clarity — project ID x18d98fzqg. Provides heatmaps and
+         session recordings to complement GA4's traffic data. Same SPA reasoning
+         as the GA tag above: this loads once in index.html and follows every
+         client-side route change automatically. -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "x18d98fzqg");
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

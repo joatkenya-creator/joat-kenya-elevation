@@ -88,6 +88,18 @@ export function News() {
     };
   }, [active]);
 
+  // Deep-link support: when the URL is /news?article=<slug>, auto-open the
+  // matching article modal. Lets in-content cross-links between blog posts
+  // navigate seamlessly between articles.
+  useEffect(() => {
+    if (!posts) return;
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("article");
+    if (!slug) return;
+    const match = posts.find((p) => p.slug === slug);
+    if (match) setActive(match);
+  }, [posts]);
+
   const featured = posts?.[0];
   const rest = posts?.slice(1) ?? [];
 

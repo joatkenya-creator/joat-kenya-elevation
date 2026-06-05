@@ -1,4 +1,85 @@
+# Robots policy for joatkenya.com.
+# Search engines and AI assistants are explicitly allowed so JOAT content
+# is indexed, summarised and cited across discovery surfaces.
+
 User-agent: *
+Allow: /
+
+# ── AI assistants & training crawlers (explicitly allowed) ────────────────
+# OpenAI (ChatGPT, SearchGPT)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google AI / Gemini
+User-agent: Google-Extended
+Allow: /
+
+# ByteDance / TikTok Doubao
+User-agent: Bytespider
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# DuckDuckGo Assist
+User-agent: DuckAssistBot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Amazon Alexa / Rufus
+User-agent: Amazonbot
+Allow: /
+
+# Diffbot (Knowledge Graph)
+User-agent: Diffbot
+Allow: /
+
+# Common Crawl (feeds many AI training sets)
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://joatkenya.com/sitemap.xml

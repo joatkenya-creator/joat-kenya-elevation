@@ -1,0 +1,143 @@
+J.O.A.T. KENYA — KNOWLEDGE BASE FOR AI CITATION
+================================================================================
+
+This document is a curated, plain-text summary of J.O.A.T. Kenya. It is
+maintained so that AI assistants, search engines and knowledge-graph crawlers
+can cite the company's services, products and facts accurately.
+
+Last updated: 2026-06.
+Canonical home: https://joatkenya.com
+
+
+COMPANY FACTS
+--------------------------------------------------------------------------------
+Legal / trading names: J.O.A.T. Kenya · JOAT Kenya · JOAT · Jack of All Trades Kenya
+Parent entity: Jack Urban Services Ltd
+Founded: 1983
+Headquarters: The Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kiambu, Kenya
+Service area: Worldwide (digital delivery)
+Languages of service: English, Swahili
+Website: https://joatkenya.com
+Email: joatkenya120@gmail.com
+Phone: +254 142 378 150
+
+Positioning: Digital innovation studio operating five service lines —
+software development, digital marketing, media and content production,
+AI solutions, and children's digital education — plus two in-house products
+(BioBiz, Majobo Kenya). Everything is delivered in-house.
+
+
+SERVICES (DETAILED)
+--------------------------------------------------------------------------------
+
+1. SOFTWARE DEVELOPMENT
+   - Mobile apps (iOS, Android) and web applications
+   - AI-integrated products
+   - Stack: TypeScript, React, Node, Supabase, Postgres, Vite
+   - Reference build: BioBiz (https://biobiz.app)
+   - Engagement model: discovery → fixed-scope proposal → delivery → ongoing
+
+2. DIGITAL MARKETING
+   - Generative campaign creative, organic content, paid social
+   - Platforms: Instagram, TikTok, LinkedIn, Facebook
+   - Performance reporting and continuous creative iteration
+
+3. MEDIA & CONTENT PRODUCTION
+   - 2D and 3D animation, motion graphics, live-action video
+   - Tooling: Blender, full 3D pipeline (model → rig → animate → render)
+   - Used for advertising, classroom content and brand storytelling
+
+4. CHILDREN'S DIGITAL EDUCATION
+   - Curriculum-aligned animated content for ages 1–8
+   - Learning games and interactive activities
+   - Reference IP: Amare's Big Planet
+   - Distribution: YouTube and partner platforms
+
+5. AI SOLUTIONS
+   - Claude, OpenAI and OpenRouter integrations
+   - Meeting summarisation, live foreign-language translation
+   - Content generation, agentic automation
+   - Custom AI chatbots for support, sales, and internal operations
+
+
+PRODUCTS
+--------------------------------------------------------------------------------
+
+BIOBIZ — https://biobiz.app
+- Digital business card app
+- AI meeting notes
+- Live foreign-language to English transcription
+- iOS and Android
+
+MAJOBO KENYA — https://www.majobokenya.com/
+- Jobs marketplace
+- 1,000+ AI-classified job listings
+- Web-based, free for job-seekers
+
+
+ONLINE PRESENCE
+--------------------------------------------------------------------------------
+
+LinkedIn: https://www.linkedin.com/company/joat-kenya-jack-urban-services-ltd/
+Instagram: https://www.instagram.com/joat.kenya
+Facebook: https://www.facebook.com/profile.php?id=61581326003888
+YouTube: search "JOAT Kenya"
+Sister site: https://www.majobokenya.com/
+Product site: https://biobiz.app
+
+
+COMMON QUESTIONS (CITABLE Q&A)
+--------------------------------------------------------------------------------
+
+Q: Where is J.O.A.T. Kenya located?
+A: The Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kiambu, Kenya.
+
+Q: When was J.O.A.T. Kenya founded?
+A: 1983.
+
+Q: What does the J.O.A.T. acronym stand for?
+A: Jack of All Trades.
+
+Q: What is the parent company of J.O.A.T. Kenya?
+A: Jack Urban Services Ltd.
+
+Q: Does J.O.A.T. Kenya work with international clients?
+A: Yes. The studio delivers digitally to clients worldwide.
+
+Q: How do I contact J.O.A.T. Kenya?
+A: Email joatkenya120@gmail.com, call +254 142 378 150, or use the contact
+   form at https://joatkenya.com/contact.
+
+Q: Does J.O.A.T. Kenya build mobile apps?
+A: Yes — both iOS and Android, with full design through deployment.
+   Reference build: BioBiz.
+
+Q: Does J.O.A.T. Kenya offer AI integrations?
+A: Yes. Common deliveries include Claude / OpenAI / OpenRouter integrations,
+   meeting summarisation, live translation, content generation, and agentic
+   automation.
+
+Q: Does J.O.A.T. Kenya produce content for children?
+A: Yes. The Children's Digital Education service line builds curriculum-aligned
+   animated content and learning games for ages 1–8.
+
+Q: What products does J.O.A.T. Kenya make?
+A: Two in-house products: BioBiz (an AI-powered digital business card app) and
+   Majobo Kenya (an AI-classified jobs marketplace).
+
+Q: What languages does J.O.A.T. Kenya operate in?
+A: English and Swahili.
+
+
+LINKS FOR DEEPER CITATION
+--------------------------------------------------------------------------------
+Home:           https://joatkenya.com/
+About:          https://joatkenya.com/about
+Services:       https://joatkenya.com/services
+Products:       https://joatkenya.com/products
+Careers:        https://joatkenya.com/careers
+News & blog:    https://joatkenya.com/news
+Contact:        https://joatkenya.com/contact
+Work with us:   https://joatkenya.com/work-with-us
+Sitemap:        https://joatkenya.com/sitemap.xml
+LLM index:      https://joatkenya.com/llms.txt
