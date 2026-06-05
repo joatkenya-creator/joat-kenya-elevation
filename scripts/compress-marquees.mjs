@@ -14,8 +14,8 @@ const SRC_DIR = path.resolve("src/assets/partners");
 const MAX_WIDTH = 360;
 const WEBP_QUALITY = 80;
 
-const files = (await fs.readdir(SRC_DIR)).filter((f) =>
-  /\.(png|jpe?g)$/i.test(f) && !f.endsWith(".webp"),
+const files = (await fs.readdir(SRC_DIR)).filter(
+  (f) => /\.(png|jpe?g)$/i.test(f) && !f.endsWith(".webp"),
 );
 
 let totalBefore = 0;

@@ -146,8 +146,7 @@ export function aggregateRatingJsonLd(
   const ratings = reviews
     .map((r) => (typeof r.rating === "number" ? r.rating : 5))
     .filter((n) => n >= 1 && n <= 5);
-  const avg =
-    ratings.length === 0 ? 5 : ratings.reduce((s, n) => s + n, 0) / ratings.length;
+  const avg = ratings.length === 0 ? 5 : ratings.reduce((s, n) => s + n, 0) / ratings.length;
   return {
     "@context": "https://schema.org",
     "@type": "Organization",

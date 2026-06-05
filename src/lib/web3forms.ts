@@ -12,10 +12,7 @@ import type { ContactPayload } from "./contact";
  * a Cloudflare environment variable (not a secret — it's a public key) for
  * production.
  */
-export async function deliverViaWeb3Forms(
-  p: ContactPayload,
-  files: File[] = [],
-): Promise<boolean> {
+export async function deliverViaWeb3Forms(p: ContactPayload, files: File[] = []): Promise<boolean> {
   const key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
   if (!key) {
     console.warn("VITE_WEB3FORMS_ACCESS_KEY not set — skipping Web3Forms delivery");

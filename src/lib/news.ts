@@ -4,6 +4,7 @@ const SUPABASE_ANON_KEY =
 
 export type BlogPost = {
   id: string;
+  slug: string;
   title: string;
   excerpt: string;
   cover_image: string | null;
@@ -33,7 +34,7 @@ export async function fetchNewsArticles(): Promise<
   { ok: true; posts: BlogPost[] } | { ok: false; posts: [] }
 > {
   try {
-    const url = `${SUPABASE_URL}/rest/v1/blog_posts?select=id,title,excerpt,cover_image,category,content,created_at&order=created_at.desc&limit=20`;
+    const url = `${SUPABASE_URL}/rest/v1/blog_posts?select=id,slug,title,excerpt,cover_image,category,content,created_at&order=created_at.desc&limit=20`;
     const res = await fetch(url, {
       headers: {
         apikey: SUPABASE_ANON_KEY,

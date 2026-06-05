@@ -10,7 +10,7 @@ export const Route = createFileRoute("/terms")({
       description:
         "The terms under which you may use joatkenya.com and the products offered by J.O.A.T. Kenya.",
       path: "/terms",
-  }),
+    }),
 });
 
 function TermsPage() {
@@ -44,9 +44,9 @@ function TermsPage() {
           <h2 className="text-xl font-bold text-foreground mb-2">2. Our services</h2>
           <p>
             JOAT provides software development, digital marketing, media and animation production,
-            AI solutions and children's digital education content, plus our own products (BioBiz
-            and Majobo Kenya) and partnered content (Amare's Big Planet). Specific products may
-            have additional terms surfaced at sign-up.
+            AI solutions and children's digital education content, plus our own products (BioBiz and
+            Majobo Kenya) and partnered content (Amare's Big Planet). Specific products may have
+            additional terms surfaced at sign-up.
           </p>
         </section>
 

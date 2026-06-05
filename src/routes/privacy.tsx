@@ -10,7 +10,7 @@ export const Route = createFileRoute("/privacy")({
       description:
         "How J.O.A.T. Kenya collects, uses, stores, and protects information shared through joatkenya.com and our products.",
       path: "/privacy",
-  }),
+    }),
 });
 
 function PrivacyPage() {
@@ -34,10 +34,10 @@ function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">1. Who we are</h2>
           <p>
-            J.O.A.T. Kenya ("JOAT", "we", "us") is a Kenyan digital innovation studio operating
-            from The Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya. This policy explains
-            what we do with personal information we collect through joatkenya.com and our products
-            (BioBiz, Majobo Kenya, and the Amare's Big Planet YouTube channel).
+            J.O.A.T. Kenya ("JOAT", "we", "us") is a Kenyan digital innovation studio operating from
+            The Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya. This policy explains what we
+            do with personal information we collect through joatkenya.com and our products (BioBiz,
+            Majobo Kenya, and the Amare's Big Planet YouTube channel).
           </p>
         </section>
 
@@ -77,8 +77,8 @@ function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">4. Who we share it with</h2>
           <p>
-            We share information only with service providers that help us run the business
-            (hosting, email, payments, analytics) and with authorities where required by law.
+            We share information only with service providers that help us run the business (hosting,
+            email, payments, analytics) and with authorities where required by law.
           </p>
         </section>
 

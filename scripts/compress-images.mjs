@@ -16,7 +16,12 @@ const WEBP_TASKS = [
   { in: "src/assets/amare-planet.jpg", out: "src/assets/amare-planet.webp", width: 400, q: 80 },
   { in: "src/assets/biobiz-mock.jpg", out: "src/assets/biobiz-mock.webp", width: 800, q: 82 },
   { in: "src/assets/biobiz-share.jpg", out: "src/assets/biobiz-share.webp", width: 800, q: 82 },
-  { in: "src/assets/biobiz-features.jpg", out: "src/assets/biobiz-features.webp", width: 800, q: 82 },
+  {
+    in: "src/assets/biobiz-features.jpg",
+    out: "src/assets/biobiz-features.webp",
+    width: 800,
+    q: 82,
+  },
   {
     in: "src/assets/biobiz-recordings.jpg",
     out: "src/assets/biobiz-recordings.webp",
@@ -89,9 +94,7 @@ for (const t of PNG_TASKS) {
   totalBefore += before;
   totalAfter += after;
   const drop = (1 - after / before) * 100;
-  console.log(
-    `  ${t.in.padEnd(26)} ${fmtKB(before)} → ${fmtKB(after)}  (-${drop.toFixed(0)}%)`,
-  );
+  console.log(`  ${t.in.padEnd(26)} ${fmtKB(before)} → ${fmtKB(after)}  (-${drop.toFixed(0)}%)`);
 }
 
 console.log("\n=== Deleting orphan files (not imported anywhere) ===");
