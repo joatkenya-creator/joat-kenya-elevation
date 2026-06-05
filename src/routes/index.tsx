@@ -9,7 +9,6 @@ import { Services } from "@/components/site/Services";
 import { Partners } from "@/components/site/Partners";
 import { Testimonials } from "@/components/site/Testimonials";
 import { Careers } from "@/components/site/Careers";
-import { News } from "@/components/site/News";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 import { Chatbot } from "@/components/site/Chatbot";
@@ -86,9 +85,6 @@ function Index() {
         <Services />
         <Testimonials />
         <Careers />
-        <section id="news">
-          <News />
-        </section>
         <Contact />
       </main>
       <Footer />

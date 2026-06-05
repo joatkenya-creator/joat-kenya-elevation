@@ -96,7 +96,7 @@ export function Footer() {
                 { l: "About Us", h: "/about" },
                 { l: "Services", h: "/services" },
                 { l: "Careers", h: "/careers" },
-                { l: "News & Articles", h: "/news" },
+                { l: "News & Articles", h: "/articles" },
                 { l: "Contact", h: "/contact" },
                 { l: "J.O.A.T. USA", h: EXTERNAL.joatUsa, external: true },
               ]}
@@ -105,10 +105,10 @@ export function Footer() {
             <FooterCol
               title="Solutions"
               links={[
-                { l: "BioBiz App", h: "#biobiz" },
-                { l: "Software Development", h: "#software" },
-                { l: "AI Marketing", h: "#ai-marketing" },
-                { l: "Blender Animation", h: "#blender" },
+                { l: "BioBiz App", h: "/#biobiz" },
+                { l: "Software Development", h: "/#software" },
+                { l: "AI Marketing", h: "/#ai-marketing" },
+                { l: "Blender Animation", h: "/#blender" },
               ]}
             />
 
