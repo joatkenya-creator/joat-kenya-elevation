@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowUpRight, Calendar, Loader2, X } from "lucide-react";
 import { fetchNewsArticles, type BlogPost } from "@/lib/news";
 
@@ -106,7 +106,7 @@ export function News() {
   return (
     <section className="relative py-14 lg:py-20">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -120,7 +120,7 @@ export function News() {
           <p className="text-sm text-muted-foreground sm:text-right max-w-xs leading-relaxed">
             Perspectives on technology, work culture and the modern digital workplace.
           </p>
-        </motion.div>
+        </m.div>
 
         {posts === null && !error && (
           <div className="flex items-center justify-center py-20 text-muted-foreground">
@@ -139,7 +139,7 @@ export function News() {
           <>
             {/* Featured article */}
             {featured && (
-              <motion.button
+              <m.button
                 type="button"
                 onClick={() => setActive(featured)}
                 initial={{ opacity: 0, y: 20 }}
@@ -177,13 +177,13 @@ export function News() {
                     </div>
                   </div>
                 </div>
-              </motion.button>
+              </m.button>
             )}
 
             {/* Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {rest.map((p, i) => (
-                <motion.button
+                <m.button
                   type="button"
                   key={p.id}
                   onClick={() => setActive(p)}
@@ -211,7 +211,7 @@ export function News() {
                       <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform shrink-0" />
                     </div>
                   </div>
-                </motion.button>
+                </m.button>
               ))}
             </div>
           </>
@@ -227,7 +227,7 @@ export function News() {
           className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto"
           onClick={() => setActive(null)}
         >
-          <motion.article
+          <m.article
             initial={{ opacity: 0, y: 30, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.25 }}
@@ -267,7 +267,7 @@ export function News() {
                 dangerouslySetInnerHTML={{ __html: active.content }}
               />
             </div>
-          </motion.article>
+          </m.article>
         </div>
       )}
     </section>

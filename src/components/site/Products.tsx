@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import {
   Download,
   Users,
@@ -540,7 +540,7 @@ function RobloxBuilds() {
                 </div>
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <motion.div
+                    <m.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -550,7 +550,7 @@ function RobloxBuilds() {
                       <p className="text-[11px] sm:text-sm text-muted-foreground mt-2 leading-relaxed">
                         {g.description}
                       </p>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -760,7 +760,7 @@ export function Products() {
   return (
     <section id="products" className="relative pt-24 lg:pt-32 pb-14 lg:pb-20 bg-navy-deep">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -776,7 +776,7 @@ export function Products() {
           <p className="mt-6 text-lg text-muted-foreground">
             Software, AI, digital marketing and media content, engineered to global standards.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="space-y-28 lg:space-y-36">
           {products.map((p) => {
@@ -787,7 +787,7 @@ export function Products() {
                 : "bg-(--joat-gold) text-(--joat-navy-deep) glow-gold";
             const accentText = p.accent === "red" ? "text-(--joat-red)" : "text-(--joat-gold)";
             return (
-              <motion.div
+              <m.div
                 key={p.id}
                 id={p.id}
                 initial={{ opacity: 0, y: 40 }}
@@ -917,13 +917,13 @@ export function Products() {
                 </div>
 
                 {p.extra}
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
 
         {/* Selected client — Amare's Big Planet (compact) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -958,7 +958,7 @@ export function Products() {
               </a>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

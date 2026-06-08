@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import {
   Code2,
   Megaphone,
@@ -138,7 +138,7 @@ export function Services() {
   return (
     <section id="services" className="relative py-14 lg:py-20 bg-navy-deep">
       <div className="max-w-5xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -152,12 +152,12 @@ export function Services() {
             digital education, we design and deliver the products, content and campaigns that move
             modern brands forward.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Single auto-rotating service card */}
         <div className="mt-10 sm:mt-14 relative glass rounded-3xl p-5 sm:p-8 lg:p-12 min-h-80 sm:min-h-96 bg-white/8 border border-(--joat-gold)/20">
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={s.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -205,7 +205,7 @@ export function Services() {
                   </ul>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </AnimatePresence>
 
           {/* Controls */}

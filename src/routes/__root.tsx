@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { LazyMotion, domAnimation } from "framer-motion";
 import {
   HeadContent,
   Outlet,
@@ -69,14 +70,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <HeadContent />
-      <Outlet />
+      {/* App-wide we use framer-motion's lightweight `m` component instead of
+          `motion`. LazyMotion ships only the `domAnimation` feature set
+          (~no drag/layout-projection code), and bundling it eagerly here keeps
+          every `m` element animating correctly on first paint — no risk of a
+          section flashing invisible while a deferred feature chunk loads. The
+          Hero (LCP element) is framer-free, so this never blocks first paint. */}
+      <LazyMotion features={domAnimation} strict>
+        <Outlet />
+      </LazyMotion>
     </QueryClientProvider>
   );
 }

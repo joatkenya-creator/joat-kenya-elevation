@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import {
   MapPin,
   Phone,
@@ -176,7 +176,7 @@ export function Contact() {
   return (
     <section id="contact" className="relative py-14 lg:py-20 bg-navy-deep">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -191,7 +191,7 @@ export function Contact() {
             Whether you need software development, are exploring our products, or partnering on
             innovation, our team is ready to help.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 mt-12">
           {/* Info + Map */}

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Globe2, Layers, Users2, Briefcase, BadgeCheck, HeartHandshake } from "lucide-react";
 
 const reasons = [
@@ -38,7 +38,7 @@ export function WhyChoose() {
   return (
     <section className="relative py-14 lg:py-20">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -49,11 +49,11 @@ export function WhyChoose() {
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground">
             Built to deliver. <span className="gradient-text-red">Trusted to scale.</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="mt-14 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {reasons.map((r, i) => (
-            <motion.div
+            <m.div
               key={r.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ export function WhyChoose() {
               <p className="mt-1.5 sm:mt-2 text-[11px] sm:text-sm text-muted-foreground leading-relaxed">
                 {r.text}
               </p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

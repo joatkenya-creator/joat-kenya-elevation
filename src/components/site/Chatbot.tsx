@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { chatCompletion, type ChatMessageT } from "@/lib/chat";
 
@@ -63,7 +63,7 @@ export function Chatbot() {
 
   return (
     <>
-      <motion.button
+      <m.button
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
@@ -72,11 +72,11 @@ export function Chatbot() {
         className="fixed bottom-6 right-6 z-60 w-14 h-14 rounded-full bg-linear-to-br from-(--joat-red) to-(--joat-gold) shadow-2xl flex items-center justify-center text-white glow-red"
       >
         {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </motion.button>
+      </m.button>
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -165,7 +165,7 @@ export function Chatbot() {
                 )}
               </button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -133,7 +133,7 @@ export function Testimonials() {
               "
             </div>
             <AnimatePresence mode="wait">
-              <motion.div
+              <m.div
                 key={t.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -158,7 +158,7 @@ export function Testimonials() {
                     <div className="text-sm text-muted-foreground">{t.role}</div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             </AnimatePresence>
 
             <div className="absolute bottom-6 right-6 flex gap-2">

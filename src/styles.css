@@ -273,3 +273,27 @@
 .news-content strong { color: var(--foreground); font-weight: 600; }
 .news-content em { font-style: italic; }
 .news-content img { border-radius: 0.75rem; margin: 1rem 0; }
+
+/* ── Hero orbital animations (CSS, compositor-thread) ──────────────────────────
+   These replace the framer-motion infinite animations that previously ran on
+   the JS main thread (and inflated INP). Pure CSS transforms run off-thread. */
+@keyframes hero-spin { to { transform: rotate(360deg); } }
+@keyframes hero-spin-reverse { to { transform: rotate(-360deg); } }
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.hero-spin { animation: hero-spin 40s linear infinite; will-change: transform; }
+.hero-spin-reverse { animation: hero-spin-reverse 60s linear infinite; will-change: transform; }
+.hero-float { animation: hero-float 4s ease-in-out infinite; will-change: transform; }
+
+/* Navbar entrance — CSS so the always-eager Navbar needs no animation lib. */
+@keyframes navbar-enter {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.navbar-enter { animation: navbar-enter 0.6s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-spin, .hero-spin-reverse, .hero-float, .navbar-enter { animation: none; }
+}

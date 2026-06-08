@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import m1 from "@/assets/partners/marquee1.webp";
 import m2 from "@/assets/partners/marquee2.webp";
 import m3 from "@/assets/partners/marquee3.webp";
@@ -44,7 +44,7 @@ export function Partners() {
         <div className="relative overflow-hidden">
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-(--joat-navy) to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-(--joat-navy) to-transparent z-10" />
-          <motion.div
+          <m.div
             className="flex gap-10 whitespace-nowrap py-4 items-center"
             animate={{ x: ["0%", "-50%"] }}
             transition={{ duration: marqueeDuration, repeat: Infinity, ease: "linear" }}
@@ -62,7 +62,7 @@ export function Partners() {
                 />
               </div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

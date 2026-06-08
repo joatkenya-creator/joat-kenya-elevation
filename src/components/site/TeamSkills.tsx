@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
 const skills = [
@@ -14,7 +14,7 @@ export function TeamSkills() {
   return (
     <section className="relative py-16 lg:py-24 bg-[oklch(0.96_0.012_85)] text-[oklch(0.18_0.035_265)]">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -34,11 +34,11 @@ export function TeamSkills() {
             We've built JOAT around the kind of multi-skilled team that the name promises; every
             project lands with the right specialists in the room.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {skills.map((s, i) => (
-            <motion.div
+            <m.div
               key={s.label}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ export function TeamSkills() {
               <div className="text-[11px] uppercase tracking-wider text-[oklch(0.55_0.18_27)] mt-1">
                 {s.level}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

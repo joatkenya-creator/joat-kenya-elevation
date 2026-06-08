@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 // Served from /public so it shares the same URL with the index.html preload
 // and the favicon — single download instead of bundled-plus-favicon duplicate.
@@ -27,11 +26,10 @@ export function Navbar() {
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -30, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    // Framer-free (CSS entrance via .navbar-enter) so the Navbar — part of the
+    // first viewport — carries no animation-library code on the critical path.
+    <header
+      className={`navbar-enter fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? "glass-solid shadow-[0_8px_30px_-15px_oklch(0_0_0/0.6)]" : ""
       }`}
     >
@@ -139,6 +137,6 @@ export function Navbar() {
           </ul>
         </div>
       )}
-    </motion.header>
+    </header>
   );
 }

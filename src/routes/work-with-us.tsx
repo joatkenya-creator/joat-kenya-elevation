@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -195,7 +195,7 @@ function WorkWithUsPage() {
             <ArrowLeft className="w-4 h-4" />
             Back to JOAT KENYA
           </Link>
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -203,16 +203,16 @@ function WorkWithUsPage() {
           >
             <Sparkles className="w-3.5 h-3.5" />
             Work With Us · AI Automation Services
-          </motion.div>
-          <motion.h1
+          </m.div>
+          <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-foreground"
           >
             Run Your Business Content From a <span className="gradient-text-gold">Single Chat</span>
-          </motion.h1>
-          <motion.p
+          </m.h1>
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
@@ -220,8 +220,8 @@ function WorkWithUsPage() {
           >
             JOAT Kenya connects your website and social channels to an AI-powered Telegram bot.
             Update prices, publish posts, upload media; just send a message. We handle the rest.
-          </motion.p>
-          <motion.div
+          </m.p>
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
@@ -241,7 +241,7 @@ function WorkWithUsPage() {
             >
               See All Packages
             </a>
-          </motion.div>
+          </m.div>
 
           {/* Stats */}
           <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
@@ -278,7 +278,7 @@ function WorkWithUsPage() {
             {packages.map((p, i) => {
               const isPopular = p.badge === "Most Popular";
               return (
-                <motion.div
+                <m.div
                   key={p.name}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -331,7 +331,7 @@ function WorkWithUsPage() {
                     Book Strategy Call
                     <ArrowRight className="w-4 h-4" />
                   </button>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
@@ -353,7 +353,7 @@ function WorkWithUsPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {services.map((s, i) => (
-              <motion.div
+              <m.div
                 key={s.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -366,7 +366,7 @@ function WorkWithUsPage() {
                 </div>
                 <h3 className="font-bold text-foreground text-lg">{s.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.text}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -421,7 +421,7 @@ function WorkWithUsPage() {
           </div>
           <div className="space-y-3">
             {faqs.map((f, i) => (
-              <motion.details
+              <m.details
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -436,7 +436,7 @@ function WorkWithUsPage() {
                   </span>
                 </summary>
                 <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">{f.a}</div>
-              </motion.details>
+              </m.details>
             ))}
           </div>
         </div>

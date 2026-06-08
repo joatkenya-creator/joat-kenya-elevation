@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import {
   Briefcase,
   Heart,
@@ -42,7 +42,7 @@ export function Careers() {
   return (
     <section id="careers" className="relative py-14 lg:py-20 bg-navy-deep">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -58,10 +58,10 @@ export function Careers() {
             a real impact across industries. Every open role at JOAT, our partners and the wider
             wider market lives on one platform: Majobo Kenya.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Live jobs CTA — links to Majobo */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -156,7 +156,7 @@ export function Careers() {
               Join Network
             </a>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Culture */}
         <div className="mt-16">

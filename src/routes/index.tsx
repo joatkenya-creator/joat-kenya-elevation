@@ -1,17 +1,40 @@
 import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+// The Hero (LCP element) and Navbar are framer-free, so the first viewport
+// paints without the animation library on the critical path. The near-fold
+// sections are imported eagerly too — they're small and keeping them in the
+// route chunk avoids a Suspense flash just below the hero.
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
-import { About } from "@/components/site/About";
-import { Products } from "@/components/site/Products";
-import { TeamSkills } from "@/components/site/TeamSkills";
-import { WhyChoose } from "@/components/site/WhyChoose";
-import { Services } from "@/components/site/Services";
 import { Partners } from "@/components/site/Partners";
-import { Testimonials } from "@/components/site/Testimonials";
-import { Careers } from "@/components/site/Careers";
-import { Contact } from "@/components/site/Contact";
-import { Footer } from "@/components/site/Footer";
+import { About } from "@/components/site/About";
+import { TeamSkills } from "@/components/site/TeamSkills";
+
+// The heavier, fully below-the-fold block is code-split into its own chunks so
+// the browser parses far less JS before first interaction. These stream in
+// afterwards; they sit below the fold, so their late insertion never moves
+// visible content — CLS stays at 0.
+const Products = lazy(() =>
+  import("@/components/site/Products").then((m) => ({ default: m.Products })),
+);
+const WhyChoose = lazy(() =>
+  import("@/components/site/WhyChoose").then((m) => ({ default: m.WhyChoose })),
+);
+const Services = lazy(() =>
+  import("@/components/site/Services").then((m) => ({ default: m.Services })),
+);
+const Testimonials = lazy(() =>
+  import("@/components/site/Testimonials").then((m) => ({ default: m.Testimonials })),
+);
+const Careers = lazy(() =>
+  import("@/components/site/Careers").then((m) => ({ default: m.Careers })),
+);
+const Contact = lazy(() =>
+  import("@/components/site/Contact").then((m) => ({ default: m.Contact })),
+);
+const Footer = lazy(() =>
+  import("@/components/site/Footer").then((m) => ({ default: m.Footer })),
+);
 // Chatbot and BackToTop are decorative UI that don't need to block first paint
 // or initial interaction. Lazy-loading frees ~40KB from the initial bundle.
 const Chatbot = lazy(() =>
@@ -107,14 +130,22 @@ function Index() {
         <Partners />
         <About />
         <TeamSkills />
-        <Products />
-        <WhyChoose />
-        <Services />
-        <Testimonials />
-        <Careers />
-        <Contact />
+        {/* Heavier below-the-fold block streams in from its own chunks. The
+            min-height reservation keeps page height stable while it loads so no
+            scrollbar jump occurs, and it's well below the fold so nothing
+            visible shifts. */}
+        <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
+          <Products />
+          <WhyChoose />
+          <Services />
+          <Testimonials />
+          <Careers />
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
       <Suspense fallback={null}>
         <Chatbot />
         <BackToTop />

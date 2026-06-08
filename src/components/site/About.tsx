@@ -1,11 +1,11 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Target, Eye } from "lucide-react";
 
 export function About() {
   return (
     <section id="about" className="relative py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -33,7 +33,7 @@ export function About() {
             We don't just deliver projects. We build products people love, stories that teach, and
             campaigns that move, delivered with the cadence of a modern tech company.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Mission / Vision */}
         <div className="grid grid-cols-2 gap-3 sm:gap-6 mt-14">
@@ -49,7 +49,7 @@ export function About() {
               text: "To be a globally trusted technology studio where software, education and digital media converge to shape the future.",
             },
           ].map((c, i) => (
-            <motion.div
+            <m.div
               key={c.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ export function About() {
               <p className="mt-1.5 sm:mt-3 text-xs sm:text-base text-muted-foreground leading-relaxed">
                 {c.text}
               </p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
