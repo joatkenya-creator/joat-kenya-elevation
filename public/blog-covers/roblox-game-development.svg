@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Roblox game development in Africa">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0d1320"/>
+      <stop offset="100%" stop-color="#1a2236"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e7c97a"/>
+      <stop offset="100%" stop-color="#d63c2c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="46%" r="56%">
+      <stop offset="0%" stop-color="#d63c2c" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="610" cy="305" rx="520" ry="330" fill="url(#glow)"/>
+  <g opacity="0.16" stroke="#e7c97a" stroke-width="1">
+    <path d="M110 500L310 365L470 445L690 290L890 372L1080 225"/>
+    <path d="M120 160H1080M120 260H1080M120 360H1080M120 460H1080"/>
+  </g>
+  <g transform="translate(600 318)" stroke="url(#accent)" stroke-linejoin="round">
+    <path d="M-260 82L-120 0L20 82L-120 164Z" fill="#111827" stroke-width="3"/>
+    <path d="M20 82L160 0L300 82L160 164Z" fill="#111827" stroke-width="3"/>
+    <path d="M-120 0L20-82L160 0L20 82Z" fill="#111827" stroke-width="3"/>
+    <path d="M-120 0V-118L20-200L160-118V0L20 82Z" fill="#0d1320" stroke-width="4"/>
+    <path d="M20-200L160-118L20-36L-120-118Z" fill="#e7c97a" opacity="0.85" stroke-width="3"/>
+    <path d="M-120-118L20-36V82L-120 0Z" fill="#d63c2c" opacity="0.68" stroke-width="3"/>
+    <path d="M160-118L20-36V82L160 0Z" fill="#1a2236" stroke-width="3"/>
+  </g>
+  <g transform="translate(844 238)">
+    <rect x="-48" y="-34" width="96" height="68" rx="16" fill="#0d1320" stroke="url(#accent)" stroke-width="3"/>
+    <circle cx="-18" cy="-3" r="7" fill="#e7c97a"/>
+    <circle cx="18" cy="-3" r="7" fill="#e7c97a"/>
+    <path d="M-18 17Q0 29 18 17" stroke="#e7c97a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="0" cy="-50" r="5" fill="#d63c2c"/>
+    <line x1="0" y1="-45" x2="0" y2="-34" stroke="#d63c2c" stroke-width="3"/>
+  </g>
+  <g transform="translate(60 60)">
+    <rect width="345" height="44" rx="22" fill="#d63c2c"/>
+    <text x="172" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="3">ROBLOX BUILDS</text>
+  </g>
+</svg>

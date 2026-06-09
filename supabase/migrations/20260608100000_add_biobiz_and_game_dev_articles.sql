@@ -9,7 +9,7 @@ values
   'BioBiz',
   'published',
   'Paper cards still work, but digital business cards are faster to share, easier to update, and better for measuring real networking results.',
-  null,
+  '/blog-covers/digital-business-cards.svg',
   $body1$
 <p>Business cards are not dead. They have simply changed shape. In Kenya, where networking often happens quickly at events, client meetings, campuses, malls and WhatsApp groups, the strongest card is the one a person can save, share and act on immediately.</p>
 
@@ -56,7 +56,7 @@ values
   'Game Development',
   'published',
   'Roblox is no longer just a kids platform. It is becoming a practical space for education, brand experiences and African creative technology.',
-  null,
+  '/blog-covers/roblox-game-development.svg',
   $body2$
 <p>Roblox is often described as a game platform, but that undersells what it has become. For young audiences, it is a social space, a creation engine and a learning environment. For brands and educators in Africa, that combination opens a serious opportunity.</p>
 
