@@ -88,7 +88,7 @@ export function News() {
     };
   }, [active]);
 
-  // Deep-link support: when the URL is /news?article=<slug>, auto-open the
+  // Deep-link support: when the URL is /articles?article=<slug>, auto-open the
   // matching article modal. Lets in-content cross-links between blog posts
   // navigate seamlessly between articles.
   useEffect(() => {
@@ -224,7 +224,7 @@ export function News() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="article-title"
-          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 z-60 flex items-start justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm overflow-hidden"
           onClick={() => setActive(null)}
         >
           <m.article
@@ -232,13 +232,13 @@ export function News() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.25 }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-3xl my-12 bg-card text-card-foreground rounded-3xl shadow-2xl overflow-hidden"
+            className="relative w-full max-w-3xl max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-2rem)] bg-card text-card-foreground rounded-3xl shadow-2xl overflow-y-auto"
           >
             <button
               type="button"
               aria-label="Close article"
               onClick={() => setActive(null)}
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 backdrop-blur flex items-center justify-center text-foreground"
+              className="sticky top-4 float-right z-10 mr-4 -mb-10 w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 backdrop-blur flex items-center justify-center text-foreground"
             >
               <X className="w-4 h-4" />
             </button>
