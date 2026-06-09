@@ -924,6 +924,7 @@ export function Products() {
 
         {/* Selected client — Amare's Big Planet (compact) */}
         <m.div
+          id="amare"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
