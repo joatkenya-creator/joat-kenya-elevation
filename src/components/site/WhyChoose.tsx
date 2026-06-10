@@ -51,7 +51,9 @@ export function WhyChoose() {
           </h2>
         </m.div>
 
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+        {/* `dark` on the grid keeps the cards navy blue while the section itself
+            stays warm white. */}
+        <div className="dark mt-14 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {reasons.map((r, i) => (
             <m.div
               key={r.title}
@@ -61,7 +63,7 @@ export function WhyChoose() {
               transition={{ duration: 0.5, delay: i * 0.05 }}
               className="group relative glass rounded-2xl p-4 sm:p-6 hover:border-(--joat-gold)/40 transition-all hover:-translate-y-1"
             >
-              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-linear-to-br from-(--joat-red)/30 to-(--joat-gold)/20 flex items-center justify-center mb-2 sm:mb-4">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-(--joat-red)/15 flex items-center justify-center mb-2 sm:mb-4">
                 <r.icon className="w-5 h-5 sm:w-6 sm:h-6 text-(--joat-gold)" />
               </div>
               <h3 className="text-sm sm:text-lg font-bold text-foreground leading-tight">

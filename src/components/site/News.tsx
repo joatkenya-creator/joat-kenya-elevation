@@ -45,7 +45,7 @@ function PostCover({
   if (!src) {
     return (
       <div
-        className={`relative bg-linear-to-br from-(--joat-red)/30 via-(--joat-navy-deep) to-(--joat-gold)/30 ${className ?? ""}`}
+        className={`relative bg-(--joat-navy-deep) ${className ?? ""}`}
       >
         <div className="absolute inset-0 grid-bg opacity-30" />
       </div>
@@ -224,7 +224,7 @@ export function News() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="article-title"
-          className="fixed inset-0 z-60 flex items-start justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm overflow-hidden"
+          className="fixed inset-0 z-60 flex items-start justify-center p-3 sm:p-4 bg-black/70 overflow-hidden"
           onClick={() => setActive(null)}
         >
           <m.article
@@ -238,7 +238,7 @@ export function News() {
               type="button"
               aria-label="Close article"
               onClick={() => setActive(null)}
-              className="sticky top-4 float-right z-10 mr-4 -mb-10 w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 backdrop-blur flex items-center justify-center text-foreground"
+              className="sticky top-4 float-right z-10 mr-4 -mb-10 w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 flex items-center justify-center text-foreground"
             >
               <X className="w-4 h-4" />
             </button>

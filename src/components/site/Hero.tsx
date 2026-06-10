@@ -1,91 +1,74 @@
-import { ArrowRight, Sparkles } from "lucide-react";
-// Globe graphic hidden per request — kept here for easy re-enabling.
-// import { GlobeGraphic } from "./GlobeGraphic";
+import { ArrowRight } from "lucide-react";
 
-// The Hero is the LCP (Largest Contentful Paint) element. It is intentionally
-// framer-free: the headline renders at full opacity immediately so the browser
-// can record LCP the instant the markup paints — no JS animation library on the
-// critical path, no opacity:0 entrance that would postpone LCP. The decorative
-// orbital card (desktop only) uses pure-CSS keyframe animations, which run on
-// the compositor thread and therefore don't add to INP (main-thread work).
+// Light, centered hero (Seamless-IT style). Background is the uploaded image at
+// /hero-bg.png under a translucent warm-white wash, so the geometric pattern
+// reads softly behind the content. Framer-free so the headline (LCP element)
+// paints immediately; if the image file isn't present yet, the warm-white wash
+// gracefully shows the page background.
+const stats = [
+  { value: "42+", label: "Years in business" },
+  { value: "5", label: "Service lines" },
+  { value: "3", label: "In-house products" },
+  { value: "100%", label: "Delivered in-house" },
+];
+
 export function Hero() {
   return (
-    <section id="home" className="relative pt-28 lg:pt-36 pb-20 lg:pb-32 overflow-hidden">
-      <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
-      <div className="absolute inset-0 grid-bg opacity-40" />
-      {/* Globe graphic hidden per request */}
+    <section id="home" className="relative pt-32 lg:pt-44 pb-20 lg:pb-28 overflow-hidden">
+      {/* Uploaded geometric background image */}
+      <div
+        className="absolute inset-0 bg-center bg-cover"
+        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+        aria-hidden="true"
+      />
+      {/* Translucent warm-white wash over the image */}
+      <div
+        className="absolute inset-0"
+        style={{ background: "oklch(0.975 0.01 85 / 0.25)" }}
+        aria-hidden="true"
+      />
 
-      <div className="relative max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-12 gap-10 items-center">
-        <div className="lg:col-span-7">
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-gold mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            Your Digital Transformation Partner
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-foreground">
-            Transforming the world through <span className="gradient-text-gold">Innovation</span>,{" "}
-            <span className="gradient-text-red">Technology</span> &amp; Digital Solutions
-          </h1>
-
-          <p className="mt-6 text-base lg:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Empowering businesses, communities, and future innovators through cutting-edge
-            technology, digital education, and immersive digital experiences.
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#products"
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-red) text-primary-foreground font-semibold glow-red hover:brightness-110 transition-all"
-            >
-              Explore Solutions{" "}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold hover:brightness-110 transition-all"
-            >
-              Partner With Us
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md glass text-foreground font-semibold hover:bg-white/8 transition-all"
-            >
-              Get Started
-            </a>
-          </div>
+      <div className="relative max-w-4xl mx-auto px-5 lg:px-8 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-card px-4 py-1.5 text-xs font-medium text-gold mb-6">
+          Since 1983 · Digital Innovation Studio
         </div>
 
-        {/* Floating orbital metrics card — decorative, desktop only. All motion
-            here is CSS (see .hero-spin / .hero-float in styles.css), so it never
-            touches the JS main thread. */}
-        <div className="lg:col-span-5 relative hidden lg:block">
-          <div className="relative aspect-square max-w-md mx-auto">
-            <div className="hero-spin absolute inset-0 rounded-full border border-(--joat-gold)/30" />
-            <div className="hero-spin-reverse absolute inset-8 rounded-full border border-(--joat-red)/30" />
-            <div className="absolute inset-16 rounded-full glass flex items-center justify-center text-center p-6">
-              <div>
-                <div className="text-5xl font-bold gradient-text-gold">42+</div>
-                <div className="text-xs uppercase tracking-widest text-muted-foreground mt-2">
-                  Years building the digital future
-                </div>
-              </div>
-            </div>
+        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-foreground">
+          Transforming Ideas into <span className="text-(--joat-red)">Digital Reality</span>
+        </h1>
 
-            {[
-              { t: "AI & Cloud", x: "-10%", y: "10%" },
-              { t: "EdTech", x: "85%", y: "20%" },
-              { t: "Marketing", x: "-5%", y: "75%" },
-              { t: "Media", x: "80%", y: "78%" },
-            ].map((b, i) => (
-              <div
-                key={b.t}
-                style={{ left: b.x, top: b.y, animationDelay: `${i * 0.4}s` }}
-                className="hero-float absolute glass px-3 py-1.5 rounded-full text-xs font-semibold text-foreground"
-              >
-                {b.t}
-              </div>
-            ))}
-          </div>
+        <p className="mt-5 text-lg lg:text-2xl font-semibold text-foreground/90">
+          Software, AI, Media &amp; Digital Marketing, built in-house by J.O.A.T. Kenya.
+        </p>
+
+        <p className="mt-4 text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          We deliver software development, AI solutions, media production and digital marketing that
+          drive real growth for businesses across Kenya and beyond.
+        </p>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <a
+            href="#contact"
+            className="group inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-red) text-primary-foreground font-semibold hover:brightness-110 transition-all"
+          >
+            Start Your Project
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+          <a
+            href="#services"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-(--border) bg-card text-foreground font-semibold hover:border-(--joat-red)/40 transition-all"
+          >
+            Explore Services
+          </a>
+        </div>
+
+        <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl mx-auto">
+          {stats.map((s) => (
+            <div key={s.label}>
+              <div className="text-3xl lg:text-4xl font-bold text-foreground">{s.value}</div>
+              <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

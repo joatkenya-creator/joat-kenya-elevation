@@ -10,7 +10,7 @@ export const Route = createFileRoute("/products")({
   component: ProductsPage,
   head: () => ({
     ...seo({
-      title: "Products | BioBiz & Digital Solutions — JOAT Kenya",
+      title: "Products | BioBiz & Digital Solutions | JOAT Kenya",
       description:
         "JOAT Kenya products: BioBiz digital business cards with AI meeting notes, plus our software, AI marketing and animation studio work.",
       path: "/products",

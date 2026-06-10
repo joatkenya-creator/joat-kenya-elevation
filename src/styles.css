@@ -85,42 +85,45 @@
   --shadow-glow: 0 20px 60px -20px oklch(0.58 0.20 27 / 0.55);
   --shadow-gold: 0 20px 60px -20px oklch(0.78 0.10 80 / 0.45);
 
-  /* === TEXT COLORS — LOCKED ACROSS THEMES ===
-     Per design: light/dark mode should NOT affect text. All foreground colors
-     are defined here at :root and never overridden by the .dark class.
-     Hex fallback first, oklch override second — same pattern as brand vars. */
-  --foreground: #fafaf2;
-  --foreground: oklch(0.97 0.01 90);
-  --card-foreground: oklch(0.97 0.01 90);
-  --popover-foreground: oklch(0.97 0.01 90);
-  --primary-foreground: oklch(0.98 0.005 90);
-  --secondary-foreground: oklch(0.18 0.035 265);
-  --accent-foreground: oklch(0.16 0.035 265);
-  --destructive-foreground: oklch(0.98 0.005 90);
-  --muted-foreground: oklch(0.72 0.02 90);
+  /* === LIGHT THEME — warm white surfaces, dark navy ink ===================== */
+  --foreground: #1c2333;
+  --foreground: oklch(0.24 0.03 265);
+  --card-foreground: oklch(0.24 0.03 265);
+  --popover-foreground: oklch(0.24 0.03 265);
+  --primary-foreground: oklch(0.99 0.005 90);
+  --secondary-foreground: oklch(0.24 0.03 265);
+  --accent-foreground: oklch(0.24 0.03 265);
+  --destructive-foreground: oklch(0.99 0.005 90);
+  --muted-foreground: #5b6478;
+  --muted-foreground: oklch(0.50 0.02 265);
 
-  /* Brand accent surfaces (red/gold) stay the same in both themes */
-  --primary: oklch(0.58 0.20 27);
+  /* Readable "ink" gold for text/eyebrows on light surfaces. The bright
+     --joat-gold is a fill colour (buttons) and too pale for text on white. */
+  --gold-ink: #9a7b1f;
+  --gold-ink: oklch(0.58 0.11 75);
+
+  /* Brand accent surfaces */
+  --primary: oklch(0.55 0.20 27);
   --secondary: oklch(0.78 0.10 80);
   --accent: oklch(0.78 0.10 80);
-  --destructive: oklch(0.60 0.245 27);
-  --ring: oklch(0.78 0.10 80);
+  --destructive: oklch(0.55 0.21 27);
+  --ring: oklch(0.55 0.20 27);
 
-  /* LIGHT MODE (default) — slightly lighter navy surfaces; locked text remains readable */
-  --background: #2b3349;
-  --background: oklch(0.26 0.045 265);
-  --card: oklch(0.30 0.045 265);
-  --popover: oklch(0.30 0.045 265);
-  --muted: oklch(0.34 0.045 265);
-  --border: oklch(1 0 0 / 14%);
-  --input: oklch(0.34 0.045 265);
+  --background: #f7f5f0;
+  --background: oklch(0.975 0.008 85);
+  --card: #ffffff;
+  --card: oklch(1 0 0);
+  --popover: oklch(1 0 0);
+  --muted: #efece4;
+  --muted: oklch(0.955 0.008 85);
+  --border: #e4dfd5;
+  --border: oklch(0.905 0.008 85);
+  --input: oklch(0.93 0.008 85);
 
-  --gradient-hero: radial-gradient(1200px 600px at 20% 0%, oklch(0.40 0.12 27 / 0.50), transparent 60%),
-                   radial-gradient(900px 500px at 90% 30%, oklch(0.50 0.10 80 / 0.35), transparent 60%),
-                   linear-gradient(180deg, oklch(0.22 0.04 265) 0%, oklch(0.26 0.045 265) 100%);
-  --shadow-card: 0 10px 40px -15px oklch(0 0 0 / 0.4);
-  --glass: oklch(1 0 0 / 0.06);
-  --glass-border: oklch(1 0 0 / 0.14);
+  --gradient-hero: var(--background);
+  --shadow-card: 0 10px 30px -18px oklch(0.2 0.03 265 / 0.18);
+  --glass: oklch(1 0 0);
+  --glass-border: oklch(0.905 0.008 85);
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -137,23 +140,39 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
-/* DARK MODE — JOAT deep navy surfaces.
-   Text colors intentionally NOT redefined here — they stay locked from :root.
-   Same fallback-then-oklch pattern for older browsers. */
+/* DARK THEME — JOAT deep navy. Scoped: applied via class="dark" on a wrapper
+   (the homepage's dark sections), NOT globally. :root is the light default, so
+   .dark must override the full palette including text colours. */
 .dark {
+  --foreground: oklch(0.97 0.01 90);
+  --card-foreground: oklch(0.97 0.01 90);
+  --popover-foreground: oklch(0.97 0.01 90);
+  --primary-foreground: oklch(0.98 0.005 90);
+  --secondary-foreground: oklch(0.18 0.035 265);
+  --accent-foreground: oklch(0.16 0.035 265);
+  --destructive-foreground: oklch(0.98 0.005 90);
+  --muted-foreground: oklch(0.72 0.02 90);
+
+  /* Bright gold reads well on dark; the light theme uses a deeper gold ink. */
+  --gold-ink: oklch(0.80 0.11 80);
+
+  --primary: oklch(0.58 0.20 27);
+  --secondary: oklch(0.78 0.10 80);
+  --accent: oklch(0.78 0.10 80);
+  --destructive: oklch(0.60 0.22 27);
+  --ring: oklch(0.78 0.10 80);
+
   --background: #1a2236;
   --background: oklch(0.16 0.035 265);
   --card: oklch(0.20 0.038 265);
   --popover: oklch(0.20 0.038 265);
-  --muted: oklch(0.24 0.035 265);
-  --border: oklch(0.30 0.04 265 / 60%);
+  --muted: oklch(0.21 0.037 265);
+  --border: oklch(0.32 0.04 265 / 65%);
   --input: oklch(0.26 0.04 265);
 
-  --gradient-hero: radial-gradient(1200px 600px at 20% 0%, oklch(0.30 0.10 27 / 0.45), transparent 60%),
-                   radial-gradient(900px 500px at 90% 30%, oklch(0.40 0.10 80 / 0.30), transparent 60%),
-                   linear-gradient(180deg, oklch(0.11 0.03 265) 0%, oklch(0.16 0.035 265) 100%);
+  --gradient-hero: var(--background);
   --shadow-card: 0 10px 40px -15px oklch(0 0 0 / 0.6);
-  --glass: oklch(1 0 0 / 0.04);
+  --glass: var(--card);
   --glass-border: oklch(1 0 0 / 0.10);
 }
 
@@ -188,60 +207,36 @@
 }
 
 @layer utilities {
+  /*
+   * Flat design system: surfaces are solid, slightly-elevated navy panels with
+   * a thin border — no frosted blur, no translucency. `.glass*` keep their names
+   * (used across ~18 components) but now render as flat cards.
+   */
   .glass {
-    background: var(--glass);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border: 1px solid var(--glass-border);
+    background: var(--card);
+    border: 1px solid var(--border);
   }
-  /*
-   * Like .glass, but near-opaque on mobile for readability (the frosted blur over
-   * scrolling content hurts legibility on small screens) and full frosted glass
-   * from the lg breakpoint up. Use for overlay panels: mobile nav menu, chatbot.
-   */
   .glass-panel {
-    background: oklch(0.12 0.03 265 / 0.97);
-    border: 1px solid var(--glass-border);
+    background: var(--card);
+    border: 1px solid var(--border);
   }
-  @media (min-width: 1024px) {
-    .glass-panel {
-      background: var(--glass);
-      backdrop-filter: blur(14px) saturate(140%);
-      -webkit-backdrop-filter: blur(14px) saturate(140%);
-    }
-  }
-  /*
-   * Fully opaque navy at every screen size — no blur, no translucency.
-   * Use where the frosted effect hurts readability on ALL devices
-   * (scrolled navbar, chatbot window).
-   */
   .glass-solid {
-    background: oklch(0.12 0.03 265 / 0.98);
-    border: 1px solid var(--glass-border);
+    background: var(--card);
+    border: 1px solid var(--border);
   }
-  .text-gold { color: var(--joat-gold); }
-  .bg-navy { background: var(--joat-navy); }
-  .bg-navy-deep { background: var(--joat-navy-deep); }
-  .gradient-text-gold {
-    background: var(--gradient-gold);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .gradient-text-red {
-    background: var(--gradient-red);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .glow-red { box-shadow: var(--shadow-glow); }
-  .glow-gold { box-shadow: var(--shadow-gold); }
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, oklch(1 0 0 / 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(1 0 0 / 0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
+  /* Gold as readable ink on light surfaces (not the pale fill colour). */
+  .text-gold { color: var(--gold-ink); }
+  /* Former dark section backgrounds → subtle warm-grey surfaces for rhythm. */
+  .bg-navy { background: var(--muted); }
+  .bg-navy-deep { background: var(--muted); }
+  /* Flat accent text — the two brand accents as solid colours (no gradient). */
+  .gradient-text-gold { color: var(--gold-ink); }
+  .gradient-text-red { color: var(--joat-red); }
+  /* Glows removed for the flat look — accent colour alone carries emphasis. */
+  .glow-red { box-shadow: none; }
+  .glow-gold { box-shadow: none; }
+  /* Background grid texture removed for a clean flat surface. */
+  .grid-bg { background-image: none; }
 }
 
 /* Rich-text rendering for fetched blog post HTML */
@@ -274,19 +269,6 @@
 .news-content em { font-style: italic; }
 .news-content img { border-radius: 0.75rem; margin: 1rem 0; }
 
-/* ── Hero orbital animations (CSS, compositor-thread) ──────────────────────────
-   These replace the framer-motion infinite animations that previously ran on
-   the JS main thread (and inflated INP). Pure CSS transforms run off-thread. */
-@keyframes hero-spin { to { transform: rotate(360deg); } }
-@keyframes hero-spin-reverse { to { transform: rotate(-360deg); } }
-@keyframes hero-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-.hero-spin { animation: hero-spin 40s linear infinite; will-change: transform; }
-.hero-spin-reverse { animation: hero-spin-reverse 60s linear infinite; will-change: transform; }
-.hero-float { animation: hero-float 4s ease-in-out infinite; will-change: transform; }
-
 /* Navbar entrance — CSS so the always-eager Navbar needs no animation lib. */
 @keyframes navbar-enter {
   from { transform: translateY(-30px); opacity: 0; }
@@ -295,5 +277,5 @@
 .navbar-enter { animation: navbar-enter 0.6s ease both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-spin, .hero-spin-reverse, .hero-float, .navbar-enter { animation: none; }
+  .navbar-enter { animation: none; }
 }

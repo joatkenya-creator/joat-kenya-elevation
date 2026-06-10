@@ -44,19 +44,19 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(awesome|amazing|excellent|wonderful|fantastic|love (it|this)|impressive|brilliant|incredible)\b/i,
     reply:
-      "Thanks — that means a lot. Want to take the next step? Book a 30-min meeting from the Contact section, or share what you're working on via the Contact form.",
+      "Thanks, that means a lot. Want to take the next step? Book a 30-min meeting from the Contact section, or share what you're working on via the Contact form.",
   },
   {
     match:
       /\b(disappointed|bad service|complaint|complain|terrible|awful|frustrated|unhappy|not (happy|good|great)|angry|upset)\b/i,
     reply:
-      "I'm sorry about that — your feedback matters. Please email joatkenya120@gmail.com or call +254142378150 directly so a human on our team can help right away.",
+      "I'm sorry about that. Your feedback matters. Please email joatkenya120@gmail.com or call +254142378150 directly so a human on our team can help right away.",
   },
   {
     match:
       /\bhow (are|r)( you| u| things)?\b|\bhow('?s| is) (it going|life|things|everything|your day)\b|\bhow do you do\b|\bhow have you been\b|\bwhat'?s up\b|\bwhatsup\b|\bsup\b/i,
     reply:
-      "I'm doing great, thanks for asking! I'm here to help — want me to walk you through our services, our packages, or set up a meeting with the team?",
+      "I'm doing great, thanks for asking! I'm here to help. Want me to walk you through our services, our packages, or set up a meeting with the team?",
   },
 
   // ===== Identity =====
@@ -64,7 +64,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(what|who)\s+(is|are|does)\s+(j\.?\s*o\.?\s*a\.?\s*t\.?|joat)( kenya)?\b|\babout joat\b|tell me about joat|founded|since 1983|\bhistory\b/i,
     reply:
-      "J.O.A.T. (Jack of All Trades) Kenya is a digital innovation studio operating since 1983. We design and deliver software, digital marketing, media production, AI solutions and children's digital education — for clients worldwide. Want to talk to the team? Book a 30-min meeting from the Contact section.",
+      "J.O.A.T. (Jack of All Trades) Kenya is a digital innovation studio operating since 1983. We design and deliver software, digital marketing, media production, AI solutions and children's digital education for clients worldwide. Want to talk to the team? Book a 30-min meeting from the Contact section.",
   },
   {
     match:
@@ -81,7 +81,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /^(hi|hello|hey|howdy|greetings|good\s+(morning|afternoon|evening|day))\b/i,
     reply:
-      "Hi there! Great to have you. I can help with our services, our packages, or setting up a meeting — which would you like to explore?",
+      "Hi there! Great to have you. I can help with our services, our packages, or setting up a meeting. Which would you like to explore?",
   },
 
   // ===== Bot capability / help =====
@@ -94,7 +94,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /^(tell me more|more|elaborate|details|explain|go on)\s*[.!?]*\s*$/i,
     reply:
-      "Happy to. About what? — our services, packages, a specific product (BioBiz / Majobo / Amare's Big Planet), how to book a meeting, or how to apply for a role at JOAT.",
+      "Happy to. About what? Our services, packages, a specific product (BioBiz / Majobo / Amare's Big Planet), how to book a meeting, or how to apply for a role at JOAT.",
   },
 
   // ===== Products (specific) =====
@@ -106,20 +106,20 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /amare|kids|children|young|early.?year|literacy|alphabet|edutainment|youtube series/i,
     reply:
-      "We design children's digital education content, including Amare's Big Planet — our partnered animated YouTube series at youtube.com/@amaresbigplanet. To talk about custom learning content, use the Contact form (pick \"Children's Digital Education\").",
+      "We design children's digital education content, including Amare's Big Planet, our partnered animated YouTube series at youtube.com/@amaresbigplanet. To talk about custom learning content, use the Contact form (pick \"Children's Digital Education\").",
   },
 
   // ===== Mobile / platform-specific =====
   {
     match: /\b(ios|iphone|ipad|apple store|app store|android|google play|play store)\b/i,
     reply:
-      "We build native iOS and Android apps (Flutter and React Native), publish to the Apple App Store and Google Play, and handle store optimization. BioBiz is one of our launched apps — free on both stores. Share your project via the Contact form or book a 30-min meeting.",
+      "We build native iOS and Android apps (Flutter and React Native), publish to the Apple App Store and Google Play, and handle store optimization. BioBiz is one of our launched apps, free on both stores. Share your project via the Contact form or book a 30-min meeting.",
   },
   {
     match:
       /\b(ecommerce|e-commerce|online store|shopify|woocommerce|magento|cart|checkout|payment gateway|stripe integration|online shop|marketplace site)\b/i,
     reply:
-      "We build custom ecommerce — Shopify customizations, headless storefronts, or built-from-scratch on React + Supabase, with M-Pesa, Stripe and PayPal integrations. Share what you're selling via the Contact form (\"Software Development\") and we'll send next steps.",
+      "We build custom ecommerce: Shopify customizations, headless storefronts, or built-from-scratch on React + Supabase, with M-Pesa, Stripe and PayPal integrations. Share what you're selling via the Contact form (\"Software Development\") and we'll send next steps.",
   },
 
   // ===== Tech stack =====
@@ -135,7 +135,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /software|mobile app|web app|\bweb(site|app)?\b|develop|engineer(ing)?|backend|frontend|api\b|saas|\bplatform\b|\bcms\b|dashboard|admin panel/i,
     reply:
-      'We build production-grade mobile apps, websites and AI-integrated products end-to-end. Tell us about your project in the Contact form (pick "Software Development") and we\'ll respond within one business day — or book a 30-min meeting from the Contact section.',
+      'We build production-grade mobile apps, websites and AI-integrated products end-to-end. Tell us about your project in the Contact form (pick "Software Development") and we\'ll respond within one business day, or book a 30-min meeting from the Contact section.',
   },
   {
     match:
@@ -153,18 +153,18 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /media|animation|\bvideo\b|blender|\b3d\b|motion|explainer|content production|brand film|videograph|cinematograph/i,
     reply:
-      'Our Media & Content team produces animation, video and 3D in Blender — film-quality work for products, classrooms and brands. Share the project via the Contact form (pick "Media & Content Production").',
+      'Our Media & Content team produces animation, video and 3D in Blender: film-quality work for products, classrooms and brands. Share the project via the Contact form (pick "Media & Content Production").',
   },
   {
     match:
       /\bai\b|claude|openrouter|automation|\bllm\b|\bagent\b|chatbot for|generative|\bgpt\b|gemini|machine learning|\bml\b/i,
     reply:
-      'Our AI Solutions team integrates Claude, OpenRouter and image models into real products — meeting summaries, live translation, content generation and agentic automation. Tell us what you want to build via the Contact form (pick "AI Solutions").',
+      'Our AI Solutions team integrates Claude, OpenRouter and image models into real products: meeting summaries, live translation, content generation and agentic automation. Tell us what you want to build via the Contact form (pick "AI Solutions").',
   },
   {
     match: /\b(game (dev|development|design|studio)|roblox|unity|unreal|gamification|gaming)\b/i,
     reply:
-      "We focus mainly on software, digital marketing, media, AI and children's education — game development isn't a current focus, though our Blender pipeline does feed into interactive experiences. If you have something gamified in mind, share it via the Contact form.",
+      "We focus mainly on software, digital marketing, media, AI and children's education. Game development isn't a current focus, though our Blender pipeline does feed into interactive experiences. If you have something gamified in mind, share it via the Contact form.",
   },
 
   // ===== Process / engagement =====
@@ -172,7 +172,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(process|how do you (work|engage|operate)|how it works|workflow|methodology|approach|discovery|kickoff|stages|phases)\b/i,
     reply:
-      "We start with a short, free 30-min discovery call, then send a tailored proposal within one business day. From there it's iterative delivery in weekly check-ins — production-grade work delivered in weeks, not quarters. Book a meeting from the Contact section to kick off.",
+      "We start with a short, free 30-min discovery call, then send a tailored proposal within one business day. From there it's iterative delivery in weekly check-ins. Production-grade work delivered in weeks, not quarters. Book a meeting from the Contact section to kick off.",
   },
   {
     match:
@@ -204,24 +204,24 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /package|tier|\bplan\b|pricing|price|cost|quote|budget|foundation|\bgrowth\b|\bscale\b|how much|\$|estimate/i,
     reply:
-      "Our Telegram CMS + Social packages are Foundation, Growth and Scale — all month-to-month with no lock-in. Full feature breakdown is on the Work With Us page. For custom services pricing depends on scope; share the project in the Contact form and we'll send a tailored quote within 24 hours.",
+      "Our Telegram CMS + Social packages are Foundation, Growth and Scale, all month-to-month with no lock-in. Full feature breakdown is on the Work With Us page. For custom services pricing depends on scope; share the project in the Contact form and we'll send a tailored quote within 24 hours.",
   },
   {
     match:
       /\b(pay(ment|ing)?|invoice|billing|m-?pesa|paypal|stripe|wire|swift|currency|\busd\b|\bkes\b|kenyan shilling|deposit|payment terms|how do i pay)\b/i,
     reply:
-      "Payments are flexible — bank transfer, card, PayPal, or M-Pesa for Kenyan clients. We work month-to-month for retainers (Foundation/Growth/Scale) and milestone-based for project work. Share details via the Contact form and we'll send terms tailored to the scope.",
+      "Payments are flexible: bank transfer, card, PayPal, or M-Pesa for Kenyan clients. We work month-to-month for retainers (Foundation/Growth/Scale) and milestone-based for project work. Share details via the Contact form and we'll send terms tailored to the scope.",
   },
   {
     match: /\b(refund|cancel(lation|ling)?|money back|cancel (my )?package)\b/i,
     reply:
-      "All our packages are month-to-month with no lock-in — you can cancel or change tiers anytime. For one-off project refunds, it's case-by-case; email joatkenya120@gmail.com and we'll resolve it quickly.",
+      "All our packages are month-to-month with no lock-in. You can cancel or change tiers anytime. For one-off project refunds, it's case-by-case; email joatkenya120@gmail.com and we'll resolve it quickly.",
   },
   {
     match:
       /\b(maintenance|support|sla|response time|bug fix|hotfix|update my (app|site|website))\b/i,
     reply:
-      "We offer ongoing maintenance and support on every project — bug fixes, security patches and feature updates. Email joatkenya120@gmail.com or book a 30-min meeting to discuss your support needs.",
+      "We offer ongoing maintenance and support on every project: bug fixes, security patches and feature updates. Email joatkenya120@gmail.com or book a 30-min meeting to discuss your support needs.",
   },
   {
     match: /\b(hosting|host (my )?(site|website|app)|server|domain|ssl|deployment)\b/i,
@@ -234,13 +234,13 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(industry|industries|sector|vertical|fintech|edtech|health.?tech|health ?care|retail|ecommerce|e-commerce|logistics|nonprofit|ngo|government|saas|b2b|b2c|media company|news company)\b/i,
     reply:
-      "We work across industries — fintech, edtech, healthcare, ecommerce, media, NGOs and SaaS startups. The fit is more about ambition than sector. Tell us about your project via the Contact form and we'll match the right team.",
+      "We work across industries: fintech, edtech, healthcare, ecommerce, media, NGOs and SaaS startups. The fit is more about ambition than sector. Tell us about your project via the Contact form and we'll match the right team.",
   },
   {
     match:
       /\b(international|global|remote|outside (kenya|africa)|abroad|\busa?\b|\buk\b|europe|asia|middle east|north america|canada)\b|work(ing)? (with|for) clients (in|across|worldwide)/i,
     reply:
-      "Yes — we work with clients worldwide. Most delivery is remote, with options for on-site engagement on larger projects. Book a 30-min meeting from the Contact section (Calendly handles time zones) or email joatkenya120@gmail.com.",
+      "Yes, we work with clients worldwide. Most delivery is remote, with options for on-site engagement on larger projects. Book a 30-min meeting from the Contact section (Calendly handles time zones) or email joatkenya120@gmail.com.",
   },
   {
     match: /\b(language|english|swahili|kiswahili|french|german|arabic|do you speak)\b/i,
@@ -251,7 +251,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(nda|non-?disclosure|confidential(ity)?|privacy of (project|idea)|secret project|sign an? nda)\b/i,
     reply:
-      "Absolutely — we sign NDAs before any sensitive discovery. Mention it in the Contact form or on the discovery call and we'll send a mutual NDA before sharing anything.",
+      "Absolutely, we sign NDAs before any sensitive discovery. Mention it in the Contact form or on the discovery call and we'll send a mutual NDA before sharing anything.",
   },
   {
     match:
@@ -265,7 +265,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /meeting|\bbook\b|\bdemo\b|schedule|appointment|consult|calendly|talk to|speak to|set.?up.+call|jump on a call/i,
     reply:
-      'Happy to set that up. Book a 30-min meeting with our team via Calendly — there\'s a "Book" button in the Contact section. Prefer to talk now? Call +254142378150 or email joatkenya120@gmail.com.',
+      'Happy to set that up. Book a 30-min meeting with our team via Calendly. There\'s a "Book" button in the Contact section. Prefer to talk now? Call +254142378150 or email joatkenya120@gmail.com.',
   },
   {
     match:
@@ -288,7 +288,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(facebook|fb|instagram|\big\b|insta|linkedin|youtube|yt\b|tiktok|twitter|\bx\.com\b|social (media|channels?|accounts?)|follow (you|us))\b/i,
     reply:
-      "You'll find our social links in the Footer — LinkedIn, Instagram, Facebook and YouTube. Follow there for updates on what we're building.",
+      "You'll find our social links in the Footer: LinkedIn, Instagram, Facebook and YouTube. Follow there for updates on what we're building.",
   },
 
   // ===== Partner =====
@@ -303,7 +303,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\bcareer|\bapply\b|\bintern|join your team|work for you|work at joat|open role|open position|\bjobs? (at|with|in) joat|cv|resume|portfolio submission/i,
     reply:
-      "Interested in working at JOAT? Head to our Careers page (/careers) to browse current openings and apply directly to the role that fits you. Don't see your role? Send a general application — we hire talented people year-round and we'll reach out when there's a match.",
+      "Interested in working at JOAT? Head to our Careers page (/careers) to browse current openings and apply directly to the role that fits you. Don't see your role? Send a general application. We hire talented people year-round and we'll reach out when there's a match.",
   },
 
   // ===== Hiring/recruiting redirect (companies asking us to source talent) =====
@@ -311,7 +311,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\bhire\b|\bhiring\b|recruit(er|ing|ment)?|outsourc|staffing|head ?hunt|find (a |me |us )?(talent|candidate|developer|engineer|hire)|need (a |to )?(talent|developer|engineer|hire|candidates?)|workforce|source (talent|candidates)|place (a |the )?candidate/i,
     reply:
-      "We're a digital innovation studio — we deliver software, digital marketing, media production, AI solutions and children's digital education, rather than staffing services. If you're hiring, Majobo Kenya (majobokenya.com) is our public job board where you can post listings. To work with us on a project, share your goals via the Contact form.",
+      "We're a digital innovation studio. We deliver software, digital marketing, media production, AI solutions and children's digital education, rather than staffing services. If you're hiring, Majobo Kenya (majobokenya.com) is our public job board where you can post listings. To work with us on a project, share your goals via the Contact form.",
   },
 
   // ===== Certifications =====
@@ -325,7 +325,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /\bservices?\b|what.+(do|offer)|capabilit|expertise|areas? (of work|of expertise)/i,
     reply:
-      "We deliver five core services: Software Development, Digital Marketing, Media & Content Production, Children's Digital Education and AI Solutions. We also build our own products — BioBiz (digital business cards) and Majobo Kenya (jobs board). Which area interests you?",
+      "We deliver five core services: Software Development, Digital Marketing, Media & Content Production, Children's Digital Education and AI Solutions. We also build our own products: BioBiz (digital business cards) and Majobo Kenya (jobs board). Which area interests you?",
   },
 ];
 

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
   head: () => ({
     ...seo({
-      title: "Services | Software, Marketing, Media, AI & Education — JOAT",
+      title: "Services | Software, Marketing, Media, AI & Education | JOAT",
       description:
         "Software development, digital marketing, media production, AI solutions and children's digital education delivered by JOAT Kenya for clients worldwide.",
       path: "/services",

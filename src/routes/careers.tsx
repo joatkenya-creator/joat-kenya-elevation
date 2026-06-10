@@ -12,7 +12,7 @@ export const Route = createFileRoute("/careers")({
     ...seo({
       title: "Careers at JOAT Kenya | Software, Marketing & Media Roles",
       description:
-        "Explore open roles at JOAT Kenya and apply directly — sales, IT support, accounting and more. Read the full job description and submit your application online.",
+        "Explore open roles at JOAT Kenya and apply directly: sales, IT support, accounting and more. Read the full job description and submit your application online.",
       path: "/careers",
     }),
     scripts: [

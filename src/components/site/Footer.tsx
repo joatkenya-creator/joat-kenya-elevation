@@ -44,11 +44,13 @@ const certs = [
 ];
 
 export function Footer() {
+  // `dark` makes the footer render in the dark navy theme on every page (light
+  // or dark), so the footer background stays consistent site-wide.
   return (
-    <footer className="relative bg-navy-deep border-t border-white/5 pt-12 pb-10">
+    <footer className="dark relative bg-(--joat-navy) text-foreground border-t border-(--border) pt-12 pb-10">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         {/* Certifications — titles only, top of footer */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pb-10 mb-10 border-b border-white/5">
+        <div className="flex flex-wrap items-center justify-center gap-3 pb-10 mb-10 border-b border-(--border)">
           <span className="text-[11px] uppercase tracking-[0.3em] text-gold mr-1">Certified</span>
           {certs.map((c) => (
             <span
@@ -74,7 +76,7 @@ export function Footer() {
                 className="h-10 sm:h-12 w-auto object-contain"
               />
               <div className="font-display font-bold text-xl sm:text-2xl md:text-3xl tracking-tight">
-                <span className="text-white">J.O.A.T. </span>
+                <span className="text-foreground">J.O.A.T. </span>
                 <span className="text-gold">KENYA</span>
               </div>
             </div>
@@ -89,7 +91,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors"
+                  className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-black/5 transition-colors"
                 >
                   <Icon className="w-4 h-4 text-foreground" />
                 </a>
@@ -145,7 +147,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+        <div className="mt-12 pt-6 border-t border-(--border) flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} J.O.A.T. Kenya. All rights reserved.</div>
           <div className="flex gap-5">
             <a href={LEGAL_LINKS.privacy} className="hover:text-gold transition-colors">

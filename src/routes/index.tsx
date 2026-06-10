@@ -123,25 +123,39 @@ function Index() {
     >
       <Navbar />
       <main>
+        {/* Landing (hero) — warm white with the geometric background image. */}
         <Hero />
-        <Partners />
-        <About />
+        {/* Dark brand sections. */}
+        <div className="dark bg-background text-foreground">
+          <Partners />
+          <About />
+        </div>
+        {/* Team skills — the second warm-white section. */}
         <TeamSkills />
-        {/* Heavier below-the-fold block streams in from its own chunks. The
-            min-height reservation keeps page height stable while it loads so no
-            scrollbar jump occurs, and it's well below the fold so nothing
-            visible shifts. */}
-        <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
-          <Products />
+        {/* Remaining dark sections. Heavier below-the-fold block streams in from
+            its own chunks; the min-height keeps page height stable while loading. */}
+        <div className="dark bg-background text-foreground">
+          <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
+            <Products />
+          </Suspense>
+        </div>
+        {/* Why JOAT Kenya — warm-white section (grids unchanged). */}
+        <Suspense fallback={null}>
           <WhyChoose />
-          <Services />
-          <Testimonials />
-          <Contact />
         </Suspense>
+        <div className="dark bg-background text-foreground">
+          <Suspense fallback={null}>
+            <Services />
+            <Testimonials />
+            <Contact />
+          </Suspense>
+        </div>
       </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      <div className="dark bg-background text-foreground">
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
+      </div>
       <Suspense fallback={null}>
         <Chatbot />
         <BackToTop />

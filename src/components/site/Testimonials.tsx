@@ -13,7 +13,7 @@ const FALLBACK_TESTIMONIALS: TItem[] = [
     name: "Sarah Mitchell",
     role: "Product Lead, Crestline Ventures · San Francisco",
     quote:
-      "BioBiz quietly replaced half my networking tools. I drop a QR and forget about it — leads always reach me, and the AI meeting summaries hand me action items before I've even closed my laptop. It's become the one app I open every day.",
+      "BioBiz quietly replaced half my networking tools. I drop a QR and forget about it. Leads always reach me, and the AI meeting summaries hand me action items before I've even closed my laptop. It's become the one app I open every day.",
   },
   {
     initials: "JW",
@@ -150,7 +150,7 @@ export function Testimonials() {
                   {t.quote}
                 </blockquote>
                 <div className="mt-8 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-(--joat-red) to-(--joat-gold) flex items-center justify-center font-bold text-white">
+                  <div className="w-12 h-12 rounded-full bg-(--joat-red) flex items-center justify-center font-bold text-white">
                     {t.initials}
                   </div>
                   <div>
@@ -165,7 +165,7 @@ export function Testimonials() {
               <button
                 onClick={prev}
                 aria-label="Previous"
-                className="w-10 h-10 rounded-full glass hover:bg-white/10 flex items-center justify-center"
+                className="w-10 h-10 rounded-full glass hover:bg-black/5 flex items-center justify-center"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -187,7 +187,7 @@ export function Testimonials() {
               key={k}
               aria-label={`Go to testimonial ${k + 1}`}
               onClick={() => setI(k)}
-              className={`h-1.5 rounded-full transition-all ${k === i ? "w-8 bg-(--joat-gold)" : "w-1.5 bg-white/20"}`}
+              className={`h-1.5 rounded-full transition-all ${k === i ? "w-8 bg-(--joat-gold)" : "w-1.5 bg-foreground/20"}`}
             />
           ))}
         </div>

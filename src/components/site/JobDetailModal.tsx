@@ -45,7 +45,7 @@ export function JobDetailModal({ job, onClose }: { job: Opening | null; onClose:
     if (!job) return;
     const url = "https://joatkenya.com/careers";
     const subject = `Job opening at J.O.A.T. Kenya: ${job.title}`;
-    const body = `I thought you'd be a great fit for this role at J.O.A.T. Kenya:\n\n${job.title} — ${job.location} (${job.type})\n\nSee details and apply here: ${url}`;
+    const body = `I thought you'd be a great fit for this role at J.O.A.T. Kenya:\n\n${job.title}, ${job.location} (${job.type})\n\nSee details and apply here: ${url}`;
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
@@ -59,7 +59,7 @@ export function JobDetailModal({ job, onClose }: { job: Opening | null; onClose:
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+          <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
           <m.div
             role="dialog"
@@ -72,7 +72,7 @@ export function JobDetailModal({ job, onClose }: { job: Opening | null; onClose:
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
             {/* Header */}
-            <div className="shrink-0 px-5 sm:px-7 pt-5 pb-4 border-b border-(--glass-border) bg-(--joat-navy-deep)/40">
+            <div className="shrink-0 px-5 sm:px-7 pt-5 pb-4 border-b border-(--glass-border) bg-muted">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-gold">
@@ -145,7 +145,7 @@ export function JobDetailModal({ job, onClose }: { job: Opening | null; onClose:
 
             {/* Sticky action bar (detail mode only) */}
             {mode === "detail" && (
-              <div className="shrink-0 px-5 sm:px-7 py-4 border-t border-(--glass-border) bg-(--joat-navy-deep)/40 flex flex-wrap gap-3">
+              <div className="shrink-0 px-5 sm:px-7 py-4 border-t border-(--glass-border) bg-muted flex flex-wrap gap-3">
                 <button
                   type="button"
                   onClick={() => setMode("apply")}
@@ -156,7 +156,7 @@ export function JobDetailModal({ job, onClose }: { job: Opening | null; onClose:
                 <button
                   type="button"
                   onClick={refer}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md glass text-foreground text-sm font-semibold hover:bg-white/8 transition-all"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md glass text-foreground text-sm font-semibold hover:bg-black/5 transition-all"
                 >
                   <Share2 className="w-4 h-4" /> Refer a friend
                 </button>

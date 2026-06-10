@@ -87,13 +87,20 @@ export function ApplicationForm({
     setServerError(null);
     setStatus("sending");
 
-    // 1. Upload each file into the job's folder in the applications bucket.
-    //    Supabase creates the folder automatically on first upload.
-    const folder = folderFor(job.title);
+    // 1. Upload files to the job's folder in the applications bucket, keeping
+    //    the applicant's original file name. Every application gets its own
+    //    subfolder named by the upload date + applicant name (e.g.
+    //    "2026-06-10-Jane-Wanjiru"), matching the hyphenated format of the
+    //    existing folders. Supabase creates folders on first upload.
+    const jobFolder = folderFor(job.title);
+    const uploadDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const baseDir = `${jobFolder}/${uploadDate}-${folderFor(form.name)}`;
     const uploaded: { name: string; path: string; url: string }[] = [];
     for (const file of files) {
-      const safe = file.name.replace(/[^\w.-]+/g, "_");
-      const path = `${folder}/${crypto.randomUUID()}-${safe}`;
+      // Retain the original file name; only strip path separators that would
+      // otherwise create unintended nested folders.
+      const safeName = file.name.replace(/[\\/]+/g, "-").trim() || "file";
+      const path = `${baseDir}/${safeName}`;
       const { error: upErr } = await supabase.storage
         .from(APPLICATIONS_BUCKET)
         .upload(path, file, { upsert: false, contentType: file.type || undefined });
@@ -149,7 +156,7 @@ export function ApplicationForm({
         <button
           type="button"
           onClick={onBack}
-          className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-md glass text-foreground text-sm font-semibold hover:bg-white/8 transition-all"
+          className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-md glass text-foreground text-sm font-semibold hover:bg-black/5 transition-all"
         >
           <ArrowLeft className="w-4 h-4" /> Back to role
         </button>
@@ -158,7 +165,7 @@ export function ApplicationForm({
   }
 
   const inputClass =
-    "w-full rounded-md bg-white/4 border border-(--glass-border) px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-(--joat-gold)/50 transition-colors";
+    "w-full rounded-md bg-black/5 border border-(--glass-border) px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-(--joat-gold)/50 transition-colors";
 
   return (
     <form onSubmit={submit} className="space-y-4">
@@ -171,7 +178,7 @@ export function ApplicationForm({
       </button>
 
       <div>
-        <h3 className="text-lg font-bold text-foreground">Apply — {job.title}</h3>
+        <h3 className="text-lg font-bold text-foreground">Apply for {job.title}</h3>
         <p className="text-sm text-muted-foreground">
           Tell us about yourself and attach your CV. Fields marked * are required.
         </p>
@@ -194,7 +201,7 @@ export function ApplicationForm({
           {errs.phone && <p className="mt-1 text-xs text-(--joat-red)">{errs.phone}</p>}
         </div>
         <div>
-          <label className="text-xs text-muted-foreground">Portfolio / LinkedIn (optional)</label>
+          <label className="text-xs text-muted-foreground">Portfolio (optional)</label>
           <input className={inputClass} value={form.portfolio} onChange={set("portfolio")} placeholder="https://…" />
         </div>
       </div>
@@ -233,8 +240,8 @@ export function ApplicationForm({
 
       {/* CV upload */}
       <div>
-        <label className="text-xs text-muted-foreground">CV / Resume * (PDF, DOC, DOCX — up to 3 files, 10 MB total)</label>
-        <label className="mt-1.5 flex items-center justify-center gap-2 rounded-md border border-dashed border-(--glass-border) bg-white/3 px-4 py-6 text-sm text-muted-foreground cursor-pointer hover:border-(--joat-gold)/40 transition-colors">
+        <label className="text-xs text-muted-foreground">CV / Resume * (PDF, DOC, DOCX; up to 3 files, 10 MB total)</label>
+        <label className="mt-1.5 flex items-center justify-center gap-2 rounded-md border border-dashed border-(--glass-border) bg-black/5 px-4 py-6 text-sm text-muted-foreground cursor-pointer hover:border-(--joat-gold)/40 transition-colors">
           <Upload className="w-4 h-4" />
           Click to attach files
           <input
@@ -251,7 +258,7 @@ export function ApplicationForm({
             {files.map((f, i) => (
               <li
                 key={`${f.name}-${i}`}
-                className="flex items-center justify-between gap-2 rounded-md bg-white/4 px-3 py-2 text-xs"
+                className="flex items-center justify-between gap-2 rounded-md bg-black/5 px-3 py-2 text-xs"
               >
                 <span className="flex items-center gap-2 min-w-0 text-foreground">
                   <FileText className="w-3.5 h-3.5 text-gold shrink-0" />

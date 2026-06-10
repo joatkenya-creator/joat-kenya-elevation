@@ -69,7 +69,7 @@ export function Chatbot() {
         transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="fixed bottom-6 right-6 z-60 w-14 h-14 rounded-full bg-linear-to-br from-(--joat-red) to-(--joat-gold) shadow-2xl flex items-center justify-center text-white glow-red"
+        className="fixed bottom-6 right-6 z-60 w-14 h-14 rounded-full bg-(--joat-red) shadow-2xl flex items-center justify-center text-white"
       >
         {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
       </m.button>
@@ -83,7 +83,7 @@ export function Chatbot() {
             transition={{ duration: 0.2 }}
             className="fixed bottom-24 right-6 z-60 w-[calc(100vw-3rem)] sm:w-96 h-120 glass-solid rounded-2xl shadow-2xl flex flex-col overflow-hidden border-(--joat-gold)/30"
           >
-            <div className="p-4 border-b border-white/10 flex items-center gap-3 bg-linear-to-r from-(--joat-red)/20 to-(--joat-gold)/10">
+            <div className="p-4 border-b border-(--border) flex items-center gap-3 bg-(--joat-red)/15">
               <div className="w-9 h-9 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) font-bold flex items-center justify-center">
                 J
               </div>
@@ -106,7 +106,7 @@ export function Chatbot() {
                     className={`max-w-[80%] text-sm px-3 py-2 rounded-2xl whitespace-pre-wrap ${
                       m.role === "user"
                         ? "bg-(--joat-red) text-primary-foreground rounded-br-sm"
-                        : "bg-white/5 text-foreground rounded-bl-sm"
+                        : "bg-black/5 text-foreground rounded-bl-sm"
                     }`}
                   >
                     {m.text}
@@ -115,7 +115,7 @@ export function Chatbot() {
               ))}
               {pending && (
                 <div className="flex justify-start">
-                  <div className="max-w-[80%] text-sm px-3 py-2 rounded-2xl bg-white/5 text-muted-foreground rounded-bl-sm inline-flex items-center gap-2">
+                  <div className="max-w-[80%] text-sm px-3 py-2 rounded-2xl bg-black/5 text-muted-foreground rounded-bl-sm inline-flex items-center gap-2">
                     <Loader2 className="w-3.5 h-3.5 animate-spin text-(--joat-gold)" />
                     Thinking…
                   </div>
@@ -138,7 +138,7 @@ export function Chatbot() {
               )}
             </div>
 
-            <div className="p-3 border-t border-white/10 flex gap-2">
+            <div className="p-3 border-t border-(--border) flex gap-2">
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -150,7 +150,7 @@ export function Chatbot() {
                 }}
                 disabled={pending}
                 placeholder={pending ? "Sending…" : "Ask anything…"}
-                className="flex-1 px-3 py-2 rounded-md bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:border-(--joat-gold)/50 disabled:opacity-60"
+                className="flex-1 px-3 py-2 rounded-md bg-black/5 border border-(--border) text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:border-(--joat-gold)/50 disabled:opacity-60"
               />
               <button
                 onClick={() => void sendMessage(input)}

@@ -6,7 +6,6 @@ import {
   Coffee,
   Rocket,
   Wrench,
-  Sparkles,
   MapPin,
   Briefcase,
   Search,
@@ -23,7 +22,7 @@ const culture = [
   {
     icon: Heart,
     title: "People First",
-    text: "We invest in our engineers, designers and marketers — their growth, their craft and their well-being.",
+    text: "We invest in our engineers, designers and marketers: their growth, their craft and their well-being.",
   },
   { icon: Rocket, title: "Real Ownership", text: "Deliver work that touches millions of lives." },
   {
@@ -39,7 +38,7 @@ const culture = [
 ];
 
 function applyEmailHref() {
-  return `mailto:${APPLY_EMAIL}?subject=${encodeURIComponent("General application — JOAT Kenya")}`;
+  return `mailto:${APPLY_EMAIL}?subject=${encodeURIComponent("General application for JOAT Kenya")}`;
 }
 
 function OpeningCard({ job, onOpen }: { job: Opening; onOpen: (j: Opening) => void }) {
@@ -129,7 +128,7 @@ export function Careers({ full = false }: { full?: boolean }) {
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
             We hire creative minds, problem solvers and innovators. Every open role lives right
-            here — click a position to read the full job description and apply directly.
+            here. Click a position to read the full job description and apply directly.
           </p>
         </m.div>
 
@@ -178,7 +177,7 @@ export function Careers({ full = false }: { full?: boolean }) {
             <div className="glass rounded-xl border border-(--glass-border) p-8 text-center">
               <p className="text-foreground font-semibold">No roles match your search.</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                We hire year-round — send us a general application and we&apos;ll reach out when a
+                We hire year-round. Send us a general application and we&apos;ll reach out when a
                 role matches your skills.
               </p>
               <a
@@ -201,7 +200,7 @@ export function Careers({ full = false }: { full?: boolean }) {
               View all open roles <ArrowRight className="w-4 h-4" />
             </Link>
             <span className="text-sm text-muted-foreground">
-              {openings.length} open {openings.length === 1 ? "role" : "roles"} — click any to read
+              {openings.length} open {openings.length === 1 ? "role" : "roles"}. Click any to read
               the full description and apply.
             </span>
           </div>
@@ -210,17 +209,16 @@ export function Careers({ full = false }: { full?: boolean }) {
         {/* General application CTA (full board) */}
         {full && visible.length > 0 && (
           <div className="mt-8 relative overflow-hidden rounded-2xl border border-(--glass-border) glass p-6 lg:p-8">
-            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-(--joat-gold)/15 blur-3xl pointer-events-none" />
             <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold mb-2">
-                  <Sparkles className="w-3.5 h-3.5" /> Don&apos;t see your role?
+                  Don&apos;t see your role?
                 </div>
                 <h3 className="text-xl lg:text-2xl font-bold text-foreground">
                   We hire talented people year-round.
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground max-w-xl">
-                  Send your CV and a short note about what you do best — we&apos;ll reach out when a
+                  Send your CV and a short note about what you do best. We&apos;ll reach out when a
                   role matches your skills.
                 </p>
               </div>

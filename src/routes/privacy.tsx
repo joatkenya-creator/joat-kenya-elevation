@@ -16,7 +16,7 @@ export const Route = createFileRoute("/privacy")({
 function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-white/5 bg-navy-deep">
+      <header className="border-b border-(--border) bg-navy-deep">
         <div className="max-w-3xl mx-auto px-5 lg:px-8 py-10">
           <Link
             to="/"

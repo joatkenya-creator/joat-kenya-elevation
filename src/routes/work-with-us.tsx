@@ -325,7 +325,7 @@ function WorkWithUsPage() {
                     className={`mt-7 inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-md font-semibold transition-all hover:brightness-110 cursor-pointer ${
                       isPopular
                         ? "bg-(--joat-gold) text-(--joat-navy-deep)"
-                        : "glass text-foreground hover:bg-white/8"
+                        : "glass text-foreground hover:bg-black/5"
                     }`}
                   >
                     Book Strategy Call
@@ -395,7 +395,7 @@ function WorkWithUsPage() {
                   "{t.quote}"
                 </blockquote>
                 <div className="mt-5 flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-full bg-linear-to-br from-(--joat-red) to-(--joat-gold) flex items-center justify-center font-bold text-white">
+                  <div className="w-11 h-11 rounded-full bg-(--joat-red) flex items-center justify-center font-bold text-white">
                     {t.name
                       .split(" ")
                       .map((w) => w[0])
@@ -446,8 +446,6 @@ function WorkWithUsPage() {
       <section className="py-20 bg-navy-deep">
         <div className="max-w-4xl mx-auto px-5 lg:px-8">
           <div className="relative overflow-hidden glass rounded-3xl p-10 lg:p-14 text-center">
-            <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-(--joat-red)/20 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-(--joat-gold)/20 blur-3xl pointer-events-none" />
             <div className="relative">
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
                 Book a free 30-minute strategy call.
@@ -467,7 +465,7 @@ function WorkWithUsPage() {
                 </button>
                 <a
                   href="tel:+254142378150"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md glass text-foreground font-semibold hover:bg-white/8 transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md glass text-foreground font-semibold hover:bg-black/5 transition-all"
                 >
                   <Phone className="w-4 h-4" />
                   +254 142 378 150

@@ -205,7 +205,7 @@ export function breadcrumbJsonLd(name: string, path: string) {
 export const servicesCatalogJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "J.O.A.T. Kenya — Services & Products",
+  name: "J.O.A.T. Kenya: Services & Products",
   itemListElement: [
     {
       "@type": "Service",
@@ -230,7 +230,7 @@ export const servicesCatalogJsonLd = {
       position: 3,
       name: "Media & Content Production",
       description:
-        "Animation, video and 3D in Blender — film-quality work for products, classrooms and brands.",
+        "Animation, video and 3D in Blender: film-quality work for products, classrooms and brands.",
       provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
       areaServed: "Worldwide",
     },

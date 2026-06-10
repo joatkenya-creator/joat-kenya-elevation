@@ -155,7 +155,7 @@ export function Services() {
         </m.div>
 
         {/* Single auto-rotating service card */}
-        <div className="mt-10 sm:mt-14 relative glass rounded-3xl p-5 sm:p-8 lg:p-12 min-h-80 sm:min-h-96 bg-white/8 border border-(--joat-gold)/20">
+        <div className="mt-10 sm:mt-14 relative glass rounded-3xl p-5 sm:p-8 lg:p-12 min-h-80 sm:min-h-96 border border-(--joat-gold)/20">
           <AnimatePresence mode="wait">
             <m.div
               key={s.title}
@@ -187,7 +187,7 @@ export function Services() {
                     {s.industries.map((x) => (
                       <span
                         key={x}
-                        className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-foreground/80 border border-white/10"
+                        className="text-xs px-2.5 py-1 rounded-full bg-black/5 text-foreground/80 border border-(--border)"
                       >
                         {x}
                       </span>
@@ -213,7 +213,7 @@ export function Services() {
             <button
               onClick={prev}
               aria-label="Previous service"
-              className="w-10 h-10 rounded-full glass hover:bg-white/10 flex items-center justify-center"
+              className="w-10 h-10 rounded-full glass hover:bg-black/5 flex items-center justify-center"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -235,7 +235,7 @@ export function Services() {
               aria-label={`Go to ${sv.title}`}
               onClick={() => setI(k)}
               className={`h-1.5 rounded-full transition-all ${
-                k === i ? "w-8 bg-(--joat-gold)" : "w-1.5 bg-white/20"
+                k === i ? "w-8 bg-(--joat-gold)" : "w-1.5 bg-foreground/20"
               }`}
             />
           ))}

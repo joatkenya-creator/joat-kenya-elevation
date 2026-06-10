@@ -45,7 +45,7 @@ export function folderFor(title: string): string {
 export const ABOUT_JOAT =
   "J.O.A.T. Kenya (Jack of All Trades) is a digital innovation studio operating since 1983. " +
   "We build software and digital products, run AI-driven marketing, produce media and animation, " +
-  "and create children's digital education — delivering everything in-house from Thindigua, Kiambu " +
+  "and create children's digital education, delivering everything in-house from Thindigua, Kiambu " +
   "for clients across Kenya, East Africa and beyond. You'll join a multi-skilled team that ships " +
   "real products used by thousands of people.";
 
@@ -60,7 +60,7 @@ export const openings: Opening[] = [
     postedNote: "Posted 4 June 2026 · Open",
     trades: ["Sales", "Client Relations", "Communication", "Lead Generation"],
     mainPurpose:
-      "Help Kenyan businesses build, maintain, secure and grow their online presence by selling JOAT's website and digital services — building strong client relationships and being rewarded with a monthly stipend, attractive commission and real career growth.",
+      "Help Kenyan businesses build, maintain, secure and grow their online presence by selling JOAT's website and digital services, building strong client relationships and being rewarded with a monthly stipend, attractive commission and real career growth.",
     whatYouWillDo: [
       "Pitch JOAT's website design, hosting, maintenance and security services to businesses across Nairobi, Kiambu and beyond.",
       "Generate leads, follow up with prospects and convert them into paying clients.",
@@ -70,7 +70,7 @@ export const openings: Opening[] = [
       "Represent JOAT professionally at meetings, pitches and networking events.",
     ],
     requiredQualifications: [
-      "Proven experience in sales, business development or a client-facing role — selling digital or website services is an added advantage.",
+      "Proven experience in sales, business development or a client-facing role. Selling digital or website services is an added advantage.",
       "Excellent communication and negotiation skills in English and Kiswahili.",
       "Confident and persuasive, comfortable pitching to business owners and decision-makers.",
       "Self-driven and motivated by targets and commission.",
@@ -83,7 +83,7 @@ export const openings: Opening[] = [
       "Reliable, honest and professional.",
     ],
     technicalCompetencies: [
-      "Understanding of websites and digital services (domains, hosting, maintenance, security) — or the drive to learn them fast.",
+      "Understanding of websites and digital services (domains, hosting, maintenance, security), or the drive to learn them fast.",
       "Lead tracking and basic pipeline / CRM management.",
       "Comfortable using WhatsApp, email and social platforms for outreach.",
     ],
@@ -132,7 +132,7 @@ export const openings: Opening[] = [
     postedNote: "Posted 2 June 2026 · Open",
     trades: ["Bookkeeping", "Microsoft Office", "Payroll", "Procurement", "Record Keeping"],
     mainPurpose:
-      "Keep JOAT's office and finances running smoothly — managing day-to-day administration while maintaining accurate financial records and supporting bookkeeping, payroll and procurement.",
+      "Keep JOAT's office and finances running smoothly, managing day-to-day administration while maintaining accurate financial records and supporting bookkeeping, payroll and procurement.",
     whatYouWillDo: [
       "Manage office operations and administrative tasks.",
       "Maintain financial records and assist in bookkeeping.",

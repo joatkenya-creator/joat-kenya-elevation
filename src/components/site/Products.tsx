@@ -65,7 +65,7 @@ type Product = {
   ctas: CTA[];
   image?: string;
   reverse?: boolean;
-  icon: React.ComponentType<{ className?: string }>;
+  icon?: React.ComponentType<{ className?: string }>;
   accent: "red" | "gold";
   extra?: React.ReactNode;
   /** Optional product brand logo. If `logoMark` is supplied (URL/import) it renders
@@ -106,7 +106,7 @@ const BiobizExtra = (
         BioBiz records meetings, transcribes them, and returns a clean summary with key insights of
         the recordings.
       </p>
-      <div className="mt-3 sm:mt-4 rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-3 sm:p-4 text-sm">
+      <div className="mt-3 sm:mt-4 rounded-xl bg-muted border border-(--border) p-3 sm:p-4 text-sm">
         <div className="flex items-center gap-2 text-[10px] sm:text-xs text-muted-foreground mb-2">
           <span className="w-2 h-2 rounded-full bg-(--joat-red) animate-pulse" />
           Sample summary
@@ -153,7 +153,7 @@ const BiobizExtra = (
         clean English transcript instantly.
       </p>
       <div className="mt-3 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-        <div className="rounded-xl bg-(--joat-navy-deep)/60 border border-white/5 p-3">
+        <div className="rounded-xl bg-muted border border-(--border) p-3">
           <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
             Recording · German
           </div>
@@ -268,7 +268,7 @@ function MajoboLiveFrame() {
   const [active, setActive] = useState(false);
   return (
     <div className="relative glass rounded-2xl overflow-hidden border border-(--glass-border)">
-      <div className="px-2 sm:px-4 py-2 bg-(--joat-navy-deep) flex items-center gap-1.5 border-b border-white/5">
+      <div className="px-2 sm:px-4 py-2 bg-(--joat-navy-deep) flex items-center gap-1.5 border-b border-(--border)">
         <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-red)" />
         <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-(--joat-gold)" />
         <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-foreground/30" />
@@ -299,13 +299,13 @@ function MajoboLiveFrame() {
           className="relative block w-full text-left"
         >
           <div className="p-3 sm:p-4 space-y-2" aria-hidden="true">
-            <div className="flex items-center gap-2 rounded-md bg-white/5 px-3 py-2 text-[11px] sm:text-xs text-muted-foreground">
+            <div className="flex items-center gap-2 rounded-md bg-black/5 px-3 py-2 text-[11px] sm:text-xs text-muted-foreground">
               <Search className="w-3 h-3 shrink-0" /> Search 1,177 opportunities…
             </div>
             {majoboJobs.map((j) => (
               <div
                 key={j.t}
-                className="rounded-md bg-white/3 px-3 py-2 flex items-center justify-between gap-2 text-[11px] sm:text-xs"
+                className="rounded-md bg-black/5 px-3 py-2 flex items-center justify-between gap-2 text-[11px] sm:text-xs"
               >
                 <div className="min-w-0">
                   <div className="font-semibold text-foreground truncate">{j.t}</div>
@@ -319,7 +319,7 @@ function MajoboLiveFrame() {
               </div>
             ))}
           </div>
-          <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-(--joat-navy-deep)/75 backdrop-blur-[1px] text-center px-5">
+          <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-(--joat-navy-deep)/90 text-center px-5">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) text-sm font-semibold">
               <Play className="w-4 h-4 fill-current" /> Open live Majobo
             </span>
@@ -385,7 +385,6 @@ const MajoboExtra = (
     </div>
 
     <div className="lg:col-span-2 relative">
-      <div className="absolute -inset-2 rounded-3xl bg-linear-to-br from-(--joat-red)/20 via-transparent to-(--joat-gold)/20 blur-2xl" />
       <MajoboLiveFrame />
     </div>
   </div>
@@ -531,7 +530,7 @@ function RobloxBuilds() {
                     onClick={() => setOpen((o) => ({ ...o, [idx]: !o[idx] }))}
                     aria-expanded={isOpen}
                     aria-label={isOpen ? `Hide ${g.title} description` : `Read about ${g.title}`}
-                    className="shrink-0 w-7 h-7 rounded-full glass flex items-center justify-center text-(--joat-gold) hover:bg-white/10"
+                    className="shrink-0 w-7 h-7 rounded-full glass flex items-center justify-center text-(--joat-gold) hover:bg-black/5"
                   >
                     <ChevronDown
                       className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -621,7 +620,6 @@ const products: Product[] = [
     ],
     ctas: [{ label: "Download BioBiz", href: "#", icon: "download", action: "download-biobiz" }],
     image: biobiz,
-    icon: Rocket,
     accent: "gold",
     extra: BiobizExtra,
     logoMark: biobizLogo,
@@ -732,7 +730,6 @@ const products: Product[] = [
       "Performance loops: regenerate from what's working",
     ],
     ctas: [{ label: "See campaigns", href: "/contact" }],
-    icon: Sparkles,
     accent: "red",
     reverse: true,
   },
@@ -750,7 +747,6 @@ const products: Product[] = [
       "Tablet-ready letter-drawing game in production",
     ],
     ctas: [{ label: "Commission a build", href: "/contact" }],
-    icon: Brush,
     accent: "gold",
     extra: BlenderExtra,
   },
@@ -823,8 +819,8 @@ export function Products() {
                           aria-hidden="true"
                           className={`w-11 h-11 rounded-xl flex items-center justify-center font-display font-bold text-lg shadow-(--shadow-card) border border-(--glass-border) ${
                             p.accent === "red"
-                              ? "bg-linear-to-br from-(--joat-red) to-(--joat-red)/70 text-primary-foreground"
-                              : "bg-linear-to-br from-(--joat-gold) to-(--joat-gold)/70 text-(--joat-navy-deep)"
+                              ? "bg-(--joat-red) text-primary-foreground"
+                              : "bg-(--joat-gold) text-(--joat-navy-deep)"
                           }`}
                         >
                           {p.logoLetter}
@@ -833,7 +829,8 @@ export function Products() {
                       <div
                         className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold glass ${accentText}`}
                       >
-                        <Icon className="w-3.5 h-3.5" /> {p.badge}
+                        {Icon ? <Icon className="w-3.5 h-3.5" /> : null}
+                        {p.badge}
                       </div>
                     </div>
                     <h3 className="mt-5 text-2xl sm:text-3xl lg:text-5xl font-bold text-foreground leading-tight">
@@ -861,7 +858,7 @@ export function Products() {
                           p.mobileInlineImage
                             ? "px-4 py-2 text-sm sm:px-5 sm:py-3 sm:text-base"
                             : "px-5 py-3"
-                        } ${primary ? accentBg : "glass text-foreground hover:bg-white/8"}`;
+                        } ${primary ? accentBg : "glass text-foreground hover:bg-black/5"}`;
                         if (c.action === "download-biobiz") {
                           return (
                             <button
@@ -899,7 +896,6 @@ export function Products() {
                         p.hideImageOnMobile || p.mobileInlineImage ? "hidden lg:block" : ""
                       }`}
                     >
-                      <div className="absolute -inset-4 rounded-3xl bg-linear-to-br from-(--joat-gold)/20 via-transparent to-(--joat-red)/20 blur-2xl" />
                       <div className="relative glass rounded-2xl sm:rounded-3xl overflow-hidden border border-(--glass-border) shadow-(--shadow-card)">
                         <img
                           src={p.image}

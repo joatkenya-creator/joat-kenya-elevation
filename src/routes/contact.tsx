@@ -12,7 +12,7 @@ export const Route = createFileRoute("/contact")({
     ...seo({
       title: "Contact JOAT Kenya | Software, Marketing, Media & AI",
       description:
-        "Contact JOAT Kenya — email joatkenya120@gmail.com, call +254 142 378 150, or book a 30-min meeting. Worldwide software, marketing, media and AI studio.",
+        "Contact JOAT Kenya: email joatkenya120@gmail.com, call +254 142 378 150, or book a 30-min meeting. Worldwide software, marketing, media and AI studio.",
       path: "/contact",
     }),
     scripts: [

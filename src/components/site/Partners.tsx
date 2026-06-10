@@ -34,7 +34,7 @@ export function Partners() {
   }, []);
 
   return (
-    <section className="relative py-20 lg:py-24 border-y border-white/5">
+    <section className="relative py-20 lg:py-24 border-y border-(--border)">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <div className="text-center mb-10">
           <div className="text-xs uppercase tracking-[0.3em] text-gold">Trusted Partners</div>
