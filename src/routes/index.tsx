@@ -26,9 +26,6 @@ const Services = lazy(() =>
 const Testimonials = lazy(() =>
   import("@/components/site/Testimonials").then((m) => ({ default: m.Testimonials })),
 );
-const Careers = lazy(() =>
-  import("@/components/site/Careers").then((m) => ({ default: m.Careers })),
-);
 const Contact = lazy(() =>
   import("@/components/site/Contact").then((m) => ({ default: m.Contact })),
 );
@@ -139,7 +136,6 @@ function Index() {
           <WhyChoose />
           <Services />
           <Testimonials />
-          <Careers />
           <Contact />
         </Suspense>
       </main>

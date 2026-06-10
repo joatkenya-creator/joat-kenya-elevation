@@ -12,7 +12,7 @@ export const Route = createFileRoute("/careers")({
     ...seo({
       title: "Careers at JOAT Kenya | Software, Marketing & Media Roles",
       description:
-        "Build your career at JOAT Kenya. Apply through Majobo Kenya and create a BioBiz card. We hire engineers, designers, marketers and content creators.",
+        "Explore open roles at JOAT Kenya and apply directly — sales, IT support, accounting and more. Read the full job description and submit your application online.",
       path: "/careers",
     }),
     scripts: [
@@ -32,7 +32,7 @@ function CareersPage() {
     >
       <Navbar />
       <main className="pt-20">
-        <Careers />
+        <Careers full />
       </main>
       <Footer />
       <Chatbot />

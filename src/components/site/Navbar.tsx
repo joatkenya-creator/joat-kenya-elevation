@@ -71,14 +71,6 @@ export function Navbar() {
         </ul>
 
         <div className="hidden lg:flex items-center gap-3">
-          <a
-            href="https://www.majobokenya.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="px-4 py-2 rounded-md text-sm font-semibold text-primary-foreground bg-(--joat-red) hover:brightness-110 transition-all glow-red"
-          >
-            Apply Now
-          </a>
           <Link
             to="/work-with-us"
             className="px-4 py-2 rounded-md text-sm font-semibold text-(--joat-navy-deep) bg-(--joat-gold) hover:brightness-110 transition-all"
@@ -117,15 +109,6 @@ export function Navbar() {
               </li>
             ))}
             <li className="flex flex-col gap-2 pt-2">
-              <a
-                href="https://www.majobokenya.com/"
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => setOpen(false)}
-                className="text-center px-4 py-2 rounded-md text-sm font-semibold text-primary-foreground bg-(--joat-red)"
-              >
-                Apply Now
-              </a>
               <Link
                 to="/work-with-us"
                 onClick={() => setOpen(false)}

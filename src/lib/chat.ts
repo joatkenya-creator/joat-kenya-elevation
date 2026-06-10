@@ -303,7 +303,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\bcareer|\bapply\b|\bintern|join your team|work for you|work at joat|open role|open position|\bjobs? (at|with|in) joat|cv|resume|portfolio submission/i,
     reply:
-      "Interested in working at JOAT? Here's how: (1) Register on Majobo Kenya (majobokenya.com) to browse and apply for open roles at JOAT and our partners. (2) Download BioBiz and create your digital business card so we can find you. We'll reach out when a role matches your skills.",
+      "Interested in working at JOAT? Head to our Careers page (/careers) to browse current openings and apply directly to the role that fits you. Don't see your role? Send a general application — we hire talented people year-round and we'll reach out when there's a match.",
   },
 
   // ===== Hiring/recruiting redirect (companies asking us to source talent) =====

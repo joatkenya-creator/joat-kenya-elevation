@@ -275,16 +275,11 @@ export function Contact() {
                     1
                   </span>
                   <span>
-                    Register on{" "}
-                    <a
-                      href="https://www.majobokenya.com/"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-gold hover:underline"
-                    >
-                      Majobo Kenya
+                    Browse open roles on our{" "}
+                    <a href="/careers" className="text-gold hover:underline">
+                      Careers page
                     </a>{" "}
-                    to browse and apply for open positions at JOAT and our partners.
+                    and apply directly to the position that fits you.
                   </span>
                 </li>
                 <li className="flex gap-3">
