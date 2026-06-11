@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Menu, X } from "lucide-react";
 // Served from /public so it shares the same URL with the index.html preload
 // and the favicon — single download instead of bundled-plus-favicon duplicate.
 const logo = "/joat-logo.png";
@@ -81,13 +82,12 @@ export function Navbar() {
 
         <div className="lg:hidden flex items-center gap-1 shrink-0">
           <button
-            aria-label="Open menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
             className="p-2 rounded-md text-foreground"
           >
-            <div className="w-6 h-0.5 bg-current mb-1.5" />
-            <div className="w-6 h-0.5 bg-current mb-1.5" />
-            <div className="w-4 h-0.5 bg-current" />
+            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </nav>

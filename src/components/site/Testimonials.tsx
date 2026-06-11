@@ -114,7 +114,7 @@ export function Testimonials() {
   useEffect(() => {
     const id = setTimeout(() => {
       setI((v) => (v + 1) % list.length);
-    }, 5000);
+    }, 11000);
     return () => clearTimeout(id);
   }, [i, list.length]);
 
