@@ -24,6 +24,13 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
+  # Serve the prerendered per-route HTML (e.g. /about -> about.html). Each of
+  # these carries its own <title>, canonical and meta tags, which fixes the
+  # "non-canonical / duplicate-title page in sitemap" audit issues. Fail-safe:
+  # a route without a matching .html simply falls through to the SPA shell.
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^([a-z0-9-]+)/?$ $1.html [L]
+
   # Everything else → index.html (200 OK, not 301)
   RewriteRule ^ index.html [L]
 </IfModule>
