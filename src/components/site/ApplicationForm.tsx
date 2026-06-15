@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Upload, X, FileText, Loader2, CheckCircle2, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { deliverApplicationViaWeb3Forms } from "@/lib/web3forms";
 import {
   APPLICATIONS_BUCKET,
   APPLY_EMAIL,
@@ -140,6 +141,29 @@ export function ApplicationForm({
     }
 
     setStatus("sent");
+
+    // 3. Notify the team by email (best-effort — the application is already
+    //    saved above, so the applicant is never blocked if this fails).
+    const appliedAt = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Africa/Nairobi",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).format(new Date());
+    void deliverApplicationViaWeb3Forms({
+      jobTitle: job.title,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      trades,
+      portfolio: form.portfolio.trim() || null,
+      message: form.message.trim() || null,
+      files: uploaded.map((u) => ({ name: u.name, url: u.url })),
+      appliedAt: `${appliedAt} (EAT)`,
+    });
   };
 
   if (status === "sent") {
