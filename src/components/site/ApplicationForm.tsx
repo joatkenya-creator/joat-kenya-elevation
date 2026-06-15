@@ -90,12 +90,15 @@ export function ApplicationForm({
 
     // 1. Upload files to the job's folder in the applications bucket, keeping
     //    the applicant's original file name. Every application gets its own
-    //    subfolder named by the upload date + applicant name (e.g.
-    //    "2026-06-10-Jane-Wanjiru"), matching the hyphenated format of the
-    //    existing folders. Supabase creates folders on first upload.
+    //    subfolder named by upload date + applicant name + a short random token
+    //    (e.g. "2026-06-10-Jane-Wanjiru-a3f9c2d10e4b"). The token makes the file
+    //    URL unguessable — the bucket is public, so without it someone who knew
+    //    an applicant's name/date/role could guess their CV's URL. Supabase
+    //    creates folders on first upload.
     const jobFolder = folderFor(job.title);
     const uploadDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-    const baseDir = `${jobFolder}/${uploadDate}-${folderFor(form.name)}`;
+    const token = crypto.randomUUID().replace(/-/g, "").slice(0, 12);
+    const baseDir = `${jobFolder}/${uploadDate}-${folderFor(form.name)}-${token}`;
     const uploaded: { name: string; path: string; url: string }[] = [];
     for (const file of files) {
       // Retain the original file name; only strip path separators that would
