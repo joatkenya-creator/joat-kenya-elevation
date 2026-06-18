@@ -14,7 +14,7 @@ export function About() {
         >
           <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-gold mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-(--joat-gold)" />
-            Our Story · Since 1983
+            Our Story
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
             Built to build. <span className="gradient-text-gold">Powered by technology.</span>

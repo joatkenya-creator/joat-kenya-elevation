@@ -30,7 +30,7 @@ export function Hero() {
 
       <div className="relative max-w-4xl mx-auto px-5 lg:px-8 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-card px-4 py-1.5 text-xs font-medium text-gold mb-6">
-          Since 1983 · Digital Innovation Studio
+          Digital Innovation Studio
         </div>
 
         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-foreground">

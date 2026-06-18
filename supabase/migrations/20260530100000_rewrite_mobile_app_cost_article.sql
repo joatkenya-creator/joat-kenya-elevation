@@ -123,7 +123,7 @@ update public.blog_posts
 
 <h2>Where JOAT fits</h2>
 
-<p>JOAT is a digital innovation studio operating from Kiambu since 1983. We typically work with founders and teams in steps 5 through 9 of this guide — once the one thing is defined and the user journey is sketched, we take responsibility for partner-grade delivery: written scope, fixed engagement tier, design system, test coverage, M-Pesa and card integrations, post-launch support, and your code in your repository on day one of handover.</p>
+<p>JOAT is a digital innovation studio operating from Kiambu. We typically work with founders and teams in steps 5 through 9 of this guide — once the one thing is defined and the user journey is sketched, we take responsibility for partner-grade delivery: written scope, fixed engagement tier, design system, test coverage, M-Pesa and card integrations, post-launch support, and your code in your repository on day one of handover.</p>
 
 <p>Every engagement is anchored to a written scope and one of three tiers — Foundation, Growth or Scale — so you know upfront what's included and what isn't. If you'd like a ballpark on your specific app idea, use the <a href="/contact">Contact</a> form and pick "Software Development"; we'll send a structured estimate within 24 hours.</p>
 $body$,

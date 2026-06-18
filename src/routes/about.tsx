@@ -10,9 +10,9 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
   head: () => ({
     ...seo({
-      title: "About | JOAT Kenya: Digital Innovation Studio Since 1983",
+      title: "About | JOAT Kenya: Digital Innovation Studio",
       description:
-        "JOAT Kenya is a digital innovation studio since 1983, delivering software, digital marketing, media, AI and children's digital education worldwide.",
+        "JOAT Kenya is a digital innovation studio delivering software, digital marketing, media, AI and children's digital education worldwide.",
       path: "/about",
     }),
     scripts: [

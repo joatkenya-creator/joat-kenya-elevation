@@ -43,7 +43,7 @@ export function folderFor(title: string): string {
 // Shared "about the company" block, shown at the top of every job detail view
 // (mirrors Deloitte's "About Deloitte" / hiring-unit section).
 export const ABOUT_JOAT =
-  "J.O.A.T. Kenya (Jack of All Trades) is a digital innovation studio operating since 1983. " +
+  "J.O.A.T. Kenya (Jack of All Trades) is a digital innovation studio. " +
   "We build software and digital products, run AI-driven marketing, produce media and animation, " +
   "and create children's digital education, delivering everything in-house from Thindigua, Kiambu " +
   "for clients across Kenya, East Africa and beyond. You'll join a multi-skilled team that ships " +

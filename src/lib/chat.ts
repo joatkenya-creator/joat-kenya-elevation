@@ -62,9 +62,9 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   // ===== Identity =====
   {
     match:
-      /\b(what|who)\s+(is|are|does)\s+(j\.?\s*o\.?\s*a\.?\s*t\.?|joat)( kenya)?\b|\babout joat\b|tell me about joat|founded|since 1983|\bhistory\b/i,
+      /\b(what|who)\s+(is|are|does)\s+(j\.?\s*o\.?\s*a\.?\s*t\.?|joat)( kenya)?\b|\babout joat\b|tell me about joat|\bhistory\b/i,
     reply:
-      "J.O.A.T. (Jack of All Trades) Kenya is a digital innovation studio operating since 1983. We design and deliver software, digital marketing, media production, AI solutions and children's digital education for clients worldwide. Want to talk to the team? Book a 30-min meeting from the Contact section.",
+      "J.O.A.T. (Jack of All Trades) Kenya is a digital innovation studio. We design and deliver software, digital marketing, media production, AI solutions and children's digital education for clients worldwide. Want to talk to the team? Book a 30-min meeting from the Contact section.",
   },
   {
     match:

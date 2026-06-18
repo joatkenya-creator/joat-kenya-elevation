@@ -54,7 +54,6 @@ export const organizationJsonLd = {
   slogan: "Digital innovation studio. Built in-house. Delivered worldwide.",
   description:
     "A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide.",
-  foundingDate: "1983",
   foundingLocation: {
     "@type": "Place",
     name: "Kiambu, Kenya",

@@ -51,7 +51,7 @@ export function Navbar() {
               <span className="text-gold">Kenya</span>
             </div>
             <div className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground hidden lg:block">
-              Since 1983 • Software. Media. AI.
+              Software. Media. AI.
             </div>
           </div>
         </Link>

@@ -513,7 +513,7 @@ $body$
 
 <h2>How JOAT scores against this checklist</h2>
 
-<p>JOAT has answered every one of these 15 questions in every client engagement since 1983. Live apps in stores: yes (BioBiz on both, Majobo Kenya web). References: available on request. Code and IP ownership: yours from day 1. Bug-fix window: 60 days standard, longer on Scale-tier engagements. Maintenance: month-to-month or annual.</p>
+<p>JOAT has answered every one of these 15 questions in every client engagement. Live apps in stores: yes (BioBiz on both, Majobo Kenya web). References: available on request. Code and IP ownership: yours from day 1. Bug-fix window: 60 days standard, longer on Scale-tier engagements. Maintenance: month-to-month or annual.</p>
 
 <p>If you'd like to put us through this checklist on a real call, the <a href="/contact">Contact form</a> goes straight to the team and we respond within 24 hours. For our engagement tiers, see the <a href="/work-with-us">Work With Us</a> page.</p>
 $body$
