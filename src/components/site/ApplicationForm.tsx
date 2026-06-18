@@ -41,6 +41,7 @@ export function ApplicationForm({
     message: "",
   });
   const [trades, setTrades] = useState<string[]>([]);
+  const [otherSkills, setOtherSkills] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [errs, setErrs] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -88,6 +89,19 @@ export function ApplicationForm({
     setServerError(null);
     setStatus("sending");
 
+    // Combine the selected skill chips with any free-text skills the applicant
+    // typed (comma/newline separated), de-duplicated case-insensitively.
+    const extraSkills = otherSkills
+      .split(/[,\n]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const allTrades = [...trades];
+    for (const skill of extraSkills) {
+      if (!allTrades.some((t) => t.toLowerCase() === skill.toLowerCase())) {
+        allTrades.push(skill);
+      }
+    }
+
     // 1. Upload files to the job's folder in the applications bucket, keeping
     //    the applicant's original file name. Every application gets its own
     //    subfolder named by upload date + applicant name + a short random token
@@ -129,7 +143,7 @@ export function ApplicationForm({
       email: form.email.trim(),
       phone: form.phone.trim(),
       job_title: job.title,
-      trades,
+      trades: allTrades,
       portfolio_link: form.portfolio.trim() || null,
       app_message: form.message.trim() || null,
       file_urls: uploaded,
@@ -161,7 +175,7 @@ export function ApplicationForm({
       name: form.name.trim(),
       email: form.email.trim(),
       phone: form.phone.trim(),
-      trades,
+      trades: allTrades,
       portfolio: form.portfolio.trim() || null,
       message: form.message.trim() || null,
       files: uploaded.map((u) => ({ name: u.name, url: u.url })),
@@ -233,9 +247,9 @@ export function ApplicationForm({
         </div>
       </div>
 
-      {job.trades.length > 0 && (
-        <div>
-          <label className="text-xs text-muted-foreground">Your relevant skills (optional)</label>
+      <div>
+        <label className="text-xs text-muted-foreground">Your relevant skills (optional)</label>
+        {job.trades.length > 0 && (
           <div className="mt-1.5 flex flex-wrap gap-2">
             {job.trades.map((t) => (
               <button
@@ -252,8 +266,14 @@ export function ApplicationForm({
               </button>
             ))}
           </div>
-        </div>
-      )}
+        )}
+        <input
+          className={`${inputClass} mt-2`}
+          value={otherSkills}
+          onChange={(e) => setOtherSkills(e.target.value)}
+          placeholder="Other skills not listed above (separate with commas)"
+        />
+      </div>
 
       <div>
         <label className="text-xs text-muted-foreground">Message / cover note (optional)</label>
