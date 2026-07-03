@@ -51,6 +51,49 @@ export const ABOUT_JOAT =
 
 export const openings: Opening[] = [
   {
+    slug: "dancers",
+    title: "Dancers",
+    category: "Media & Performance",
+    location: "Thindigua, Kiambu · Studio & On-location",
+    type: "Full-time",
+    postedNote: "Posted July 2026 · Open",
+    trades: [
+      "Dance",
+      "Choreography",
+      "Stage Performance",
+      "On-camera Performance",
+      "Working with Children",
+      "Teamwork",
+    ],
+    mainPurpose:
+      "Bring music and movement to life for children as a performer with Amares Big Planet, JOAT Kenya's children's entertainment and digital education brand. We're looking for energetic, creative and confident dancers who love performing and inspiring children through music and movement. Solo dancers and dance groups are all welcome to apply.",
+    whatYouWillDo: [
+      "Perform high-energy, creative dance routines for children, both live and on camera.",
+      "Inspire and engage young audiences — including children on the autism spectrum — through music and movement.",
+      "Bring positive energy, confidence and creativity to every rehearsal and performance.",
+      "Collaborate with the team on choreography, themes and content ideas.",
+      "Represent Amares Big Planet professionally at shoots, events and performances.",
+    ],
+    requiredQualifications: [
+      "Strong dance skills as a solo performer or as part of a dance crew or group.",
+      "A genuine passion for working with children, including children on the autism spectrum.",
+      "Confidence performing on stage and in front of the camera.",
+      "Commitment, reliability, teamwork and consistently positive energy.",
+      "Formal dance training is a plus, but talent, attitude and energy matter most.",
+    ],
+    behaviouralCompetencies: [
+      "Energetic, creative and confident.",
+      "Patient, warm and encouraging with children.",
+      "Reliable, committed and a dependable team player.",
+      "Brings positive energy to every rehearsal and performance.",
+    ],
+    technicalCompetencies: [
+      "Dance and choreography across one or more styles.",
+      "Comfortable performing to a live audience and to camera.",
+      "Able to learn and adapt routines quickly for different themes.",
+    ],
+  },
+  {
     slug: "website-services-sales-person",
     title: "Website Services Sales Person",
     category: "Sales & Business Development",
