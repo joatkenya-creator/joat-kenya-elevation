@@ -29,6 +29,7 @@ const ROUTES = [
   "about",
   "services",
   "products",
+  "courses",
   "articles",
   "careers",
   "contact",

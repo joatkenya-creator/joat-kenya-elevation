@@ -14,11 +14,15 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CoursesSignUpRouteImport } from './routes/courses_.sign-up'
+import { Route as CoursesLoginRouteImport } from './routes/courses_.login'
+import { Route as CoursesAccountRouteImport } from './routes/courses_.account'
 
 const WorkWithUsRoute = WorkWithUsRouteImport.update({
   id: '/work-with-us',
@@ -43,6 +47,11 @@ const ProductsRoute = ProductsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -70,6 +79,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoursesSignUpRoute = CoursesSignUpRouteImport.update({
+  id: '/courses_/sign-up',
+  path: '/courses/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesLoginRoute = CoursesLoginRouteImport.update({
+  id: '/courses_/login',
+  path: '/courses/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesAccountRoute = CoursesAccountRouteImport.update({
+  id: '/courses_/account',
+  path: '/courses/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -77,11 +101,15 @@ export interface FileRoutesByFullPath {
   '/articles': typeof ArticlesRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
+  '/courses/account': typeof CoursesAccountRoute
+  '/courses/login': typeof CoursesLoginRoute
+  '/courses/sign-up': typeof CoursesSignUpRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,11 +117,15 @@ export interface FileRoutesByTo {
   '/articles': typeof ArticlesRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
+  '/courses/account': typeof CoursesAccountRoute
+  '/courses/login': typeof CoursesLoginRoute
+  '/courses/sign-up': typeof CoursesSignUpRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,11 +134,15 @@ export interface FileRoutesById {
   '/articles': typeof ArticlesRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
+  '/courses_/account': typeof CoursesAccountRoute
+  '/courses_/login': typeof CoursesLoginRoute
+  '/courses_/sign-up': typeof CoursesSignUpRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -116,11 +152,15 @@ export interface FileRouteTypes {
     | '/articles'
     | '/careers'
     | '/contact'
+    | '/courses'
     | '/privacy'
     | '/products'
     | '/services'
     | '/terms'
     | '/work-with-us'
+    | '/courses/account'
+    | '/courses/login'
+    | '/courses/sign-up'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,11 +168,15 @@ export interface FileRouteTypes {
     | '/articles'
     | '/careers'
     | '/contact'
+    | '/courses'
     | '/privacy'
     | '/products'
     | '/services'
     | '/terms'
     | '/work-with-us'
+    | '/courses/account'
+    | '/courses/login'
+    | '/courses/sign-up'
   id:
     | '__root__'
     | '/'
@@ -140,11 +184,15 @@ export interface FileRouteTypes {
     | '/articles'
     | '/careers'
     | '/contact'
+    | '/courses'
     | '/privacy'
     | '/products'
     | '/services'
     | '/terms'
     | '/work-with-us'
+    | '/courses_/account'
+    | '/courses_/login'
+    | '/courses_/sign-up'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,11 +201,15 @@ export interface RootRouteChildren {
   ArticlesRoute: typeof ArticlesRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
+  CoursesRoute: typeof CoursesRoute
   PrivacyRoute: typeof PrivacyRoute
   ProductsRoute: typeof ProductsRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
   WorkWithUsRoute: typeof WorkWithUsRoute
+  CoursesAccountRoute: typeof CoursesAccountRoute
+  CoursesLoginRoute: typeof CoursesLoginRoute
+  CoursesSignUpRoute: typeof CoursesSignUpRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -197,6 +249,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -232,6 +291,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courses_/sign-up': {
+      id: '/courses_/sign-up'
+      path: '/courses/sign-up'
+      fullPath: '/courses/sign-up'
+      preLoaderRoute: typeof CoursesSignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses_/login': {
+      id: '/courses_/login'
+      path: '/courses/login'
+      fullPath: '/courses/login'
+      preLoaderRoute: typeof CoursesLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses_/account': {
+      id: '/courses_/account'
+      path: '/courses/account'
+      fullPath: '/courses/account'
+      preLoaderRoute: typeof CoursesAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -241,11 +321,15 @@ const rootRouteChildren: RootRouteChildren = {
   ArticlesRoute: ArticlesRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
+  CoursesRoute: CoursesRoute,
   PrivacyRoute: PrivacyRoute,
   ProductsRoute: ProductsRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
   WorkWithUsRoute: WorkWithUsRoute,
+  CoursesAccountRoute: CoursesAccountRoute,
+  CoursesLoginRoute: CoursesLoginRoute,
+  CoursesSignUpRoute: CoursesSignUpRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

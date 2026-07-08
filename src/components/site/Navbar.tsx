@@ -10,6 +10,7 @@ const links = [
   { label: "About Us", to: "/about" as const },
   { label: "Services", to: "/services" as const },
   { label: "Products", to: "/products" as const },
+  { label: "Courses", to: "/courses" as const },
   { label: "Careers", to: "/careers" as const },
   { label: "Articles", to: "/articles" as const },
   { label: "Contact Us", to: "/contact" as const },

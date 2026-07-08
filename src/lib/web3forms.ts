@@ -159,3 +159,94 @@ export async function deliverApplicationViaWeb3Forms(app: {
     return false;
   }
 }
+
+const TIER_LABEL: Record<string, string> = {
+  builder: "Builder (KES 24,900)",
+  shipper: "Shipper (KES 44,900)",
+  pro: "Pro (KES 79,900)",
+};
+
+const PAYMENT_LABEL: Record<string, string> = {
+  full: "Pay in full",
+  installments: "Installments",
+  parent_pays: "Parent will pay",
+};
+
+/**
+ * Notify the team by email when someone finishes a course registration
+ * (Supabase Auth account created + their course_students row saved). This is
+ * the "where do leads get routed" step from the course brief — reuses the
+ * same Web3Forms key and destination inbox as the contact form and job
+ * applications, so registrations land in the same place the team already
+ * checks. Best-effort: the registration is already saved in Supabase, so a
+ * failed email never blocks the student.
+ */
+export async function deliverCourseRegistrationViaWeb3Forms(reg: {
+  fullName: string;
+  email: string;
+  phone: string;
+  registrantType: "student" | "parent";
+  college?: string | null;
+  tier: string;
+  paymentPreference: string;
+  howHeard?: string | null;
+  registeredAt: string;
+}): Promise<boolean> {
+  const key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  if (!key) {
+    console.warn("VITE_WEB3FORMS_ACCESS_KEY not set — course registration email skipped");
+    return false;
+  }
+
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+  const ref = supabaseUrl?.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1];
+  const dashboardUrl = ref
+    ? `https://supabase.com/dashboard/project/${ref}/editor`
+    : "https://supabase.com/dashboard";
+
+  const message = [
+    "New course registration.",
+    "",
+    `Name: ${reg.fullName}`,
+    `Email: ${reg.email}`,
+    `Phone: ${reg.phone}`,
+    `Registering as: ${reg.registrantType === "parent" ? "Parent" : "Student"}`,
+    ...(reg.college ? [`College: ${reg.college}`] : []),
+    `Tier: ${TIER_LABEL[reg.tier] ?? reg.tier}`,
+    `Payment preference: ${PAYMENT_LABEL[reg.paymentPreference] ?? reg.paymentPreference}`,
+    ...(reg.howHeard ? [`How they heard about us: ${reg.howHeard}`] : []),
+    `Registered: ${reg.registeredAt}`,
+    "",
+    `View in dashboard: ${dashboardUrl}`,
+  ].join("\n");
+
+  const fields = {
+    access_key: key,
+    from_name: "JOAT KENYA Courses",
+    subject: `New course registration: ${TIER_LABEL[reg.tier] ?? reg.tier} — ${reg.fullName}`,
+    name: reg.fullName,
+    email: reg.email,
+    replyto: reg.email,
+    message,
+  };
+
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify(fields),
+    });
+    const json = (await res.json().catch(() => null)) as {
+      success?: boolean;
+      message?: string;
+    } | null;
+    if (!res.ok || !json?.success) {
+      console.error("Web3Forms rejected the course registration email", res.status, json?.message);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("Web3Forms course registration email failed", err);
+    return false;
+  }
+}
