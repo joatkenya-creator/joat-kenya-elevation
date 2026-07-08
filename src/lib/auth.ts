@@ -6,6 +6,7 @@ import { deliverCourseRegistrationViaWeb3Forms } from "@/lib/web3forms";
 export type Tier = "builder" | "shipper" | "pro";
 export type RegistrantType = "student" | "parent";
 export type PaymentPreference = "full" | "installments" | "parent_pays";
+export type CourseStatus = "registered" | "deposit_paid" | "in_progress" | "completed";
 
 export type CourseStudent = {
   id: string;
@@ -16,6 +17,7 @@ export type CourseStudent = {
   tier: Tier;
   payment_preference: PaymentPreference;
   how_heard: string | null;
+  status: CourseStatus;
   created_at: string;
 };
 
@@ -141,6 +143,32 @@ export async function insertCourseStudentRow(
   }
 
   return result;
+}
+
+// Lets a student update their own contact details later. Deliberately
+// excludes `tier` and `status`: tier changes affect pricing/deposit and
+// should go through the team, and `status` is locked at the database level
+// (see the status migration) so a student's own session cannot self-report
+// progress.
+export type EditableRegistration = {
+  full_name: string;
+  phone: string;
+  registrant_type: RegistrantType;
+  college: string;
+  payment_preference: PaymentPreference;
+};
+
+export async function updateCourseStudentRow(userId: string, data: EditableRegistration) {
+  return supabase
+    .from("course_students")
+    .update({
+      full_name: data.full_name.trim(),
+      phone: data.phone.trim(),
+      registrant_type: data.registrant_type,
+      college: data.college.trim() || null,
+      payment_preference: data.payment_preference,
+    })
+    .eq("id", userId);
 }
 
 export async function fetchCourseStudentRow(userId: string) {

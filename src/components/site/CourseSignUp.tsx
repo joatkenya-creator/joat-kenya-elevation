@@ -62,7 +62,7 @@ export function CourseSignUp({ initialTier }: { initialTier?: Tier }) {
     const { data, error } = await signUpStudent(email.trim(), password);
     if (error) {
       setStatus("error");
-      setServerError(error.message || "We couldn't create your account. Please try again.");
+      setServerError(error.message || "We could not create your account. Please try again.");
       return;
     }
 
@@ -81,7 +81,7 @@ export function CourseSignUp({ initialTier }: { initialTier?: Tier }) {
       if (insErr) {
         setStatus("error");
         setServerError(
-          "Your account was created, but we couldn't save your registration details. Please log in and try again.",
+          "Your account was created, but we could not save your registration details. Please log in and try again.",
         );
         return;
       }
@@ -194,9 +194,9 @@ export function CourseSignUp({ initialTier }: { initialTier?: Tier }) {
             value={tier}
             onChange={(e) => setTier(e.target.value as Tier)}
           >
-            <option value="builder">Builder — KES 24,900</option>
-            <option value="shipper">Shipper — KES 44,900</option>
-            <option value="pro">Pro — KES 79,900</option>
+            <option value="builder">Builder: KES 24,900</option>
+            <option value="shipper">Shipper: KES 44,900</option>
+            <option value="pro">Pro: KES 79,900</option>
           </select>
         </div>
 

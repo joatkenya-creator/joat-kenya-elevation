@@ -2,22 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { m } from "framer-motion";
 import type { Tier } from "@/lib/auth";
 
-// Small, consistent marker for brief facts JOAT leadership hasn't signed off
-// on yet (course name, dates, venue, prices, paybill). Keeps unconfirmed
-// values visibly distinct from the rest of the copy instead of reading as
-// final.
-function Confirm({ children }: { children: string }) {
-  return (
-    <span className="ml-1.5 inline-block whitespace-nowrap rounded border border-(--joat-red)/40 bg-(--joat-red)/10 px-1.5 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-wide text-(--joat-red)">
-      {children}
-    </span>
-  );
-}
-
 const promises = [
   "3 real, deployed apps anyone can open and use",
   "A portfolio site built to get callbacks",
-  "M-Pesa payments working in a real app you built",
+  "Secure payment integrations built directly into your applications, e.g. M-Pesa Daraja",
   "The workflow to keep building on your own, with AI",
 ];
 
@@ -26,19 +14,19 @@ const curriculum = [
     weeks: "Weeks 1–2",
     title: "Foundations of building with AI",
     body: "How to structure an app idea into a buildable plan, the modern AI toolchain, and setting up your dev environment.",
-    ship: "Ship: App #1 — a simple working web app, deployed live.",
+    ship: "Ship: App #1, a simple working web app, deployed live.",
   },
   {
     weeks: "Weeks 3–4",
     title: "Real apps, real data",
     body: "Databases, authentication, connecting frontend to backend, and fixing what AI gets wrong.",
-    ship: "Ship: App #2 — a full-stack app with user accounts, deployed.",
+    ship: "Ship: App #2, a full-stack app with user accounts, deployed.",
   },
   {
     weeks: "Weeks 5–6",
     title: "Payments and going live in Kenya",
-    body: "Deploying for real users, and M-Pesa (Daraja) integration so your app can actually take money.",
-    ship: "Ship: App #3 — an app that accepts M-Pesa payments.",
+    body: "Deploying for real users, and M-Pesa (Daraja) integration so your app can accept payments and handle money flow.",
+    ship: "Ship: App #3, an app that accepts M-Pesa payments.",
   },
   {
     weeks: "Weeks 7–8",
@@ -101,7 +89,7 @@ const faqs = [
   },
   {
     q: "Is it online or in person?",
-    a: "Live and in person in Nairobi — that's the point, you build alongside a mentor.",
+    a: "Live and in person in Nairobi. That is the point: you build alongside a mentor.",
   },
   {
     q: "What do I leave with?",
@@ -113,7 +101,7 @@ const faqs = [
   },
   {
     q: "Will this get me a job?",
-    a: "We give you the portfolio and skills employers ask for, and the tech market pays roughly KES 50,000–200,000 a month for developers. We don't promise placement.",
+    a: "We give you the portfolio and skills employers ask for, and the tech market pays roughly KES 50,000–200,000 a month for developers. We do not promise placement.",
   },
   {
     q: "How big is the class?",
@@ -147,16 +135,12 @@ export function Courses() {
             <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">
               A JOAT Kenya Live Cohort · Nairobi
             </div>
-            <p className="text-sm text-muted-foreground mb-3">
-              Working title: "Zero to Shipped" — AI App Builder Cohort
-              <Confirm>Name not final</Confirm>
-            </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] text-foreground">
-              Finished IT but can't actually build anything? In 8 weeks, ship 3 real apps.
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-[1.25] text-foreground">
+              Finished IT but cannot actually build anything? In 8 weeks, ship 3 real apps.
             </h1>
             <p className="mt-6 text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              A small, live, in-person cohort in Nairobi. Learn to build and ship real apps with AI
-              — deployment, M-Pesa payments and all — taught by a team that ships to the app stores
+              A small, live, in-person cohort in Nairobi. Learn to build and ship real apps with AI,
+              deployment, M-Pesa integrations and all, taught by a team that ships to the app stores
               for a living.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -166,17 +150,8 @@ export function Courses() {
               >
                 Register for the next cohort
               </Link>
-              <a
-                href="#curriculum"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-md glass text-foreground font-semibold hover:bg-black/5 transition-all"
-              >
-                See what you'll build
-              </a>
             </div>
-            <p className="mt-6 text-sm text-muted-foreground">
-              Small cohort · 8–12 spots · Next intake:
-              <Confirm>Date not set</Confirm>
-            </p>
+            <p className="mt-6 text-sm text-muted-foreground">Small cohort · 8–12 spots</p>
           </div>
         </div>
       </section>
@@ -186,23 +161,22 @@ export function Courses() {
         <div className="max-w-6xl mx-auto px-5 lg:px-8">
           <m.div {...fadeUp} className="max-w-2xl">
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-              The degree wasn't the problem. Nobody taught you to build.
+              The degree was not the problem. Nobody taught you to build.
             </h2>
             <p className="mt-6 text-base text-muted-foreground leading-relaxed">
               You did the course. You have the certificate. But every job wants a portfolio and real
-              projects, and you've got nothing shipped. You've watched the tutorials, maybe
-              half-finished a bootcamp, and you still don't know where to start. You're not behind
-              because you're not smart. You're behind because school taught theory, and the market
+              projects, and you have got nothing shipped. You have watched the tutorials, maybe
+              half-finished a bootcamp, and you still do not know where to start. You are not behind
+              because you are not smart. You are behind because school taught theory, and the market
               pays for shipped work.
             </p>
             <blockquote className="mt-6 border-l-2 border-(--joat-gold) pl-4 text-base text-foreground">
               "How do I build a real app when my IT degree taught me nothing practical?"
             </blockquote>
             <p className="mt-6 text-sm text-muted-foreground leading-relaxed">
-              It's not just you. Youth unemployment in Kenya runs at roughly two-thirds for people
+              It is not just you. Youth unemployment in Kenya runs at roughly two-thirds for people
               aged 15–34, and over a million young people enter the job market every year without
-              skills that get them hired. Meanwhile developer salaries here run KES 50,000–200,000 a
-              month, for people who can prove they can build.
+              skills that get them hired.
             </p>
           </m.div>
         </div>
@@ -235,13 +209,9 @@ export function Courses() {
         <div className="max-w-6xl mx-auto px-5 lg:px-8">
           <m.div {...fadeUp}>
             <SectionHeading
-              eyebrow="What You'll Build"
+              eyebrow="What You Will Build"
               title="Three real apps, built one at a time."
             />
-            <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-              Draft curriculum
-              <Confirm>Pending final sign-off</Confirm> — structured around shipping 3 real apps.
-            </p>
           </m.div>
           <div className="mt-10 max-w-3xl space-y-10">
             {curriculum.map((block) => (
@@ -265,7 +235,7 @@ export function Courses() {
               title="We teach the way we ship, not what school taught us."
             />
             <p className="mt-6 max-w-2xl text-base text-muted-foreground leading-relaxed">
-              JOAT Kenya doesn't teach coding theory. We teach you to ship the way our own team
+              JOAT Kenya does not teach coding theory. We teach you to ship the way our own team
               ships production apps like{" "}
               <a
                 href="https://biobiz.app"
@@ -284,20 +254,20 @@ export function Courses() {
               >
                 Majobo
               </a>
-              : a structured AI-build method, real deployment, and live M-Pesa payments. Where
+              : a structured AI-build method, real deployment, and live M-Pesa integrations. Where
               bootcamps hand you a certificate, we hand you a portfolio of deployed apps and the
-              workflow to keep building. Taught live, in a small group, by people who do this for
-              money.
+              workflow to keep building. Taught live, in a small group, by a team genuinely invested
+              in helping junior developers grow into confident, capable engineers.
             </p>
 
             <div className="mt-10 max-w-2xl space-y-6">
               <p className="text-sm text-muted-foreground leading-relaxed">
                 <span className="font-semibold text-foreground">
-                  We've made the exact leap you need to make.{" "}
+                  We have made the exact leap you need to make.{" "}
                 </span>
                 JOAT Kenya's team came up through practical building, from client websites to
                 shipping full products, so we teach the jump from "I have a certificate" to "I can
-                build" because we've lived it.
+                build" because we have lived it.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 <span className="font-semibold text-foreground">
@@ -310,7 +280,7 @@ export function Courses() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 <span className="font-semibold text-foreground">We ship for a living. </span>
                 Biobiz is a digital business-card app live on Google Play and the App Store. Majobo
-                is a jobs-board platform. You'll learn the same workflow we use to ship them.
+                is a jobs-board platform. You will learn the same workflow we use to ship them.
               </p>
             </div>
           </m.div>
@@ -323,28 +293,16 @@ export function Courses() {
           <m.div {...fadeUp}>
             <SectionHeading eyebrow="Fit Check" title="Who this is for." />
           </m.div>
-          <div className="mt-10 grid md:grid-cols-2 gap-10 max-w-4xl">
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-                This is for you if
-              </h3>
-              <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                <li>You finished an IT or tech course but can't build on your own yet.</li>
-                <li>You've applied to dev jobs and gotten no callbacks.</li>
-                <li>You want a real portfolio, not another certificate.</li>
-                <li>You learn better live, alongside other people, than alone from videos.</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-                Not for you if
-              </h3>
-              <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                <li>You want a purely online, self-paced course.</li>
-                <li>You want a certificate without doing the work.</li>
-                <li>You're already shipping production apps on your own.</li>
-              </ul>
-            </div>
+          <div className="mt-10 max-w-xl">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+              This is for you if
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+              <li>You finished an IT or tech course but cannot build on your own yet.</li>
+              <li>You have applied to dev jobs and gotten no callbacks.</li>
+              <li>You want a real portfolio, not another certificate.</li>
+              <li>You learn better live, alongside other people, than alone from videos.</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -358,7 +316,7 @@ export function Courses() {
               title="Three tiers, depending on how far you want to go."
             />
             <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-              Pay in full, in installments, or have a parent pay by M-Pesa.
+              Payment can be made in full or in installments.
             </p>
           </m.div>
 
@@ -414,7 +372,7 @@ export function Courses() {
               This course exists because of a real conversation: a parent reached out to us because
               their graduate had finished an IT course with a certificate but no technical skills,
               and no job. After working with our team, that graduate was building real things with
-              AI. We're running this cohort so more grads in that position get the same shot.
+              AI. We are running this cohort so more grads in that position get the same shot.
             </p>
           </m.div>
         </div>
@@ -438,21 +396,6 @@ export function Courses() {
                 <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{f.a}</p>
               </details>
             ))}
-            <details className="group py-4">
-              <summary className="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold text-foreground">
-                <span>
-                  Is there a job guarantee?
-                  <Confirm>Language pending</Confirm>
-                </span>
-                <span className="text-muted-foreground text-lg leading-none transition-transform group-open:rotate-45">
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                We haven't finalized what, if any, job-support language we can commit to. We'll
-                update this once JOAT leadership confirms it.
-              </p>
-            </details>
           </div>
         </div>
       </section>
@@ -465,7 +408,7 @@ export function Courses() {
               In 8 weeks, ship 3 real apps and build a portfolio that gets callbacks.
             </h2>
             <p className="mt-4 text-base text-muted-foreground max-w-xl mx-auto">
-              Register your interest below. We'll follow up on WhatsApp or email with next steps.
+              Register your interest below. We will follow up on WhatsApp or email with next steps.
             </p>
             <div className="mt-8">
               <Link
@@ -474,6 +417,15 @@ export function Courses() {
               >
                 Register for the next cohort
               </Link>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Already registered?{" "}
+                <Link
+                  to="/courses/login"
+                  className="text-foreground underline underline-offset-2 hover:text-gold"
+                >
+                  Sign in
+                </Link>
+              </p>
             </div>
           </m.div>
         </div>

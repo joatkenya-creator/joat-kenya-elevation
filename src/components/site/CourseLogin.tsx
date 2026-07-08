@@ -25,7 +25,7 @@ export function CourseLogin() {
     const { error: signInError } = await signInStudent(email.trim(), password);
     if (signInError) {
       setSending(false);
-      setError(signInError.message || "Couldn't log you in. Check your email and password.");
+      setError(signInError.message || "Could not log you in. Check your email and password.");
       return;
     }
     void navigate({ to: "/courses/account" });
