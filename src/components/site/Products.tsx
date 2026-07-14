@@ -19,6 +19,10 @@ import {
   ChevronDown,
   Search,
   MapPin,
+  MessageSquare,
+  Workflow,
+  BarChart3,
+  Clock,
 } from "lucide-react";
 import biobiz from "@/assets/biobiz-mock.webp";
 import biobizShare from "@/assets/biobiz-share.webp";
@@ -749,6 +753,145 @@ const products: Product[] = [
     ctas: [{ label: "Commission a build", href: "/contact" }],
     accent: "gold",
     extra: BlenderExtra,
+  },
+  {
+    id: "va-starter",
+    badge: "Virtual Assistant · Starter",
+    title: "Reclaim your hours, one inbox at a time.",
+    tagline: "Part-time support for the admin that eats your calendar.",
+    description:
+      "Starter is built for founders and small teams who need the basics off their plate: a trained virtual assistant handling inbox, calendar and data entry, using our internal AI tools to draft faster and never miss a follow-up.",
+    features: [
+      "~20–40 hours/month",
+      "Inbox & calendar management",
+      "Data entry, scheduling & reminders",
+      "AI-assisted drafting for faster turnaround",
+    ],
+    ctas: [{ label: "Get Starter VA support", href: "/contact" }],
+    icon: Clock,
+    accent: "gold",
+  },
+  {
+    id: "va-professional",
+    badge: "Virtual Assistant · Professional",
+    title: "A dedicated hand across content, CRM and customer replies.",
+    tagline: "Standard-hours support that moves beyond admin into daily operations.",
+    description:
+      "Professional is for growing teams: a dedicated assistant covering content support, CRM upkeep and customer replies, paired with an AI copilot for research and first drafts so turnaround stays fast as your workload grows.",
+    features: [
+      "~80–120 hours/month",
+      "Content support & social scheduling",
+      "CRM upkeep & customer replies",
+      "AI copilot for research & first drafts",
+    ],
+    ctas: [{ label: "Get Professional VA support", href: "/contact" }],
+    icon: Users,
+    accent: "red",
+    reverse: true,
+  },
+  {
+    id: "va-executive",
+    badge: "Virtual Assistant · Executive",
+    title: "Full-time senior support, backed by our in-house AI agents.",
+    tagline: "Dedicated executive assistance for founders and leadership teams.",
+    description:
+      "Executive pairs a senior, full-time assistant with JOAT's own AI agents, the same engine behind BioBiz's meeting notes and live translation, for founders who need a right hand across scheduling, reporting and vendor or client liaison.",
+    features: [
+      "Full-time, dedicated hours",
+      "Executive & project coordination",
+      "Reporting, vendor & client liaison",
+      "Backed by our AI meeting notes & translation engine",
+    ],
+    ctas: [{ label: "Get Executive VA support", href: "/contact" }],
+    icon: Rocket,
+    accent: "gold",
+  },
+  {
+    id: "ai-content-studio",
+    badge: "AI Content & Copy Studio",
+    title: "Your team, drafting at the speed of a prompt.",
+    tagline: "Self-serve AI content generation, tuned to your brand voice.",
+    description:
+      "Where AI Marketing is us running the campaign for you, Content Studio is the tool itself, handed to your team: brand-tuned prompts that turn a rough idea into blog posts, ad copy and landing pages in minutes, ready to edit and publish.",
+    features: [
+      "Prompt-tuned to your brand voice",
+      "Blog posts, ad copy & landing pages in minutes",
+      "Multi-language output",
+      "Editable exports to your CMS",
+    ],
+    ctas: [{ label: "Try Content Studio", href: "/contact" }],
+    icon: Sparkles,
+    accent: "red",
+  },
+  {
+    id: "ai-chatbot",
+    badge: "AI Support Chatbot",
+    title: "A support agent that never sleeps.",
+    tagline: "Claude-powered chat for customer support and lead qualification.",
+    description:
+      "We train a Claude-powered chatbot on your docs, FAQs and product catalog, then embed it on your website or WhatsApp. It answers customer questions on-brand, qualifies leads, and hands off to your team the moment a conversation needs a human.",
+    features: [
+      "Trained on your docs & FAQs",
+      "Lead qualification with handoff to sales",
+      "Embeds on your website or WhatsApp",
+      "Built on Claude for accurate, on-brand answers",
+    ],
+    ctas: [{ label: "Deploy a chatbot", href: "/contact" }],
+    icon: MessageSquare,
+    accent: "gold",
+    reverse: true,
+  },
+  {
+    id: "ai-automation",
+    badge: "AI Workflow Automation",
+    title: "The busywork, running itself.",
+    tagline: "Automating data entry, invoicing and email triage across your stack.",
+    description:
+      "We map your repetitive back-office work, data entry, invoicing, email triage, report generation, and automate it with custom integrations across the tools you already use, with human-in-the-loop checkpoints wherever a decision still needs a person.",
+    features: [
+      "Data entry, invoicing & email triage automated",
+      "Custom integrations across your existing tools",
+      "Human-in-the-loop approval checkpoints",
+      "Built to cut operational hours, not just tasks",
+    ],
+    ctas: [{ label: "Automate a workflow", href: "/contact" }],
+    icon: Workflow,
+    accent: "red",
+  },
+  {
+    id: "ai-meeting-agent",
+    badge: "AI Meeting & Notes Agent",
+    title: "Every meeting, captured, summarized, actioned.",
+    tagline: "The recording, transcription and translation engine behind BioBiz, standalone.",
+    description:
+      "For teams that don't need a full BioBiz card but want the AI behind it: record any meeting, get an instant summary with action items, and read foreign-language conversations translated into English in real time.",
+    features: [
+      "Record, transcribe & summarize any meeting",
+      "Foreign-language → English live translation",
+      "Action items extracted automatically",
+      "The same engine that powers BioBiz, standalone",
+    ],
+    ctas: [{ label: "Bring AI notes to your team", href: "/contact" }],
+    icon: Mic,
+    accent: "gold",
+  },
+  {
+    id: "ai-analytics",
+    badge: "AI Analytics & Insights",
+    title: "Dashboards that tell you what to do next.",
+    tagline: "Predictive reporting and plain-language insights from your existing data.",
+    description:
+      "We turn the data you already have, sales, ops, marketing, into dashboards that go beyond charts: predictive trend detection and plain-language summaries, delivered as a digest so your team acts on insight instead of hunting for it.",
+    features: [
+      "Custom dashboards from your existing data",
+      "Predictive reporting & trend detection",
+      "Plain-language summaries, not just charts",
+      "Automated weekly or monthly digest",
+    ],
+    ctas: [{ label: "Get analytics for your data", href: "/contact" }],
+    icon: BarChart3,
+    accent: "red",
+    reverse: true,
   },
 ];
 
