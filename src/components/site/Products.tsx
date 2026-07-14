@@ -22,8 +22,6 @@ import {
   MessageSquare,
   Workflow,
   BarChart3,
-  Zap,
-  Home,
 } from "lucide-react";
 import biobiz from "@/assets/biobiz-mock.webp";
 import biobizShare from "@/assets/biobiz-share.webp";
@@ -35,14 +33,8 @@ import amare from "@/assets/amare-planet.webp";
 import roblox from "@/assets/roblox-world.webp";
 import talent from "@/assets/talent.webp";
 import majoboLogo from "@/assets/majobo-logo.webp";
-
-type CTA = {
-  label: string;
-  href: string;
-  icon?: "download" | "apple" | "external";
-  /** When set, the CTA renders as a button that runs this action instead of a link. */
-  action?: "download-biobiz";
-};
+import { realEstateVAProducts } from "@/data/real-estate-va";
+import type { CTA, Product } from "@/lib/product-types";
 
 const BIOBIZ_PLAY_STORE = "https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile";
 const BIOBIZ_APP_STORE = "https://apps.apple.com/ke/app/biobiz/id6762440603";
@@ -59,29 +51,6 @@ function downloadBioBiz() {
   const url = isIOS ? BIOBIZ_APP_STORE : BIOBIZ_PLAY_STORE;
   window.open(url, "_blank", "noreferrer");
 }
-
-type Product = {
-  id: string;
-  badge: string;
-  title: string;
-  tagline: string;
-  description: string;
-  features: string[];
-  ctas: CTA[];
-  image?: string;
-  reverse?: boolean;
-  icon?: React.ComponentType<{ className?: string }>;
-  accent: "red" | "gold";
-  extra?: React.ReactNode;
-  /** Optional product brand logo. If `logoMark` is supplied (URL/import) it renders
-   * as an image; otherwise `logoLetter` renders a gradient placeholder square. */
-  logoMark?: string;
-  logoLetter?: string;
-  /** On mobile, place the product image beside the text (2-col) instead of stacked. */
-  mobileInlineImage?: boolean;
-  /** Hide the product hero image on mobile (e.g. when the extra block already shows it). */
-  hideImageOnMobile?: boolean;
-};
 
 function CTAIcon({ kind }: { kind?: CTA["icon"] }) {
   if (kind === "download") return <Download className="w-4 h-4" />;
@@ -755,59 +724,7 @@ const products: Product[] = [
     accent: "gold",
     extra: BlenderExtra,
   },
-  {
-    id: "va-realestate-starter",
-    badge: "Real Estate VA · AI Starter (ISA)",
-    title: "Never lose a lead to a slow reply again.",
-    tagline:
-      "Sub-5-minute AI response to every Zillow, Realtor.com, Facebook & website lead, 24/7.",
-    description:
-      "Starter is a fully AI-run Inside Sales Agent (ISA) built for real estate speed-to-lead: it responds to new buyer and seller leads from Zillow, Realtor.com, Facebook/Instagram and your website within minutes, qualifies intent, budget and timeline, books showings, and keeps nurturing the lead until a human needs to step in, all logged straight into your CRM. Leads contacted in the first 5 minutes convert far more often than those left waiting, so speed is the whole point.",
-    features: [
-      "Sub-5-minute AI response, day or night (speed-to-lead)",
-      "Works every source: Zillow, Realtor.com, Facebook & website leads",
-      "Acts as your 24/7 ISA: qualifies intent, budget & timeline",
-      "Auto-scheduled showings, open house sign-ups & CRM logging",
-    ],
-    ctas: [{ label: "Get instant lead response", href: "/contact" }],
-    icon: Zap,
-    accent: "gold",
-  },
-  {
-    id: "va-realestate-professional",
-    badge: "Real Estate VA · Professional",
-    title: "A dedicated VA who knows MLS, CRM and your pipeline.",
-    tagline: "Standard-hours human support for listings, leads and client follow-up.",
-    description:
-      "Professional pairs your listings with a dedicated, real-estate-literate assistant: MLS entry and updates, CRM upkeep (Follow Up Boss, kvCORE and similar), lead follow-up calls and texts, and showing coordination, backed by an AI copilot for listing descriptions and social posts.",
-    features: [
-      "~80–120 hours/month",
-      "MLS listing entry, updates & CRM management",
-      "Warm & hot lead follow-up until appointments are booked",
-      "AI-drafted listing descriptions & social posts",
-    ],
-    ctas: [{ label: "Get Professional Real Estate VA", href: "/contact" }],
-    icon: Home,
-    accent: "red",
-    reverse: true,
-  },
-  {
-    id: "va-realestate-executive",
-    badge: "Real Estate VA · Executive",
-    title: "Full-time senior support for top-producing agents & teams.",
-    tagline: "Dedicated executive assistance for brokers and high-volume teams.",
-    description:
-      "Executive pairs a senior, full-time assistant with JOAT's own AI agents, the same engine behind BioBiz's meeting notes and live translation, for brokers and top producers who need a right hand across contract-to-close coordination, vendor and lender liaison, and sphere-of-influence database management.",
-    features: [
-      "Full-time, dedicated hours",
-      "Contract-to-close transaction coordination",
-      "Vendor, lender & title liaison",
-      "Backed by our AI meeting notes & translation engine",
-    ],
-    ctas: [{ label: "Get Executive Real Estate VA", href: "/contact" }],
-    icon: Rocket,
-    accent: "gold",
-  },
+  ...realEstateVAProducts,
   {
     id: "ai-content-studio",
     badge: "AI Content & Copy Studio",
@@ -897,6 +814,141 @@ const products: Product[] = [
   },
 ];
 
+/** Renders a single product entry — the hero, badge, feature list and CTAs.
+ * Exported so standalone landing pages (e.g. /real-estate-virtual-assistant)
+ * can reuse the exact same card for a product line that also lives here. */
+export function ProductCard({ p }: { p: Product }) {
+  const Icon = p.icon;
+  const accentBg =
+    p.accent === "red"
+      ? "bg-(--joat-red) text-primary-foreground glow-red"
+      : "bg-(--joat-gold) text-(--joat-navy-deep) glow-gold";
+  const accentText = p.accent === "red" ? "text-(--joat-red)" : "text-(--joat-gold)";
+  return (
+    <m.div
+      id={p.id}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7 }}
+    >
+      <div
+        className={`grid gap-8 lg:gap-16 items-start lg:items-center ${
+          p.image ? "lg:grid-cols-2" : "lg:grid-cols-1"
+        } ${p.reverse && p.image ? "lg:[&>*:first-child]:order-2" : ""}`}
+      >
+        <div>
+          {/* Floated image so the paragraph wraps around it (mobile/tablet only) */}
+          {p.image && p.mobileInlineImage && (
+            <img
+              src={p.image}
+              alt={`${p.badge} preview`}
+              loading="lazy"
+              className="lg:hidden float-right w-2/5 ml-3 mb-2 rounded-xl object-cover aspect-square border border-(--glass-border) shadow-(--shadow-card)"
+            />
+          )}
+          <div className="flex items-center gap-3">
+            {p.logoMark ? (
+              <img
+                src={p.logoMark}
+                alt={`${p.badge} logo`}
+                className="w-11 h-11 rounded-xl object-cover shadow-(--shadow-card) border border-(--glass-border)"
+                loading="lazy"
+              />
+            ) : p.logoLetter ? (
+              <div
+                aria-hidden="true"
+                className={`w-11 h-11 rounded-xl flex items-center justify-center font-display font-bold text-lg shadow-(--shadow-card) border border-(--glass-border) ${
+                  p.accent === "red"
+                    ? "bg-(--joat-red) text-primary-foreground"
+                    : "bg-(--joat-gold) text-(--joat-navy-deep)"
+                }`}
+              >
+                {p.logoLetter}
+              </div>
+            ) : null}
+            <div
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold glass ${accentText}`}
+            >
+              {Icon ? <Icon className="w-3.5 h-3.5" /> : null}
+              {p.badge}
+            </div>
+          </div>
+          <h3 className="mt-5 text-2xl sm:text-3xl lg:text-5xl font-bold text-foreground leading-tight">
+            {p.title}
+          </h3>
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground">{p.tagline}</p>
+          <p className="mt-3 sm:mt-4 text-sm text-muted-foreground leading-relaxed">
+            {p.description}
+          </p>
+          <ul className="clear-both mt-6 space-y-2">
+            {p.features.map((f) => (
+              <li key={f} className="flex items-start gap-2 text-sm text-foreground/90">
+                <Check className={`w-4 h-4 mt-0.5 shrink-0 ${accentText}`} />
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-7 flex flex-wrap gap-3">
+            {p.ctas.map((c, idx) => {
+              const primary = idx === 0;
+              const external = c.href.startsWith("http");
+              const cls = `inline-flex items-center gap-2 rounded-md font-semibold transition-all hover:brightness-110 cursor-pointer ${
+                p.mobileInlineImage ? "px-4 py-2 text-sm sm:px-5 sm:py-3 sm:text-base" : "px-5 py-3"
+              } ${primary ? accentBg : "glass text-foreground hover:bg-black/5"}`;
+              if (c.action === "download-biobiz") {
+                return (
+                  <button key={c.label} type="button" onClick={downloadBioBiz} className={cls}>
+                    <CTAIcon kind={c.icon} />
+                    {c.label}
+                    {primary && <ArrowRight className="w-4 h-4" />}
+                  </button>
+                );
+              }
+              return (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noreferrer" : undefined}
+                  className={cls}
+                >
+                  <CTAIcon kind={c.icon} />
+                  {c.label}
+                  {primary && <ArrowRight className="w-4 h-4" />}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
+        {p.image && (
+          <div
+            className={`relative ${
+              p.hideImageOnMobile || p.mobileInlineImage ? "hidden lg:block" : ""
+            }`}
+          >
+            <div className="relative glass rounded-2xl sm:rounded-3xl overflow-hidden border border-(--glass-border) shadow-(--shadow-card)">
+              <img
+                src={p.image}
+                alt={`${p.badge} preview`}
+                loading="lazy"
+                width={1200}
+                height={900}
+                className={`w-full h-auto object-cover ${
+                  p.mobileInlineImage ? "aspect-square sm:aspect-[4/3]" : "aspect-[4/3]"
+                }`}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {p.extra}
+    </m.div>
+  );
+}
+
 export function Products() {
   return (
     <section id="products" className="relative pt-24 lg:pt-32 pb-14 lg:pb-20 bg-navy-deep">
@@ -920,147 +972,9 @@ export function Products() {
         </m.div>
 
         <div className="space-y-28 lg:space-y-36">
-          {products.map((p) => {
-            const Icon = p.icon;
-            const accentBg =
-              p.accent === "red"
-                ? "bg-(--joat-red) text-primary-foreground glow-red"
-                : "bg-(--joat-gold) text-(--joat-navy-deep) glow-gold";
-            const accentText = p.accent === "red" ? "text-(--joat-red)" : "text-(--joat-gold)";
-            return (
-              <m.div
-                key={p.id}
-                id={p.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.7 }}
-              >
-                <div
-                  className={`grid gap-8 lg:gap-16 items-start lg:items-center ${
-                    p.image ? "lg:grid-cols-2" : "lg:grid-cols-1"
-                  } ${p.reverse && p.image ? "lg:[&>*:first-child]:order-2" : ""}`}
-                >
-                  <div>
-                    {/* Floated image so the paragraph wraps around it (mobile/tablet only) */}
-                    {p.image && p.mobileInlineImage && (
-                      <img
-                        src={p.image}
-                        alt={`${p.badge} preview`}
-                        loading="lazy"
-                        className="lg:hidden float-right w-2/5 ml-3 mb-2 rounded-xl object-cover aspect-square border border-(--glass-border) shadow-(--shadow-card)"
-                      />
-                    )}
-                    <div className="flex items-center gap-3">
-                      {p.logoMark ? (
-                        <img
-                          src={p.logoMark}
-                          alt={`${p.badge} logo`}
-                          className="w-11 h-11 rounded-xl object-cover shadow-(--shadow-card) border border-(--glass-border)"
-                          loading="lazy"
-                        />
-                      ) : p.logoLetter ? (
-                        <div
-                          aria-hidden="true"
-                          className={`w-11 h-11 rounded-xl flex items-center justify-center font-display font-bold text-lg shadow-(--shadow-card) border border-(--glass-border) ${
-                            p.accent === "red"
-                              ? "bg-(--joat-red) text-primary-foreground"
-                              : "bg-(--joat-gold) text-(--joat-navy-deep)"
-                          }`}
-                        >
-                          {p.logoLetter}
-                        </div>
-                      ) : null}
-                      <div
-                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold glass ${accentText}`}
-                      >
-                        {Icon ? <Icon className="w-3.5 h-3.5" /> : null}
-                        {p.badge}
-                      </div>
-                    </div>
-                    <h3 className="mt-5 text-2xl sm:text-3xl lg:text-5xl font-bold text-foreground leading-tight">
-                      {p.title}
-                    </h3>
-                    <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground">
-                      {p.tagline}
-                    </p>
-                    <p className="mt-3 sm:mt-4 text-sm text-muted-foreground leading-relaxed">
-                      {p.description}
-                    </p>
-                    <ul className="clear-both mt-6 space-y-2">
-                      {p.features.map((f) => (
-                        <li key={f} className="flex items-start gap-2 text-sm text-foreground/90">
-                          <Check className={`w-4 h-4 mt-0.5 shrink-0 ${accentText}`} />
-                          <span>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-7 flex flex-wrap gap-3">
-                      {p.ctas.map((c, idx) => {
-                        const primary = idx === 0;
-                        const external = c.href.startsWith("http");
-                        const cls = `inline-flex items-center gap-2 rounded-md font-semibold transition-all hover:brightness-110 cursor-pointer ${
-                          p.mobileInlineImage
-                            ? "px-4 py-2 text-sm sm:px-5 sm:py-3 sm:text-base"
-                            : "px-5 py-3"
-                        } ${primary ? accentBg : "glass text-foreground hover:bg-black/5"}`;
-                        if (c.action === "download-biobiz") {
-                          return (
-                            <button
-                              key={c.label}
-                              type="button"
-                              onClick={downloadBioBiz}
-                              className={cls}
-                            >
-                              <CTAIcon kind={c.icon} />
-                              {c.label}
-                              {primary && <ArrowRight className="w-4 h-4" />}
-                            </button>
-                          );
-                        }
-                        return (
-                          <a
-                            key={c.label}
-                            href={c.href}
-                            target={external ? "_blank" : undefined}
-                            rel={external ? "noreferrer" : undefined}
-                            className={cls}
-                          >
-                            <CTAIcon kind={c.icon} />
-                            {c.label}
-                            {primary && <ArrowRight className="w-4 h-4" />}
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {p.image && (
-                    <div
-                      className={`relative ${
-                        p.hideImageOnMobile || p.mobileInlineImage ? "hidden lg:block" : ""
-                      }`}
-                    >
-                      <div className="relative glass rounded-2xl sm:rounded-3xl overflow-hidden border border-(--glass-border) shadow-(--shadow-card)">
-                        <img
-                          src={p.image}
-                          alt={`${p.badge} preview`}
-                          loading="lazy"
-                          width={1200}
-                          height={900}
-                          className={`w-full h-auto object-cover ${
-                            p.mobileInlineImage ? "aspect-square sm:aspect-[4/3]" : "aspect-[4/3]"
-                          }`}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {p.extra}
-              </m.div>
-            );
-          })}
+          {products.map((p) => (
+            <ProductCard key={p.id} p={p} />
+          ))}
         </div>
 
         {/* Selected client — Amare's Big Planet (compact) */}

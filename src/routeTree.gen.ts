@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkWithUsRouteImport } from './routes/work-with-us'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as RealEstateVirtualAssistantRouteImport } from './routes/real-estate-virtual-assistant'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as CoursesRouteImport } from './routes/courses'
@@ -39,6 +40,12 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RealEstateVirtualAssistantRoute =
+  RealEstateVirtualAssistantRouteImport.update({
+    id: '/real-estate-virtual-assistant',
+    path: '/real-estate-virtual-assistant',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProductsRoute = ProductsRouteImport.update({
   id: '/products',
   path: '/products',
@@ -104,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
+  '/real-estate-virtual-assistant': typeof RealEstateVirtualAssistantRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
@@ -120,6 +128,7 @@ export interface FileRoutesByTo {
   '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
+  '/real-estate-virtual-assistant': typeof RealEstateVirtualAssistantRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
@@ -137,6 +146,7 @@ export interface FileRoutesById {
   '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
+  '/real-estate-virtual-assistant': typeof RealEstateVirtualAssistantRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/work-with-us': typeof WorkWithUsRoute
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/courses'
     | '/privacy'
     | '/products'
+    | '/real-estate-virtual-assistant'
     | '/services'
     | '/terms'
     | '/work-with-us'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/courses'
     | '/privacy'
     | '/products'
+    | '/real-estate-virtual-assistant'
     | '/services'
     | '/terms'
     | '/work-with-us'
@@ -187,6 +199,7 @@ export interface FileRouteTypes {
     | '/courses'
     | '/privacy'
     | '/products'
+    | '/real-estate-virtual-assistant'
     | '/services'
     | '/terms'
     | '/work-with-us'
@@ -204,6 +217,7 @@ export interface RootRouteChildren {
   CoursesRoute: typeof CoursesRoute
   PrivacyRoute: typeof PrivacyRoute
   ProductsRoute: typeof ProductsRoute
+  RealEstateVirtualAssistantRoute: typeof RealEstateVirtualAssistantRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
   WorkWithUsRoute: typeof WorkWithUsRoute
@@ -233,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/real-estate-virtual-assistant': {
+      id: '/real-estate-virtual-assistant'
+      path: '/real-estate-virtual-assistant'
+      fullPath: '/real-estate-virtual-assistant'
+      preLoaderRoute: typeof RealEstateVirtualAssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products': {
@@ -324,6 +345,7 @@ const rootRouteChildren: RootRouteChildren = {
   CoursesRoute: CoursesRoute,
   PrivacyRoute: PrivacyRoute,
   ProductsRoute: ProductsRoute,
+  RealEstateVirtualAssistantRoute: RealEstateVirtualAssistantRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
   WorkWithUsRoute: WorkWithUsRoute,

@@ -34,6 +34,7 @@ const ROUTES = [
   "careers",
   "contact",
   "work-with-us",
+  "real-estate-virtual-assistant",
   "privacy",
   "terms",
 ];

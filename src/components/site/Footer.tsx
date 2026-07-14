@@ -118,6 +118,7 @@ export function Footer() {
             <FooterCol
               title="Solutions"
               links={[
+                { l: "Real Estate Virtual Assistant", h: "/real-estate-virtual-assistant" },
                 { l: "BioBiz App", h: "/#biobiz" },
                 { l: "Software Development", h: "/#software" },
                 { l: "AI Marketing", h: "/#ai-marketing" },
