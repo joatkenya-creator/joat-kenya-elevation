@@ -757,18 +757,19 @@ const products: Product[] = [
   },
   {
     id: "va-realestate-starter",
-    badge: "Real Estate VA · AI Starter",
+    badge: "Real Estate VA · AI Starter (ISA)",
     title: "Never lose a lead to a slow reply again.",
-    tagline: "24/7 AI-run lead response and follow-up, no human hours required.",
+    tagline:
+      "Sub-5-minute AI response to every Zillow, Realtor.com, Facebook & website lead, 24/7.",
     description:
-      "Starter is a fully AI-run assistant built for real estate speed-to-lead: it responds to new buyer and seller leads within seconds, qualifies intent, budget and timeline, books showings, and keeps nurturing the lead until a human needs to step in, all logged straight into your CRM.",
+      "Starter is a fully AI-run Inside Sales Agent (ISA) built for real estate speed-to-lead: it responds to new buyer and seller leads from Zillow, Realtor.com, Facebook/Instagram and your website within minutes, qualifies intent, budget and timeline, books showings, and keeps nurturing the lead until a human needs to step in, all logged straight into your CRM. Leads contacted in the first 5 minutes convert far more often than those left waiting, so speed is the whole point.",
     features: [
-      "Instant AI response to new leads, 24/7 (speed-to-lead)",
-      "Buyer/seller qualification: intent, budget, timeline",
-      "Auto-scheduled showings & open house sign-ups",
-      "AI drip follow-up logged straight into your CRM",
+      "Sub-5-minute AI response, day or night (speed-to-lead)",
+      "Works every source: Zillow, Realtor.com, Facebook & website leads",
+      "Acts as your 24/7 ISA: qualifies intent, budget & timeline",
+      "Auto-scheduled showings, open house sign-ups & CRM logging",
     ],
-    ctas: [{ label: "Get AI lead response", href: "/contact" }],
+    ctas: [{ label: "Get instant lead response", href: "/contact" }],
     icon: Zap,
     accent: "gold",
   },
@@ -782,7 +783,7 @@ const products: Product[] = [
     features: [
       "~80–120 hours/month",
       "MLS listing entry, updates & CRM management",
-      "Lead follow-up calls, texts & showing coordination",
+      "Warm & hot lead follow-up until appointments are booked",
       "AI-drafted listing descriptions & social posts",
     ],
     ctas: [{ label: "Get Professional Real Estate VA", href: "/contact" }],
