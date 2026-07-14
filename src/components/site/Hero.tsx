@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 // paints immediately; if the image file isn't present yet, the warm-white wash
 // gracefully shows the page background.
 const stats = [
-  { value: "42+", label: "Years in business" },
+  { value: "12+", label: "Years in business" },
   { value: "5", label: "Service lines" },
   { value: "3", label: "In-house products" },
   { value: "100%", label: "Delivered in-house" },
