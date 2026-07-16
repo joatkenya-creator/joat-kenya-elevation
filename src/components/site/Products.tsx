@@ -33,7 +33,7 @@ import amare from "@/assets/amare-planet.webp";
 import roblox from "@/assets/roblox-world.webp";
 import talent from "@/assets/talent.webp";
 import majoboLogo from "@/assets/majobo-logo.webp";
-import { realEstateVAProducts } from "@/data/real-estate-va";
+import { realEstateVAOverview } from "@/data/real-estate-va";
 import type { CTA, Product } from "@/lib/product-types";
 
 const BIOBIZ_PLAY_STORE = "https://play.google.com/store/apps/details?id=com.biobiz.biobiz_mobile";
@@ -724,7 +724,7 @@ const products: Product[] = [
     accent: "gold",
     extra: BlenderExtra,
   },
-  ...realEstateVAProducts,
+  realEstateVAOverview,
   {
     id: "ai-content-studio",
     badge: "AI Content & Copy Studio",

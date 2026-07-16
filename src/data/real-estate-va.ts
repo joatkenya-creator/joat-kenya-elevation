@@ -63,6 +63,31 @@ export const realEstateVAProducts: Product[] = [
   },
 ];
 
+/**
+ * Single-card summary of the Real Estate VA field for the Products page.
+ * Products lists virtual-assistant *fields* (Real Estate, and eventually
+ * Medical, Contractors, Executive Assistant), each pointing to its own
+ * dedicated page for tiers/pricing, rather than surfacing every tier inline.
+ */
+export const realEstateVAOverview: Product = {
+  id: "va-real-estate",
+  badge: "Virtual Assistant · Real Estate",
+  title: "Real estate leads, handled, from first reply to close.",
+  tagline:
+    "AI-run instant lead response, or a dedicated human VA for MLS, CRM and transaction coordination.",
+  description:
+    "Our Real Estate Virtual Assistant line covers the full spectrum: a fully AI-run Inside Sales Agent (ISA) that responds to new leads in under 5 minutes, up to a dedicated human assistant handling MLS listings, CRM management and contract-to-close coordination for brokers and top-producing teams.",
+  features: [
+    "24/7 AI-run lead response (ISA), or dedicated human support",
+    "Built for Zillow, Realtor.com, Facebook & your MLS/CRM stack",
+    "Scales from instant lead response to full transaction coordination",
+    "Three plans to match your pipeline and team size",
+  ],
+  ctas: [{ label: "Explore Real Estate VA plans", href: "/real-estate-virtual-assistant" }],
+  icon: Home,
+  accent: "gold",
+};
+
 export const realEstateVAFaqs = [
   {
     q: "What is a real estate virtual assistant (VA)?",
