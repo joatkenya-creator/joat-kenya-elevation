@@ -149,7 +149,16 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-(--border) flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <div>© {new Date().getFullYear()} J.O.A.T. Kenya. All rights reserved.</div>
+          <div className="flex items-center gap-3">
+            <img
+            src="/sdvosb-seal.svg"
+            alt="Service-Disabled Veteran-Owned Small Business (SDVOSB) - VA Verified"
+            width={36}
+            height={36}
+            className="w-9 h-9"
+          />
+          <span>© {new Date().getFullYear()} J.O.A.T. Kenya. All rights reserved.</span>
+          </div>
           <div className="flex gap-5">
             <a href={LEGAL_LINKS.privacy} className="hover:text-gold transition-colors">
               Privacy
