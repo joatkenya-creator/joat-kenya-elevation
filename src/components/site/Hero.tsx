@@ -1,14 +1,20 @@
 import { ArrowRight } from "lucide-react";
+import { FALLBACK_SERVICES } from "@/data/services-catalog";
+import { products } from "./Products";
 
 // Light, centered hero (Seamless-IT style). Background is the uploaded image at
 // /hero-bg.png under a translucent warm-white wash, so the geometric pattern
 // reads softly behind the content. Framer-free so the headline (LCP element)
 // paints immediately; if the image file isn't present yet, the warm-white wash
 // gracefully shows the page background.
+//
+// "Service lines" and "In-house products" are counted from the same data the
+// Services and Products pages render, not hand-typed, so this never drifts
+// out of sync when a service/product is added or removed.
 const stats = [
   { value: "12+", label: "Years in business" },
-  { value: "5", label: "Service lines" },
-  { value: "3", label: "In-house products" },
+  { value: String(FALLBACK_SERVICES.length), label: "Service lines" },
+  { value: String(products.length), label: "In-house products" },
   { value: "100%", label: "Delivered in-house" },
 ];
 

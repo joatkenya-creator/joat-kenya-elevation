@@ -577,7 +577,7 @@ const BlenderExtra = (
   </div>
 );
 
-const products: Product[] = [
+export const products: Product[] = [
   {
     id: "biobiz",
     badge: "BioBiz App",
