@@ -119,10 +119,10 @@ export function Footer() {
               title="Solutions"
               links={[
                 { l: "Real Estate Virtual Assistant", h: "/real-estate-virtual-assistant" },
-                { l: "BioBiz App", h: "/#biobiz" },
-                { l: "Software Development", h: "/#software" },
-                { l: "AI Marketing", h: "/#ai-marketing" },
-                { l: "Blender Animation", h: "/#blender" },
+                { l: "BioBiz App", h: "/products#biobiz" },
+                { l: "Software Development", h: "/products#software" },
+                { l: "AI Marketing", h: "/products#ai-marketing" },
+                { l: "Blender Animation", h: "/products#blender" },
               ]}
             />
 

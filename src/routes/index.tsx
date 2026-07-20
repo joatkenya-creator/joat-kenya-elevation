@@ -14,9 +14,6 @@ import { TeamSkills } from "@/components/site/TeamSkills";
 // the browser parses far less JS before first interaction. These stream in
 // afterwards; they sit below the fold, so their late insertion never moves
 // visible content — CLS stays at 0.
-const Products = lazy(() =>
-  import("@/components/site/Products").then((m) => ({ default: m.Products })),
-);
 const WhyChoose = lazy(() =>
   import("@/components/site/WhyChoose").then((m) => ({ default: m.WhyChoose })),
 );
@@ -130,13 +127,6 @@ function Index() {
         </div>
         {/* Team skills — the second warm-white section. */}
         <TeamSkills />
-        {/* Remaining dark sections. Heavier below-the-fold block streams in from
-            its own chunks; the min-height keeps page height stable while loading. */}
-        <div className="dark bg-background text-foreground">
-          <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
-            <Products />
-          </Suspense>
-        </div>
         {/* Why JOAT Kenya — warm-white section (grids unchanged). */}
         <Suspense fallback={null}>
           <WhyChoose />
