@@ -43,11 +43,12 @@ export function folderFor(title: string): string {
 // Shared "about the company" block, shown at the top of every job detail view
 // (mirrors Deloitte's "About Deloitte" / hiring-unit section).
 export const ABOUT_JOAT =
-  "J.O.A.T. Kenya (Jack of All Trades) is a digital innovation studio. " +
-  "We build software and digital products, run AI-driven marketing, produce media and animation, " +
-  "and create children's digital education, delivering everything in-house from Thindigua, Kiambu " +
-  "for clients across Kenya, East Africa and beyond. You'll join a multi-skilled team that ships " +
-  "real products used by thousands of people.";
+  "J.O.A.T. Kenya (Jack of All Trades) is an elite virtual assistant, AI automation and " +
+  "lead-generation partner. We staff businesses with AI-run and human VAs, automate operations " +
+  "with AI, and run marketing that generates leads, backed by in-house software, media and " +
+  "children's digital education, delivering everything from Thindigua, Kiambu for clients across " +
+  "Kenya, East Africa and beyond. You'll join a multi-skilled team that ships real products used " +
+  "by thousands of people.";
 
 export const openings: Opening[] = [
   {

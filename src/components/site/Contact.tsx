@@ -19,11 +19,12 @@ import { supabase, UPLOADS_BUCKET } from "@/lib/supabase";
 
 const services = [
   "General Inquiry",
+  "Virtual Assistant",
+  "AI & Automation",
+  "Marketing & Lead Generation",
   "Software Development",
-  "Digital Marketing",
   "Media & Content Production",
   "Children's Digital Education",
-  "AI Solutions",
   "Biobiz / Product Inquiry",
   "Animation / Blender",
   "Other",

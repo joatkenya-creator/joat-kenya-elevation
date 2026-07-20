@@ -21,7 +21,7 @@ export function seo({ title, description, path = "/", image = DEFAULT_IMAGE, noi
       {
         name: "keywords",
         content:
-          "JOAT Kenya, J.O.A.T. Kenya, digital innovation studio, software development, mobile app development, web development, digital marketing, AI solutions, media production, animation studio, children's digital education, BioBiz, Majobo Kenya",
+          "JOAT Kenya, J.O.A.T. Kenya, elite virtual assistants, virtual assistant services, AI automation, lead generation, real estate virtual assistant, software development, mobile app development, web development, digital marketing, AI solutions, media production, animation studio, children's digital education, BioBiz, Majobo Kenya",
       },
       { name: "author", content: "J.O.A.T. Kenya" },
       { name: "robots", content: noindex ? "noindex, nofollow" : "index, follow" },
@@ -51,9 +51,10 @@ export const organizationJsonLd = {
   image: DEFAULT_IMAGE,
   email: "joatkenya120@gmail.com",
   telephone: "+254142378150",
-  slogan: "Digital innovation studio. Built in-house. Delivered worldwide.",
+  slogan:
+    "Elite virtual assistants, AI automation and lead generation. Built in-house. Delivered worldwide.",
   description:
-    "A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide.",
+    "An elite virtual assistant, AI automation and lead-generation partner, backed by in-house software development, media production and children's digital education capabilities for clients worldwide.",
   foundingLocation: {
     "@type": "Place",
     name: "Kiambu, Kenya",
@@ -102,6 +103,9 @@ export const organizationJsonLd = {
     { "@type": "CreativeWork", name: "Full knowledge file", url: `${SITE_URL}/llms-full.txt` },
   ],
   knowsAbout: [
+    "Virtual assistant services",
+    "AI automation",
+    "Lead generation",
     "Software development",
     "Mobile app development",
     "Web development",
@@ -198,8 +202,11 @@ export function breadcrumbJsonLd(name: string, path: string) {
 }
 
 /**
- * Catalog of our five services + two products as schema.org "Service" entries —
- * gives Google a structured view of what JOAT actually offers.
+ * Catalog of our services + products as schema.org "Service" entries — gives
+ * Google a structured view of what JOAT actually offers. Ordered to lead with
+ * the core positioning (Virtual Assistants, AI & Automation, Marketing & Lead
+ * Generation); Software Development, Media and Children's Education are
+ * supporting in-house capabilities, listed after.
  */
 export const servicesCatalogJsonLd = {
   "@context": "https://schema.org",
@@ -209,6 +216,33 @@ export const servicesCatalogJsonLd = {
     {
       "@type": "Service",
       position: 1,
+      name: "Virtual Assistants",
+      description:
+        "Elite AI-run and human virtual assistants for lead response, CRM and operations, starting with real estate.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "Service",
+      position: 2,
+      name: "AI & Automation",
+      description:
+        "Claude/OpenRouter integrations, chatbots, meeting summaries, live translation and agentic workflow automation.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "Service",
+      position: 3,
+      name: "Marketing & Lead Generation",
+      description:
+        "Generative campaigns, outbound systems and paid ads across IG, TikTok, LinkedIn and Facebook, engineered for qualified leads.",
+      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "Service",
+      position: 4,
       name: "Software Development",
       description:
         "Custom mobile apps, websites and AI-integrated products, designed, built and delivered end-to-end.",
@@ -217,16 +251,7 @@ export const servicesCatalogJsonLd = {
     },
     {
       "@type": "Service",
-      position: 2,
-      name: "Digital Marketing",
-      description:
-        "Generative campaigns, content and paid ads across IG, TikTok, LinkedIn and Facebook.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
-      areaServed: "Worldwide",
-    },
-    {
-      "@type": "Service",
-      position: 3,
+      position: 5,
       name: "Media & Content Production",
       description:
         "Animation, video and 3D in Blender: film-quality work for products, classrooms and brands.",
@@ -235,7 +260,7 @@ export const servicesCatalogJsonLd = {
     },
     {
       "@type": "Service",
-      position: 4,
+      position: 6,
       name: "Children's Digital Education",
       description:
         "Curriculum-aligned animated content, learning games and interactive activities for ages 1–8.",
@@ -244,16 +269,17 @@ export const servicesCatalogJsonLd = {
     },
     {
       "@type": "Service",
-      position: 5,
-      name: "AI Solutions",
+      position: 7,
+      name: "Real Estate Virtual Assistant",
       description:
-        "Claude/OpenRouter integrations, meeting summaries, live translation, content generation and agentic automation.",
+        "AI Inside Sales Agent (ISA) for sub-5-minute lead response, or a dedicated human VA for MLS, CRM and transaction coordination.",
       provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
       areaServed: "Worldwide",
+      url: `${SITE_URL}/real-estate-virtual-assistant`,
     },
     {
       "@type": "SoftwareApplication",
-      position: 6,
+      position: 8,
       name: "BioBiz",
       description:
         "Digital business-card app with AI meeting notes and live foreign-language to English transcription.",
@@ -263,7 +289,7 @@ export const servicesCatalogJsonLd = {
     },
     {
       "@type": "WebSite",
-      position: 7,
+      position: 9,
       name: "Majobo Kenya",
       description: "Jobs marketplace with 1,000+ AI-classified listings.",
       url: "https://www.majobokenya.com/",
@@ -298,7 +324,7 @@ export const localBusinessJsonLd = {
   email: "joatkenya120@gmail.com",
   telephone: "+254142378150",
   description:
-    "A digital innovation studio delivering software, digital marketing, media production, AI solutions and children's digital education for clients worldwide.",
+    "An elite virtual assistant, AI automation and lead-generation partner, backed by in-house software development, media production and children's digital education capabilities for clients worldwide.",
   priceRange: "$$",
   areaServed: "Worldwide",
   address: {
@@ -308,6 +334,9 @@ export const localBusinessJsonLd = {
     addressCountry: "KE",
   },
   serviceType: [
+    "Virtual assistant services",
+    "AI automation",
+    "Lead generation",
     "Software development",
     "Mobile app development",
     "Web development",

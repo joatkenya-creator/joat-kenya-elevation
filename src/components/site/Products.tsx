@@ -577,7 +577,115 @@ const BlenderExtra = (
   </div>
 );
 
+// Ordered to lead with the core positioning (Virtual Assistants, AI &
+// Automation, Marketing & Lead Generation); BioBiz, Software Development and
+// Blender are supporting in-house capabilities, listed after.
 export const products: Product[] = [
+  realEstateVAOverview,
+  {
+    id: "ai-chatbot",
+    badge: "AI Support Chatbot",
+    title: "A support agent that never sleeps.",
+    tagline: "Claude-powered chat for customer support and lead qualification.",
+    description:
+      "We train a Claude-powered chatbot on your docs, FAQs and product catalog, then embed it on your website or WhatsApp. It answers customer questions on-brand, qualifies leads, and hands off to your team the moment a conversation needs a human.",
+    features: [
+      "Trained on your docs & FAQs",
+      "Lead qualification with handoff to sales",
+      "Embeds on your website or WhatsApp",
+      "Built on Claude for accurate, on-brand answers",
+    ],
+    ctas: [{ label: "Deploy a chatbot", href: "/contact" }],
+    icon: MessageSquare,
+    accent: "red",
+    reverse: true,
+  },
+  {
+    id: "ai-automation",
+    badge: "AI Workflow Automation",
+    title: "The busywork, running itself.",
+    tagline: "Automating data entry, invoicing and email triage across your stack.",
+    description:
+      "We map your repetitive back-office work, data entry, invoicing, email triage, report generation, and automate it with custom integrations across the tools you already use, with human-in-the-loop checkpoints wherever a decision still needs a person.",
+    features: [
+      "Data entry, invoicing & email triage automated",
+      "Custom integrations across your existing tools",
+      "Human-in-the-loop approval checkpoints",
+      "Built to cut operational hours, not just tasks",
+    ],
+    ctas: [{ label: "Automate a workflow", href: "/contact" }],
+    icon: Workflow,
+    accent: "gold",
+  },
+  {
+    id: "ai-meeting-agent",
+    badge: "AI Meeting & Notes Agent",
+    title: "Every meeting, captured, summarized, actioned.",
+    tagline: "The recording, transcription and translation engine behind BioBiz, standalone.",
+    description:
+      "For teams that don't need a full BioBiz card but want the AI behind it: record any meeting, get an instant summary with action items, and read foreign-language conversations translated into English in real time.",
+    features: [
+      "Record, transcribe & summarize any meeting",
+      "Foreign-language → English live translation",
+      "Action items extracted automatically",
+      "The same engine that powers BioBiz, standalone",
+    ],
+    ctas: [{ label: "Bring AI notes to your team", href: "/contact" }],
+    icon: Mic,
+    accent: "red",
+  },
+  {
+    id: "ai-analytics",
+    badge: "AI Analytics & Insights",
+    title: "Dashboards that tell you what to do next.",
+    tagline: "Predictive reporting and plain-language insights from your existing data.",
+    description:
+      "We turn the data you already have, sales, ops, marketing, into dashboards that go beyond charts: predictive trend detection and plain-language summaries, delivered as a digest so your team acts on insight instead of hunting for it.",
+    features: [
+      "Custom dashboards from your existing data",
+      "Predictive reporting & trend detection",
+      "Plain-language summaries, not just charts",
+      "Automated weekly or monthly digest",
+    ],
+    ctas: [{ label: "Get analytics for your data", href: "/contact" }],
+    icon: BarChart3,
+    accent: "gold",
+    reverse: true,
+  },
+  {
+    id: "ai-content-studio",
+    badge: "AI Content & Copy Studio",
+    title: "Your team, drafting at the speed of a prompt.",
+    tagline: "Self-serve AI content generation, tuned to your brand voice.",
+    description:
+      "Where AI Marketing is us running the campaign for you, Content Studio is the tool itself, handed to your team: brand-tuned prompts that turn a rough idea into blog posts, ad copy and landing pages in minutes, ready to edit and publish.",
+    features: [
+      "Prompt-tuned to your brand voice",
+      "Blog posts, ad copy & landing pages in minutes",
+      "Multi-language output",
+      "Editable exports to your CMS",
+    ],
+    ctas: [{ label: "Try Content Studio", href: "/contact" }],
+    icon: Sparkles,
+    accent: "red",
+  },
+  {
+    id: "ai-marketing",
+    badge: "AI Marketing",
+    title: "Campaigns at the speed of prompts.",
+    tagline: "Generative imagery and copy pipelines powered by Claude + OpenRouter.",
+    description:
+      "We orchestrate Claude, OpenRouter and image models into production marketing pipelines: brand-consistent posts, multi-format campaigns and on-trend creative, generated in hours rather than weeks. Perfect for product launches, social-first brands and budget-conscious growth teams.",
+    features: [
+      "Brand-tuned image generation",
+      "AI-written captions, hooks & ad variants",
+      "Multi-platform output (IG, TikTok, LinkedIn, X)",
+      "Performance loops: regenerate from what's working",
+    ],
+    ctas: [{ label: "See campaigns", href: "/contact" }],
+    accent: "gold",
+    reverse: true,
+  },
   {
     id: "biobiz",
     badge: "BioBiz App",
@@ -594,9 +702,43 @@ export const products: Product[] = [
     ],
     ctas: [{ label: "Download BioBiz", href: "#", icon: "download", action: "download-biobiz" }],
     image: biobiz,
-    accent: "gold",
+    accent: "red",
     extra: BiobizExtra,
     logoMark: biobizLogo,
+  },
+  {
+    id: "software",
+    badge: "Software Development",
+    title: "Built by an engineering team that delivers.",
+    tagline: "Production-grade mobile, web and AI products, built in-house.",
+    description:
+      "BioBiz is a proof point of how we work: real product, real users, real delivery cadence. From native mobile (Flutter, React Native) to AI integrations (Claude, OpenRouter) to backend (Supabase, Cloudflare Workers), we build software the way modern tech companies do, and we partner with organizations who want the same engineering culture without hiring a full team.",
+    features: [
+      "Native mobile + web with shared design systems",
+      "AI integrations: transcription, translation, agentic flows",
+      "Edge backends on Cloudflare Workers + Supabase",
+      "From discovery to launch in weeks, not quarters",
+    ],
+    ctas: [{ label: "Talk to Engineering Team", href: "/contact" }],
+    icon: Boxes,
+    accent: "gold",
+  },
+  {
+    id: "blender",
+    badge: "Animation · Blender",
+    title: "3D animation that teaches and plays.",
+    tagline: "Production-quality 3D in Blender, repurposed into games, ads and classrooms.",
+    description:
+      "Our Blender pipeline produces characters, sets and motion that flow into multiple products, most recently a kids' game where children learn the alphabet by drawing each letter alongside an animated Blender character that cheers them on.",
+    features: [
+      "Character modeling, rigging & animation",
+      "Render pipelines feeding into Roblox / game engines",
+      "Brand explainers and product motion",
+      "Tablet-ready letter-drawing game in production",
+    ],
+    ctas: [{ label: "Commission a build", href: "/contact" }],
+    accent: "red",
+    extra: BlenderExtra,
   },
   /* Majobo Kenya (talent outsourcing) — disabled; kept for easy re-enabling.
   {
@@ -624,23 +766,6 @@ export const products: Product[] = [
     hideImageOnMobile: true,
   },
   */
-  {
-    id: "software",
-    badge: "Software Development",
-    title: "Built by an engineering team that delivers.",
-    tagline: "Production-grade mobile, web and AI products, built in-house.",
-    description:
-      "BioBiz is a proof point of how we work: real product, real users, real delivery cadence. From native mobile (Flutter, React Native) to AI integrations (Claude, OpenRouter) to backend (Supabase, Cloudflare Workers), we build software the way modern tech companies do, and we partner with organizations who want the same engineering culture without hiring a full team.",
-    features: [
-      "Native mobile + web with shared design systems",
-      "AI integrations: transcription, translation, agentic flows",
-      "Edge backends on Cloudflare Workers + Supabase",
-      "From discovery to launch in weeks, not quarters",
-    ],
-    ctas: [{ label: "Talk to Engineering Team", href: "/contact" }],
-    icon: Boxes,
-    accent: "gold",
-  },
   /* Amare's Big Planet — repositioned as a "Selected client" section (see render below); full product card disabled.
      Game Development · Roblox — disabled; kept for easy re-enabling.
   {
@@ -690,128 +815,6 @@ export const products: Product[] = [
     mobileInlineImage: true,
   },
   */
-  {
-    id: "ai-marketing",
-    badge: "AI Marketing",
-    title: "Campaigns at the speed of prompts.",
-    tagline: "Generative imagery and copy pipelines powered by Claude + OpenRouter.",
-    description:
-      "We orchestrate Claude, OpenRouter and image models into production marketing pipelines: brand-consistent posts, multi-format campaigns and on-trend creative, generated in hours rather than weeks. Perfect for product launches, social-first brands and budget-conscious growth teams.",
-    features: [
-      "Brand-tuned image generation",
-      "AI-written captions, hooks & ad variants",
-      "Multi-platform output (IG, TikTok, LinkedIn, X)",
-      "Performance loops: regenerate from what's working",
-    ],
-    ctas: [{ label: "See campaigns", href: "/contact" }],
-    accent: "red",
-    reverse: true,
-  },
-  {
-    id: "blender",
-    badge: "Animation · Blender",
-    title: "3D animation that teaches and plays.",
-    tagline: "Production-quality 3D in Blender, repurposed into games, ads and classrooms.",
-    description:
-      "Our Blender pipeline produces characters, sets and motion that flow into multiple products, most recently a kids' game where children learn the alphabet by drawing each letter alongside an animated Blender character that cheers them on.",
-    features: [
-      "Character modeling, rigging & animation",
-      "Render pipelines feeding into Roblox / game engines",
-      "Brand explainers and product motion",
-      "Tablet-ready letter-drawing game in production",
-    ],
-    ctas: [{ label: "Commission a build", href: "/contact" }],
-    accent: "gold",
-    extra: BlenderExtra,
-  },
-  realEstateVAOverview,
-  {
-    id: "ai-content-studio",
-    badge: "AI Content & Copy Studio",
-    title: "Your team, drafting at the speed of a prompt.",
-    tagline: "Self-serve AI content generation, tuned to your brand voice.",
-    description:
-      "Where AI Marketing is us running the campaign for you, Content Studio is the tool itself, handed to your team: brand-tuned prompts that turn a rough idea into blog posts, ad copy and landing pages in minutes, ready to edit and publish.",
-    features: [
-      "Prompt-tuned to your brand voice",
-      "Blog posts, ad copy & landing pages in minutes",
-      "Multi-language output",
-      "Editable exports to your CMS",
-    ],
-    ctas: [{ label: "Try Content Studio", href: "/contact" }],
-    icon: Sparkles,
-    accent: "red",
-  },
-  {
-    id: "ai-chatbot",
-    badge: "AI Support Chatbot",
-    title: "A support agent that never sleeps.",
-    tagline: "Claude-powered chat for customer support and lead qualification.",
-    description:
-      "We train a Claude-powered chatbot on your docs, FAQs and product catalog, then embed it on your website or WhatsApp. It answers customer questions on-brand, qualifies leads, and hands off to your team the moment a conversation needs a human.",
-    features: [
-      "Trained on your docs & FAQs",
-      "Lead qualification with handoff to sales",
-      "Embeds on your website or WhatsApp",
-      "Built on Claude for accurate, on-brand answers",
-    ],
-    ctas: [{ label: "Deploy a chatbot", href: "/contact" }],
-    icon: MessageSquare,
-    accent: "gold",
-    reverse: true,
-  },
-  {
-    id: "ai-automation",
-    badge: "AI Workflow Automation",
-    title: "The busywork, running itself.",
-    tagline: "Automating data entry, invoicing and email triage across your stack.",
-    description:
-      "We map your repetitive back-office work, data entry, invoicing, email triage, report generation, and automate it with custom integrations across the tools you already use, with human-in-the-loop checkpoints wherever a decision still needs a person.",
-    features: [
-      "Data entry, invoicing & email triage automated",
-      "Custom integrations across your existing tools",
-      "Human-in-the-loop approval checkpoints",
-      "Built to cut operational hours, not just tasks",
-    ],
-    ctas: [{ label: "Automate a workflow", href: "/contact" }],
-    icon: Workflow,
-    accent: "red",
-  },
-  {
-    id: "ai-meeting-agent",
-    badge: "AI Meeting & Notes Agent",
-    title: "Every meeting, captured, summarized, actioned.",
-    tagline: "The recording, transcription and translation engine behind BioBiz, standalone.",
-    description:
-      "For teams that don't need a full BioBiz card but want the AI behind it: record any meeting, get an instant summary with action items, and read foreign-language conversations translated into English in real time.",
-    features: [
-      "Record, transcribe & summarize any meeting",
-      "Foreign-language → English live translation",
-      "Action items extracted automatically",
-      "The same engine that powers BioBiz, standalone",
-    ],
-    ctas: [{ label: "Bring AI notes to your team", href: "/contact" }],
-    icon: Mic,
-    accent: "gold",
-  },
-  {
-    id: "ai-analytics",
-    badge: "AI Analytics & Insights",
-    title: "Dashboards that tell you what to do next.",
-    tagline: "Predictive reporting and plain-language insights from your existing data.",
-    description:
-      "We turn the data you already have, sales, ops, marketing, into dashboards that go beyond charts: predictive trend detection and plain-language summaries, delivered as a digest so your team acts on insight instead of hunting for it.",
-    features: [
-      "Custom dashboards from your existing data",
-      "Predictive reporting & trend detection",
-      "Plain-language summaries, not just charts",
-      "Automated weekly or monthly digest",
-    ],
-    ctas: [{ label: "Get analytics for your data", href: "/contact" }],
-    icon: BarChart3,
-    accent: "red",
-    reverse: true,
-  },
 ];
 
 /** Renders a single product entry — the hero, badge, feature list and CTAs.

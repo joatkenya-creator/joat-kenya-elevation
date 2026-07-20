@@ -64,7 +64,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(what|who)\s+(is|are|does)\s+(j\.?\s*o\.?\s*a\.?\s*t\.?|joat)( kenya)?\b|\babout joat\b|tell me about joat|\bhistory\b/i,
     reply:
-      "J.O.A.T. (Jack of All Trades) Kenya is a digital innovation studio. We design and deliver software, digital marketing, media production, AI solutions and children's digital education for clients worldwide. Want to talk to the team? Book a 30-min meeting from the Contact section.",
+      "J.O.A.T. (Jack of All Trades) Kenya is an elite virtual assistant, AI automation and lead-generation partner. We staff businesses with AI-run and human VAs, automate operations with AI, and run marketing that generates leads, backed by in-house software, media production and children's digital education. Want to talk to the team? Book a 30-min meeting from the Contact section.",
   },
   {
     match:
@@ -89,7 +89,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /^(help|menu|options)\s*[.!?]*\s*$|what can (you|u) (do|help)|what (can|do) you help|things you can|how can you assist/i,
     reply:
-      "I can answer questions about: our services (Software Development, Digital Marketing, Media & Content, Children's Digital Education, AI Solutions); our packages (Foundation, Growth, Scale); our products (BioBiz, Majobo Kenya); booking a meeting; how to contact us; or how to apply for a role at JOAT. Which one?",
+      "I can answer questions about: our services (Virtual Assistants, AI & Automation, Marketing & Lead Generation, Software Development, Media & Content, Children's Digital Education); our packages (Foundation, Growth, Scale); our products (Real Estate VA, BioBiz, Majobo Kenya); booking a meeting; how to contact us; or how to apply for a role at JOAT. Which one?",
   },
   {
     match: /^(tell me more|more|elaborate|details|explain|go on)\s*[.!?]*\s*$/i,
@@ -141,13 +141,13 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(google ads|meta ads|facebook ads|instagram ads|tiktok ads|linkedin ads|youtube ads|search ads|display ads|ppc|paid search)\b/i,
     reply:
-      'We run paid campaigns across Google, Meta (Facebook + Instagram), TikTok, LinkedIn and YouTube, with AI-generated creative and weekly performance reviews. Use the Contact form ("Digital Marketing") or book a 30-min meeting.',
+      'We run paid campaigns across Google, Meta (Facebook + Instagram), TikTok, LinkedIn and YouTube, with AI-generated creative and weekly performance reviews, engineered for qualified leads, not just reach. Use the Contact form ("Marketing & Lead Generation") or book a 30-min meeting.',
   },
   {
     match:
       /marketing|campaign|social media|\bads?\b|\bbrand\b|\bseo\b|paid media|growth marketing|content strategy/i,
     reply:
-      'Our Digital Marketing service runs AI-powered campaigns, social content and paid ads across IG, TikTok, LinkedIn and Facebook. Use the Contact form (pick "Digital Marketing") or book a 30-min meeting from the Contact section.',
+      'Our Marketing & Lead Generation service runs AI-powered campaigns, social content and paid ads across IG, TikTok, LinkedIn and Facebook, engineered to fill your pipeline. Use the Contact form (pick "Marketing & Lead Generation") or book a 30-min meeting from the Contact section.',
   },
   {
     match:
@@ -159,7 +159,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\bai\b|claude|openrouter|automation|\bllm\b|\bagent\b|chatbot for|generative|\bgpt\b|gemini|machine learning|\bml\b/i,
     reply:
-      'Our AI Solutions team integrates Claude, OpenRouter and image models into real products: meeting summaries, live translation, content generation and agentic automation. Tell us what you want to build via the Contact form (pick "AI Solutions").',
+      'Our AI & Automation team integrates Claude, OpenRouter and image models into real products: chatbots, meeting summaries, live translation, content generation and agentic workflow automation. Tell us what you want to build via the Contact form (pick "AI & Automation").',
   },
   {
     match: /\b(game (dev|development|design|studio)|roblox|unity|unreal|gamification|gaming)\b/i,
@@ -245,7 +245,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /\b(language|english|swahili|kiswahili|french|german|arabic|do you speak)\b/i,
     reply:
-      "We work primarily in English and Kiswahili, with translation support for client-facing content in other languages via our AI Solutions service. What language do you need supported?",
+      "We work primarily in English and Kiswahili, with translation support for client-facing content in other languages via our AI & Automation service. What language do you need supported?",
   },
   {
     match:
@@ -306,12 +306,12 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
       "Interested in working at JOAT? Head to our Careers page (/careers) to browse current openings and apply directly to the role that fits you. Don't see your role? Send a general application. We hire talented people year-round and we'll reach out when there's a match.",
   },
 
-  // ===== Hiring/recruiting redirect (companies asking us to source talent) =====
+  // ===== Hiring/staffing/VA interest =====
   {
     match:
-      /\bhire\b|\bhiring\b|recruit(er|ing|ment)?|outsourc|staffing|head ?hunt|find (a |me |us )?(talent|candidate|developer|engineer|hire)|need (a |to )?(talent|developer|engineer|hire|candidates?)|workforce|source (talent|candidates)|place (a |the )?candidate/i,
+      /\bhire\b|\bhiring\b|recruit(er|ing|ment)?|outsourc|staffing|head ?hunt|find (a |me |us )?(talent|candidate|developer|engineer|hire)|need (a |to )?(talent|developer|engineer|hire|candidates?)|workforce|source (talent|candidates)|place (a |the )?candidate|virtual assistant|\bva\b/i,
     reply:
-      "We're a digital innovation studio. We deliver software, digital marketing, media production, AI solutions and children's digital education, rather than staffing services. If you're hiring, Majobo Kenya (majobokenya.com) is our public job board where you can post listings. To work with us on a project, share your goals via the Contact form.",
+      "We offer elite Virtual Assistants, a 24/7 AI Inside Sales Agent or a dedicated human VA for lead response, CRM and operations, currently for real estate, with more industries coming. See /real-estate-virtual-assistant for details, or share your needs via the Contact form. If you're posting a job listing instead, Majobo Kenya (majobokenya.com) is our public job board.",
   },
 
   // ===== Certifications =====
@@ -325,7 +325,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /\bservices?\b|what.+(do|offer)|capabilit|expertise|areas? (of work|of expertise)/i,
     reply:
-      "We deliver five core services: Software Development, Digital Marketing, Media & Content Production, Children's Digital Education and AI Solutions. We also build our own products: BioBiz (digital business cards) and Majobo Kenya (jobs board). Which area interests you?",
+      "We deliver six core services: Virtual Assistants, AI & Automation, Marketing & Lead Generation, Software Development, Media & Content Production and Children's Digital Education. We also build our own products: Real Estate Virtual Assistant, BioBiz (digital business cards) and Majobo Kenya (jobs board). Which area interests you?",
   },
 ];
 

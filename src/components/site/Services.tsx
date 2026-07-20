@@ -65,9 +65,9 @@ export function Services() {
           <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">Services</div>
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground">What We Do</h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            From software development and AI to digital marketing, media production and children's
-            digital education, we design and deliver the products, content and campaigns that move
-            modern brands forward.
+            We place elite virtual assistants inside your business, automate the busywork with AI,
+            and run marketing engineered to generate leads, backed by in-house software, media and
+            education capabilities when you need them.
           </p>
         </m.div>
 

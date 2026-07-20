@@ -29,9 +29,7 @@ const Testimonials = lazy(() =>
 const Contact = lazy(() =>
   import("@/components/site/Contact").then((m) => ({ default: m.Contact })),
 );
-const Footer = lazy(() =>
-  import("@/components/site/Footer").then((m) => ({ default: m.Footer })),
-);
+const Footer = lazy(() => import("@/components/site/Footer").then((m) => ({ default: m.Footer })));
 // Chatbot and BackToTop are decorative UI that don't need to block first paint
 // or initial interaction. Lazy-loading frees ~40KB from the initial bundle.
 const Chatbot = lazy(() =>
@@ -86,9 +84,9 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     ...seo({
-      title: "JOAT Kenya | Software, Digital Marketing, Media & AI Studio",
+      title: "JOAT Kenya | Elite Virtual Assistants, AI Automation & Lead Generation",
       description:
-        "JOAT Kenya is a digital innovation studio. We build software, run AI marketing, produce media and launch in-house products (BioBiz, Majobo) worldwide.",
+        "JOAT Kenya delivers elite virtual assistants, AI automation and lead-generation marketing for growing businesses, backed by in-house software, media and education capabilities.",
     }),
     scripts: [
       {

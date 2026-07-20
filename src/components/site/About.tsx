@@ -25,13 +25,15 @@ export function About() {
             products of genuine quality, from the ground up.
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-            Today we operate as a digital innovation studio, developing software and products,
-            creating children's digital education content, and powering brands with digital
-            marketing and media.
+            Today we operate as an elite virtual assistant, AI automation and lead-generation
+            partner, staffing businesses with AI-run and human VAs, automating operations with AI,
+            and running marketing that fills pipelines, backed by in-house software, media and
+            education capabilities.
           </p>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-            We don't just deliver projects. We build products people love, stories that teach, and
-            campaigns that move, delivered with the cadence of a modern tech company.
+            We don't just deliver projects. We embed elite talent and AI into your operations,
+            generate the leads that grow your business, and build the technology behind it all,
+            delivered with the cadence of a modern tech company.
           </p>
         </m.div>
 
@@ -41,12 +43,12 @@ export function About() {
             {
               icon: Target,
               title: "Our Mission",
-              text: "Build world-class software and digital products, create children's digital education content, and power brands with modern digital marketing and media.",
+              text: "Deliver elite virtual assistants, AI automation and lead generation that grow our clients' businesses, backed by world-class in-house software, media and education capabilities.",
             },
             {
               icon: Eye,
               title: "Our Vision",
-              text: "To be a globally trusted technology studio where software, education and digital media converge to shape the future.",
+              text: "To be the trusted elite VA, AI automation and lead-generation partner for growing businesses worldwide.",
             },
           ].map((c, i) => (
             <m.div

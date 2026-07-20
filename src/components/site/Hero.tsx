@@ -36,20 +36,23 @@ export function Hero() {
 
       <div className="relative max-w-4xl mx-auto px-5 lg:px-8 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-card px-4 py-1.5 text-xs font-medium text-gold mb-6">
-          Digital Innovation Studio
+          Elite VA, AI Automation &amp; Lead Generation
         </div>
 
         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-foreground">
-          Transforming Ideas into <span className="text-(--joat-red)">Digital Reality</span>
+          Elite Virtual Assistants.{" "}
+          <span className="text-(--joat-red)">AI Automation. Lead Generation.</span>
         </h1>
 
         <p className="mt-5 text-lg lg:text-2xl font-semibold text-foreground/90">
-          Software, AI, Media &amp; Digital Marketing, built in-house by J.O.A.T. Kenya.
+          Elite virtual assistants, AI-powered automation and marketing that generates real leads,
+          built in-house by J.O.A.T. Kenya.
         </p>
 
         <p className="mt-4 text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          We deliver software development, AI solutions, media production and digital marketing that
-          drive real growth for businesses across Kenya and beyond.
+          We staff your business with elite virtual assistants, automate the busywork with AI, and
+          run marketing engineered to convert, backed by in-house software, media and education
+          capabilities for clients across Kenya and beyond.
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
