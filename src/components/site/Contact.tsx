@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { m } from "framer-motion";
 import {
   MapPin,
   Phone,
   Mail,
-  Calendar,
   Check,
   Loader2,
   AlertCircle,
   Paperclip,
   X,
+  Briefcase,
 } from "lucide-react";
 import { type ContactPayload } from "@/lib/contact";
 import { deliverViaWeb3Forms } from "@/lib/web3forms";
 import { SOCIAL_LINKS } from "@/lib/links";
 import { openCalendly } from "@/lib/calendly";
 import { supabase, UPLOADS_BUCKET } from "@/lib/supabase";
+import { Honeypot } from "./Honeypot";
 
 const services = [
   "General Inquiry",
@@ -27,6 +28,7 @@ const services = [
   "Children's Digital Education",
   "Biobiz / Product Inquiry",
   "Animation / Blender",
+  "Paid Consultation",
   "Other",
 ];
 
@@ -45,6 +47,7 @@ export function Contact() {
   });
   const [errs, setErrs] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<File[]>([]);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   // Attachments: PDF only, up to 5 files, 10 MB total.
   const MAX_FILES = 5;
@@ -96,6 +99,11 @@ export function Contact() {
 
   const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
+    if (honeypotRef.current?.value) {
+      // Bot filled the hidden field — fake success, write nothing.
+      setStatus("sent");
+      return;
+    }
     if (!validate() || status === "sending") return;
     setServerError(null);
     setStatus("sending");
@@ -248,12 +256,15 @@ export function Contact() {
               />
             </div>
 
+            {/* Paid consultancy — dedicated advisory time. Fee is disclosed
+                during booking, not priced on the site. */}
             <div className="glass rounded-2xl p-6 flex items-center gap-4">
-              <Calendar className="w-5 h-5 text-(--joat-gold)" />
+              <Briefcase className="w-5 h-5 text-(--joat-gold)" />
               <div className="flex-1">
-                <div className="font-bold text-foreground">Book a 30-min demo</div>
+                <div className="font-bold text-foreground">Book a paid consultation</div>
                 <div className="text-sm text-muted-foreground">
-                  Talk to our team about a solution that fits.
+                  Talk to our team about a solution that fits. A consulting fee applies, shared when
+                  we connect.
                 </div>
               </div>
               <button
@@ -311,6 +322,7 @@ export function Contact() {
             className="glass rounded-3xl p-4 sm:p-6 lg:p-8 space-y-3 sm:space-y-5"
             noValidate
           >
+            <Honeypot ref={honeypotRef} />
             {status === "sent" ? (
               <div className="text-center py-10">
                 <div className="w-14 h-14 rounded-full bg-(--joat-gold) text-(--joat-navy-deep) mx-auto flex items-center justify-center mb-4">
@@ -382,6 +394,12 @@ export function Contact() {
                       </option>
                     ))}
                   </select>
+                  {form.area === "Paid Consultation" && (
+                    <p className="mt-1.5 text-xs text-muted-foreground">
+                      Consultancy engagements carry a professional fee, we will share the details
+                      when we connect.
+                    </p>
+                  )}
                 </div>
                 {form.area === "Other" && (
                   <Field

@@ -314,6 +314,14 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
       "We offer elite Virtual Assistants, a 24/7 AI Inside Sales Agent or a dedicated human VA for lead response, CRM and operations, currently for real estate, with more industries coming. See /real-estate-virtual-assistant for details, or share your needs via the Contact form. If you're posting a job listing instead, Majobo Kenya (majobokenya.com) is our public job board.",
   },
 
+  // ===== Paid consultancy =====
+  {
+    match:
+      /\bconsult(ant|ancy|ation|ing)?\b|advisory|strategy session|paid (call|session|meeting)/i,
+    reply:
+      "Yes — we offer paid consultancy for clients who want dedicated advisory time with our team. There's a professional fee, but we don't quote it here; book a call via the Contact section (pick \"Paid Consultation\") and we'll cover the details when we connect.",
+  },
+
   // ===== Certifications =====
   {
     match: /cert(ifi|s\b)|\biso\b|\bnema\b|\bkra\b|compliance|compliant|accredit/i,
