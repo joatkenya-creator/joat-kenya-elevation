@@ -1,47 +1,50 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { m, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { ICONS, FALLBACK_SERVICES, type SvcItem } from "@/data/services-catalog";
 
+const SERVICES_STALE_TIME = 5 * 60 * 1000;
+
+// Falls back silently to the hard-coded list if the network call fails or
+// the table is empty — returning null (not throwing) keeps that fallback
+// path a normal "success with no data" case rather than a query error.
+async function fetchServices(): Promise<SvcItem[] | null> {
+  const { data, error } = await supabase
+    .from("services")
+    .select("name, short_summary, full_description, icon_name, outcomes, industries, display_order")
+    .eq("published", true)
+    .order("display_order", { ascending: true });
+  if (error || !data || data.length === 0) return null;
+  return data.map((row) => ({
+    icon: ICONS[row.icon_name] ?? ICONS.Sparkles,
+    title: row.name,
+    summary: row.short_summary,
+    detail: row.full_description,
+    industries: row.industries ?? [],
+    outcomes: row.outcomes ?? [],
+  }));
+}
+
 export function Services() {
-  const [list, setList] = useState<SvcItem[]>(FALLBACK_SERVICES);
+  const { data } = useQuery({
+    queryKey: ["services"],
+    queryFn: fetchServices,
+    staleTime: SERVICES_STALE_TIME,
+  });
+  const list = data ?? FALLBACK_SERVICES;
   const [i, setI] = useState(0);
-  const s = list[i];
+  const s = list[i] ?? list[0];
   const Icon = s.icon;
 
   const next = () => setI((v) => (v + 1) % list.length);
   const prev = () => setI((v) => (v - 1 + list.length) % list.length);
 
-  // Fetch services from Supabase on mount. Falls back silently to the
-  // hard-coded list if the network call fails or the table is empty.
+  // Jump back to the first card once the live list replaces the fallback.
   useEffect(() => {
-    let cancelled = false;
-    supabase
-      .from("services")
-      .select(
-        "name, short_summary, full_description, icon_name, outcomes, industries, display_order",
-      )
-      .eq("published", true)
-      .order("display_order", { ascending: true })
-      .then(({ data, error }) => {
-        if (cancelled || error || !data || data.length === 0) return;
-        setList(
-          data.map((row) => ({
-            icon: ICONS[row.icon_name] ?? ICONS.Sparkles,
-            title: row.name,
-            summary: row.short_summary,
-            detail: row.full_description,
-            industries: row.industries ?? [],
-            outcomes: row.outcomes ?? [],
-          })),
-        );
-        setI(0);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    if (data && data.length > 0) setI(0);
+  }, [data]);
 
   // Auto-rotate one service at a time, like the testimonials carousel.
   // Timer resets whenever `i` changes, so a manual click pauses-then-resumes.

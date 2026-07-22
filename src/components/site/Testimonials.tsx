@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { m, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+
+const TESTIMONIALS_STALE_TIME = 5 * 60 * 1000;
 
 type TItem = { initials: string; name: string; role: string; quote: string };
 
@@ -76,39 +79,39 @@ function formatRole(row: {
   return [left, row.location].filter(Boolean).join(" · ");
 }
 
+// If the network call fails or the table is empty, returns null so the
+// hard-coded fallback stays in place and the section is never blank.
+async function fetchTestimonials(): Promise<TItem[] | null> {
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("author_name, author_role, company, location, quote, display_order")
+    .eq("featured", true)
+    .order("display_order", { ascending: true });
+  if (error || !data || data.length === 0) return null;
+  return data.map((d) => ({
+    initials: makeInitials(d.author_name),
+    name: d.author_name,
+    role: formatRole(d),
+    quote: d.quote,
+  }));
+}
+
 export function Testimonials() {
-  const [list, setList] = useState<TItem[]>(FALLBACK_TESTIMONIALS);
+  const { data } = useQuery({
+    queryKey: ["testimonials"],
+    queryFn: fetchTestimonials,
+    staleTime: TESTIMONIALS_STALE_TIME,
+  });
+  const list = data ?? FALLBACK_TESTIMONIALS;
   const [i, setI] = useState(0);
   const next = () => setI((v) => (v + 1) % list.length);
   const prev = () => setI((v) => (v - 1 + list.length) % list.length);
-  const t = list[i];
+  const t = list[i] ?? list[0];
 
-  // Pull testimonials from Supabase on mount. If the network call fails or the
-  // table is empty, the hard-coded fallback stays in place so the section is
-  // never blank.
+  // Jump back to the first testimonial once the live list replaces the fallback.
   useEffect(() => {
-    let cancelled = false;
-    supabase
-      .from("testimonials")
-      .select("author_name, author_role, company, location, quote, display_order")
-      .eq("featured", true)
-      .order("display_order", { ascending: true })
-      .then(({ data, error }) => {
-        if (cancelled || error || !data || data.length === 0) return;
-        setList(
-          data.map((d) => ({
-            initials: makeInitials(d.author_name),
-            name: d.author_name,
-            role: formatRole(d),
-            quote: d.quote,
-          })),
-        );
-        setI(0);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    if (data && data.length > 0) setI(0);
+  }, [data]);
 
   // Auto-rotate one testimonial at a time. Timer resets on manual interaction.
   useEffect(() => {

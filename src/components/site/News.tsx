@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { ArrowUpRight, Calendar, Loader2, X } from "lucide-react";
 import { fetchNewsArticles, type BlogPost } from "@/lib/news";
+
+const NEWS_STALE_TIME = 5 * 60 * 1000;
+
+async function loadNewsArticles(): Promise<BlogPost[]> {
+  const res = await fetchNewsArticles();
+  if (!res.ok || res.posts.length === 0) throw new Error("No articles available");
+  return res.posts;
+}
 
 function formatDate(iso: string) {
   try {
@@ -55,25 +64,12 @@ function PostCover({
 }
 
 export function News() {
-  const [posts, setPosts] = useState<BlogPost[] | null>(null);
-  const [error, setError] = useState(false);
+  const { data: posts, isError: error } = useQuery({
+    queryKey: ["news-articles"],
+    queryFn: loadNewsArticles,
+    staleTime: NEWS_STALE_TIME,
+  });
   const [active, setActive] = useState<BlogPost | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetchNewsArticles()
-      .then((res) => {
-        if (cancelled) return;
-        if (res.ok && res.posts.length > 0) setPosts(res.posts);
-        else setError(true);
-      })
-      .catch(() => {
-        if (!cancelled) setError(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useEffect(() => {
     if (!active) return;
@@ -122,7 +118,7 @@ export function News() {
           </p>
         </m.div>
 
-        {posts === null && !error && (
+        {posts === undefined && !error && (
           <div className="flex items-center justify-center py-20 text-muted-foreground">
             <Loader2 className="w-5 h-5 animate-spin mr-3 text-(--joat-gold)" />
             Loading insights…

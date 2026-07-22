@@ -74,6 +74,23 @@ ErrorDocument 404 /index.html
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(self), geolocation=()"
+
+  # Content-Security-Policy — enumerates every third-party origin this site
+  # actually calls: Supabase (data + storage), Web3Forms (form delivery),
+  # Calendly (booking widget popup), Google Maps + Majobo Kenya (embedded
+  # iframes), GA4 + Microsoft Clarity (analytics), Google Fonts. The one
+  # inline <script> in index.html (the analytics bootstrap shim) is allowed
+  # by exact SHA-256 hash instead of 'unsafe-inline', so injected scripts
+  # still can't run even though a fixed first-party script can.
+  #
+  # Shipped as Report-Only: it logs violations to the browser console without
+  # blocking anything. Load every page that touches a third party (home,
+  # /contact, /courses/login, /courses/sign-up, /careers → apply, /products,
+  # /articles, /real-estate-virtual-assistant), confirm devtools console shows
+  # no CSP violations, then rename the header below from
+  # "Content-Security-Policy-Report-Only" to "Content-Security-Policy" to
+  # start enforcing it.
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'sha256-7TpnKtwejAHd3uPpkuXhY7N2gQQbj4fKkUqVWPx0yLc=' https://assets.calendly.com https://www.googletagmanager.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://assets.calendly.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://prkdfkkhqncxkyehokop.supabase.co https://api.web3forms.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms; frame-src https://calendly.com https://*.calendly.com https://www.google.com https://www.majobokenya.com; form-action 'self' https://api.web3forms.com; frame-ancestors 'self'"
 </IfModule>
 
 # ─── 6. Force HTTPS (uncomment after SSL is provisioned on Truehost) ──────────

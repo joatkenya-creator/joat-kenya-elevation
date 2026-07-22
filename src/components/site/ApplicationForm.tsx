@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Upload, X, FileText, Loader2, CheckCircle2, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { deliverApplicationViaWeb3Forms } from "@/lib/web3forms";
@@ -8,6 +8,7 @@ import {
   folderFor,
   type Opening,
 } from "@/lib/openings";
+import { Honeypot } from "./Honeypot";
 
 const MAX_FILES = 3;
 const MAX_TOTAL_BYTES = 10 * 1024 * 1024; // 10 MB
@@ -46,6 +47,7 @@ export function ApplicationForm({
   const [errs, setErrs] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((p) => ({ ...p, [k]: e.target.value }));
@@ -84,6 +86,11 @@ export function ApplicationForm({
 
   const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
+    if (honeypotRef.current?.value) {
+      // Bot filled the hidden field — fake success, write nothing.
+      setStatus("sent");
+      return;
+    }
     if (status === "sending") return;
     if (!validate()) return;
     setServerError(null);
@@ -210,6 +217,7 @@ export function ApplicationForm({
 
   return (
     <form onSubmit={submit} className="space-y-4">
+      <Honeypot ref={honeypotRef} />
       <button
         type="button"
         onClick={onBack}
