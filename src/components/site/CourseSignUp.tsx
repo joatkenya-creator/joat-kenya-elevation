@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import {
@@ -10,6 +10,7 @@ import {
   type RegistrantType,
   type Tier,
 } from "@/lib/auth";
+import { Honeypot } from "./Honeypot";
 
 const inputClass =
   "w-full rounded-md bg-black/5 border border-(--glass-border) px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-(--joat-gold)/50 transition-colors";
@@ -30,6 +31,7 @@ export function CourseSignUp({ initialTier }: { initialTier?: Tier }) {
   const [errs, setErrs] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -43,6 +45,12 @@ export function CourseSignUp({ initialTier }: { initialTier?: Tier }) {
 
   const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
+    if (honeypotRef.current?.value) {
+      // Bot filled the hidden field — fake the "check your email" success
+      // state without creating an account or calling Supabase Auth.
+      setStatus("check-email");
+      return;
+    }
     if (status === "sending") return;
     if (!validate()) return;
     setServerError(null);
@@ -116,6 +124,7 @@ export function CourseSignUp({ initialTier }: { initialTier?: Tier }) {
       </p>
 
       <form onSubmit={submit} className="mt-8 space-y-4">
+        <Honeypot ref={honeypotRef} />
         <div>
           <label className="text-xs text-muted-foreground">Full name *</label>
           <input
