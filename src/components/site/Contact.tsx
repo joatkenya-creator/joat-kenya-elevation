@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
 import {
   MapPin,
@@ -10,6 +10,8 @@ import {
   Paperclip,
   X,
   Briefcase,
+  Users,
+  Calendar,
 } from "lucide-react";
 import { type ContactPayload } from "@/lib/contact";
 import { deliverViaWeb3Forms } from "@/lib/web3forms";
@@ -32,6 +34,15 @@ const services = [
   "Other",
 ];
 
+// Keys match the `?consult=` values the Navbar's Consultation dropdown links
+// to (e.g. /contact?consult=va) — each pre-fills the service area and a
+// starter message for that pillar.
+const CONSULT_PILLARS: Record<string, string> = {
+  va: "Virtual Assistants (VA)",
+  ai: "AI & Automation",
+  marketing: "Marketing & Lead Generation",
+};
+
 type Status = "idle" | "sending" | "sent" | "error";
 
 export function Contact() {
@@ -48,6 +59,21 @@ export function Contact() {
   const [errs, setErrs] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<File[]>([]);
   const honeypotRef = useRef<HTMLInputElement>(null);
+
+  // Arriving via the Navbar's Consultation dropdown (/contact?consult=va,
+  // ?consult=ai, ?consult=marketing) pre-fills the service area and a
+  // starter message for that pillar, then scrolls to the section.
+  useEffect(() => {
+    const pillar =
+      CONSULT_PILLARS[new URLSearchParams(window.location.search).get("consult") ?? ""];
+    if (!pillar) return;
+    setForm((f) => ({
+      ...f,
+      area: "Paid Consultation",
+      message: `I'd like to book a paid consultation about ${pillar} for my business.`,
+    }));
+    document.getElementById("consultation")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   // Attachments: PDF only, up to 5 files, 10 MB total.
   const MAX_FILES = 5;
@@ -202,6 +228,62 @@ export function Contact() {
           </p>
         </m.div>
 
+        {/* Consultation CTA — pitch + prominent button + phone fallback on one
+            side, a visual panel with a floating "book" badge on the other. */}
+        <m.div
+          id="consultation"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="glass rounded-3xl p-6 sm:p-10 lg:p-12 mt-10 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center scroll-mt-24"
+        >
+          <div>
+            <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">Consultation</div>
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+              Get expert guidance on VA, AI automation &amp; lead generation.
+            </h3>
+            <p className="mt-4 text-base text-muted-foreground leading-relaxed">
+              Not sure where to start? Book dedicated, one-on-one time with our team to talk through
+              your virtual assistant, automation or lead-generation strategy. A professional
+              consulting fee applies, we&apos;ll share the details when we connect.
+            </p>
+            <button
+              type="button"
+              onClick={() => void openCalendly()}
+              className="mt-7 inline-flex items-center gap-2 px-6 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-bold hover:brightness-110 transition-all cursor-pointer"
+            >
+              <Briefcase className="w-4 h-4" />
+              Book a Paid Consultation
+            </button>
+            <div className="mt-3">
+              <span className="text-sm text-muted-foreground">or call </span>
+              <a
+                href="tel:+254142378150"
+                className="text-sm font-bold text-foreground hover:text-gold transition-colors"
+              >
+                +254 142 378 150
+              </a>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="dark rounded-2xl bg-(--joat-navy-deep) border border-(--border) p-10 lg:p-14 flex flex-col items-center justify-center text-center min-h-56">
+              <div className="w-16 h-16 rounded-full bg-(--joat-gold)/15 flex items-center justify-center mb-4">
+                <Users className="w-8 h-8 text-(--joat-gold)" />
+              </div>
+              <div className="text-lg font-bold text-foreground">Talk to a Specialist</div>
+              <p className="mt-2 text-sm text-muted-foreground max-w-xs">
+                A dedicated session with the JOAT team, no obligation to continue after.
+              </p>
+            </div>
+            <div className="absolute -bottom-4 -right-4 sm:-bottom-5 sm:-right-5 inline-flex items-center gap-2 rounded-full bg-(--joat-red) text-primary-foreground px-4 py-2.5 text-sm font-bold shadow-[0_10px_25px_-8px_oklch(0_0_0/0.5)]">
+              <Calendar className="w-4 h-4" />
+              Book Today
+            </div>
+          </div>
+        </m.div>
+
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 mt-12">
           {/* Info + Map */}
           <div className="space-y-6">
@@ -254,26 +336,6 @@ export function Contact() {
                 className="w-full h-64 grayscale brightness-75 contrast-110"
                 loading="lazy"
               />
-            </div>
-
-            {/* Paid consultancy — dedicated advisory time. Fee is disclosed
-                during booking, not priced on the site. */}
-            <div className="glass rounded-2xl p-6 flex items-center gap-4">
-              <Briefcase className="w-5 h-5 text-(--joat-gold)" />
-              <div className="flex-1">
-                <div className="font-bold text-foreground">Book a paid consultation</div>
-                <div className="text-sm text-muted-foreground">
-                  Talk to our team about a solution that fits. A consulting fee applies, shared when
-                  we connect.
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => void openCalendly()}
-                className="px-4 py-2 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) font-semibold text-sm hover:brightness-110 transition-all cursor-pointer"
-              >
-                Book
-              </button>
             </div>
 
             {/* Career interest — how to apply to JOAT roles */}

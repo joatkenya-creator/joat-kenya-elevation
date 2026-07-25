@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ChevronDown } from "lucide-react";
 // Served from /public so it shares the same URL with the index.html preload
 // and the favicon — single download instead of bundled-plus-favicon duplicate.
 const logo = "/joat-logo.png";
 
-// Top-level links stay visible; "Company" groups the lower-traffic pages
-// behind a dropdown (hover on desktop, tap on touch) so the bar itself reads
-// clean and premium instead of an 8-item wall of text.
+// Top-level links stay visible; "Consultation" and "Company" group related
+// pages behind dropdowns (hover on desktop, tap on touch) so the bar itself
+// reads clean and premium instead of a wall of text.
 const links = [
   { label: "Home", to: "/" as const },
   { label: "Services", to: "/services" as const },
@@ -22,11 +22,92 @@ const companyLinks = [
   { label: "Articles", to: "/articles" as const },
 ];
 
+// All three route to the same paid-consultation booking flow on /contact —
+// `consult` just pre-fills the service area and message for that pillar.
+const consultationLinks = [
+  { label: "VA Consulting", href: "/contact?consult=va" },
+  { label: "AI & Automation Consulting", href: "/contact?consult=ai" },
+  { label: "Marketing & Lead Gen Consulting", href: "/contact?consult=marketing" },
+];
+
+/** Shared hover/click/outside-click/Escape dropdown behavior for desktop nav
+ * menus. Callers control what renders inside via `children`. */
+function NavDropdown({
+  id,
+  label,
+  active,
+  children,
+}: {
+  id: string;
+  label: string;
+  active: boolean;
+  children: (opts: { close: () => void }) => ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const attr = `data-nav-menu-${id}`;
+
+  const openMenu = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+  // Small delay before closing so the cursor can travel from the trigger to
+  // the panel without the menu vanishing mid-move.
+  const scheduleClose = () => {
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onClick = (e: MouseEvent) => {
+      if (!(e.target as Element).closest(`[${attr}]`)) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("click", onClick);
+    };
+  }, [open, attr]);
+
+  return (
+    <li
+      {...{ [attr]: true }}
+      className="relative"
+      onMouseEnter={openMenu}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        aria-haspopup="true"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className={`flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer ${
+          active ? "text-gold" : "text-foreground/80 hover:text-gold"
+        }`}
+      >
+        {label}
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <ul
+          role="menu"
+          className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-56 glass-solid rounded-xl border border-(--glass-border) p-2 shadow-[0_20px_40px_-20px_oklch(0_0_0/0.5)]"
+        >
+          {children({ close: () => setOpen(false) })}
+        </ul>
+      )}
+    </li>
+  );
+}
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [companyOpen, setCompanyOpen] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
   const isCompanyActive = companyLinks.some((l) => l.to === currentPath);
 
@@ -36,34 +117,6 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const openCompany = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setCompanyOpen(true);
-  };
-  // Small delay before closing so the cursor can travel from the trigger to
-  // the panel without the menu vanishing mid-move.
-  const scheduleCloseCompany = () => {
-    closeTimer.current = setTimeout(() => setCompanyOpen(false), 150);
-  };
-
-  // Close on outside click / Escape so the dropdown behaves like a normal menu
-  // once it's opened by click (touch devices, keyboard users).
-  useEffect(() => {
-    if (!companyOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setCompanyOpen(false);
-    };
-    const onClick = (e: MouseEvent) => {
-      if (!(e.target as Element).closest("[data-company-menu]")) setCompanyOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("click", onClick);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("click", onClick);
-    };
-  }, [companyOpen]);
 
   return (
     // Framer-free (CSS entrance via .navbar-enter) so the Navbar — part of the
@@ -109,49 +162,41 @@ export function Navbar() {
             </li>
           ))}
 
-          <li
-            data-company-menu
-            className="relative"
-            onMouseEnter={openCompany}
-            onMouseLeave={scheduleCloseCompany}
-          >
-            <button
-              type="button"
-              aria-haspopup="true"
-              aria-expanded={companyOpen}
-              onClick={() => setCompanyOpen((v) => !v)}
-              className={`flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer ${
-                isCompanyActive ? "text-gold" : "text-foreground/80 hover:text-gold"
-              }`}
-            >
-              Company
-              <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform ${companyOpen ? "rotate-180" : ""}`}
-              />
-            </button>
+          <NavDropdown id="consultation" label="Consultation" active={false}>
+            {({ close }) =>
+              consultationLinks.map((l) => (
+                <li key={l.href} role="none">
+                  <a
+                    href={l.href}
+                    role="menuitem"
+                    onClick={close}
+                    className="block px-3 py-2 rounded-lg text-sm text-foreground/80 hover:text-gold hover:bg-black/5 transition-colors"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </NavDropdown>
 
-            {companyOpen && (
-              <ul
-                role="menu"
-                className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-48 glass-solid rounded-xl border border-(--glass-border) p-2 shadow-[0_20px_40px_-20px_oklch(0_0_0/0.5)]"
-              >
-                {companyLinks.map((l) => (
-                  <li key={l.to} role="none">
-                    <Link
-                      to={l.to}
-                      role="menuitem"
-                      onClick={() => setCompanyOpen(false)}
-                      activeProps={{ className: "text-gold" }}
-                      activeOptions={{ exact: true }}
-                      className="block px-3 py-2 rounded-lg text-sm text-foreground/80 hover:text-gold hover:bg-black/5 transition-colors"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
+          <NavDropdown id="company" label="Company" active={isCompanyActive}>
+            {({ close }) =>
+              companyLinks.map((l) => (
+                <li key={l.to} role="none">
+                  <Link
+                    to={l.to}
+                    role="menuitem"
+                    onClick={close}
+                    activeProps={{ className: "text-gold" }}
+                    activeOptions={{ exact: true }}
+                    className="block px-3 py-2 rounded-lg text-sm text-foreground/80 hover:text-gold hover:bg-black/5 transition-colors"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))
+            }
+          </NavDropdown>
 
           {links.slice(3).map((l) => (
             <li key={l.to}>
@@ -202,6 +247,21 @@ export function Navbar() {
                 >
                   {l.label}
                 </Link>
+              </li>
+            ))}
+
+            <li className="pt-2 pb-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              Consultation
+            </li>
+            {consultationLinks.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="block py-2 pl-3 text-foreground/90 border-l border-(--glass-border)"
+                >
+                  {l.label}
+                </a>
               </li>
             ))}
 
