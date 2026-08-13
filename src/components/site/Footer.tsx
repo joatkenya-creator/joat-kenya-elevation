@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 // Shared with the Navbar import and index.html preload — single download.
 const logo = "/joat-logo.png";
-import { EXTERNAL, LEGAL_LINKS } from "@/lib/links";
+import { LEGAL_LINKS } from "@/lib/links";
 
 const socials: { Icon: typeof Linkedin; href: string; label: string }[] = [
   {
@@ -111,7 +111,6 @@ export function Footer() {
                 { l: "Careers", h: "/careers" },
                 { l: "News & Articles", h: "/articles" },
                 { l: "Contact", h: "/contact" },
-                { l: "J.O.A.T. USA", h: EXTERNAL.joatUsa, external: true },
               ]}
             />
 
