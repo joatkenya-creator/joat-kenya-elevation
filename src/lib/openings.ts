@@ -9,7 +9,7 @@
 // NOTE: replace the seeded descriptions below with the live Majobo Kenya job
 // content. The titles match real folders already in the storage bucket.
 
-export const APPLY_EMAIL = "joatkenya120@gmail.com";
+export const APPLY_EMAIL = "admin@joatkenya.com";
 export const APPLICATIONS_BUCKET = "joatkenya-applications-and-bot";
 
 export type Opening = {

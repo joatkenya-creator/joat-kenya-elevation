@@ -49,7 +49,7 @@ export const organizationJsonLd = {
   url: SITE_URL,
   logo: DEFAULT_IMAGE,
   image: DEFAULT_IMAGE,
-  email: "joatkenya120@gmail.com",
+  email: "admin@joatkenya.com",
   telephone: "+254142378150",
   slogan:
     "Elite virtual assistants, AI automation and lead generation. Built in-house. Delivered worldwide.",
@@ -76,7 +76,7 @@ export const organizationJsonLd = {
     {
       "@type": "ContactPoint",
       contactType: "customer service",
-      email: "joatkenya120@gmail.com",
+      email: "admin@joatkenya.com",
       telephone: "+254142378150",
       areaServed: "Worldwide",
       availableLanguage: ["English", "Swahili"],
@@ -84,7 +84,7 @@ export const organizationJsonLd = {
     {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: "joatkenya120@gmail.com",
+      email: "admin@joatkenya.com",
       url: `${SITE_URL}/contact`,
       areaServed: "Worldwide",
       availableLanguage: ["English", "Swahili"],
@@ -321,7 +321,7 @@ export const localBusinessJsonLd = {
   name: "J.O.A.T. Kenya",
   url: SITE_URL,
   image: DEFAULT_IMAGE,
-  email: "joatkenya120@gmail.com",
+  email: "admin@joatkenya.com",
   telephone: "+254142378150",
   description:
     "An elite virtual assistant, AI automation and lead-generation partner, backed by in-house software development, media production and children's digital education capabilities for clients worldwide.",

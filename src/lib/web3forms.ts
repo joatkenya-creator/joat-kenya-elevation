@@ -78,7 +78,7 @@ export async function deliverViaWeb3Forms(p: ContactPayload, files: File[] = [])
 /**
  * Notify the team by email when a job application is submitted. Reuses the same
  * Web3Forms access key as the contact form, so the email lands in the same inbox
- * (the address configured on the Web3Forms key — joatkenya120@gmail.com). The
+ * (the address configured on the Web3Forms key — admin@joatkenya.com). The
  * uploaded CV/files are listed as public Storage URLs in the body, the same way
  * the contact form surfaces its attachments. Best-effort: the application is
  * already saved in Supabase, so a failed email never blocks the applicant.

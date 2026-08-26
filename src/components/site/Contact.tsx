@@ -153,7 +153,7 @@ export function Contact() {
         console.error("Supabase upload failed", uploadError);
         setStatus("error");
         setServerError(
-          `We couldn't upload "${file.name}". Please try again, or email us directly at joatkenya120@gmail.com.`,
+          `We couldn't upload "${file.name}". Please try again, or email us directly at admin@joatkenya.com.`,
         );
         return;
       }
@@ -204,7 +204,7 @@ export function Contact() {
 
     setStatus("error");
     setServerError(
-      "We couldn't send that just now. Please try again, or email us directly at joatkenya120@gmail.com.",
+      "We couldn't send that just now. Please try again, or email us directly at admin@joatkenya.com.",
     );
   };
 
@@ -316,7 +316,7 @@ export function Contact() {
                 </div>
               </a>
               <a
-                href="mailto:joatkenya120@gmail.com"
+                href="mailto:admin@joatkenya.com"
                 className="glass rounded-2xl p-4 sm:p-6 hover:border-(--joat-gold)/40 transition-colors"
               >
                 <Mail className="w-5 h-5 text-(--joat-gold) mb-2" />
@@ -324,7 +324,7 @@ export function Contact() {
                   Email
                 </div>
                 <div className="font-bold text-foreground mt-1 text-xs sm:text-base break-all">
-                  joatkenya120@gmail.com
+                  admin@joatkenya.com
                 </div>
               </a>
             </div>

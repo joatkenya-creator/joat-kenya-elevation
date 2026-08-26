@@ -22,7 +22,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /^(yes|yeah|yep|sure|ok|okay|alright|sounds good|that works|let'?s do it|cool)\s*[.!?]*\s*$/i,
     reply:
-      'Great! The fastest next step is the "Book" button in the Contact section for a 30-min meeting, or the Contact form below. You can also call +254142378150 or email joatkenya120@gmail.com.',
+      'Great! The fastest next step is the "Book" button in the Contact section for a 30-min meeting, or the Contact form below. You can also call +254142378150 or email admin@joatkenya.com.',
   },
   {
     match: /^(no|nope|nah|not really|not now|maybe later)\s*[.!?]*\s*$/i,
@@ -50,7 +50,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(disappointed|bad service|complaint|complain|terrible|awful|frustrated|unhappy|not (happy|good|great)|angry|upset)\b/i,
     reply:
-      "I'm sorry about that. Your feedback matters. Please email joatkenya120@gmail.com or call +254142378150 directly so a human on our team can help right away.",
+      "I'm sorry about that. Your feedback matters. Please email admin@joatkenya.com or call +254142378150 directly so a human on our team can help right away.",
   },
   {
     match:
@@ -215,13 +215,13 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /\b(refund|cancel(lation|ling)?|money back|cancel (my )?package)\b/i,
     reply:
-      "All our packages are month-to-month with no lock-in. You can cancel or change tiers anytime. For one-off project refunds, it's case-by-case; email joatkenya120@gmail.com and we'll resolve it quickly.",
+      "All our packages are month-to-month with no lock-in. You can cancel or change tiers anytime. For one-off project refunds, it's case-by-case; email admin@joatkenya.com and we'll resolve it quickly.",
   },
   {
     match:
       /\b(maintenance|support|sla|response time|bug fix|hotfix|update my (app|site|website))\b/i,
     reply:
-      "We offer ongoing maintenance and support on every project: bug fixes, security patches and feature updates. Email joatkenya120@gmail.com or book a 30-min meeting to discuss your support needs.",
+      "We offer ongoing maintenance and support on every project: bug fixes, security patches and feature updates. Email admin@joatkenya.com or book a 30-min meeting to discuss your support needs.",
   },
   {
     match: /\b(hosting|host (my )?(site|website|app)|server|domain|ssl|deployment)\b/i,
@@ -240,7 +240,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\b(international|global|remote|outside (kenya|africa)|abroad|\busa?\b|\buk\b|europe|asia|middle east|north america|canada)\b|work(ing)? (with|for) clients (in|across|worldwide)/i,
     reply:
-      "Yes, we work with clients worldwide. Most delivery is remote, with options for on-site engagement on larger projects. Book a 30-min meeting from the Contact section (Calendly handles time zones) or email joatkenya120@gmail.com.",
+      "Yes, we work with clients worldwide. Most delivery is remote, with options for on-site engagement on larger projects. Book a 30-min meeting from the Contact section (Calendly handles time zones) or email admin@joatkenya.com.",
   },
   {
     match: /\b(language|english|swahili|kiswahili|french|german|arabic|do you speak)\b/i,
@@ -265,7 +265,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /meeting|\bbook\b|\bdemo\b|schedule|appointment|consult|calendly|talk to|speak to|set.?up.+call|jump on a call/i,
     reply:
-      'Happy to set that up. Book a 30-min meeting with our team via Calendly. There\'s a "Book" button in the Contact section. Prefer to talk now? Call +254142378150 or email joatkenya120@gmail.com.',
+      'Happy to set that up. Book a 30-min meeting with our team via Calendly. There\'s a "Book" button in the Contact section. Prefer to talk now? Call +254142378150 or email admin@joatkenya.com.',
   },
   {
     match:
@@ -277,12 +277,12 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\bcontact\b|\bemail\b|\bphone\b|\bcall\b|reach (out|us)|get in touch|how do i (reach|contact)/i,
     reply:
-      "Reach us at +254142378150, email joatkenya120@gmail.com, or use the Contact form on this page. We respond within one business day.",
+      "Reach us at +254142378150, email admin@joatkenya.com, or use the Contact form on this page. We respond within one business day.",
   },
   {
     match: /\b(where|location|office|address|headquarters|hq|directions|visit (you|your))\b/i,
     reply:
-      "Our headquarters is Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya. Phone +254142378150 or email joatkenya120@gmail.com if you'd like to visit or set up a meeting.",
+      "Our headquarters is Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya. Phone +254142378150 or email admin@joatkenya.com if you'd like to visit or set up a meeting.",
   },
   {
     match:
@@ -350,7 +350,7 @@ type JackResponse = {
   error?: string;
 };
 
-const CONTACT_EMAIL = "joatkenya120@gmail.com";
+const CONTACT_EMAIL = "admin@joatkenya.com";
 const CONTACT_PHONE = "+254142378150";
 
 /**
