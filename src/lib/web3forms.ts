@@ -250,3 +250,100 @@ export async function deliverCourseRegistrationViaWeb3Forms(reg: {
     return false;
   }
 }
+
+/**
+ * Notify the Director/team when a Kenya consultation is booked on
+ * /kenya-consultation. Same access key and inbox as every other form on the
+ * site (admin@joatkenya.com). Best-effort: the booking row is already in
+ * Supabase, so a failed email never blocks the visitor.
+ *
+ * Only what the team needs to prepare and reply is included — no extra
+ * personal data beyond what the visitor submitted.
+ */
+export async function deliverConsultationBookingViaWeb3Forms(b: {
+  fullName: string;
+  email: string;
+  phone: string;
+  country: string;
+  company?: string;
+  website?: string;
+  objectives: string[];
+  details: string;
+  minutes: number;
+  startAt: string;
+  timezone: string;
+}): Promise<boolean> {
+  const key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  if (!key) {
+    console.warn("VITE_WEB3FORMS_ACCESS_KEY not set — consultation email skipped");
+    return false;
+  }
+
+  const start = new Date(b.startAt);
+  const inZone = (tz: string) =>
+    new Intl.DateTimeFormat("en-GB", {
+      timeZone: tz,
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(start);
+
+  const sessionName =
+    b.minutes === 120
+      ? "Kenya Market Entry Strategy Session (2h)"
+      : "Kenya Discovery Consultation (1h)";
+
+  const message = [
+    "New Kenya consultation booking.",
+    "",
+    `Session: ${sessionName}`,
+    `When (Nairobi): ${inZone("Africa/Nairobi")} EAT`,
+    `When (client): ${inZone(b.timezone)} (${b.timezone})`,
+    "",
+    `Name: ${b.fullName}`,
+    `Email: ${b.email}`,
+    `Phone / WhatsApp: ${b.phone}`,
+    `Country: ${b.country}`,
+    ...(b.company ? [`Company: ${b.company}`] : []),
+    ...(b.website ? [`Website: ${b.website}`] : []),
+    "",
+    `Objectives: ${b.objectives.join(", ")}`,
+    "What they want to discuss:",
+    b.details,
+    "",
+    "Action: confirm the slot with the client and send joining details.",
+  ].join("\n");
+
+  const fields = {
+    access_key: key,
+    from_name: "JOAT KENYA Consultations",
+    subject: `Consultation booked: ${sessionName} — ${b.fullName} (${b.country})`,
+    name: b.fullName,
+    email: b.email,
+    replyto: b.email,
+    message,
+  };
+
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify(fields),
+    });
+    const json = (await res.json().catch(() => null)) as {
+      success?: boolean;
+      message?: string;
+    } | null;
+    if (!res.ok || !json?.success) {
+      console.error("Web3Forms rejected the consultation email", res.status, json?.message);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("Web3Forms consultation email failed", err);
+    return false;
+  }
+}

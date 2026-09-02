@@ -25,6 +25,7 @@ const companyLinks = [
 // All three route to the same paid-consultation booking flow on /contact —
 // `consult` just pre-fills the service area and message for that pillar.
 const consultationLinks = [
+  { label: "Kenya Market Entry & Relocation", href: "/kenya-consultation" },
   { label: "VA Consulting", href: "/contact?consult=va" },
   { label: "AI & Automation Consulting", href: "/contact?consult=ai" },
   { label: "Marketing & Lead Gen Consulting", href: "/contact?consult=marketing" },

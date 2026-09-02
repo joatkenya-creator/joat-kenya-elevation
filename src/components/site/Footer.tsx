@@ -107,6 +107,7 @@ export function Footer() {
                 { l: "About Us", h: "/about" },
                 { l: "Services", h: "/services" },
                 { l: "Products", h: "/products" },
+                { l: "Kenya Market Entry Consulting", h: "/kenya-consultation" },
                 { l: "Work With Us", h: "/work-with-us" },
                 { l: "Careers", h: "/careers" },
                 { l: "News & Articles", h: "/articles" },

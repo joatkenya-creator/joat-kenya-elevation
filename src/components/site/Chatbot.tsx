@@ -69,6 +69,7 @@ export function Chatbot() {
         transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close chat" : "Open chat"}
+        data-floating-widget
         className="fixed bottom-6 right-6 z-60 w-14 h-14 rounded-full bg-(--joat-red) shadow-2xl flex items-center justify-center text-white"
       >
         {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}

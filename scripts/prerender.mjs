@@ -35,6 +35,7 @@ const ROUTES = [
   "contact",
   "work-with-us",
   "real-estate-virtual-assistant",
+  "kenya-consultation",
   "privacy",
   "terms",
 ];

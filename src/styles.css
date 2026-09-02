@@ -269,6 +269,12 @@
 .news-content em { font-style: italic; }
 .news-content img { border-radius: 0.75rem; margin: 1rem 0; }
 
+/* The Kenya consultation page pins a Call / Book bar to the bottom on mobile;
+   lift the floating chatbot + back-to-top controls above it so nothing overlaps. */
+@media (max-width: 1023px) {
+  .consult-page [data-floating-widget] { bottom: 5.5rem; }
+}
+
 /* Navbar entrance — CSS so the always-eager Navbar needs no animation lib. */
 @keyframes navbar-enter {
   from { transform: translateY(-30px); opacity: 0; }

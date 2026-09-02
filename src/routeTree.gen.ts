@@ -15,6 +15,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as RealEstateVirtualAssistantRouteImport } from './routes/real-estate-virtual-assistant'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as KenyaConsultationRouteImport } from './routes/kenya-consultation'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
@@ -54,6 +55,11 @@ const ProductsRoute = ProductsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KenyaConsultationRoute = KenyaConsultationRouteImport.update({
+  id: '/kenya-consultation',
+  path: '/kenya-consultation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesRoute = CoursesRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
+  '/kenya-consultation': typeof KenyaConsultationRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/real-estate-virtual-assistant': typeof RealEstateVirtualAssistantRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
+  '/kenya-consultation': typeof KenyaConsultationRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/real-estate-virtual-assistant': typeof RealEstateVirtualAssistantRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
+  '/kenya-consultation': typeof KenyaConsultationRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/real-estate-virtual-assistant': typeof RealEstateVirtualAssistantRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/careers'
     | '/contact'
     | '/courses'
+    | '/kenya-consultation'
     | '/privacy'
     | '/products'
     | '/real-estate-virtual-assistant'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/careers'
     | '/contact'
     | '/courses'
+    | '/kenya-consultation'
     | '/privacy'
     | '/products'
     | '/real-estate-virtual-assistant'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
     | '/careers'
     | '/contact'
     | '/courses'
+    | '/kenya-consultation'
     | '/privacy'
     | '/products'
     | '/real-estate-virtual-assistant'
@@ -215,6 +227,7 @@ export interface RootRouteChildren {
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRoute
+  KenyaConsultationRoute: typeof KenyaConsultationRoute
   PrivacyRoute: typeof PrivacyRoute
   ProductsRoute: typeof ProductsRoute
   RealEstateVirtualAssistantRoute: typeof RealEstateVirtualAssistantRoute
@@ -268,6 +281,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kenya-consultation': {
+      id: '/kenya-consultation'
+      path: '/kenya-consultation'
+      fullPath: '/kenya-consultation'
+      preLoaderRoute: typeof KenyaConsultationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses': {
@@ -343,6 +363,7 @@ const rootRouteChildren: RootRouteChildren = {
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
   CoursesRoute: CoursesRoute,
+  KenyaConsultationRoute: KenyaConsultationRoute,
   PrivacyRoute: PrivacyRoute,
   ProductsRoute: ProductsRoute,
   RealEstateVirtualAssistantRoute: RealEstateVirtualAssistantRoute,
