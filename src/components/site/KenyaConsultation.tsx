@@ -705,6 +705,18 @@ export function KenyaConsultation() {
                 <Phone className="w-4 h-4 text-(--joat-gold)" />
                 {PHONE_DISPLAY}
               </a>
+              {whatsappLink && (
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track("whatsapp_clicked", { location: "footer_cta" })}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-(--border) text-foreground font-semibold hover:border-(--joat-gold)/50 transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4 text-(--joat-gold)" />
+                  Ask on WhatsApp
+                </a>
+              )}
             </div>
           </div>
         </div>

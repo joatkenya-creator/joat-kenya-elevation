@@ -36,11 +36,13 @@ function priceLabel(amount?: string) {
 }
 
 /* ─── WhatsApp ──────────────────────────────────────────────────────────────
- * The site has no WhatsApp channel configured today, so the CTA stays hidden
- * until a number is set. Digits only, international format, no plus sign:
- *   VITE_WHATSAPP_NUMBER=254142378150
+ * Defaults to the company line already published across the site. Override
+ * with a different WhatsApp Business number (digits only, no plus sign) via:
+ *   VITE_WHATSAPP_NUMBER=2547XXXXXXXX
+ * Set it to an empty string to hide the WhatsApp CTAs entirely.
  */
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;
+const WHATSAPP_NUMBER =
+  (import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined) ?? "254142378150";
 
 export const PHONE_DISPLAY = "+254 142 378 150";
 export const PHONE_HREF = "tel:+254142378150";
@@ -159,8 +161,8 @@ export const OBJECTIVES = [
 export const AVAILABILITY = {
   timeZone: "Africa/Nairobi",
   utcOffsetHours: 3,
-  /** 1 = Monday … 5 = Friday, in Nairobi local days. */
-  weekdays: [1, 2, 3, 4, 5],
+  /** 0 = Sunday … 6 = Saturday, in Nairobi local days. Tuesday–Friday. */
+  weekdays: [2, 3, 4, 5],
   /** First and last slot START hour, Nairobi local time. */
   firstHour: 9,
   lastHour: 17,

@@ -11,7 +11,7 @@ Web3Forms is the fastest path to a working contact form. It's free for 250 submi
 ### Step 1 — Get an access key
 
 1. Go to [https://web3forms.com](https://web3forms.com).
-2. Enter `joatkenya120@gmail.com` and click **Get Access Key**.
+2. Enter `admin@joatkenya.com` and click **Get Access Key**.
 3. Check your Gmail — Web3Forms sends a one-time email with your access key (a UUID-like string).
 4. Click the **Activate** link in that email. Done — you don't need a password or account dashboard.
 
@@ -24,7 +24,7 @@ Create a `.dev.vars` file at the repo root (gitignored — never commit secrets)
 WEB3FORMS_ACCESS_KEY=paste-your-key-here
 ```
 
-Then run `npm run dev` and submit the contact form. The email arrives in `joatkenya120@gmail.com` within a few seconds.
+Then run `npm run dev` and submit the contact form. The email arrives in `admin@joatkenya.com` within a few seconds. Every form on the site (contact, job applications, course registrations and Kenya consultation bookings) delivers to that same inbox.
 
 ### Step 3 — Wire it in for production
 

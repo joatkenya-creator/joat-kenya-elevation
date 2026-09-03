@@ -187,7 +187,11 @@ export async function submitBooking(p: BookingPayload): Promise<BookingResult> {
         error: "That time was just booked by someone else. Please choose another slot.",
       };
     }
+    // Any other failure (table missing, RLS, network): don't lose the lead —
+    // email the team anyway, and only report failure if that also fails.
     console.error("Consultation booking insert failed", error);
+    const emailed = await deliverConsultationBookingViaWeb3Forms(p);
+    if (emailed) return { ok: true };
     return {
       ok: false,
       error:
@@ -199,23 +203,10 @@ export async function submitBooking(p: BookingPayload): Promise<BookingResult> {
   // email must never look like a failed booking to the visitor.
   await deliverConsultationBookingViaWeb3Forms(p);
 
-  // Optional client-confirmation transport. Web3Forms only delivers to the
-  // account inbox, so the confirmation email to the CLIENT needs a sender the
-  // business controls (a Supabase Edge Function, Resend, etc.). Point
-  // VITE_BOOKING_CONFIRMATION_ENDPOINT at it and each booking is POSTed there.
-  const endpoint = import.meta.env.VITE_BOOKING_CONFIRMATION_ENDPOINT as string | undefined;
-  if (endpoint) {
-    try {
-      await fetch(endpoint, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(p),
-      });
-    } catch (err) {
-      console.warn("Confirmation endpoint failed", err);
-    }
-  }
-
+  // The client's confirmation is sent by hand: the team replies to the
+  // notification email above (its reply-to is the client's address), which
+  // keeps the whole flow on the existing Web3Forms inbox — no transactional
+  // email provider needed.
   return { ok: true };
 }
 

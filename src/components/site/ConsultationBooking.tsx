@@ -365,7 +365,7 @@ export function ConsultationBooking() {
 
               <p className="mt-4 text-xs text-muted-foreground">
                 Sessions run {AVAILABILITY.firstHour}:00–{AVAILABILITY.lastHour + 1}:00 Nairobi time
-                (EAT, UTC+3), Monday to Friday, with at least {AVAILABILITY.leadTimeHours}{" "}
+                (EAT, UTC+3), Tuesday to Friday, with at least {AVAILABILITY.leadTimeHours}{" "}
                 hours&apos; notice.
               </p>
 
@@ -619,8 +619,8 @@ export function ConsultationBooking() {
                 Your Kenya consultation is confirmed
               </h4>
               <p className="mt-2 text-muted-foreground">
-                We have your booking and the Director has your notes. You will receive joining
-                details by email at {form.email}.
+                We have your booking and the Director has your notes. We will confirm this slot and
+                send joining details by email to {form.email}, usually within one business day.
               </p>
 
               <dl className="mt-6 space-y-3 text-sm">

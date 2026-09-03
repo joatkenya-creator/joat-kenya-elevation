@@ -314,7 +314,8 @@ export async function deliverConsultationBookingViaWeb3Forms(b: {
     "What they want to discuss:",
     b.details,
     "",
-    "Action: confirm the slot with the client and send joining details.",
+    "Action: reply to this email (reply-to is the client's address) to confirm",
+    "the slot and send the joining link and fee details.",
   ].join("\n");
 
   const fields = {

@@ -83,7 +83,7 @@ Also verify:
 - BioBiz product card screenshots load
 - Roblox gameplay videos autoplay (muted) — they live in `/videos/`
 - Chatbot opens and responds (calls the public Supabase JACK endpoint directly from the browser — no server needed)
-- Contact form submits and an email arrives at `joatkenya120@gmail.com` (Web3Forms key is baked into the bundle via `.env.local` at build time)
+- Contact form submits and an email arrives at `admin@joatkenya.com` (Web3Forms key is baked into the bundle via `.env.local` at build time)
 
 ---
 
@@ -152,7 +152,7 @@ Confirm `dist/videos/` was uploaded and that the files are exactly `abyss.mp4` a
 
 **Contact form says "Message received" but no email arrives.**
 - Open browser DevTools → Network tab → submit form → look at the request to `api.web3forms.com`. If you see a Cloudflare challenge HTML or a 403, the access key was wrong or Web3Forms blocked the request.
-- Re-check `VITE_WEB3FORMS_ACCESS_KEY` matches the one registered against `joatkenya120@gmail.com`.
+- Re-check `VITE_WEB3FORMS_ACCESS_KEY` matches the one registered against `admin@joatkenya.com`.
 
 **Chatbot replies are scripted/generic instead of conversational.**
 - The site is falling back to the heuristic regex replies because the JACK Supabase Edge Function couldn't be reached. Check DevTools → Network → POST to `prkdfkkhqncxkyehokop.supabase.co/functions/v1/jack`. If it's blocked, contact support.

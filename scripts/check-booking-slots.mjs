@@ -31,6 +31,10 @@ try {
   // Lead time: nothing inside the next 24h, so Monday itself is closed.
   assert.equal(slotsForDay("2026-09-07", 60, [], now).length, 0, "same-day slots must be blocked");
 
+  // Mondays are closed (availability runs Tuesday–Friday); 2026-09-14 is a
+  // Monday well outside the lead-time window.
+  assert.equal(slotsForDay("2026-09-14", 60, [], now).length, 0, "Mondays must be closed");
+
   // Tuesday is fully open: 09:00–17:00 EAT starts for a 1-hour session.
   const tue = slotsForDay("2026-09-08", 60, [], now);
   assert.deepEqual(
@@ -59,8 +63,8 @@ try {
   const days = availableDays(60, [], now).slice(0, 6);
   assert.deepEqual(
     days,
-    ["2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11", "2026-09-14", "2026-09-15"],
-    "available days skip the weekend and the lead-time window",
+    ["2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11", "2026-09-15", "2026-09-16"],
+    "available days skip weekends, Mondays and the lead-time window",
   );
 
   // Nairobi day keys roll over at 21:00 UTC (00:00 EAT).
