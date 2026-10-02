@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
+import DOMPurify from "dompurify";
 import { ArrowUpRight, Calendar, Loader2, X } from "lucide-react";
 import { fetchNewsArticles, type BlogPost } from "@/lib/news";
 
@@ -258,9 +259,11 @@ export function News() {
               <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
                 {active.excerpt}
               </p>
+              {/* Article HTML comes from the blog_posts table; sanitize so a bad row
+                  can't run script on joatkenya.com. */}
               <div
                 className="news-content mt-6 text-foreground leading-relaxed space-y-4"
-                dangerouslySetInnerHTML={{ __html: active.content }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(active.content) }}
               />
             </div>
           </m.article>

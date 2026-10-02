@@ -1,6 +1,9 @@
 # JOAT KENYA — Apache config for Truehost / cPanel static hosting.
 # Copy this file to public_html/.htaccess alongside the dist/ contents.
 
+# No auto-generated directory listings (e.g. /assets/ listed every bundle).
+Options -Indexes
+
 # ─── 1. SPA fallback ──────────────────────────────────────────────────────────
 # Any request that doesn't match a real file or directory gets rewritten to
 # index.html so React Router's client-side routes (/privacy, /terms,
@@ -8,6 +11,11 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Force HTTPS. Must be the first rule: the SPA fallback below ends with [L],
+  # so a redirect placed after it is never reached.
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # SEO files must be served as static files, not routed into React.
   RewriteRule ^(sitemap\.xml|robots\.txt|site\.webmanifest|llms\.txt|llms-full\.txt)$ - [L]
@@ -70,6 +78,10 @@ ErrorDocument 404 /index.html
 
 # ─── 5. Security headers ──────────────────────────────────────────────────────
 <IfModule mod_headers.c>
+  # HTTPS only for a year. No includeSubDomains/preload: subdomains haven't
+  # been confirmed to serve HTTPS, and preload is hard to undo. Browsers ignore
+  # it on plain-HTTP replies, so it is safe to send unconditionally.
+  Header always set Strict-Transport-Security "max-age=31536000"
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
@@ -81,7 +93,8 @@ ErrorDocument 404 /index.html
   # iframes), GA4 + Microsoft Clarity (analytics), Google Fonts. The one
   # inline <script> in index.html (the analytics bootstrap shim) is allowed
   # by exact SHA-256 hash instead of 'unsafe-inline', so injected scripts
-  # still can't run even though a fixed first-party script can.
+  # still can't run even though a fixed first-party script can. Editing that
+  # script changes its hash: run `npm run test:security` to catch a stale one.
   #
   # Shipped as Report-Only: it logs violations to the browser console without
   # blocking anything. Load every page that touches a third party (home,
@@ -93,10 +106,5 @@ ErrorDocument 404 /index.html
   Header always set Content-Security-Policy-Report-Only "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'sha256-7TpnKtwejAHd3uPpkuXhY7N2gQQbj4fKkUqVWPx0yLc=' https://assets.calendly.com https://www.googletagmanager.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://assets.calendly.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://prkdfkkhqncxkyehokop.supabase.co https://api.web3forms.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms; frame-src https://calendly.com https://*.calendly.com https://www.google.com https://www.majobokenya.com; form-action 'self' https://api.web3forms.com; frame-ancestors 'self'"
 </IfModule>
 
-# ─── 6. Force HTTPS (uncomment after SSL is provisioned on Truehost) ──────────
-# <IfModule mod_rewrite.c>
-#   RewriteCond %{HTTPS} off
-#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# </IfModule>
 
 
