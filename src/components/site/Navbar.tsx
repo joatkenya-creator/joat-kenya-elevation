@@ -3,7 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ChevronDown } from "lucide-react";
 // Served from /public so it shares the same URL with the index.html preload
 // and the favicon — single download instead of bundled-plus-favicon duplicate.
-const logo = "/joat-logo.png";
+const logo = "/joat-logo.png?v=4";
 
 // Top-level links stay visible; "Consultation" and "Company" group related
 // pages behind dropdowns (hover on desktop, tap on touch) so the bar itself
@@ -132,20 +132,16 @@ export function Navbar() {
           <img
             src={logo}
             alt="JOAT KENYA"
-            width="500"
-            height="500"
+            width="513"
+            height="200"
             fetchPriority="high"
             decoding="async"
-            className="h-9 lg:h-12 w-auto object-contain shrink-0"
+            className="h-10 lg:h-14 w-auto object-contain shrink-0"
           />
-          <div className="leading-tight min-w-0">
-            <div className="font-display font-bold text-base sm:text-lg md:text-2xl tracking-wide whitespace-nowrap">
-              <span className="gradient-text-red">J.O.A.T</span>{" "}
-              <span className="text-gold">Kenya</span>
-            </div>
-            <div className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground hidden lg:block">
-              VA · AI Automation · Lead Gen
-            </div>
+          <div className="text-[10px] leading-tight tracking-[0.2em] uppercase text-muted-foreground hidden xl:block">
+            VA · AI Automation
+            <br />
+            Lead Gen
           </div>
         </Link>
 

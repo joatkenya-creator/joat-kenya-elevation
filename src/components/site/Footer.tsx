@@ -11,7 +11,7 @@ import {
   Receipt,
 } from "lucide-react";
 // Shared with the Navbar import and index.html preload — single download.
-const logo = "/joat-logo.png";
+const logo = "/joat-logo.png?v=4";
 import { LEGAL_LINKS } from "@/lib/links";
 
 const socials: { Icon: typeof Linkedin; href: string; label: string }[] = [
@@ -65,21 +65,15 @@ export function Footer() {
 
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-10">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3">
-              <img
-                src={logo}
-                alt="JOAT KENYA"
-                width="500"
-                height="500"
-                loading="lazy"
-                decoding="async"
-                className="h-10 sm:h-12 w-auto object-contain"
-              />
-              <div className="font-display font-bold text-xl sm:text-2xl md:text-3xl tracking-tight">
-                <span className="text-foreground">J.O.A.T. </span>
-                <span className="text-gold">KENYA</span>
-              </div>
-            </div>
+            <img
+              src={logo}
+              alt="JOAT KENYA"
+              width="513"
+              height="200"
+              loading="lazy"
+              decoding="async"
+              className="h-14 sm:h-16 w-auto object-contain"
+            />
             <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-sm">
               Elite virtual assistants, AI automation and lead generation, built in-house.
             </p>
