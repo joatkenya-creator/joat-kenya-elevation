@@ -256,22 +256,6 @@ export function Contact() {
               <Briefcase className="w-4 h-4" />
               Book a Paid Consultation
             </button>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Moving to Kenya, expanding here or investing?{" "}
-              <a href="/kenya-consultation" className="text-gold hover:underline">
-                Book a Kenya market entry &amp; relocation consultation
-              </a>{" "}
-              instead, it has its own 1-hour and 2-hour sessions with scheduling.
-            </p>
-            <div className="mt-3">
-              <span className="text-sm text-muted-foreground">or call </span>
-              <a
-                href="tel:+254142378150"
-                className="text-sm font-bold text-foreground hover:text-gold transition-colors"
-              >
-                +254 142 378 150
-              </a>
-            </div>
           </div>
 
           <div className="relative">
