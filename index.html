@@ -16,8 +16,8 @@
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#f7f5f0" />
     <link rel="canonical" href="https://joatkenya.com/" />
-    <link rel="icon" type="image/png" href="/joat-logo.png?v=4" />
-    <link rel="apple-touch-icon" href="/joat-logo.png?v=4" />
+    <link rel="icon" type="image/png" href="/joat-logo.png?v=5" />
+    <link rel="apple-touch-icon" href="/joat-logo.png?v=5" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- OpenSearch descriptor — lets Chrome / Firefox / Edge / Brave offer
@@ -63,18 +63,20 @@
 
     <!-- Preload the logo (LCP candidate above the fold) and warm font origin
          connections so the fetches start in parallel with HTML parsing. -->
-    <link rel="preload" as="image" href="/joat-logo.png?v=4" fetchpriority="high" />
+    <link rel="preload" as="image" href="/joat-logo.png?v=5" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Non-blocking Google Fonts via the print-swap trick: fetched as a
          low-priority stylesheet (media="print") and promoted to media="all"
-         once loaded. Result: the stylesheet doesn't block first paint. -->
+         once loaded by the inline script below (not an onload="" attribute,
+         which the Content-Security-Policy blocks). Result: the stylesheet
+         doesn't block first paint. -->
     <link
-      rel="preload"
-      as="style"
+      id="google-fonts"
+      rel="stylesheet"
+      media="print"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
       <link
@@ -92,6 +94,10 @@
          the real scripts are loaded so no events are lost during the window
          between first paint and the deferred load. -->
     <script>
+      var fonts = document.getElementById('google-fonts');
+      if (fonts.sheet) fonts.media = 'all';
+      else fonts.addEventListener('load', function () { fonts.media = 'all'; });
+
       window.dataLayer = window.dataLayer || [];
       window.gtag = window.gtag || function(){ dataLayer.push(arguments); };
       gtag('js', new Date());

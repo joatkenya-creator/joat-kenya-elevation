@@ -3,7 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ChevronDown } from "lucide-react";
 // Served from /public so it shares the same URL with the index.html preload
 // and the favicon — single download instead of bundled-plus-favicon duplicate.
-const logo = "/joat-logo.png?v=4";
+const logo = "/joat-logo.png?v=5";
 
 // Top-level links stay visible; "Consultation" and "Company" group related
 // pages behind dropdowns (hover on desktop, tap on touch) so the bar itself

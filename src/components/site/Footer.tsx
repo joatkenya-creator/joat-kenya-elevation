@@ -11,7 +11,7 @@ import {
   Receipt,
 } from "lucide-react";
 // Shared with the Navbar import and index.html preload — single download.
-const logo = "/joat-logo.png?v=4";
+const logo = "/joat-logo.png?v=5";
 import { LEGAL_LINKS } from "@/lib/links";
 
 const socials: { Icon: typeof Linkedin; href: string; label: string }[] = [
