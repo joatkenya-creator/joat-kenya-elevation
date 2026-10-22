@@ -16,7 +16,7 @@ const realEstateVAServiceJsonLd = {
   name: "Real Estate Virtual Assistant Services",
   description:
     "AI-run and human virtual assistants for real estate agents, brokers and teams: instant AI lead response (ISA), MLS & CRM management, and transaction coordination.",
-  provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+  provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
   areaServed: "Worldwide",
   audience: {
     "@type": "Audience",
@@ -64,7 +64,7 @@ export const Route = createFileRoute("/real-estate-virtual-assistant")({
   component: RealEstateVAPage,
   head: () => ({
     ...seo({
-      title: "Real Estate Virtual Assistant Services | JOAT Kenya",
+      title: "Real Estate Virtual Assistant Services | JOAT",
       description:
         "Hire a real estate virtual assistant that converts: a 24/7 AI ISA for sub-5-minute lead response, or a dedicated human VA for MLS, CRM, showings and transaction coordination.",
       path: "/real-estate-virtual-assistant",

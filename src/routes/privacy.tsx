@@ -6,9 +6,9 @@ export const Route = createFileRoute("/privacy")({
   component: PrivacyPage,
   head: () =>
     seo({
-      title: "Privacy Policy | JOAT KENYA",
+      title: "Privacy Policy | JOAT",
       description:
-        "How J.O.A.T. Kenya collects, uses, stores, and protects information shared through joatkenya.com and our products.",
+        "How J.O.A.T. collects, uses, stores, and protects information shared through joatkenya.com and our products.",
       path: "/privacy",
     }),
 });
@@ -23,7 +23,7 @@ function PrivacyPage() {
             className="inline-flex items-center gap-1.5 text-sm text-gold hover:underline"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to JOAT KENYA
+            Back to JOAT
           </Link>
           <h1 className="mt-6 text-4xl lg:text-5xl font-bold text-foreground">Privacy Policy</h1>
           <p className="mt-3 text-sm text-muted-foreground">Last updated: 18 May 2026</p>
@@ -34,7 +34,7 @@ function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">1. Who we are</h2>
           <p>
-            J.O.A.T. Kenya ("JOAT", "we", "us") is a Kenyan digital innovation studio operating from
+            J.O.A.T. ("JOAT", "we", "us") is a Kenyan digital innovation studio operating from
             The Brick Mall, 2nd Floor, Kiambu Road, Thindigua, Kenya. This policy explains what we
             do with personal information we collect through joatkenya.com and our products (BioBiz,
             Majobo Kenya, and the Amare's Big Planet YouTube channel).
@@ -104,7 +104,7 @@ function PrivacyPage() {
 
         <section id="compliance">
           <h2 className="text-xl font-bold text-foreground mb-2">7. Compliance</h2>
-          <p>JOAT KENYA holds the following certifications and registrations:</p>
+          <p>JOAT holds the following certifications and registrations:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1.5">
             <li>ISO 9001: Quality management.</li>
             <li>NEMA NCA-1: Environmental compliance, Category 1.</li>

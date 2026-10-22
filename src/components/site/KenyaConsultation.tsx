@@ -76,7 +76,7 @@ export function KenyaConsultation() {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-(--border) bg-card text-foreground font-semibold hover:border-(--joat-gold)/50 transition-colors"
             >
               <Phone className="w-4 h-4 text-(--joat-gold)" />
-              Call J.O.A.T. Kenya
+              Call J.O.A.T.
             </a>
           </div>
           {whatsappLink && (
@@ -188,7 +188,7 @@ export function KenyaConsultation() {
               One hour to decide. Two hours to plan.
             </h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              Both sessions are a direct conversation with the Director of J.O.A.T. Kenya. The
+              Both sessions are a direct conversation with the Director of J.O.A.T. The
               difference is depth: the first helps you decide whether Kenya belongs in your plans,
               the second pulls your plan apart and puts it back together with local reality applied.
             </p>
@@ -396,7 +396,7 @@ export function KenyaConsultation() {
               <p className="mt-3">
                 The difficulty is selection and management rather than availability. Applications
                 arrive in volume, references need checking properly, and remote-managed teams need
-                clear structure, supervision and a route for people to grow. J.O.A.T. Kenya staffs
+                clear structure, supervision and a route for people to grow. J.O.A.T. staffs
                 and manages teams for international clients as a core service line, so this part of
                 the conversation comes from direct experience rather than theory. You can see how we
                 do it on our{" "}
@@ -508,7 +508,7 @@ export function KenyaConsultation() {
                   alt={
                     DIRECTOR.name
                       ? `${DIRECTOR.name}, ${DIRECTOR.title}`
-                      : "The Director of J.O.A.T. Kenya"
+                      : "The Director of J.O.A.T."
                   }
                   width="160"
                   height="160"
@@ -547,7 +547,7 @@ export function KenyaConsultation() {
                 ))
               ) : (
                 <p className="mt-3 text-muted-foreground leading-relaxed">
-                  J.O.A.T. Kenya has been building and running businesses from Kiambu for over 12
+                  J.O.A.T. has been building and running businesses from Kiambu for over 12
                   years, staffing teams, building software and running marketing for clients in
                   Kenya and abroad. That is the experience the conversation draws on: what it takes
                   to operate here, hire here and sell here, day to day.
@@ -581,13 +581,13 @@ export function KenyaConsultation() {
         <div className="max-w-7xl mx-auto px-5 lg:px-8">
           <div className="max-w-3xl mb-10">
             <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">
-              Why J.O.A.T. Kenya
+              Why J.O.A.T.
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
               A working business here, not a consultancy about here.
             </h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              J.O.A.T. Kenya (Jack Urban Services Ltd) operates from The Brick Mall on Kiambu Road,
+              J.O.A.T. (Jack Urban Services Ltd) operates from The Brick Mall on Kiambu Road,
               Thindigua. We provide virtual assistants, AI automation and lead generation, backed by
               in-house software development, media production and children&apos;s digital education
               capabilities, for clients in Kenya and worldwide. Every view you get in a consultation

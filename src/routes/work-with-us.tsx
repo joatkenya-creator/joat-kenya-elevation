@@ -23,9 +23,9 @@ export const Route = createFileRoute("/work-with-us")({
   component: WorkWithUsPage,
   head: () => ({
     ...seo({
-      title: "AI Automation Services in Kenya | Work With JOAT KENYA",
+      title: "AI Automation Services in Kenya | Work With JOAT",
       description:
-        "Run your business content from a single chat. JOAT Kenya connects your site and socials to an AI Telegram bot via Foundation, Growth and Scale packages.",
+        "Run your business content from a single chat. JOAT connects your site and socials to an AI Telegram bot via Foundation, Growth and Scale packages.",
       path: "/work-with-us",
     }),
     scripts: [
@@ -193,7 +193,7 @@ function WorkWithUsPage() {
             className="inline-flex items-center gap-1.5 text-sm text-gold hover:underline mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to JOAT KENYA
+            Back to JOAT
           </Link>
           <m.div
             initial={{ opacity: 0, y: 20 }}
@@ -218,7 +218,7 @@ function WorkWithUsPage() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-6 text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
           >
-            JOAT Kenya connects your website and social channels to an AI-powered Telegram bot.
+            JOAT connects your website and social channels to an AI-powered Telegram bot.
             Update prices, publish posts, upload media; just send a message. We handle the rest.
           </m.p>
           <m.div

@@ -1,4 +1,4 @@
-// JOAT KENYA's own deployed assistant (Supabase Edge Function).
+// JOAT's own deployed assistant (Supabase Edge Function).
 // Same backend that powers the chatbot on the original joatkenya.com site.
 // The key is a public Supabase anon JWT — safe to embed.
 const JACK_URL = "https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/jack";
@@ -70,13 +70,13 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
     match:
       /\bwho are you\b|\bwhat are you\b|\bare you (a|an) (bot|ai|robot|human|person)\b|\byour name\b/i,
     reply:
-      "I'm JACK, J.O.A.T. Kenya's assistant. I can answer questions about our services, packages and team, or help you book a meeting. What are you exploring?",
+      "I'm JACK, J.O.A.T.'s assistant. I can answer questions about our services, packages and team, or help you book a meeting. What are you exploring?",
   },
   {
     match:
       /^(hi|hello|hey|howdy|greetings|hola|good\s+(morning|afternoon|evening|day))\s*[!.?]*\s*$/i,
     reply:
-      "Hi! I'm JACK, J.O.A.T. Kenya's assistant. I can walk you through our services, explain our packages, or set up a meeting with the team. How can I help?",
+      "Hi! I'm JACK, J.O.A.T.'s assistant. I can walk you through our services, explain our packages, or set up a meeting with the team. How can I help?",
   },
   {
     match: /^(hi|hello|hey|howdy|greetings|good\s+(morning|afternoon|evening|day))\b/i,
@@ -326,7 +326,7 @@ const HEURISTIC_FALLBACKS: { match: RegExp; reply: string }[] = [
   {
     match: /cert(ifi|s\b)|\biso\b|\bnema\b|\bkra\b|compliance|compliant|accredit/i,
     reply:
-      "J.O.A.T. Kenya is ISO 9001 quality-certified, NEMA NCA-1 (environmental) compliant and fully KRA tax-compliant.",
+      "J.O.A.T. is ISO 9001 quality-certified, NEMA NCA-1 (environmental) compliant and fully KRA tax-compliant.",
   },
 
   // ===== Services overview (broadest, last) =====

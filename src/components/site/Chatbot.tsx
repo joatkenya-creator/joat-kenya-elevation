@@ -9,7 +9,7 @@ const FALLBACK_REPLY =
   "I'm having a moment, but our team isn't. Drop your question in the Contact form below or call +254142378150 and we'll respond within 24 hours.";
 
 const INITIAL_GREETING =
-  "Hi! I'm JACK, J.O.A.T. Kenya's assistant. I can walk you through our services, explain our packages, or set up a meeting with the team. How can I help?";
+  "Hi! I'm JACK, J.O.A.T.'s assistant. I can walk you through our services, explain our packages, or set up a meeting with the team. How can I help?";
 
 const QUICK_REPLIES = [
   { label: "Our services", message: "What services do you offer?" },
@@ -92,7 +92,7 @@ export function Chatbot() {
                 <div className="font-bold text-foreground text-sm">JACK</div>
                 <div className="text-[10px] text-gold uppercase tracking-widest flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-(--joat-gold) animate-pulse" />{" "}
-                  J.O.A.T. Kenya Assistant
+                  J.O.A.T. Assistant
                 </div>
               </div>
             </div>

@@ -64,7 +64,7 @@
 :root {
   --radius: 0.75rem;
 
-  /* JOAT KENYA brand constants — same in light and dark.
+  /* JOAT brand constants — same in light and dark.
      Each variable declares an sRGB hex fallback FIRST, then overrides with
      oklch. Browsers that don't understand oklch (older Safari, Opera Mini,
      legacy Android WebView) silently discard the oklch declaration and use

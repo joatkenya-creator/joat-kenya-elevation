@@ -12,7 +12,7 @@ export const Route = createFileRoute("/services")({
     ...seo({
       title: "Services | Virtual Assistants, AI Automation & Lead Generation | JOAT",
       description:
-        "Elite virtual assistants, AI automation and lead-generation marketing from JOAT Kenya, backed by in-house software development, media production and children's digital education.",
+        "Elite virtual assistants, AI automation and lead-generation marketing from JOAT, backed by in-house software development, media production and children's digital education.",
       path: "/services",
     }),
     scripts: [

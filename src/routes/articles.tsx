@@ -10,9 +10,9 @@ export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
   head: () => ({
     ...seo({
-      title: "News & Articles | JOAT KENYA",
+      title: "News & Articles | JOAT",
       description:
-        "Read JOAT Kenya insights on talent recruitment, work culture, digital business tools, AI automation, and the East African job market.",
+        "Read JOAT insights on talent recruitment, work culture, digital business tools, AI automation, and the East African job market.",
       path: "/articles",
     }),
     scripts: [

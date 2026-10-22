@@ -14,8 +14,8 @@ export const Route = createFileRoute("/courses_/sign-up")({
   validateSearch: searchSchema,
   head: () => ({
     ...seo({
-      title: "Register | JOAT Kenya Courses",
-      description: "Create your account to register for the next JOAT Kenya course cohort.",
+      title: "Register | JOAT Courses",
+      description: "Create your account to register for the next JOAT course cohort.",
       path: "/courses/sign-up",
       noindex: true,
     }),

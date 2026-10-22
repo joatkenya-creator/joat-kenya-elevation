@@ -131,7 +131,7 @@ export function Navbar() {
         <Link to="/" className="flex items-center gap-2 lg:gap-3 group min-w-0">
           <img
             src={logo}
-            alt="JOAT KENYA"
+            alt="JOAT"
             width="513"
             height="200"
             fetchPriority="high"

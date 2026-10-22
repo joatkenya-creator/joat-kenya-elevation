@@ -6,9 +6,9 @@ export const Route = createFileRoute("/terms")({
   component: TermsPage,
   head: () =>
     seo({
-      title: "Terms of Use | JOAT KENYA",
+      title: "Terms of Use | JOAT",
       description:
-        "The terms under which you may use joatkenya.com and the products offered by J.O.A.T. Kenya.",
+        "The terms under which you may use joatkenya.com and the products offered by J.O.A.T.",
       path: "/terms",
     }),
 });
@@ -23,7 +23,7 @@ function TermsPage() {
             className="inline-flex items-center gap-1.5 text-sm text-gold hover:underline"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to JOAT KENYA
+            Back to JOAT
           </Link>
           <h1 className="mt-6 text-4xl lg:text-5xl font-bold text-foreground">Terms of Use</h1>
           <p className="mt-3 text-sm text-muted-foreground">Last updated: 18 May 2026</p>
@@ -34,7 +34,7 @@ function TermsPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-2">1. Agreement</h2>
           <p>
-            By accessing joatkenya.com or any of the products offered by J.O.A.T. Kenya (Jack of All
+            By accessing joatkenya.com or any of the products offered by J.O.A.T. (Jack of All
             Trades Kenya, "JOAT", "we"), you agree to these terms. If you don't agree, please stop
             using the site.
           </p>

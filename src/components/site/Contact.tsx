@@ -322,7 +322,7 @@ export function Contact() {
 
             <div className="glass rounded-2xl overflow-hidden">
               <iframe
-                title="JOAT Kenya HQ"
+                title="JOAT HQ"
                 src="https://www.google.com/maps?q=Kiambu+Road+Thindigua+Kenya&output=embed"
                 className="w-full h-64 grayscale brightness-75 contrast-110"
                 loading="lazy"

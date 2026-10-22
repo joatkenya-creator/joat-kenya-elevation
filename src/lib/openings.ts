@@ -43,7 +43,7 @@ export function folderFor(title: string): string {
 // Shared "about the company" block, shown at the top of every job detail view
 // (mirrors Deloitte's "About Deloitte" / hiring-unit section).
 export const ABOUT_JOAT =
-  "J.O.A.T. Kenya (Jack of All Trades) is an elite virtual assistant, AI automation and " +
+  "J.O.A.T. (Jack of All Trades) is an elite virtual assistant, AI automation and " +
   "lead-generation partner. We staff businesses with AI-run and human VAs, automate operations " +
   "with AI, and run marketing that generates leads, backed by in-house software, media and " +
   "children's digital education, delivering everything from Thindigua, Kiambu for clients across " +
@@ -68,7 +68,7 @@ export const openings: Opening[] = [
       "Microsoft Office",
     ],
     mainPurpose:
-      "Support JOAT Kenya's team remotely by managing emails, calendars and day-to-day administrative work, helping the business stay organised, responsive and efficient while being part of something impactful.",
+      "Support JOAT's team remotely by managing emails, calendars and day-to-day administrative work, helping the business stay organised, responsive and efficient while being part of something impactful.",
     whatYouWillDo: [
       "Manage emails, calendars and appointments.",
       "Respond to client inquiries professionally and promptly.",
@@ -117,7 +117,7 @@ export const openings: Opening[] = [
       "Teamwork",
     ],
     mainPurpose:
-      "Bring music and movement to life for children as a performer with Amares Big Planet, JOAT Kenya's children's entertainment and digital education brand. We're looking for energetic, creative and confident dancers who love performing and inspiring children through music and movement. Solo dancers and dance groups are all welcome to apply.",
+      "Bring music and movement to life for children as a performer with Amares Big Planet, JOAT's children's entertainment and digital education brand. We're looking for energetic, creative and confident dancers who love performing and inspiring children through music and movement. Solo dancers and dance groups are all welcome to apply.",
     whatYouWillDo: [
       "Perform high-energy, creative dance routines for children, both live and on camera.",
       "Inspire and engage young audiences — including children on the autism spectrum — through music and movement.",

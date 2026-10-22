@@ -33,7 +33,7 @@ export const Route = createFileRoute("/courses")({
   component: CoursesPage,
   head: () => ({
     ...seo({
-      title: "Courses | JOAT Kenya Live Cohort — Ship 3 Real Apps in 8 Weeks",
+      title: "Courses | JOAT Live Cohort — Ship 3 Real Apps in 8 Weeks",
       description:
         "A live, in-person cohort in Nairobi for IT/tech grads who have the certificate but can't build. Ship 3 real apps with AI — deployment and M-Pesa included.",
       path: "/courses",

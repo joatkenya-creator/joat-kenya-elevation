@@ -1,5 +1,5 @@
 const SITE_URL = "https://joatkenya.com";
-const SITE_NAME = "J.O.A.T. Kenya";
+const SITE_NAME = "J.O.A.T.";
 const DEFAULT_IMAGE = `${SITE_URL}/joat-logo.png`;
 
 type SeoConfig = {
@@ -23,7 +23,7 @@ export function seo({ title, description, path = "/", image = DEFAULT_IMAGE, noi
         content:
           "JOAT Kenya, J.O.A.T. Kenya, elite virtual assistants, virtual assistant services, AI automation, lead generation, real estate virtual assistant, software development, mobile app development, web development, digital marketing, AI solutions, media production, animation studio, children's digital education, BioBiz, Majobo Kenya",
       },
-      { name: "author", content: "J.O.A.T. Kenya" },
+      { name: "author", content: "J.O.A.T." },
       { name: "robots", content: noindex ? "noindex, nofollow" : "index, follow" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -43,7 +43,7 @@ export function seo({ title, description, path = "/", image = DEFAULT_IMAGE, noi
 export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "J.O.A.T. Kenya",
+  name: "J.O.A.T.",
   alternateName: ["JOAT Kenya", "JOAT", "Jack of All Trades Kenya"],
   legalName: "Jack Urban Services Ltd",
   url: SITE_URL,
@@ -125,7 +125,7 @@ export const organizationJsonLd = {
 export const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "J.O.A.T. Kenya",
+  name: "J.O.A.T.",
   url: SITE_URL,
   potentialAction: {
     "@type": "SearchAction",
@@ -153,7 +153,7 @@ export function aggregateRatingJsonLd(
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "J.O.A.T. Kenya",
+    name: "J.O.A.T.",
     url: SITE_URL,
     aggregateRating: {
       "@type": "AggregateRating",
@@ -211,7 +211,7 @@ export function breadcrumbJsonLd(name: string, path: string) {
 export const servicesCatalogJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "J.O.A.T. Kenya: Services & Products",
+  name: "J.O.A.T.: Services & Products",
   itemListElement: [
     {
       "@type": "Service",
@@ -219,7 +219,7 @@ export const servicesCatalogJsonLd = {
       name: "Virtual Assistants",
       description:
         "Elite AI-run and human virtual assistants for lead response, CRM and operations, starting with real estate.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
       areaServed: "Worldwide",
     },
     {
@@ -228,7 +228,7 @@ export const servicesCatalogJsonLd = {
       name: "AI & Automation",
       description:
         "Claude/OpenRouter integrations, chatbots, meeting summaries, live translation and agentic workflow automation.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
       areaServed: "Worldwide",
     },
     {
@@ -237,7 +237,7 @@ export const servicesCatalogJsonLd = {
       name: "Marketing & Lead Generation",
       description:
         "Generative campaigns, outbound systems and paid ads across IG, TikTok, LinkedIn and Facebook, engineered for qualified leads.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
       areaServed: "Worldwide",
     },
     {
@@ -246,7 +246,7 @@ export const servicesCatalogJsonLd = {
       name: "Software Development",
       description:
         "Custom mobile apps, websites and AI-integrated products, designed, built and delivered end-to-end.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
       areaServed: "Worldwide",
     },
     {
@@ -255,7 +255,7 @@ export const servicesCatalogJsonLd = {
       name: "Media & Content Production",
       description:
         "Animation, video and 3D in Blender: film-quality work for products, classrooms and brands.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
       areaServed: "Worldwide",
     },
     {
@@ -264,7 +264,7 @@ export const servicesCatalogJsonLd = {
       name: "Children's Digital Education",
       description:
         "Curriculum-aligned animated content, learning games and interactive activities for ages 1–8.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
       areaServed: "Worldwide",
     },
     {
@@ -273,7 +273,7 @@ export const servicesCatalogJsonLd = {
       name: "Real Estate Virtual Assistant",
       description:
         "AI Inside Sales Agent (ISA) for sub-5-minute lead response, or a dedicated human VA for MLS, CRM and transaction coordination.",
-      provider: { "@type": "Organization", name: "J.O.A.T. Kenya", url: SITE_URL },
+      provider: { "@type": "Organization", name: "J.O.A.T.", url: SITE_URL },
       areaServed: "Worldwide",
       url: `${SITE_URL}/real-estate-virtual-assistant`,
     },
@@ -318,7 +318,7 @@ export function faqPageJsonLd(items: { q: string; a: string }[]) {
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "J.O.A.T. Kenya",
+  name: "J.O.A.T.",
   url: SITE_URL,
   image: DEFAULT_IMAGE,
   email: "admin@joatkenya.com",

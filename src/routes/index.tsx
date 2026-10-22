@@ -81,9 +81,9 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     ...seo({
-      title: "JOAT Kenya | Elite Virtual Assistants, AI Automation & Lead Generation",
+      title: "JOAT | Elite Virtual Assistants, AI Automation & Lead Generation",
       description:
-        "JOAT Kenya delivers elite virtual assistants, AI automation and lead-generation marketing for growing businesses, backed by in-house software, media and education capabilities.",
+        "JOAT delivers elite virtual assistants, AI automation and lead-generation marketing for growing businesses, backed by in-house software, media and education capabilities.",
     }),
     scripts: [
       {
@@ -127,7 +127,7 @@ function Index() {
         </div>
         {/* Team skills — the second warm-white section. */}
         <TeamSkills />
-        {/* Why JOAT Kenya — warm-white section (grids unchanged). */}
+        {/* Why JOAT — warm-white section (grids unchanged). */}
         <Suspense fallback={null}>
           <WhyChoose />
         </Suspense>

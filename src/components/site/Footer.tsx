@@ -67,7 +67,7 @@ export function Footer() {
           <div className="lg:col-span-4">
             <img
               src={logo}
-              alt="JOAT KENYA"
+              alt="JOAT"
               width="513"
               height="200"
               loading="lazy"
@@ -143,7 +143,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-(--border) flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <div>© {new Date().getFullYear()} J.O.A.T. Kenya. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} J.O.A.T. All rights reserved.</div>
           <div className="flex gap-5">
             <a href={LEGAL_LINKS.privacy} className="hover:text-gold transition-colors">
               Privacy

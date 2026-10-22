@@ -10,9 +10,9 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
   head: () => ({
     ...seo({
-      title: "Contact JOAT Kenya | Software, Marketing, Media & AI",
+      title: "Contact JOAT | Software, Marketing, Media & AI",
       description:
-        "Contact JOAT Kenya: email admin@joatkenya.com, call +254 142 378 150, or book a 30-min meeting. Worldwide software, marketing, media and AI studio.",
+        "Contact JOAT: email admin@joatkenya.com, call +254 142 378 150, or book a 30-min meeting. Worldwide software, marketing, media and AI studio.",
       path: "/contact",
     }),
     scripts: [

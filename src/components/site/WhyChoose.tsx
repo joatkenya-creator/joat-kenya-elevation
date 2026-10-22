@@ -45,7 +45,7 @@ export function WhyChoose() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl"
         >
-          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">Why JOAT KENYA</div>
+          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">Why JOAT</div>
           <h2 className="text-4xl lg:text-6xl font-bold text-foreground">
             Built to deliver. <span className="gradient-text-red">Trusted to scale.</span>
           </h2>

@@ -133,7 +133,7 @@ export function Courses() {
         <div className="max-w-6xl mx-auto px-5 lg:px-8">
           <div className="max-w-3xl">
             <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">
-              A JOAT Kenya Live Cohort · Nairobi
+              A JOAT Live Cohort · Nairobi
             </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-[1.25] text-foreground">
               Finished IT but cannot actually build anything? In 8 weeks, ship 3 real apps.
@@ -231,11 +231,11 @@ export function Courses() {
         <div className="max-w-6xl mx-auto px-5 lg:px-8">
           <m.div {...fadeUp}>
             <SectionHeading
-              eyebrow="Why JOAT Kenya"
+              eyebrow="Why JOAT"
               title="We teach the way we ship, not what school taught us."
             />
             <p className="mt-6 max-w-2xl text-base text-muted-foreground leading-relaxed">
-              JOAT Kenya does not teach coding theory. We teach you to ship the way our own team
+              JOAT does not teach coding theory. We teach you to ship the way our own team
               ships production apps like{" "}
               <a
                 href="https://biobiz.app"
@@ -265,7 +265,7 @@ export function Courses() {
                 <span className="font-semibold text-foreground">
                   We have made the exact leap you need to make.{" "}
                 </span>
-                JOAT Kenya's team came up through practical building, from client websites to
+                JOAT's team came up through practical building, from client websites to
                 shipping full products, so we teach the jump from "I have a certificate" to "I can
                 build" because we have lived it.
               </p>

@@ -44,8 +44,8 @@ export function JobDetailModal({ job, onClose }: { job: Opening | null; onClose:
   const refer = () => {
     if (!job) return;
     const url = "https://joatkenya.com/careers";
-    const subject = `Job opening at J.O.A.T. Kenya: ${job.title}`;
-    const body = `I thought you'd be a great fit for this role at J.O.A.T. Kenya:\n\n${job.title}, ${job.location} (${job.type})\n\nSee details and apply here: ${url}`;
+    const subject = `Job opening at J.O.A.T.: ${job.title}`;
+    const body = `I thought you'd be a great fit for this role at J.O.A.T.:\n\n${job.title}, ${job.location} (${job.type})\n\nSee details and apply here: ${url}`;
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 

@@ -226,14 +226,14 @@ export function bookingIcs(p: { startAt: string; minutes: number; name: string }
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//J.O.A.T. Kenya//Consultation//EN",
+    "PRODID:-//J.O.A.T.//Consultation//EN",
     "BEGIN:VEVENT",
     `UID:${start.getTime()}-joat-kenya-consultation`,
     `DTSTAMP:${icsStamp(new Date())}`,
     `DTSTART:${icsStamp(start)}`,
     `DTEND:${icsStamp(end)}`,
-    `SUMMARY:${p.name} with J.O.A.T. Kenya`,
-    "DESCRIPTION:Joining details will be emailed by J.O.A.T. Kenya. Questions: admin@joatkenya.com / +254 142 378 150",
+    `SUMMARY:${p.name} with J.O.A.T.`,
+    "DESCRIPTION:Joining details will be emailed by J.O.A.T. Questions: admin@joatkenya.com / +254 142 378 150",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");

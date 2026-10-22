@@ -8,8 +8,8 @@ export const Route = createFileRoute("/courses_/account")({
   component: CourseAccountPage,
   head: () => ({
     ...seo({
-      title: "My Account | JOAT Kenya Courses",
-      description: "Your JOAT Kenya course registration.",
+      title: "My Account | JOAT Courses",
+      description: "Your JOAT course registration.",
       path: "/courses/account",
       noindex: true,
     }),

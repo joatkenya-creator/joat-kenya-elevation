@@ -46,7 +46,7 @@ export function Hero() {
 
         <p className="mt-5 text-lg lg:text-2xl font-semibold text-foreground/90">
           Elite virtual assistants, AI-powered automation and marketing that generates real leads,
-          built in-house by J.O.A.T. Kenya.
+          built in-house by J.O.A.T.
         </p>
 
         <p className="mt-4 text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">

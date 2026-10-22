@@ -50,7 +50,7 @@ export const EMAIL = "admin@joatkenya.com";
 
 export const whatsappLink = WHATSAPP_NUMBER
   ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-      "Hello J.O.A.T. Kenya, I would like to ask about a Kenya market entry / relocation consultation.",
+      "Hello J.O.A.T., I would like to ask about a Kenya market entry / relocation consultation.",
     )}`
   : null;
 
@@ -106,7 +106,7 @@ export const CONSULTATIONS: ConsultationOption[] = [
       "Technology and systems you will need on the ground",
       "Marketing and route to customer in a market where mobile and word of mouth dominate",
       "The specific questions to answer before committing capital",
-      "A recommended sequence of next steps, and where J.O.A.T. Kenya can help if you want it",
+      "A recommended sequence of next steps, and where J.O.A.T. can help if you want it",
     ],
     cta: "Book a 2-Hour Market Entry Session",
     price: priceLabel(PRICE_120),
@@ -222,7 +222,7 @@ export const DIRECTOR: {
   bio: string[] | null;
 } = {
   name: null,
-  title: "Director, J.O.A.T. Kenya",
+  title: "Director, J.O.A.T.",
   photo: null,
   bio: null,
 };
@@ -236,7 +236,7 @@ export const CONSULTATION_FAQS = [
   },
   {
     q: "Can I speak with someone about moving my business to Kenya?",
-    a: "Yes, that is exactly what these sessions are. You book a 1-hour discovery consultation or a 2-hour market entry strategy session and speak directly with the Director of J.O.A.T. Kenya about your plans, by video call or phone.",
+    a: "Yes, that is exactly what these sessions are. You book a 1-hour discovery consultation or a 2-hour market entry strategy session and speak directly with the Director of J.O.A.T. about your plans, by video call or phone.",
   },
   {
     q: "Can you help me determine whether Kenya is the right market for my business?",
@@ -264,7 +264,7 @@ export const CONSULTATION_FAQS = [
   },
   {
     q: "Can you help me understand the Kenyan market?",
-    a: "Yes, that is the core of the service. J.O.A.T. Kenya has operated here for over 12 years, serving Kenyan and international clients, so the conversation is grounded in running a business here rather than in published summaries.",
+    a: "Yes, that is the core of the service. J.O.A.T. has operated here for over 12 years, serving Kenyan and international clients, so the conversation is grounded in running a business here rather than in published summaries.",
   },
   {
     q: "Can you help me find business opportunities in Kenya?",
@@ -286,7 +286,7 @@ export const TRUST_POINTS = [
   {
     stat: "12+",
     label: "Years in business",
-    text: "J.O.A.T. Kenya (Jack Urban Services Ltd) has been operating from Kiambu since long before the current wave of interest in the market.",
+    text: "J.O.A.T. (Jack Urban Services Ltd) has been operating from Kiambu since long before the current wave of interest in the market.",
   },
   {
     stat: "Kenya",

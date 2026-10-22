@@ -21,10 +21,10 @@ const consultationServiceJsonLd = {
   serviceType: "Kenya market entry and relocation consulting",
   name: "Kenya Market Entry & Relocation Consultation",
   description:
-    "One-on-one consulting for people considering moving to Kenya, starting a business in Kenya, expanding into the Kenyan market, investing, or building a team, delivered directly by the Director of J.O.A.T. Kenya.",
+    "One-on-one consulting for people considering moving to Kenya, starting a business in Kenya, expanding into the Kenyan market, investing, or building a team, delivered directly by the Director of J.O.A.T.",
   provider: {
     "@type": "Organization",
-    name: "J.O.A.T. Kenya",
+    name: "J.O.A.T.",
     url: SITE_URL,
     telephone: "+254142378150",
     email: "admin@joatkenya.com",
@@ -61,9 +61,9 @@ export const Route = createFileRoute("/kenya-consultation")({
   component: KenyaConsultationPage,
   head: () => ({
     ...seo({
-      title: "Kenya Market Entry & Relocation Consultation | JOAT Kenya",
+      title: "Kenya Market Entry & Relocation Consultation | JOAT",
       description:
-        "Moving to Kenya, starting a business, or expanding into the Kenyan market? Book a 1-hour discovery consultation or a 2-hour market entry strategy session with JOAT Kenya's Director.",
+        "Moving to Kenya, starting a business, or expanding into the Kenyan market? Book a 1-hour discovery consultation or a 2-hour market entry strategy session with JOAT's Director.",
       path: PATH,
     }),
     scripts: [

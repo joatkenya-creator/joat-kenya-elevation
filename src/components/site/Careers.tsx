@@ -38,7 +38,7 @@ const culture = [
 ];
 
 function applyEmailHref() {
-  return `mailto:${APPLY_EMAIL}?subject=${encodeURIComponent("General application for JOAT Kenya")}`;
+  return `mailto:${APPLY_EMAIL}?subject=${encodeURIComponent("General application for JOAT")}`;
 }
 
 function OpeningCard({ job, onOpen }: { job: Opening; onOpen: (j: Opening) => void }) {

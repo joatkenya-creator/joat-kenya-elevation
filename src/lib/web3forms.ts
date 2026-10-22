@@ -21,7 +21,7 @@ export async function deliverViaWeb3Forms(p: ContactPayload, files: File[] = [])
 
   const fields = {
     access_key: key,
-    from_name: "JOAT KENYA Website",
+    from_name: "JOAT Website",
     subject: `JOAT contact · ${p.area} · ${p.first} ${p.last}`,
     name: `${p.first} ${p.last}`,
     email: p.email,
@@ -131,7 +131,7 @@ export async function deliverApplicationViaWeb3Forms(app: {
 
   const fields = {
     access_key: key,
-    from_name: "JOAT KENYA Careers",
+    from_name: "JOAT Careers",
     subject: `New application: ${app.jobTitle} - ${app.name}`,
     name: app.name,
     email: app.email,
@@ -222,7 +222,7 @@ export async function deliverCourseRegistrationViaWeb3Forms(reg: {
 
   const fields = {
     access_key: key,
-    from_name: "JOAT KENYA Courses",
+    from_name: "JOAT Courses",
     subject: `New course registration: ${TIER_LABEL[reg.tier] ?? reg.tier} — ${reg.fullName}`,
     name: reg.fullName,
     email: reg.email,
@@ -320,7 +320,7 @@ export async function deliverConsultationBookingViaWeb3Forms(b: {
 
   const fields = {
     access_key: key,
-    from_name: "JOAT KENYA Consultations",
+    from_name: "JOAT Consultations",
     subject: `Consultation booked: ${sessionName} — ${b.fullName} (${b.country})`,
     name: b.fullName,
     email: b.email,
