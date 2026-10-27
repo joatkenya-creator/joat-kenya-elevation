@@ -11,7 +11,7 @@ import {
   Receipt,
 } from "lucide-react";
 // Shared with the Navbar import and index.html preload — single download.
-const logo = "/joat-logo.png?v=5";
+const logo = "/joat-logo.png?v=6";
 import { LEGAL_LINKS } from "@/lib/links";
 
 const socials: { Icon: typeof Linkedin; href: string; label: string }[] = [
@@ -68,7 +68,7 @@ export function Footer() {
             <img
               src={logo}
               alt="JOAT"
-              width="513"
+              width="508"
               height="200"
               loading="lazy"
               decoding="async"
