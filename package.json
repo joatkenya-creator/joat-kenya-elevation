@@ -11,7 +11,10 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test:security": "node --test tests/*.test.mjs",
-    "security:live": "node --env-file=.env scripts/security-check-live.mjs"
+    "security:live": "node --env-file=.env scripts/security-check-live.mjs",
+    "dev:portal": "vite --config vite.portal.config.ts",
+    "build:portal": "vite build --config vite.portal.config.ts",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.portal.json"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
