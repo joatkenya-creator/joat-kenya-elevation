@@ -34,6 +34,12 @@ test("CSP allows exactly the inline scripts index.html ships", () => {
   }
 });
 
+test("CSP is enforced and nothing relies on inline event handlers", () => {
+  assert.match(htaccess, /^\s*Header always set Content-Security-Policy "/m, "CSP is not enforced");
+  const handler = read("index.html").match(/<[a-z][^>]*\son[a-z]+=/i);
+  assert.equal(handler, null, `inline on*= handler is blocked by the CSP: ${handler?.[0]}`);
+});
+
 test("HTTPS redirect runs before the SPA fallback", () => {
   const redirect = htaccess.indexOf("RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]");
   const fallback = htaccess.indexOf("RewriteRule ^ index.html [L]");

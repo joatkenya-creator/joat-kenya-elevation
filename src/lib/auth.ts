@@ -101,6 +101,10 @@ export async function requestPasswordReset(email: string) {
   });
 }
 
+export async function updatePassword(password: string) {
+  return supabase.auth.updateUser({ password });
+}
+
 export async function insertCourseStudentRow(
   userId: string,
   email: string,

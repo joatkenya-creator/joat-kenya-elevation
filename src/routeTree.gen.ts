@@ -9,36 +9,66 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WorkWithUsRouteImport } from './routes/work-with-us'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as ServicesRouteImport } from './routes/services'
-import { Route as RealEstateVirtualAssistantRouteImport } from './routes/real-estate-virtual-assistant'
-import { Route as ProductsRouteImport } from './routes/products'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as KenyaConsultationRouteImport } from './routes/kenya-consultation'
-import { Route as CoursesRouteImport } from './routes/courses'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CareersRouteImport } from './routes/careers'
-import { Route as ArticlesRouteImport } from './routes/articles'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CoursesSignUpRouteImport } from './routes/courses_.sign-up'
-import { Route as CoursesLoginRouteImport } from './routes/courses_.login'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ArticlesRouteImport } from './routes/articles'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as KenyaConsultationRouteImport } from './routes/kenya-consultation'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ProductsRouteImport } from './routes/products'
+import { Route as RealEstateVirtualAssistantRouteImport } from './routes/real-estate-virtual-assistant'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WorkWithUsRouteImport } from './routes/work-with-us'
 import { Route as CoursesAccountRouteImport } from './routes/courses_.account'
+import { Route as CoursesLoginRouteImport } from './routes/courses_.login'
+import { Route as CoursesSignUpRouteImport } from './routes/courses_.sign-up'
 
-const WorkWithUsRoute = WorkWithUsRouteImport.update({
-  id: '/work-with-us',
-  path: '/work-with-us',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
+const ArticlesRoute = ArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KenyaConsultationRoute = KenyaConsultationRouteImport.update({
+  id: '/kenya-consultation',
+  path: '/kenya-consultation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RealEstateVirtualAssistantRoute =
@@ -47,54 +77,24 @@ const RealEstateVirtualAssistantRoute =
     path: '/real-estate-virtual-assistant',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ProductsRoute = ProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
-const KenyaConsultationRoute = KenyaConsultationRouteImport.update({
-  id: '/kenya-consultation',
-  path: '/kenya-consultation',
+const WorkWithUsRoute = WorkWithUsRouteImport.update({
+  id: '/work-with-us',
+  path: '/work-with-us',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoursesRoute = CoursesRouteImport.update({
-  id: '/courses',
-  path: '/courses',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareersRoute = CareersRouteImport.update({
-  id: '/careers',
-  path: '/careers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ArticlesRoute = ArticlesRouteImport.update({
-  id: '/articles',
-  path: '/articles',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoursesSignUpRoute = CoursesSignUpRouteImport.update({
-  id: '/courses_/sign-up',
-  path: '/courses/sign-up',
+const CoursesAccountRoute = CoursesAccountRouteImport.update({
+  id: '/courses_/account',
+  path: '/courses/account',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesLoginRoute = CoursesLoginRouteImport.update({
@@ -102,9 +102,9 @@ const CoursesLoginRoute = CoursesLoginRouteImport.update({
   path: '/courses/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoursesAccountRoute = CoursesAccountRouteImport.update({
-  id: '/courses_/account',
-  path: '/courses/account',
+const CoursesSignUpRoute = CoursesSignUpRouteImport.update({
+  id: '/courses_/sign-up',
+  path: '/courses/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -241,81 +241,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/work-with-us': {
-      id: '/work-with-us'
-      path: '/work-with-us'
-      fullPath: '/work-with-us'
-      preLoaderRoute: typeof WorkWithUsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/real-estate-virtual-assistant': {
-      id: '/real-estate-virtual-assistant'
-      path: '/real-estate-virtual-assistant'
-      fullPath: '/real-estate-virtual-assistant'
-      preLoaderRoute: typeof RealEstateVirtualAssistantRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/kenya-consultation': {
-      id: '/kenya-consultation'
-      path: '/kenya-consultation'
-      fullPath: '/kenya-consultation'
-      preLoaderRoute: typeof KenyaConsultationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/courses': {
-      id: '/courses'
-      path: '/courses'
-      fullPath: '/courses'
-      preLoaderRoute: typeof CoursesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/careers': {
-      id: '/careers'
-      path: '/careers'
-      fullPath: '/careers'
-      preLoaderRoute: typeof CareersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/articles': {
-      id: '/articles'
-      path: '/articles'
-      fullPath: '/articles'
-      preLoaderRoute: typeof ArticlesRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -325,18 +255,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/articles': {
+      id: '/articles'
+      path: '/articles'
+      fullPath: '/articles'
+      preLoaderRoute: typeof ArticlesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/courses_/sign-up': {
-      id: '/courses_/sign-up'
-      path: '/courses/sign-up'
-      fullPath: '/courses/sign-up'
-      preLoaderRoute: typeof CoursesSignUpRouteImport
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kenya-consultation': {
+      id: '/kenya-consultation'
+      path: '/kenya-consultation'
+      fullPath: '/kenya-consultation'
+      preLoaderRoute: typeof KenyaConsultationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/real-estate-virtual-assistant': {
+      id: '/real-estate-virtual-assistant'
+      path: '/real-estate-virtual-assistant'
+      fullPath: '/real-estate-virtual-assistant'
+      preLoaderRoute: typeof RealEstateVirtualAssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work-with-us': {
+      id: '/work-with-us'
+      path: '/work-with-us'
+      fullPath: '/work-with-us'
+      preLoaderRoute: typeof WorkWithUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses_/account': {
+      id: '/courses_/account'
+      path: '/courses/account'
+      fullPath: '/courses/account'
+      preLoaderRoute: typeof CoursesAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses_/login': {
@@ -346,11 +346,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/courses_/account': {
-      id: '/courses_/account'
-      path: '/courses/account'
-      fullPath: '/courses/account'
-      preLoaderRoute: typeof CoursesAccountRouteImport
+    '/courses_/sign-up': {
+      id: '/courses_/sign-up'
+      path: '/courses/sign-up'
+      fullPath: '/courses/sign-up'
+      preLoaderRoute: typeof CoursesSignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
   }

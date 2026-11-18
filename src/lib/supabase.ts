@@ -20,6 +20,11 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
   );
 }
 
+// A password-reset email link lands with `#...type=recovery` in the URL. The
+// client strips that hash once it has signed the user in, so read it first.
+export const isPasswordRecovery =
+  typeof window !== "undefined" && /type=recovery/.test(window.location.hash);
+
 export const supabase = createClient(SUPABASE_URL ?? "", SUPABASE_KEY ?? "");
 
 export const UPLOADS_BUCKET =

@@ -1,12 +1,89 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
-import { requestPasswordReset, signInStudent } from "@/lib/auth";
+import { requestPasswordReset, signInStudent, updatePassword, useSession } from "@/lib/auth";
+import { isPasswordRecovery } from "@/lib/supabase";
 
 const inputClass =
   "w-full rounded-md bg-black/5 border border-(--glass-border) px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-(--joat-gold)/50 transition-colors";
 
 export function CourseLogin() {
+  const { session } = useSession();
+  // Arrived from a reset email: the link has already signed them in, so ask
+  // for the new password instead of showing the login form.
+  const [recovering, setRecovering] = useState(isPasswordRecovery);
+  if (recovering && session) return <SetNewPassword onDone={() => setRecovering(false)} />;
+  return <LoginForm />;
+}
+
+function SetNewPassword({ onDone }: { onDone: () => void }) {
+  const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const submit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (sending) return;
+    if (password.length < 8) return setError("Password must be at least 8 characters");
+    if (password !== confirm) return setError("Passwords don't match");
+    setError(null);
+    setSending(true);
+    const { error: updateError } = await updatePassword(password);
+    setSending(false);
+    if (updateError) return setError(updateError.message || "Could not update your password.");
+    onDone();
+    void navigate({ to: "/courses/account" });
+  };
+
+  return (
+    <div className="max-w-md mx-auto px-5 py-16 lg:py-20">
+      <h1 className="text-3xl font-bold text-foreground">Set a new password</h1>
+      <p className="mt-2 text-sm text-muted-foreground">Choose a new password for your account.</p>
+
+      <form onSubmit={submit} className="mt-8 space-y-4">
+        <div>
+          <label className="text-xs text-muted-foreground">New password</label>
+          <input
+            className={inputClass}
+            type="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <label className="text-xs text-muted-foreground">Confirm new password</label>
+          <input
+            className={inputClass}
+            type="password"
+            autoComplete="new-password"
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+          />
+        </div>
+
+        {error && (
+          <p className="text-sm text-(--joat-red) bg-(--joat-red)/10 rounded-md px-3 py-2">
+            {error}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          disabled={sending}
+          className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md bg-(--joat-gold) text-(--joat-navy-deep) text-sm font-semibold hover:brightness-110 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+          Save new password
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function LoginForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

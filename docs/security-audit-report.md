@@ -57,7 +57,7 @@ Status key: **Confirmed** = reproduced or proven from the policy text. **Suspect
   - insert their row with any `status`;
   - change `tier` after registering, although the code comment says tier changes go through the team.
 - **Impact:** students can falsify their payment or progress stage and their price tier. They cannot touch other students' rows: RLS holds.
-- **Status:** Suspected, with high confidence. Not reproduced live, because that would mean creating a real account on production.
+- **Status:** Confirmed. Reproduced on 7 Oct 2026 against the real migrations in a local Postgres (`tests/db-policies.test.mjs old`): a student could insert and update `status`, and change `tier`. Not reproduced on production, since that would mean creating a real account.
 - **Fix written:** `20261002110000_tighten_course_students_and_bookings.sql` revokes table-level INSERT/UPDATE from `authenticated` and grants column lists instead:
   - **INSERT:** the 8 fields the sign-up form sends;
   - **UPDATE:** the 5 fields the account page edits.
@@ -69,9 +69,9 @@ Status key: **Confirmed** = reproduced or proven from the policy text. **Suspect
 - **Where:** `public.consultation_bookings`, policy `Public can request a consultation` (`with check (true)`)
 - **Category:** Business-logic flaw / insufficient input validation (A04)
 - **Evidence:** the policy accepts any row from the anon key. Combined with the one-booking-per-slot unique index, a script can reserve every slot for weeks. It can also create rows already marked `confirmed`, rows in the past, or rows years ahead, with fields of unlimited length. All limits exist only in the browser (zod).
-- **Status:** Confirmed from the policy definition. Not exercised live, because that would write to production.
+- **Status:** Confirmed. Reproduced against the real migrations in a local Postgres: `confirmed`, past and far-future bookings were all accepted. **Still open in production until `supabase db push`.**
 - **Fix written:** same migration. New rows must have `status = 'requested'`, `start_at` between now and +90 days (the UI horizon is 45), and field lengths matching the form's validation.
-- **Residual risk:** someone can still book every *valid* slot. Stopping that needs rate limiting or a CAPTCHA (see section 8).
+- **Residual risk:** now capped at 3 bookings per IP per hour (`20261007100000`, see L-6). Someone rotating through many IPs could still book many valid slots; a CAPTCHA is the next step if that happens.
 
 #### M-3 — Article HTML was rendered unsanitized (stored-XSS sink)
 - **Where:** `src/components/site/News.tsx`, `dangerouslySetInnerHTML={{ __html: active.content }}`
@@ -103,11 +103,11 @@ Status key: **Confirmed** = reproduced or proven from the policy text. **Suspect
 |---|---|---|---|
 | L-1 | Directory listing on (`https://joatkenya.com/assets/` lists 864 files) | Confirmed live | **Fixed:** `Options -Indexes`. Covered by a test. Verify after deploy (see section 6). |
 | L-2 | `npm audit`: high/moderate advisories in build tooling (postcss, browserslist, nanoid, js-yaml, brace-expansion, baseline-browser-mapping) | Confirmed. Build-time only, not shipped to browsers. | **Fixed** with `npm audit fix` (no `--force`, lockfile only). |
-| L-3 | `sharp` ≤ 0.35.4 (libvips/libheif CVEs). Dev dependency, used only by local image-compression scripts on your own images. | Confirmed, low exposure | **Open.** The fix is 0.34 → 0.35, which npm marks as breaking. Upgrade deliberately and re-run `scripts/compress-*.mjs`. |
-| L-4 | 8-character password minimum is enforced only in the browser | Server setting unverified | **Open:** set the minimum length (and the leaked-password check, if your plan has it) in Supabase → Auth → Policies. |
-| L-5 | Password reset link signs the student in, but the site never asks for a new password (`PASSWORD_RECOVERY` is not handled, and `updateUser` is never called) | Confirmed in code | **Open:** feature work, not changed. Add a "set new password" step on `/courses/login`. |
-| L-6 | Anon-insert tables (`contact_submissions`, `applications`, `newsletter_subscribers`, `page_events`) and the uploads have no server-side rate limit or length caps | Confirmed from policies | **Open:** spam and storage abuse. See section 8. |
-| L-7 | CSP is `Report-Only`, so it does not block anything yet | Confirmed live | **Open.** The inline-script hash is **correct** (browsers hash after normalizing CRLF to LF), and a new test now guards it. Enforcing is safe to try after the console check described in `.htaccess`. |
+| L-3 | `sharp` ≤ 0.35.5-rc.1 (libvips/libheif/librsvg CVEs). Dev dependency, used only by local image-compression scripts on your own images. | Confirmed, low exposure | **Open (rechecked 7 Oct).** The fix is 0.34 → 0.35.5, which npm marks as breaking. Upgrade deliberately and re-run `scripts/compress-*.mjs`. |
+| L-4 | 8-character password minimum is enforced only in the browser | Server setting unverified | **Owner action:** the minimum is a dashboard setting with no API reachable from this repo. Set it to 8 in Supabase → Authentication → Providers → Email → *Minimum password length*. Both sign-up and the new reset form already require 8. |
+| L-5 | Password reset link signs the student in, but the site never asks for a new password | Confirmed in code | **Fixed (7 Oct).** `src/lib/supabase.ts` records `type=recovery` from the link before the client strips it; `/courses/login` then shows *Set a new password* (8+ chars, confirmed) and calls `updateUser`. A tampered link was checked in headless Chrome and falls back to the normal login. A real reset email still needs one manual test. |
+| L-6 | Anon-insert tables had no server-side rate limit | Confirmed from policies | **Fixed (7 Oct), pending `db push`.** `20261007100000_rate_limit_public_forms.sql`: per-IP hourly limits (contact 10, applications 10, bookings 3, newsletter 5), keyed on Cloudflare's `cf-connecting-ip` (the client can't spoof it; the first `x-forwarded-for` entry can be spoofed). Verified locally. Not covered: storage uploads (the bucket size and type limits apply) and `page_events`. No CAPTCHA; add Turnstile if IP rotation shows up. |
+| L-7 | CSP was `Report-Only` | Confirmed live | **Fixed (7 Oct), pending deploy.** Enforcing it as written would have broken two things on every page: Clarity (`scripts.clarity.ms` was not allowed) and Google Fonts (an inline `onload=` handler). Both fixed, and the header is now enforced. All 15 routes were loaded in headless Chrome under the enforced policy with zero violations; fonts, GA, Clarity, the Calendly popup and the map embed all confirmed working. |
 
 ### Informational
 
@@ -129,6 +129,11 @@ Status key: **Confirmed** = reproduced or proven from the policy text. **Suspect
 | `public/.htaccess` | HTTPS redirect (first rule), HSTS, `Options -Indexes`, comment pointing at the CSP-hash test | M-4, L-1 |
 | `package.json` / `package-lock.json` | Add `dompurify` ^3.4.16; `npm audit fix`; add the `test:security` and `security:live` scripts | M-3, L-2 |
 | `tests/security.test.mjs` (new) | Static regression tests (Node's built-in runner, no new dependencies) | All of the above |
+| `supabase/migrations/20261007100000_rate_limit_public_forms.sql` (7 Oct) | Per-IP insert rate limits on the four public form tables | L-6, M-2 |
+| `src/lib/supabase.ts`, `src/lib/auth.ts`, `src/components/site/CourseLogin.tsx` (7 Oct) | Set-new-password step after a reset link | L-5 |
+| `index.html`, `public/.htaccess` (7 Oct) | Font swap moved into the hashed script; `scripts.clarity.ms` allowed; CSP enforced | L-7 |
+| `src/routes/__root.tsx` (7 Oct) | Error component typed with `ErrorComponentProps` (needed after the router security bump) | L-2 |
+| `tests/db-policies.test.mjs` (7 Oct) | Applies the migrations to an in-process Postgres (PGlite, new dev dependency) and attacks the policies | M-1, M-2, M-5, C-1, L-6 |
 | `scripts/security-check-live.mjs` (new) | Read-only live check of table reads, bucket listing and schema exposure | C-1 regression |
 
 **Dependency changes:** added `dompurify` (Cure53, the standard HTML sanitizer). Lockfile-only bumps of postcss, browserslist, nanoid, js-yaml, brace-expansion and baseline-browser-mapping within their existing semver ranges. No major upgrades.
@@ -143,10 +148,10 @@ Status key: **Confirmed** = reproduced or proven from the policy text. **Suspect
 |---|---|
 | `npx tsc --noEmit` | Pass (also passed before the changes) |
 | `npm run build` (Vite + prerender of 12 routes) | Pass |
-| `npm run test:security` | 5 of 5 pass |
+| `npm run test:security` | 7 of 7 pass (7 Oct), including the 24 database-policy checks |
 | Mutation check: the same tests run against the pre-fix `.htaccess` and `News.tsx`, plus a planted service-role JWT, a planted `sb_secret_` key and an edited inline script | 5 of 5 tests fail as they should |
 | `npm run security:live` | 9 pass, **1 fail (C-1: expected until the migration is pushed)** |
-| `npm audit` | 1 high remaining (`sharp`, dev only; see L-3), down from 7 |
+| `npm audit` | 7 Oct: new advisories (seroval *critical* via TanStack Router, braces, source-map-js) fixed with `npm audit fix`; 1 high remaining (`sharp`, dev only; see L-3). The router bump required one type fix in `src/routes/__root.tsx`. |
 | `npx eslint .` | 1,488 pre-existing errors before the changes, all `prettier/prettier` from CRLF line endings. No new errors from these changes; `News.tsx` dropped from 269 to 1 (the one left is pre-existing, at line 57). |
 | Built bundle contains no privileged key | Pass (covered by the test suite, which scans `dist/`) |
 
@@ -167,7 +172,7 @@ There is no existing unit or end-to-end test suite in the project. Forms, naviga
 
 ## 6. Manual steps for the owner
 
-1. **Apply the migrations** (fixes C-1, M-1, M-2, M-5): `supabase db push`. Then run `npm run security:live` (it should show all PASS) and queries Q1 and Q2.
+1. **Apply the migrations** (fixes C-1, M-1, M-2, M-5, L-6): `supabase db push` (three files: `20261002100000`, `20261002110000`, `20261007100000`). Then run `npm run security:live` (it should show all PASS) and queries Q1 and Q2.
 2. **Deploy the new build** (`npm run build`, then upload `dist/` including `.htaccess`). Then check:
    - `curl -I http://joatkenya.com/` returns `301` to `https://`;
    - the homepage loads (if it returns **500**, the host forbids `Options`: delete that one line and redeploy);
@@ -205,7 +210,7 @@ order by tablename, cmd;
 
 - **Run `npm run test:security` before every deploy**, and `npm run security:live` after any Supabase change.
 - **Put every table and bucket policy in `supabase/migrations/`.** `applications`, `blog_posts`, `leads` and the careers bucket are currently configured only in the dashboard, which is how C-1-style drift goes unnoticed.
-- **Add a CAPTCHA (Cloudflare Turnstile) to the public forms** and move inserts behind a small Edge Function that verifies it. This is the real fix for M-2's residual risk and for L-6.
-- **Enforce the CSP** (rename the header from `Report-Only`) once a pass over the pages shows no console violations.
+- **If spam gets past the per-IP limits**, add Cloudflare Turnstile to the public forms and move the inserts behind a small Edge Function that verifies it.
+- **When adding any third-party script, iframe or API,** add its origin to the CSP in `.htaccess`; the enforced policy blocks anything not listed.
 - **Turn on Supabase's Security Advisor** and review it monthly. Upgrade `sharp` when convenient.
 - **Set a retention period** for contact attachments and CVs, and delete old files on a schedule.
