@@ -1,6 +1,15 @@
+import { useState } from "react";
 import { Link, Navigate, createFileRoute } from "@tanstack/react-router";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "@/lib/auth";
-import { useAccount, usePrograms } from "../account";
+import { supabase } from "@/lib/supabase";
+import {
+  ACTIVE_STATUSES,
+  friendlyError,
+  useAccount,
+  usePrograms,
+  type MembershipStatus,
+} from "../account";
 import { ErrorNote, Loading, Page, StatusBadge } from "../ui";
 
 export const Route = createFileRoute("/dashboard")({
@@ -9,6 +18,14 @@ export const Route = createFileRoute("/dashboard")({
   }),
   component: Dashboard,
 });
+
+const STATUS_TEXT: Record<MembershipStatus, string> = {
+  pending: "We're reviewing your application.",
+  approved: "You're approved. Your referral links will appear here once tracking is switched on.",
+  rejected: "Not approved this time. You're welcome to apply again.",
+  suspended: "This membership is suspended. Contact the partner team for details.",
+  withdrawn: "You left this programme. You can apply again at any time.",
+};
 
 function Dashboard() {
   const { session, loading } = useSession();
@@ -27,25 +44,33 @@ function Dashboard() {
 
   const { profile, memberships, staff } = account.data!;
   const programName = (id: string) => programs?.find((p) => p.id === id)?.name ?? id;
+  const canApply = (programs ?? []).some(
+    (p) =>
+      p.accepting_applications &&
+      !memberships.some((m) => m.program_id === p.id && ACTIVE_STATUSES.includes(m.status)),
+  );
 
   return (
     <Page title="Dashboard" intro={<>Signed in as {session.user.email}</>}>
+      {staff.length > 0 && (
+        <p className="text-sm">
+          You have a staff role. Go to the{" "}
+          <Link to="/admin" className="text-primary underline">
+            admin area
+          </Link>
+          .
+        </p>
+      )}
+
       {!profile ? (
         <section className="rounded-lg border border-border bg-card p-6">
           <h2 className="text-lg font-semibold">You're not an ambassador yet</h2>
           <p className="mt-2 text-muted-foreground">
-            This account doesn't have an ambassador profile. Applications open soon. When they do,
-            you'll be able to apply to one or both programmes from here.
+            {canApply
+              ? "Apply to one or both programmes. It's free and takes a few minutes."
+              : "Applications open soon. When they do, you'll be able to apply from here."}
           </p>
-          {staff.length > 0 && (
-            <p className="mt-4 text-sm">
-              You have a staff role. Go to the{" "}
-              <Link to="/admin" className="text-primary underline">
-                admin area
-              </Link>
-              .
-            </p>
-          )}
+          {canApply && <ApplyLink />}
         </section>
       ) : (
         <>
@@ -60,20 +85,88 @@ function Dashboard() {
             ) : (
               <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
                 {memberships.map((m) => (
-                  <li key={m.program_id} className="flex items-center justify-between p-4">
-                    <span className="font-medium">{programName(m.program_id)}</span>
-                    <StatusBadge status={m.status} />
+                  <li
+                    key={m.program_id}
+                    className="flex flex-wrap items-start justify-between gap-3 p-4"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{programName(m.program_id)}</span>
+                        <StatusBadge status={m.status} />
+                      </div>
+                      <p className="mt-1 text-sm text-muted-foreground">{STATUS_TEXT[m.status]}</p>
+                    </div>
+                    {(m.status === "pending" || m.status === "approved") && (
+                      <LeaveProgramme programId={m.program_id} name={programName(m.program_id)} />
+                    )}
                   </li>
                 ))}
               </ul>
             )}
-            <p className="mt-4 text-sm text-muted-foreground">
-              Referral links, clicks, conversions and commissions will appear here once tracking is
-              switched on for your approved programmes.
-            </p>
+            {canApply && <ApplyLink label="Apply to another programme" />}
           </section>
         </>
       )}
     </Page>
+  );
+}
+
+function ApplyLink({ label = "Apply now" }: { label?: string }) {
+  return (
+    <Link
+      to="/apply"
+      className="mt-4 inline-block rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+    >
+      {label}
+    </Link>
+  );
+}
+
+/** Two-step button: browsers' confirm() dialogs are avoided on purpose. */
+function LeaveProgramme({ programId, name }: { programId: string; name: string }) {
+  const queryClient = useQueryClient();
+  const [confirming, setConfirming] = useState(false);
+  const leave = useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase.rpc("withdraw_partner_membership", {
+        p_program_id: programId,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["account"] }),
+  });
+
+  if (!confirming)
+    return (
+      <button
+        type="button"
+        onClick={() => setConfirming(true)}
+        className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+      >
+        Leave programme
+      </button>
+    );
+  return (
+    <div className="flex flex-col items-end gap-2 text-sm">
+      <span>Leave {name}?</span>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          disabled={leave.isPending}
+          onClick={() => leave.mutate()}
+          className="rounded-md bg-red-700 px-3 py-1.5 text-white hover:bg-red-800 disabled:opacity-60"
+        >
+          {leave.isPending ? "Leaving…" : "Yes, leave"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setConfirming(false)}
+          className="rounded-md border border-border px-3 py-1.5"
+        >
+          Cancel
+        </button>
+      </div>
+      {leave.error && <ErrorNote>{friendlyError(leave.error)}</ErrorNote>}
+    </div>
   );
 }

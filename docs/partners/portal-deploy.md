@@ -1,6 +1,6 @@
 # Partner portal: setup and deployment
 
-The portal at `partners.joatglobal.com` is a second build of this repository. It shares the
+The portal at `partners.joatkenya.com` is a second build of this repository. It shares the
 Supabase project with the public site but deploys separately, so a portal release never touches
 joatkenya.com.
 
@@ -58,7 +58,7 @@ Instead, run the 4 new files by hand, then record them:
 1. Open https://supabase.com/dashboard/project/prkdfkkhqncxkyehokop/auth/url-configuration
 2. Leave **Site URL** as it is. Course logins on joatkenya.com depend on it.
 3. Under **Redirect URLs**, click **Add URL** and add, one at a time:
-   - `https://partners.joatglobal.com/login`
+   - `https://partners.joatkenya.com/login`
    - `http://localhost:8081/login` (local testing)
 4. Click **Save**.
 5. In the left menu, under Authentication, open **Multi-Factor** and check that **TOTP
@@ -133,33 +133,33 @@ Then:
 `_headers` pins the Supabase project URL in the Content-Security-Policy `connect-src`. If the
 project ever changes, update it there too.
 
-## 5. DNS for partners.joatglobal.com
+## 5. DNS for partners.joatkenya.com
+
+joatkenya.com's DNS is hosted by Truehost (nameservers `ns1.cloudoon.com`, `ns2.cloudoon.net`,
+`ns3.cloudoon.org`), so the record goes in Truehost.
 
 1. In Cloudflare: the `joat-partners` project → **Custom domains** → **Set up a custom domain** →
-   enter `partners.joatglobal.com` → **Continue**. Cloudflare then shows the CNAME record it expects.
+   enter `partners.joatkenya.com` → **Continue**. Cloudflare then shows the CNAME record it expects.
    Do this before adding the DNS record.
-2. Add that record where joatglobal.com's DNS is managed. Its nameservers are
-   `ns-cloud-a*.googledomains.com`, so it's one of:
-   - **Google Cloud Console**: https://console.cloud.google.com/net-services/dns/zones → the
-     `joatglobal.com` zone → **Add standard** (record set).
-   - **Squarespace Domains** (where old Google Domains moved): https://account.squarespace.com/domains
-     → `joatglobal.com` → **DNS** → **Custom records** → **Add record**.
-
-   Record:
+2. Log in to Truehost cPanel for joatkenya.com → **Domains** section → **Zone Editor** → on the
+   `joatkenya.com` row click **+ CNAME Record**. (No cPanel access? Truehost client area →
+   **Domains** → joatkenya.com → **Manage DNS**, or ask Truehost support to add it.)
 
    | Field | Value |
    |---|---|
-   | Host / DNS name | `partners` |
+   | Name | `partners` (cPanel may show it as `partners.joatkenya.com.`) |
    | Type | `CNAME` |
    | TTL | `300` (or the lowest offered) |
-   | Data / Canonical name | `joat-partners.pages.dev` (Cloud Console wants a trailing dot: `joat-partners.pages.dev.`) |
+   | Record / CNAME | `joat-partners.pages.dev` |
 
+   If a `partners` A record or subdomain already exists in cPanel, remove it first; a name can't have
+   both.
 3. Save. Back in Cloudflare, the domain changes from "Verifying" to **Active**, usually within
    minutes and up to 24 hours. The certificate is issued automatically.
-4. Open https://partners.joatglobal.com and sign in with the super-admin account. Visiting **Admin**
+4. Open https://partners.joatkenya.com and sign in with the super-admin account. Visiting **Admin**
    should show the authenticator QR code.
 
-Nothing else in the joatglobal.com zone changes; the Shopify store is unaffected.
+Nothing else in the joatkenya.com zone changes; the main site stays on Truehost.
 
 ## Rollback
 

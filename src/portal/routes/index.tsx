@@ -49,9 +49,17 @@ function Home() {
             ambassadors.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
+            {programs?.some((p) => p.accepting_applications) && (
+              <Link
+                to="/apply"
+                className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              >
+                Apply now
+              </Link>
+            )}
             <a
               href="#how-it-works"
-              className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              className="rounded-md border border-border px-5 py-3 text-sm font-medium hover:bg-muted"
             >
               How it works
             </a>

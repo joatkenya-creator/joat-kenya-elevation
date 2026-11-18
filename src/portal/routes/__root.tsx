@@ -88,9 +88,17 @@ function Header() {
               </button>
             </>
           ) : (
-            <Link to="/login" className={navLink} activeProps={navActive}>
-              Sign in
-            </Link>
+            <>
+              <Link to="/login" className={navLink} activeProps={navActive}>
+                Sign in
+              </Link>
+              <Link
+                to="/apply"
+                className="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              >
+                Apply
+              </Link>
+            </>
           )}
         </nav>
       </div>

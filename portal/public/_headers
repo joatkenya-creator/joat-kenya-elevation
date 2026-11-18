@@ -1,8 +1,8 @@
-# Cloudflare Pages response headers for partners.joatglobal.com.
+# Cloudflare Pages response headers for partners.joatkenya.com.
 # connect-src must name the Supabase project URL (public, same as public/.htaccess).
 # If the project changes, update it here or sign-in will be blocked by the browser.
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://prkdfkkhqncxkyehokop.supabase.co; frame-ancestors 'none'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://prkdfkkhqncxkyehokop.supabase.co https://api.web3forms.com; frame-ancestors 'none'; form-action 'self'
   Strict-Transport-Security: max-age=31536000
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY

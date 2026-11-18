@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { Navigate, createFileRoute } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "@/lib/auth";
-import { supabase } from "@/lib/supabase";
 import { MfaGate } from "../MfaGate";
-import { ROLE_LABEL, useAccount, usePrograms, type MembershipStatus } from "../account";
+import { ROLE_LABEL, isSuperAdmin, useAccount, usePrograms } from "../account";
 import { ErrorNote, Loading, Page } from "../ui";
+import { Members } from "../admin/Members";
+import { Programmes } from "../admin/Programmes";
+import { Activity } from "../admin/Activity";
+import { useMembers } from "../admin/data";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -45,92 +49,74 @@ function Admin() {
       </Page>
     );
 
-  return (
-    <Page title="Admin">
-      <section>
-        <h2 className="text-lg font-semibold">Your access</h2>
-        <ul className="mt-2 flex flex-wrap gap-2">
-          {staff.map((s) => (
-            <li
-              key={`${s.role}-${s.program_id}`}
-              className="rounded-full bg-muted px-3 py-1 text-sm"
-            >
-              {ROLE_LABEL[s.role]}
-              {s.program_id && ` · ${s.program_id}`}
-            </li>
-          ))}
-        </ul>
-      </section>
-      <Programmes />
-      <p className="text-sm text-muted-foreground">
-        The application queue and ambassador management arrive with the onboarding release.
-      </p>
-    </Page>
-  );
+  return <AdminHome staff={staff} />;
 }
 
-const STATUSES: MembershipStatus[] = ["pending", "approved", "suspended", "rejected", "withdrawn"];
+type Tab = "queue" | "ambassadors" | "programmes" | "activity";
 
-function Programmes() {
+function AdminHome({
+  staff,
+}: {
+  staff: NonNullable<ReturnType<typeof useAccount>["data"]>["staff"];
+}) {
+  const [tab, setTab] = useState<Tab>("queue");
   const programs = usePrograms();
-  // RLS limits this to the programmes this staff member can see.
-  // ponytail: counts in the browser; switch to a SQL view once memberships reach thousands.
-  const memberships = useQuery({
-    queryKey: ["admin-memberships"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("affiliate_memberships")
-        .select("program_id, status");
-      if (error) throw error;
-      return data as { program_id: string; status: MembershipStatus }[];
-    },
-  });
+  const members = useMembers();
+  const programName = (id: string) => programs.data?.find((p) => p.id === id)?.name ?? id;
+  const pending = members.data?.filter((m) => m.status === "pending").length ?? 0;
 
-  if (programs.isLoading || memberships.isLoading) return <Loading label="Loading programmes" />;
-  if (programs.error || memberships.error)
-    return <ErrorNote>We couldn't load programme data. Refresh to try again.</ErrorNote>;
-
-  const count = (program: string, status: MembershipStatus) =>
-    memberships.data!.filter((m) => m.program_id === program && m.status === status).length;
+  const tabs: { id: Tab; label: string }[] = [
+    { id: "queue", label: pending ? `Applications (${pending})` : "Applications" },
+    { id: "ambassadors", label: "Ambassadors" },
+    { id: "programmes", label: "Programmes" },
+    { id: "activity", label: "Activity" },
+  ];
 
   return (
-    <section>
-      <h2 className="text-lg font-semibold">Programmes</h2>
-      <div className="mt-3 overflow-x-auto rounded-lg border border-border bg-card">
-        <table className="w-full min-w-[640px] text-left text-sm">
-          <thead className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
-            <tr>
-              <th className="p-3">Programme</th>
-              <th className="p-3">Applications</th>
-              <th className="p-3">Attribution</th>
-              {STATUSES.map((s) => (
-                <th key={s} className="p-3 capitalize">
-                  {s}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {programs.data!.map((p) => (
-              <tr key={p.id}>
-                <td className="p-3 font-medium">{p.name}</td>
-                <td className="p-3">{p.accepting_applications ? "Open" : "Closed"}</td>
-                <td className="p-3">
-                  {p.attribution_model
-                    ? `${p.attribution_model.replace("_", " ")}, `
-                    : "Model not selected, "}
-                  {p.attribution_window_days} days
-                </td>
-                {STATUSES.map((s) => (
-                  <td key={s} className="p-3 tabular-nums">
-                    {count(p.id, s)}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <Page
+      title="Admin"
+      intro={
+        <span className="flex flex-wrap gap-2">
+          {staff.map((s) => (
+            <span
+              key={`${s.role}-${s.program_id}`}
+              className="rounded-full bg-muted px-3 py-1 text-sm text-foreground"
+            >
+              {ROLE_LABEL[s.role]}
+              {s.program_id && ` · ${programName(s.program_id)}`}
+            </span>
+          ))}
+        </span>
+      }
+    >
+      <div
+        role="tablist"
+        aria-label="Admin sections"
+        className="flex flex-wrap gap-1 border-b border-border"
+      >
+        {tabs.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            role="tab"
+            id={`tab-${t.id}`}
+            aria-selected={tab === t.id}
+            aria-controls={`panel-${t.id}`}
+            onClick={() => setTab(t.id)}
+            className={`-mb-px border-b-2 px-3 py-2 text-sm ${tab === t.id ? "border-primary font-medium text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
-    </section>
+      <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
+        {tab === "queue" && <Members view="queue" staff={staff} programName={programName} />}
+        {tab === "ambassadors" && (
+          <Members view="ambassadors" staff={staff} programName={programName} />
+        )}
+        {tab === "programmes" && <Programmes superAdmin={isSuperAdmin(staff)} />}
+        {tab === "activity" && <Activity programName={programName} />}
+      </div>
+    </Page>
   );
 }

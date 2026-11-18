@@ -1,0 +1,402 @@
+import { useEffect, useState } from "react";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { useSession } from "@/lib/auth";
+import { supabase } from "@/lib/supabase";
+import { deliverPartnerApplicationViaWeb3Forms } from "@/lib/web3forms";
+import { ACTIVE_STATUSES, friendlyError, useAccount, usePrograms } from "../account";
+import { ErrorNote, Loading, Page, buttonClass, inputClass } from "../ui";
+
+export const Route = createFileRoute("/apply")({
+  head: () => ({ meta: [{ title: "Apply | JOAT Global Partners" }] }),
+  component: Apply,
+});
+
+function Apply() {
+  const { session, loading } = useSession();
+  if (loading) return <Loading />;
+  return (
+    <Page
+      title="Apply to become an ambassador"
+      intro="Free to join. No purchase required. You earn only on verified sales to customers you refer yourself."
+    >
+      {session ? (
+        <ApplicationForm userId={session.user.id} email={session.user.email ?? ""} />
+      ) : (
+        <CreateAccount />
+      )}
+    </Page>
+  );
+}
+
+function CreateAccount() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [checkInbox, setCheckInbox] = useState(false);
+
+  const submit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (busy) return;
+    if (password.length < 8) return setError("Use at least 8 characters for your password.");
+    if (password !== confirm) return setError("The two passwords don't match.");
+    setBusy(true);
+    setError(null);
+    const { data, error: e } = await supabase.auth.signUp({
+      email: email.trim(),
+      password,
+      options: { emailRedirectTo: `${window.location.origin}/apply` },
+    });
+    setBusy(false);
+    if (e) return setError(e.message || "We couldn't create your account. Please try again.");
+    // With email confirmation on, there's no session until the link is clicked.
+    if (!data.session) setCheckInbox(true);
+  };
+
+  if (checkInbox)
+    return (
+      <section className="max-w-lg rounded-lg border border-border bg-card p-6" role="status">
+        <h2 className="text-lg font-semibold">Check your inbox</h2>
+        <p className="mt-2 text-muted-foreground">
+          We've sent a confirmation link to <strong>{email.trim()}</strong>. Click it to confirm
+          your email, and you'll come back here to fill in your application.
+        </p>
+        <p className="mt-3 text-sm text-muted-foreground">
+          No email after a few minutes? Check spam, or{" "}
+          <Link to="/login" className="text-primary underline">
+            sign in
+          </Link>{" "}
+          if you already have an account.
+        </p>
+      </section>
+    );
+
+  return (
+    <section className="max-w-sm">
+      <h2 className="text-lg font-semibold">Step 1: Create your account</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Already have one?{" "}
+        <Link to="/login" className="text-primary underline">
+          Sign in
+        </Link>
+        , then come back to this page.
+      </p>
+      <form onSubmit={submit} className="mt-5 space-y-4">
+        <Field id="signup-email" label="Email">
+          <input
+            id="signup-email"
+            className={inputClass}
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Field>
+        <Field id="signup-password" label="Password (at least 8 characters)">
+          <input
+            id="signup-password"
+            className={inputClass}
+            type="password"
+            autoComplete="new-password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Field>
+        <Field id="signup-confirm" label="Confirm password">
+          <input
+            id="signup-confirm"
+            className={inputClass}
+            type="password"
+            autoComplete="new-password"
+            required
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+          />
+        </Field>
+        {error && <ErrorNote>{error}</ErrorNote>}
+        <button type="submit" className={buttonClass} disabled={busy}>
+          {busy ? "Creating account…" : "Create account"}
+        </button>
+      </form>
+    </section>
+  );
+}
+
+function ApplicationForm({ userId, email }: { userId: string; email: string }) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const programs = usePrograms();
+  const account = useAccount(userId);
+
+  const [fullName, setFullName] = useState("");
+  const [country, setCountry] = useState("");
+  const [chosen, setChosen] = useState<string[]>([]);
+  const [links, setLinks] = useState("");
+  const [website, setWebsite] = useState("");
+  const [audience, setAudience] = useState("");
+  const [experience, setExperience] = useState("");
+  const [interests, setInterests] = useState("");
+  const [terms, setTerms] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
+  const [disclosure, setDisclosure] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Prefill from an existing profile (re-applying, or adding a second programme).
+  const profile = account.data?.profile;
+  useEffect(() => {
+    if (!profile) return;
+    setFullName((v) => v || profile.full_name);
+    setCountry((v) => v || profile.country);
+  }, [profile]);
+
+  if (programs.isLoading || account.isLoading) return <Loading label="Loading the application" />;
+  if (programs.error || account.error)
+    return <ErrorNote>We couldn't load the application form. Refresh to try again.</ErrorNote>;
+
+  const statusOf = (id: string) =>
+    account.data!.memberships.find((m) => m.program_id === id)?.status;
+  const available = programs.data!.filter(
+    (p) => p.accepting_applications && !ACTIVE_STATUSES.includes(statusOf(p.id)!),
+  );
+
+  if (available.length === 0)
+    return (
+      <section className="rounded-lg border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold">Nothing to apply for right now</h2>
+        <p className="mt-2 text-muted-foreground">
+          Either applications aren't open yet, or you've already applied to every open programme.
+          Your applications are on your{" "}
+          <Link to="/dashboard" className="text-primary underline">
+            dashboard
+          </Link>
+          .
+        </p>
+      </section>
+    );
+
+  const submit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (busy) return;
+    const linkList = links
+      .split(/\s+/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    if (chosen.length === 0) return setError("Choose at least one programme.");
+    if ([...linkList, website.trim()].some((l) => l && !/^https?:\/\/\S+$/i.test(l)))
+      return setError("Each link must be a full web address starting with https://");
+    if (!(terms && privacy && disclosure))
+      return setError("Please tick all three boxes at the end of the form.");
+
+    setBusy(true);
+    setError(null);
+    const { error: e } = await supabase.rpc("submit_partner_application", {
+      p_programs: chosen,
+      p_full_name: fullName,
+      p_country: country,
+      p_social_links: linkList,
+      p_website: website.trim() || null,
+      p_audience: audience,
+      p_experience: experience,
+      p_interests: interests,
+      p_accept_terms: true,
+    });
+    setBusy(false);
+    if (e) return setError(friendlyError(e));
+
+    void deliverPartnerApplicationViaWeb3Forms({
+      fullName: fullName.trim(),
+      email,
+      country: country.trim(),
+      programmes: programs.data!.filter((p) => chosen.includes(p.id)).map((p) => p.name),
+      adminUrl: `${window.location.origin}/admin`,
+    });
+    await queryClient.invalidateQueries({ queryKey: ["account"] });
+    void navigate({ to: "/dashboard" });
+  };
+
+  const toggle = (id: string) =>
+    setChosen((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
+
+  return (
+    <form onSubmit={submit} className="max-w-2xl space-y-8" noValidate>
+      <fieldset className="space-y-3">
+        <legend className="text-lg font-semibold">Programmes</legend>
+        <p className="text-sm text-muted-foreground">
+          Choose one or both. Each reviews you separately.
+        </p>
+        {programs.data!.map((p) => {
+          const st = statusOf(p.id);
+          const blocked = !p.accepting_applications || ACTIVE_STATUSES.includes(st!);
+          return (
+            <label
+              key={p.id}
+              className={`flex items-start gap-3 rounded-lg border border-border bg-card p-4 ${blocked ? "opacity-60" : "cursor-pointer"}`}
+            >
+              <input
+                type="checkbox"
+                className="mt-1 h-4 w-4"
+                disabled={blocked}
+                checked={chosen.includes(p.id)}
+                onChange={() => toggle(p.id)}
+              />
+              <span>
+                <span className="font-medium">{p.name}</span>
+                {blocked && (
+                  <span className="block text-sm text-muted-foreground">
+                    {st && ACTIVE_STATUSES.includes(st)
+                      ? `Already ${st}`
+                      : "Not accepting applications yet"}
+                  </span>
+                )}
+              </span>
+            </label>
+          );
+        })}
+      </fieldset>
+
+      <fieldset className="space-y-4">
+        <legend className="text-lg font-semibold">About you</legend>
+        <Field id="full-name" label="Full name">
+          <input
+            id="full-name"
+            className={inputClass}
+            autoComplete="name"
+            required
+            maxLength={120}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+        </Field>
+        <Field id="country" label="Country of residence">
+          <input
+            id="country"
+            className={inputClass}
+            autoComplete="country-name"
+            required
+            maxLength={80}
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          />
+        </Field>
+        <Field id="links" label="Social media profiles (one link per line, up to 10)">
+          <textarea
+            id="links"
+            className={inputClass}
+            rows={3}
+            placeholder="https://www.instagram.com/yourname"
+            value={links}
+            onChange={(e) => setLinks(e.target.value)}
+          />
+        </Field>
+        <Field id="website" label="Website or blog (optional)">
+          <input
+            id="website"
+            className={inputClass}
+            type="url"
+            placeholder="https://"
+            maxLength={300}
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </Field>
+      </fieldset>
+
+      <fieldset className="space-y-4">
+        <legend className="text-lg font-semibold">Your audience and experience (optional)</legend>
+        <Field id="audience" label="Who would you share these brands with?">
+          <textarea
+            id="audience"
+            className={inputClass}
+            rows={3}
+            maxLength={1000}
+            placeholder="For example: parents of young children, small business owners"
+            value={audience}
+            onChange={(e) => setAudience(e.target.value)}
+          />
+        </Field>
+        <Field id="experience" label="Relevant experience">
+          <textarea
+            id="experience"
+            className={inputClass}
+            rows={3}
+            maxLength={2000}
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
+          />
+        </Field>
+        <Field id="interests" label="Marketing interests">
+          <textarea
+            id="interests"
+            className={inputClass}
+            rows={2}
+            maxLength={1000}
+            placeholder="For example: short videos, newsletters, community groups"
+            value={interests}
+            onChange={(e) => setInterests(e.target.value)}
+          />
+        </Field>
+      </fieldset>
+
+      <fieldset className="space-y-3">
+        <legend className="text-lg font-semibold">Agreements</legend>
+        <Check checked={terms} onChange={setTerms}>
+          I have read the{" "}
+          <Link to="/terms" target="_blank" className="text-primary underline">
+            programme terms
+          </Link>{" "}
+          (draft pending legal review) and agree to them.
+        </Check>
+        <Check checked={privacy} onChange={setPrivacy}>
+          I have read the{" "}
+          <Link to="/privacy" target="_blank" className="text-primary underline">
+            privacy notice
+          </Link>
+          .
+        </Check>
+        <Check checked={disclosure} onChange={setDisclosure}>
+          Whenever I share a referral link or recommend these brands, I will clearly disclose that
+          I'm a JOAT Global ambassador and may earn a commission.
+        </Check>
+      </fieldset>
+
+      {error && <ErrorNote>{error}</ErrorNote>}
+      <button type="submit" className={buttonClass} disabled={busy}>
+        {busy ? "Sending…" : "Submit application"}
+      </button>
+    </form>
+  );
+}
+
+function Field({ id, label, children }: { id: string; label: string; children: React.ReactNode }) {
+  return (
+    <div className="space-y-1">
+      <label htmlFor={id} className="text-sm text-muted-foreground">
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+function Check(props: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="flex cursor-pointer items-start gap-3 text-sm">
+      <input
+        type="checkbox"
+        className="mt-0.5 h-4 w-4"
+        checked={props.checked}
+        onChange={(e) => props.onChange(e.target.checked)}
+      />
+      <span>{props.children}</span>
+    </label>
+  );
+}

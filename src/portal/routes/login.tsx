@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, Navigate, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useSession } from "@/lib/auth";
 import { isPasswordRecovery, supabase } from "@/lib/supabase";
 import { ErrorNote, Page, buttonClass, inputClass } from "../ui";
@@ -98,7 +98,11 @@ function SignInForm() {
           </button>
         </div>
         <p className="text-sm text-muted-foreground">
-          New to the programme? Applications open soon. Accounts are created when you apply.
+          New to the programme?{" "}
+          <Link to="/apply" className="text-primary underline">
+            Create an account and apply
+          </Link>
+          .
         </p>
       </form>
     </Page>

@@ -74,3 +74,43 @@ export const ROLE_LABEL: Record<StaffRole, string> = {
   finance: "Finance",
   support: "Support (read-only)",
 };
+
+/** Display only; the review functions re-check this in the database. */
+export function canReview(staff: Account["staff"], programId: string) {
+  return staff.some(
+    (s) => s.role === "super_admin" || (s.role === "program_manager" && s.program_id === programId),
+  );
+}
+
+export const isSuperAdmin = (staff: Account["staff"]) =>
+  staff.some((s) => s.role === "super_admin");
+
+/** Memberships in these states block a new application to the same programme. */
+export const ACTIVE_STATUSES: MembershipStatus[] = ["pending", "approved", "suspended"];
+
+// The database functions raise short codes; this turns them into sentences.
+const ERRORS: Record<string, string> = {
+  programme_closed: "That programme isn't accepting applications right now.",
+  already_applied: "You've already applied to, or are a member of, that programme.",
+  no_programme: "Choose at least one programme.",
+  invalid_link: "Each link must be a full web address starting with https://",
+  invalid_name: "Enter your full name.",
+  invalid_country: "Enter your country of residence.",
+  too_many_links: "Add up to 10 links.",
+  text_too_long: "One of the answers is too long. Please shorten it.",
+  terms_not_accepted: "Please accept the programme terms, privacy notice and disclosure rules.",
+  too_many_applications: "You've applied several times today. Please try again tomorrow.",
+  not_signed_in: "Your session has ended. Please sign in again.",
+  not_authorised: "You don't have permission to do that.",
+  cannot_review_self: "You can't review your own membership. Ask another staff member.",
+  invalid_transition:
+    "That change isn't allowed from the membership's current status. Refresh and try again.",
+  reason_required: "Add a reason. It's kept in the activity log, not shown to the ambassador.",
+  nothing_to_withdraw: "There's nothing to leave: this membership is no longer active.",
+  membership_not_found: "That membership no longer exists. Refresh and try again.",
+};
+
+export function friendlyError(error: { message?: string } | null | undefined) {
+  const key = Object.keys(ERRORS).find((k) => error?.message?.includes(k));
+  return key ? ERRORS[key] : "Something went wrong. Please try again.";
+}

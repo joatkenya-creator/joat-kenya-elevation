@@ -13,8 +13,8 @@ Discovery was read-only: file reads, `git status`, `git fetch --dry-run`, the te
 
 | # | Decision | Answer | Date |
 |---|---|---|---|
-| D1 | Which site JOAT referral links point to | **(c) joatkenya.com for now.** Link format: `https://joatkenya.com/?ref={affiliate_id}` (and deep links on joatkenya.com). Moving to joatglobal.com is a later, separate decision. | 2026-11-18 |
-| D2 | Portal hosting | **Cloudflare Pages**, `partners.joatglobal.com` added as a CNAME in Google Cloud DNS. | 2026-11-18 |
+| D1 | Which site JOAT referral links point to | **(c) joatkenya.com for now.** Link format: `https://joatkenya.com/?ref={affiliate_id}` (and deep links on joatkenya.com). | 2026-11-18 |
+| D2 | Portal hosting | **Cloudflare Pages**, at **`partners.joatkenya.com`** (CNAME added in Truehost DNS). Amare links use `https://amaresbigplanet.com/?ref={affiliate_id}`. | 2026-11-18 (host corrected same day) |
 | D13 | Where this report lives | This file. | 2026-11-18 |
 | D3–D12 | See §13 | Open | – |
 
@@ -25,13 +25,13 @@ Discovery was read-only: file reads, `git status`, `git fetch --dry-run`, the te
 - **joatkenya.com needs a cookie-consent banner** before attribution cookies are set (none exists today).
 - **Public copy stays "JOAT Global".** joatkenya.com is used only as the link domain; portal pages, emails and materials use the JOAT Global name.
 - **Portal deployment is separate from the public site.** The Pages project builds only the portal target from this repository, so a portal deploy cannot affect the Truehost upload of joatkenya.com.
-- **DNS steps (owner action, nothing changed yet):** add the custom domain in the Cloudflare Pages project first, then create `partners CNAME <project>.pages.dev` in Google Cloud DNS. Add `https://partners.joatglobal.com` to Supabase Auth's allowed redirect URLs.
+- **DNS steps (owner action, nothing changed yet):** add the custom domain in the Cloudflare Pages project first, then create `partners CNAME <project>.pages.dev` in Truehost DNS for joatkenya.com. Add `https://partners.joatkenya.com/login` to Supabase Auth's allowed redirect URLs.
 
 ---
 
 ## 0. Findings that change the brief
 
-1. **[V] joatglobal.com is a Shopify store, not this repository.** Store `zmzmkq-gr.myshopify.com`, theme "JOAT FINAL", DNS in Google Cloud DNS. Its public catalogue lists "Lucky Belt", "Confetti Belt" and "Keeper Belt" at $89.90 and has a French page address (`/pages/conseil-dentretien`), which look like leftover demo products on a live domain.
+1. **[V] joatglobal.com is not a JOAT site.** The owner confirmed on 2026-11-18 that it is unrelated to this project, so nothing here uses it. For the record, discovery found an unrelated Shopify store there: Store `zmzmkq-gr.myshopify.com`, theme "JOAT FINAL", DNS in Google Cloud DNS. Its public catalogue lists "Lucky Belt", "Confetti Belt" and "Keeper Belt" at $89.90 and has a French page address (`/pages/conseil-dentretien`), which look like leftover demo products on a live domain.
 2. **[V] This repository serves joatkenya.com**, a static site on Truehost (cPanel/Apache) with no server of its own. DNS is at cloudoon (Truehost). `joatglobal.com` appears nowhere in the code; `joatkenya.com` is the canonical domain in 22 places.
 3. **[V] The JOAT enquiry funnel exists only on joatkenya.com** (contact form, consultation bookings, course sign-ups). Resolved by D1.
 4. **[V] Amare has no Shopify code in its repository.** The live site's "Shop 🛍️" menu item links to `https://amares-big-planet.myshopify.com/` (print products, vendor "Amare's Big Planet"). With no custom shop domain, a cookie on amaresbigplanet.com cannot be read by the shop, so the referral must be carried across explicitly (§6).
@@ -63,9 +63,10 @@ Discovery was read-only: file reads, `git status`, `git fetch --dry-run`, the te
 ## 3. Hosting and deployment
 
 - [V] joatkenya.com: Truehost Apache, strict CSP in `.htaccess`, manual upload.
-- [V] joatglobal.com: Shopify behind Cloudflare, DNS in Google Cloud DNS. `partners.joatglobal.com` does not exist yet.
+- [V] joatglobal.com: unrelated to JOAT (owner, 2026-11-18). Not used.
+- [R] Portal: `partners.joatkenya.com` on Cloudflare Pages, via a CNAME in joatkenya.com's Truehost DNS (D2).
 - [V] amaresbigplanet.com: Cloudflare Worker, DNS on Cloudflare, account referenced in `deploy.yml`.
-- [U] Who has access to the Google Cloud DNS zone and to a Cloudflare account for the Pages project.
+- [U] Who has access to joatkenya.com's DNS at Truehost and to a Cloudflare account for the Pages project.
 
 ## 4. Amare and Shopify
 
@@ -89,8 +90,8 @@ Discovery was read-only: file reads, `git status`, `git fetch --dry-run`, the te
           Ambassadors / Admins (browser)
                      │
                      ▼
-  partners.joatglobal.com ── portal built from THIS repo
-  (own layout, navigation, login)   [Cloudflare Pages, CNAME from Google DNS]
+  partners.joatkenya.com ── portal built from THIS repo
+  (own layout, navigation, login)   [Cloudflare Pages, CNAME from Truehost DNS]
                      │ user session, Row Level Security
                      ▼
  ┌────────────── Supabase (existing project) ─────────────────────────┐
@@ -174,7 +175,7 @@ Discovery was read-only: file reads, `git status`, `git fetch --dry-run`, the te
 
 - **Shopify:** custom app on the Amare store.
 - **Transactional email:** needed for ambassador emails and Supabase Auth (built-in email is heavily rate-limited; Web3Forms only reaches the team inbox). Options: Resend, ZeptoMail (Zoho already used), Postmark. **D7.**
-- **Portal hosting:** Cloudflare Pages + `partners` CNAME in Google Cloud DNS (D2).
+- **Portal hosting:** Cloudflare Pages + `partners` CNAME in joatkenya.com's Truehost DNS (D2).
 - **Secrets** (Edge Function secrets): `SHOPIFY_AMARE_WEBHOOK_SECRET`, `SHOPIFY_AMARE_ADMIN_TOKEN`, `REFERRAL_TOKEN_KEY`, `EMAIL_API_KEY`.
 - **Consent:** lightweight banner on joatkenya.com and the parent-facing Amare pages. GA4/Clarity currently run without one.
 

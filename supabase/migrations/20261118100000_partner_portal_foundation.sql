@@ -1,6 +1,6 @@
 -- ─── Partner portal foundation (Ambassador Programme, Phase 1) ─────────────
 -- Programmes, staff roles, ambassador profiles and programme memberships for
--- partners.joatglobal.com. See docs/partners/stage-1-discovery.md §8.
+-- partners.joatkenya.com. See docs/partners/stage-1-discovery.md §8.
 --
 -- Access model:
 --   * Ambassadors read only their own profile and memberships.

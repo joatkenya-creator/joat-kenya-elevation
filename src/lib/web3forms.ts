@@ -348,3 +348,49 @@ export async function deliverConsultationBookingViaWeb3Forms(b: {
     return false;
   }
 }
+
+/**
+ * Tell the team a partner-programme application arrived (partners.joatkenya.com).
+ * Same key and inbox as the other forms. Best-effort: the application is
+ * already saved, so a failed email never blocks the applicant.
+ */
+export async function deliverPartnerApplicationViaWeb3Forms(a: {
+  fullName: string;
+  email: string;
+  country: string;
+  programmes: string[];
+  adminUrl: string;
+}): Promise<boolean> {
+  const key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  if (!key) return false;
+  const message = [
+    "New ambassador application.",
+    "",
+    `Name: ${a.fullName}`,
+    `Email: ${a.email}`,
+    `Country: ${a.country}`,
+    `Programmes: ${a.programmes.join(", ")}`,
+    "",
+    `Review it: ${a.adminUrl}`,
+  ].join("\n");
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify({
+        access_key: key,
+        from_name: "JOAT Global Partners",
+        subject: `Ambassador application: ${a.fullName} (${a.programmes.join(" + ")})`,
+        name: a.fullName,
+        email: a.email,
+        replyto: a.email,
+        message,
+      }),
+    });
+    const json = (await res.json().catch(() => null)) as { success?: boolean } | null;
+    return res.ok && !!json?.success;
+  } catch (err) {
+    console.error("Web3Forms partner application email failed", err);
+    return false;
+  }
+}
