@@ -9,6 +9,8 @@ const ACTION_LABEL: Record<string, string> = {
   "membership.withdrawn": "Left the programme",
   "program.applications_opened": "Applications opened",
   "program.applications_closed": "Applications closed",
+  "link.disabled": "Link disabled",
+  "link.active": "Link re-enabled",
 };
 
 export function Activity({ programName }: { programName: (id: string) => string }) {

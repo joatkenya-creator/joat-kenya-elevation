@@ -10,6 +10,7 @@ import {
   Leaf,
   Receipt,
 } from "lucide-react";
+import { resetConsent } from "@/lib/referral";
 // Shared with the Navbar import and index.html preload — single download.
 const logo = "/joat-logo.png?v=6";
 import { LEGAL_LINKS } from "@/lib/links";
@@ -154,6 +155,9 @@ export function Footer() {
             <a href={LEGAL_LINKS.compliance} className="hover:text-gold transition-colors">
               Compliance
             </a>
+            <button type="button" onClick={resetConsent} className="hover:text-gold transition-colors">
+              Cookie settings
+            </button>
           </div>
         </div>
       </div>

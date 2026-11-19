@@ -9,6 +9,9 @@ import {
   useReview,
   type ApplicationRow,
   type MemberRow,
+  useAllLinks,
+  useSetLinkStatus,
+  type AdminLink,
 } from "./data";
 
 /**
@@ -125,6 +128,7 @@ function MemberCard(props: {
         </dl>
       )}
 
+      {m.status !== "pending" && <MemberLinks member={m} canAct={props.canAct} />}
       {props.canAct && <ReviewActions member={m} />}
     </li>
   );
@@ -218,5 +222,98 @@ function ReviewActions({ member }: { member: MemberRow }) {
       )}
       {review.error && <ErrorNote>{friendlyError(review.error)}</ErrorNote>}
     </div>
+  );
+}
+
+function MemberLinks({ member, canAct }: { member: MemberRow; canAct: boolean }) {
+  const links = useAllLinks();
+  const mine = (links.data ?? []).filter(
+    (l) => l.profile_id === member.profile_id && l.program_id === member.program_id,
+  );
+  if (mine.length === 0) return null;
+  return (
+    <details className="mt-3 text-sm">
+      <summary className="cursor-pointer text-muted-foreground">
+        Referral links ({mine.length})
+      </summary>
+      <ul className="mt-2 space-y-2">
+        {mine.map((l) => (
+          <LinkRow key={l.id} link={l} canAct={canAct} />
+        ))}
+      </ul>
+    </details>
+  );
+}
+
+function LinkRow({ link, canAct }: { link: AdminLink; canAct: boolean }) {
+  const setStatus = useSetLinkStatus();
+  const [asking, setAsking] = useState(false);
+  const [reason, setReason] = useState("");
+  const reasonId = `link-reason-${link.id}`;
+  return (
+    <li className="rounded-md border border-border p-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <span>
+          <span className="font-mono">{link.destination_path}</span>
+          {link.campaign && <span className="text-muted-foreground"> · {link.campaign}</span>}
+          {link.status === "disabled" && (
+            <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-900">
+              Disabled
+            </span>
+          )}
+        </span>
+        {canAct && !asking && (
+          <button
+            type="button"
+            disabled={setStatus.isPending}
+            onClick={() =>
+              link.status === "active"
+                ? setAsking(true)
+                : setStatus.mutate({ linkId: link.id, status: "active" })
+            }
+            className="rounded-md border border-border px-2 py-1 text-xs hover:bg-muted disabled:opacity-60"
+          >
+            {link.status === "active" ? "Disable…" : "Re-enable"}
+          </button>
+        )}
+      </div>
+      {asking && (
+        <div className="mt-2 space-y-2">
+          <label htmlFor={reasonId} className="text-xs text-muted-foreground">
+            Reason (kept in the activity log)
+          </label>
+          <input
+            id={reasonId}
+            className={inputClass}
+            maxLength={1000}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+          <div className="flex gap-2">
+            <button
+              type="button"
+              disabled={setStatus.isPending || !reason.trim()}
+              onClick={() =>
+                setStatus.mutate(
+                  { linkId: link.id, status: "disabled", reason: reason.trim() },
+                  { onSuccess: () => setAsking(false) },
+                )
+              }
+              className="rounded-md bg-red-700 px-3 py-1 text-xs text-white hover:bg-red-800 disabled:opacity-60"
+            >
+              Confirm disable
+            </button>
+            <button
+              type="button"
+              onClick={() => setAsking(false)}
+              className="rounded-md border border-border px-3 py-1 text-xs"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+      {setStatus.error && <ErrorNote>{friendlyError(setStatus.error)}</ErrorNote>}
+    </li>
   );
 }

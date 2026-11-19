@@ -11,6 +11,7 @@ import {
   type MembershipStatus,
 } from "../account";
 import { ErrorNote, Loading, Page, StatusBadge } from "../ui";
+import { ProgrammeLinks } from "../Links";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/dashboard")({
 
 const STATUS_TEXT: Record<MembershipStatus, string> = {
   pending: "We're reviewing your application.",
-  approved: "You're approved. Your referral links will appear here once tracking is switched on.",
+  approved: "You're approved. Your referral links are below.",
   rejected: "Not approved this time. You're welcome to apply again.",
   suspended: "This membership is suspended. Contact the partner team for details.",
   withdrawn: "You left this programme. You can apply again at any time.",
@@ -105,6 +106,21 @@ function Dashboard() {
             )}
             {canApply && <ApplyLink label="Apply to another programme" />}
           </section>
+          {memberships
+            .filter((m) => m.status === "approved")
+            .map((m) => {
+              const program = programs?.find((p) => p.id === m.program_id);
+              return (
+                program && (
+                  <ProgrammeLinks
+                    key={m.program_id}
+                    userId={session.user.id}
+                    publicCode={profile.public_code}
+                    program={program}
+                  />
+                )
+              );
+            })}
         </>
       )}
     </Page>

@@ -16,7 +16,11 @@ Discovery was read-only: file reads, `git status`, `git fetch --dry-run`, the te
 | D1 | Which site JOAT referral links point to | **(c) joatkenya.com for now.** Link format: `https://joatkenya.com/?ref={affiliate_id}` (and deep links on joatkenya.com). | 2026-11-18 |
 | D2 | Portal hosting | **Cloudflare Pages**, at **`partners.joatkenya.com`** (CNAME added in Truehost DNS). Amare links use `https://amaresbigplanet.com/?ref={affiliate_id}`. | 2026-11-18 (host corrected same day) |
 | D13 | Where this report lives | This file. | 2026-11-18 |
-| D3–D12 | See §13 | Open | – |
+| D4 | Attribution | **Last click, 30-day window**, both programmes. | 2026-11-19 |
+| – | Cookie consent | **Accept / Reject banner** on joatkenya.com and amaresbigplanet.com. Referral cookie, GA4 and Clarity run only after Accept; clicks are still counted without a cookie. | 2026-11-19 |
+| – | Amare tracking scope | **Whole site**, referral stored only after an adult accepts; banner worded for parents. Attorney to confirm under COPPA. | 2026-11-19 |
+| – | Amare repo changes | On a **branch**; owner reviews and merges (merging deploys). | 2026-11-19 |
+| D3, D5–D12 | See §13 | Open | – |
 
 ### What D1 and D2 change
 

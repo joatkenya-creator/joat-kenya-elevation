@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tailwindcss from "@tailwindcss/vite";
 
-// Partner portal (partners.joatglobal.com): a second build of this repository
+// Partner portal (partners.joatkenya.com): a second build of this repository
 // with its own entry, route tree and output folder, deployed separately on
 // Cloudflare Pages. The public site's vite.config.ts and dist/ are untouched.
 const repoRoot = fileURLToPath(new URL(".", import.meta.url));

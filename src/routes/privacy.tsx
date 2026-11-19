@@ -56,6 +56,13 @@ function PrivacyPage() {
               events to keep the site healthy.
             </li>
             <li>
+              <strong id="cookies">Cookies (only if you accept)</strong>: Google Analytics and
+              Microsoft Clarity for site analytics, and a referral cookie (up to 30 days) that
+              credits the JOAT Global ambassador whose link you followed. If you arrive through an
+              ambassador link we always count the visit, without a cookie or any identifier stored
+              on your device. Change your choice any time with “Cookie settings” in the footer.
+            </li>
+            <li>
               <strong>AI chat transcripts</strong>: questions you send to our website assistant
               (JACK) so we can answer them and improve the assistant.
             </li>

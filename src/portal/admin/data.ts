@@ -109,6 +109,45 @@ export function useReview() {
   });
 }
 
+export type AdminLink = {
+  id: string;
+  code: string;
+  profile_id: string;
+  program_id: string;
+  destination_path: string;
+  campaign: string | null;
+  status: "active" | "disabled";
+};
+
+export function useAllLinks() {
+  return useQuery({
+    queryKey: ["admin", "links"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("affiliate_links")
+        .select("id, code, profile_id, program_id, destination_path, campaign, status")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data as AdminLink[];
+    },
+  });
+}
+
+export function useSetLinkStatus() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (v: { linkId: string; status: "active" | "disabled"; reason?: string }) => {
+      const { error } = await supabase.rpc("set_partner_link_status", {
+        p_link_id: v.linkId,
+        p_status: v.status,
+        p_reason: v.reason ?? null,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin"] }),
+  });
+}
+
 export const formatDate = (iso: string) =>
   new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(
     new Date(iso),

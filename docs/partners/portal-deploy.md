@@ -161,6 +161,60 @@ joatkenya.com's DNS is hosted by Truehost (nameservers `ns1.cloudoon.com`, `ns2.
 
 Nothing else in the joatkenya.com zone changes; the main site stays on Truehost.
 
+## Phase 3: referral tracking
+
+Run these in order. Steps 1–3 are in the VS Code terminal at the repo root.
+
+1. **Database.** Paste `supabase/migrations/20261120100000_partner_tracking.sql` into the
+   [SQL Editor](https://supabase.com/dashboard/project/prkdfkkhqncxkyehokop/sql/new) → **Run**. Then:
+
+   ```sh
+   supabase migration repair --status applied 20261120100000
+   ```
+
+2. **Signing key** for referral tokens. Generate one and store it as a Supabase secret (it never
+   goes in a file or in Git):
+
+   ```sh
+   node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+   supabase secrets set REFERRAL_TOKEN_KEY=<paste the value printed above>
+   ```
+
+   Changing this key later invalidates every referral cookie already issued.
+
+3. **Deploy the track-click function** (public: visitors aren't signed in, so no JWT check):
+
+   ```sh
+   supabase functions deploy track-click --no-verify-jwt --use-api
+   ```
+
+   Check it answers. This sends one fake visit with a made-up code (`AAAAAAAA`); nothing is saved.
+   The right answer is `{"ok":false}` ("not a valid referral"). A 503 error means the
+   REFERRAL_TOKEN_KEY secret is missing; a 404 means the function isn't deployed.
+
+   PowerShell:
+
+   ```powershell
+   Invoke-RestMethod -Method Post -Uri https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/track-click -Headers @{ Origin = "https://joatkenya.com" } -ContentType "application/json" -Body '{"landing_url":"https://joatkenya.com/?ref=AAAAAAAA","consent":false}'
+   ```
+
+   Git Bash:
+
+   ```sh
+   curl -s -X POST https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/track-click -H "Origin: https://joatkenya.com" -H "content-type: application/json" -d "{\"landing_url\":\"https://joatkenya.com/?ref=AAAAAAAA\",\"consent\":false}"
+   ```
+
+4. **joatkenya.com.** `npm run build`, then upload `dist/` to Truehost as usual. This release
+   changes `.htaccess` (new script hash in the CSP) and `index.html` (analytics wait for consent),
+   so upload all of `dist/`, including the hidden `.htaccess`.
+5. **Portal.** `npm run build:portal`, then upload `dist-portal` to the `joat-partners` Pages project.
+6. **amaresbigplanet.com.** Review and merge the pull request from branch
+   `partner-referral-tracking`. Merging deploys automatically.
+
+**Check it end to end:** open a programme, apply with a second account, approve it, copy its
+link from the dashboard, open the link in a private window, click **Accept**, then refresh the
+dashboard. The click count goes up by one, and the browser has a `joat_ref` (or `abp_ref`) cookie.
+
 ## Rollback
 
 Cloudflare Pages keeps every deployment: Deployments → pick the previous one → Rollback.

@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ConsentBanner } from "@/components/site/ConsentBanner";
 import { LazyMotion, domAnimation } from "framer-motion";
 import {
   HeadContent,
@@ -86,6 +87,7 @@ function RootComponent() {
       <LazyMotion features={domAnimation} strict>
         <Outlet />
       </LazyMotion>
+      <ConsentBanner />
     </QueryClientProvider>
   );
 }

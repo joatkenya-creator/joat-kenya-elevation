@@ -11,6 +11,7 @@ export type Program = {
   accepting_applications: boolean;
   attribution_window_days: number;
   attribution_model: "first_touch" | "last_touch" | null;
+  site_url: string | null;
 };
 
 export type MembershipStatus = "pending" | "approved" | "rejected" | "suspended" | "withdrawn";
@@ -30,7 +31,9 @@ export function usePrograms() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("affiliate_programs")
-        .select("id, name, accepting_applications, attribution_window_days, attribution_model")
+        .select(
+          "id, name, accepting_applications, attribution_window_days, attribution_model, site_url",
+        )
         .order("id", { ascending: false });
       if (error) throw error;
       return data as Program[];
@@ -96,7 +99,8 @@ const ERRORS: Record<string, string> = {
   invalid_link: "Each link must be a full web address starting with https://",
   invalid_name: "Enter your full name.",
   invalid_country: "Enter your country of residence.",
-  too_many_links: "Add up to 10 links.",
+  too_many_links:
+    "You've reached the limit of 10 profile links, or 50 referral links per programme.",
   text_too_long: "One of the answers is too long. Please shorten it.",
   terms_not_accepted: "Please accept the programme terms, privacy notice and disclosure rules.",
   too_many_applications: "You've applied several times today. Please try again tomorrow.",
@@ -106,6 +110,11 @@ const ERRORS: Record<string, string> = {
   invalid_transition:
     "That change isn't allowed from the membership's current status. Refresh and try again.",
   reason_required: "Add a reason. It's kept in the activity log, not shown to the ambassador.",
+  not_approved: "You can create links once your membership is approved.",
+  invalid_destination: "Links can only point to a page on this programme's own website.",
+  invalid_campaign: "Campaign labels use lowercase letters, numbers and dashes (up to 40).",
+  link_exists: "You already have a link for that page and campaign.",
+  link_not_found: "That link no longer exists. Refresh and try again.",
   nothing_to_withdraw: "There's nothing to leave: this membership is no longer active.",
   membership_not_found: "That membership no longer exists. Refresh and try again.",
 };

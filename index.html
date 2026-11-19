@@ -118,10 +118,22 @@
         document.head.appendChild(cl);
       }
 
-      if (document.readyState === 'complete') {
-        setTimeout(loadAnalytics, 1500);
-      } else {
-        window.addEventListener('load', function () { setTimeout(loadAnalytics, 1500); });
+      // Cookie consent: analytics load only after the visitor accepts
+      // (src/lib/referral.ts calls joatLoadAnalytics when they do).
+      var analyticsLoaded = false;
+      window.joatLoadAnalytics = function () {
+        if (analyticsLoaded) return;
+        analyticsLoaded = true;
+        loadAnalytics();
+      };
+      var consented = false;
+      try { consented = localStorage.getItem('joat_consent') === 'accepted'; } catch (e) {}
+      if (consented) {
+        if (document.readyState === 'complete') {
+          setTimeout(window.joatLoadAnalytics, 1500);
+        } else {
+          window.addEventListener('load', function () { setTimeout(window.joatLoadAnalytics, 1500); });
+        }
       }
     </script>
   </head>
