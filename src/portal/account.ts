@@ -85,6 +85,17 @@ export function canReview(staff: Account["staff"], programId: string) {
   );
 }
 
+/** Super admin, or a programme manager of this programme. */
+export const canManage = canReview;
+
+/** Confirms JOAT payments: finance or super admin. */
+export const isFinance = (staff: Account["staff"]) =>
+  staff.some((s) => s.role === "super_admin" || s.role === "finance");
+
+/** Any staff role that can see this programme's records. */
+export const canSee = (staff: Account["staff"], programId: string) =>
+  staff.some((s) => s.program_id === null || s.program_id === programId);
+
 export const isSuperAdmin = (staff: Account["staff"]) =>
   staff.some((s) => s.role === "super_admin");
 
@@ -115,6 +126,18 @@ const ERRORS: Record<string, string> = {
   invalid_campaign: "Campaign labels use lowercase letters, numbers and dashes (up to 40).",
   link_exists: "You already have a link for that page and campaign.",
   link_not_found: "That link no longer exists. Refresh and try again.",
+  lead_not_referred: "That enquiry didn't come through an ambassador link.",
+  engagement_exists: "There's already an engagement for that enquiry.",
+  engagement_not_found: "That engagement no longer exists. Refresh and try again.",
+  currency_mismatch: "All invoices on one engagement must use the same currency.",
+  invoice_exists: "That invoice number is already used.",
+  invoice_not_found: "That invoice no longer exists. Refresh and try again.",
+  future_date: "The payment date can't be in the future.",
+  overpayment: "That would take payments above the invoice amount.",
+  duplicate_payment: "That payment reference has already been entered.",
+  payment_not_found: "That payment no longer exists. Refresh and try again.",
+  cannot_confirm_own_entry:
+    "Someone other than the person who recorded this payment must confirm it.",
   nothing_to_withdraw: "There's nothing to leave: this membership is no longer active.",
   membership_not_found: "That membership no longer exists. Refresh and try again.",
 };

@@ -84,7 +84,7 @@ function Home() {
             logo={joatLogo}
             title="JOAT Global"
             body="Refer businesses to JOAT Global for virtual assistants, AI and automation, marketing and lead generation, software development and media production."
-            basis="Commission on collected revenue from clients you refer."
+            basis="10% of the first invoice paid by each client you refer."
           />
           <ProgramCard
             program={byId("amare")}
@@ -92,7 +92,7 @@ function Home() {
             logo={amarePlanet}
             title="Amare's Big Planet"
             body="Recommend Amare's Big Planet, a children's learning brand with songs, videos, the Drawalet letter-tracing app and an online shop, to parents and families."
-            basis="Commission on eligible net product sales from the Amare shop."
+            basis="10% of eligible net product sales from the Amare shop."
           />
         </div>
       </section>
@@ -111,8 +111,7 @@ function Home() {
           </ol>
           <p className="mt-6 max-w-3xl text-sm text-muted-foreground">
             We don't promise or guarantee any level of income. What you earn depends entirely on
-            genuine sales to customers you refer. Commission rates will be published on each
-            programme page before applications open.
+            genuine sales to customers you refer. Full commission rules are on each programme page.
           </p>
         </div>
       </section>

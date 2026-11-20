@@ -11,6 +11,11 @@ const ACTION_LABEL: Record<string, string> = {
   "program.applications_closed": "Applications closed",
   "link.disabled": "Link disabled",
   "link.active": "Link re-enabled",
+  "joat.engagement_created": "JOAT engagement created",
+  "joat.invoice_added": "JOAT invoice added",
+  "joat.payment_recorded": "Payment recorded",
+  "joat.payment_confirmed": "Payment confirmed",
+  "joat.payment_rejected": "Payment rejected",
 };
 
 export function Activity({ programName }: { programName: (id: string) => string }) {

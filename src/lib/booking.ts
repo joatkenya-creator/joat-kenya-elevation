@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getReferralToken } from "./referral";
 import { supabase } from "./supabase";
 import { deliverConsultationBookingViaWeb3Forms } from "./web3forms";
 import { AVAILABILITY } from "@/data/kenya-consultation";
@@ -175,6 +176,8 @@ export async function submitBooking(p: BookingPayload): Promise<BookingResult> {
     objectives: p.objectives,
     details: p.details,
     source: "kenya-consultation",
+    // Signed ambassador referral, if any; the database verifies it and keeps only the click id.
+    referral_token: getReferralToken(),
   });
 
   if (error) {

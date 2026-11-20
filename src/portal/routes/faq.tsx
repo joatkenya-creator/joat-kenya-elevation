@@ -36,8 +36,12 @@ const FAQS: { q: string; a: string }[] = [
     a: "Through your personal referral links. A referral is credited if the customer buys within the programme's attribution window after clicking your link. We use first-party tracking only and respect cookie choices.",
   },
   {
+    q: "How much commission do I earn?",
+    a: "10% on both programmes. Amare's Big Planet: 10% of eligible net product revenue on each referred order (after discounts, excluding shipping and tax). JOAT Global: 10% of the amount the referred client pays on their first invoice.",
+  },
+  {
     q: "When is commission paid?",
-    a: "After the customer's payment is verified and the programme's hold period has passed. Our team reviews and approves every payout. The payout method and schedule will be confirmed before launch.",
+    a: "After the customer's payment is verified and the programme's hold period has passed. Every sale has a 30-day hold after the payment is verified, then our team reviews and approves the commission. Payouts are made monthly; the payout method is confirmed with you when you're approved.",
   },
   {
     q: "What happens if a customer gets a refund?",

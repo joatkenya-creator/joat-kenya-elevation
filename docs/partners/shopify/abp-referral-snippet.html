@@ -1,0 +1,49 @@
+<!--
+  Amare's Big Planet: ambassador referral snippet for the Shopify theme.
+
+  Paste this into the theme (Online Store → Themes → … → Edit code →
+  layout/theme.liquid), just above </body>. See docs/partners/portal-deploy.md.
+
+  What it does: when a shopper arrives from amaresbigplanet.com with a
+  referral (the abp_ref link parameter, or the shared abp_ref cookie on
+  shop.amaresbigplanet.com), it stores the signed referral token as a hidden
+  cart attribute (_abp_ref). Shopify copies cart attributes onto the order,
+  and the shopify-webhook function verifies the token when the order is paid.
+
+  The token is only ever issued after the visitor accepted cookies on
+  amaresbigplanet.com. It holds a click number and an expiry, nothing personal,
+  and is signed: editing it makes it invalid.
+-->
+<script>
+  (function () {
+    var PATTERN = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
+    var fromLink = new URLSearchParams(window.location.search).get("abp_ref");
+    var fromCookie = (document.cookie.match(/(?:^|; )abp_ref=([^;]+)/) || [])[1];
+    var token = fromLink || fromCookie || null;
+    var stored = null;
+    try {
+      stored = window.localStorage.getItem("abp_ref");
+      if (token) window.localStorage.setItem("abp_ref", token);
+      else token = stored;
+    } catch (e) {}
+    if (!token || token.length > 600 || !PATTERN.test(token)) return;
+
+    // Only update the cart when the referral is new for this browser tab.
+    try {
+      if (window.sessionStorage.getItem("abp_ref_applied") === token) return;
+    } catch (e) {}
+    fetch("/cart/update.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ attributes: { _abp_ref: token } }),
+    })
+      .then(function (res) {
+        if (res.ok) {
+          try {
+            window.sessionStorage.setItem("abp_ref_applied", token);
+          } catch (e) {}
+        }
+      })
+      .catch(function () {});
+  })();
+</script>

@@ -215,6 +215,134 @@ Run these in order. Steps 1–3 are in the VS Code terminal at the repo root.
 link from the dashboard, open the link in a private window, click **Accept**, then refresh the
 dashboard. The click count goes up by one, and the browser has a `joat_ref` (or `abp_ref`) cookie.
 
+## Phase 4: Amare shop orders and JOAT sales
+
+Do these **in order**. Step 2 must happen before step 7, or the joatkenya.com forms would send a
+field the database doesn't have yet.
+
+Supabase CLI steps need `$env:SUPABASE_ACCESS_TOKEN = "sbp_..."` set in the PowerShell window first.
+
+### 1. Put the referral key in Supabase Vault
+
+The database checks referrals on the JOAT enquiry forms, so it needs the same key as the
+`REFERRAL_TOKEN_KEY` function secret. Edge Function secrets can't be read back, so:
+
+- **If you still have the key** you set in Phase 3, use it below.
+- **If not**, make a new one and set it in both places. Referral cookies already handed out
+  stop working, which is fine before launch.
+
+  ```powershell
+  node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+  supabase secrets set REFERRAL_TOKEN_KEY=<new key>
+  ```
+
+Then in the [SQL Editor](https://supabase.com/dashboard/project/prkdfkkhqncxkyehokop/sql/new):
+
+```sql
+select vault.create_secret('<the key>', 'referral_token_key');
+```
+
+(If it says the name already exists, use
+`select vault.update_secret(id, '<the key>') from vault.secrets where name = 'referral_token_key';`.)
+
+### 2. Database
+
+Paste `supabase/migrations/20261121100000_partner_conversions.sql` into the SQL Editor → **Run**. Then:
+
+```powershell
+supabase migration repair --status applied 20261121100000
+```
+
+### 3. (Optional, skipped for now) Connect shop.amaresbigplanet.com to Shopify
+
+The store stays on `amares-big-planet.myshopify.com` (decision D5, 2026-11-20); skip to step 4.
+Referrals still work: every Shop link on amaresbigplanet.com carries the referral. Connecting the
+domain later would also credit shoppers who reach the shop some other way.
+
+1. Shopify admin → **Settings → Domains → Connect existing domain** → enter
+   `shop.amaresbigplanet.com` → **Next**. Shopify shows the record it needs (a CNAME to
+   `shops.myshopify.com`).
+2. Cloudflare dashboard → **amaresbigplanet.com → DNS → Records → Add record**:
+
+   | Field | Value |
+   |---|---|
+   | Type | CNAME |
+   | Name | `shop` |
+   | Target | `shops.myshopify.com` |
+   | Proxy status | **DNS only** (grey cloud; Shopify won't verify a proxied record) |
+
+3. Back in Shopify, click **Verify connection**. When it's connected, choose **Change primary
+   domain** and pick `shop.amaresbigplanet.com`. Old `myshopify.com` links keep working and
+   redirect there.
+
+### 4. Add the referral snippet to the Shopify theme
+
+1. Shopify admin → **Online Store → Themes** → on the live theme, **⋯ → Edit code**.
+2. Open **layout/theme.liquid**, find `</body>` near the end, and paste the whole contents of
+   `docs/partners/shopify/abp-referral-snippet.html` just above it. **Save**.
+3. **Customize** the theme → a product page → the buy buttons block → untick **Show dynamic
+   checkout buttons**. "Buy it now" skips the cart, so the referral wouldn't reach the order.
+
+### 5. Shopify webhooks
+
+Shopify admin → **Settings → Notifications → Webhooks** (at the bottom) → **Create webhook**,
+three times, all with Format **JSON**, the latest API version, and this URL:
+
+`https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/shopify-webhook`
+
+Events: **Order payment**, **Order cancellation**, **Refund create**.
+
+Shopify doesn't offer dispute (chargeback) events in this list. Shopify emails the store owner
+about every chargeback, and they're listed in Shopify admin under **Finance → Payouts →
+Chargebacks** (or **Settings → Payments → View payouts**). Before approving commission on a shop
+order, finance checks that list and rejects commission on any order that has a chargeback.
+
+Under the list, Shopify shows "Your webhooks will be signed with **…**". Copy that value.
+
+### 6. Function secrets and deploy
+
+```powershell
+supabase secrets set SHOPIFY_AMARE_WEBHOOK_SECRET=<value from step 5> SHOPIFY_AMARE_SHOP_DOMAIN=wu0b1t-n6.myshopify.com
+supabase functions deploy shopify-webhook --no-verify-jwt --use-api
+```
+
+Check it: on the Shopify webhooks page, click **Send test notification** on the "Order payment"
+webhook. In the portal, **Admin → Shop orders → Recent Shopify notifications** shows
+`orders/paid · ignored: no referral` (the test order has no referral, which is correct).
+That list is visible to super admins and support staff.
+
+### 7. Release the sites
+
+1. `npm run build` → upload `dist/` to Truehost (the contact and booking forms now carry referrals).
+2. `npm run build:portal` → upload `dist-portal` to the `joat-partners` Pages project.
+3. Optional: the Amare pull request from branch `partner-shop-domain` only matters if step 3 is
+   done later. Merging it now is harmless.
+
+### Check it end to end
+
+- **Amare:** private window → an approved ambassador's Amare link → **Accept** → Shop → buy
+  something (a real low-priced item you then refund works; Shopify Payments has no test mode on a
+  live store unless you turn it on under Settings → Payments). **Admin → Shop orders** shows the
+  order as Verified. Refund it in Shopify: it changes to Reversed.
+- **JOAT:** private window → an approved ambassador's JOAT link → **Accept** → send the contact
+  form. **Admin → JOAT sales** shows it under Referred enquiries → **Create engagement** → **Add
+  invoice** → **Record a payment** with an M-Pesa code → a *different* finance user clicks
+  **Confirm**. The ambassador's dashboard shows the sale as Verified.
+
+## Phase 5a: commission rates
+
+Shows 10% commission and the 30-day hold on every referred sale, and publishes the rates on the
+portal's programme pages, terms and FAQ.
+
+1. Supabase dashboard → project `prkdfkkhqncxkyehokop` → **SQL Editor** → paste
+   `supabase/migrations/20261122100000_partner_commissions.sql` → **Run**. Then, in PowerShell:
+   `supabase migration repair --status applied 20261122100000`
+2. `npm run build:portal` and upload `dist-portal` to the `joat-partners` Cloudflare Pages project
+   as before. joatkenya.com doesn't change.
+3. Check: the programme pages show "Rate: 10%"; Admin → Shop orders has a Commission column.
+
+Upload the portal only after step 1: until then its sales tables can't load.
+
 ## Rollback
 
 Cloudflare Pages keeps every deployment: Deployments → pick the previous one → Rollback.

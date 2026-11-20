@@ -3,9 +3,11 @@ import { Navigate, createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "@/lib/auth";
 import { MfaGate } from "../MfaGate";
-import { ROLE_LABEL, isSuperAdmin, useAccount, usePrograms } from "../account";
+import { ROLE_LABEL, canSee, isSuperAdmin, useAccount, usePrograms } from "../account";
 import { ErrorNote, Loading, Page } from "../ui";
 import { Members } from "../admin/Members";
+import { JoatSales } from "../admin/JoatSales";
+import { ShopOrders } from "../admin/ShopOrders";
 import { Programmes } from "../admin/Programmes";
 import { Activity } from "../admin/Activity";
 import { useMembers } from "../admin/data";
@@ -49,15 +51,17 @@ function Admin() {
       </Page>
     );
 
-  return <AdminHome staff={staff} />;
+  return <AdminHome staff={staff} userId={session.user.id} />;
 }
 
-type Tab = "queue" | "ambassadors" | "programmes" | "activity";
+type Tab = "queue" | "ambassadors" | "joat" | "shop" | "programmes" | "activity";
 
 function AdminHome({
   staff,
+  userId,
 }: {
   staff: NonNullable<ReturnType<typeof useAccount>["data"]>["staff"];
+  userId: string;
 }) {
   const [tab, setTab] = useState<Tab>("queue");
   const programs = usePrograms();
@@ -68,6 +72,8 @@ function AdminHome({
   const tabs: { id: Tab; label: string }[] = [
     { id: "queue", label: pending ? `Applications (${pending})` : "Applications" },
     { id: "ambassadors", label: "Ambassadors" },
+    ...(canSee(staff, "joat") ? [{ id: "joat" as const, label: "JOAT sales" }] : []),
+    ...(canSee(staff, "amare") ? [{ id: "shop" as const, label: "Shop orders" }] : []),
     { id: "programmes", label: "Programmes" },
     { id: "activity", label: "Activity" },
   ];
@@ -114,6 +120,8 @@ function AdminHome({
         {tab === "ambassadors" && (
           <Members view="ambassadors" staff={staff} programName={programName} />
         )}
+        {tab === "joat" && <JoatSales staff={staff} userId={userId} />}
+        {tab === "shop" && <ShopOrders />}
         {tab === "programmes" && <Programmes superAdmin={isSuperAdmin(staff)} />}
         {tab === "activity" && <Activity programName={programName} />}
       </div>

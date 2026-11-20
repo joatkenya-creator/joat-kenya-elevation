@@ -20,7 +20,12 @@ Discovery was read-only: file reads, `git status`, `git fetch --dry-run`, the te
 | – | Cookie consent | **Accept / Reject banner** on joatkenya.com and amaresbigplanet.com. Referral cookie, GA4 and Clarity run only after Accept; clicks are still counted without a cookie. | 2026-11-19 |
 | – | Amare tracking scope | **Whole site**, referral stored only after an adult accepts; banner worded for parents. Attorney to confirm under COPPA. | 2026-11-19 |
 | – | Amare repo changes | On a **branch**; owner reviews and merges (merging deploys). | 2026-11-19 |
-| D3, D5–D12 | See §13 | Open | – |
+| D3 | Amare Shopify | **Grow plan, Shopify Payments on.** Orders, refunds and cancellations arrive by store webhook (Settings → Notifications → Webhooks). Shopify doesn't offer dispute events there (confirmed 2026-11-20), so chargebacks are checked by hand before commission is approved; referral carried in a hidden cart attribute set by a theme snippet. | 2026-11-19 |
+| D5 | Shop domain | **Stay on amares-big-planet.myshopify.com** (already the primary domain). The referral travels on Shop links (`?abp_ref=`). shop.amaresbigplanet.com is optional for later. | 2026-11-20 (revised from 2026-11-19) |
+| – | JOAT billing | **M-Pesa statements**, no invoicing system. JOAT sales are entered in the portal: engagement → invoice → payment (M-Pesa code), confirmed by a second staff member. | 2026-11-19 |
+| D6 | Commission | **Amare 10%** of eligible net product revenue (after discounts and refunds, excl. shipping and tax). **JOAT 10% of the first invoice**, on confirmed payments. Rounded half-up per sale, in the sale's currency. | 2026-11-20 |
+| D8 | Hold and payout | **30-day hold** after the verified payment. Payouts monthly; method and minimum decided later and confirmed with each ambassador on approval. | 2026-11-20 |
+| D7, D9–D12 | See §13 | Open | – |
 
 ### What D1 and D2 change
 

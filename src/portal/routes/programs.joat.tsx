@@ -54,10 +54,12 @@ function JoatProgram() {
           <li>We issue an eligible invoice.</li>
           <li>The client pays, and we confirm the payment has been received.</li>
         </ol>
+        <p>Unpaid invoices, proposals and enquiries do not earn commission.</p>
         <p>
-          Unpaid invoices, proposals and enquiries do not earn commission. The commission basis (a
-          percentage of collected revenue or a fixed fee) and its rate will be published here before
-          applications open.
+          <strong>Rate: 10% of the client's first invoice</strong>, on the amount actually paid.
+          Later invoices to the same client don't earn commission. For example, a first invoice of
+          KES 200,000, paid in full, earns KES 20,000. Commission can be approved for payout 30 days
+          after the payment is confirmed.
         </p>
       </Section>
     </Page>

@@ -45,8 +45,11 @@ function Terms() {
           Commission is calculated under the rule in force when the qualifying sale is verified, and
           that record does not change if rates change later. Commission is reduced or reversed for
           refunds, cancellations and chargebacks. Payouts are reviewed and approved by our team.
-          Rates, hold periods, payout methods and minimum payout amounts will be set out here before
-          launch.
+          Current rates: Amare's Big Planet, 10% of eligible net product revenue (after discounts,
+          excluding shipping and tax); JOAT Global, 10% of the amount paid on a referred client's
+          first invoice. Commission is paid in the currency of the sale, after a 30-day hold from
+          the verified payment. Payouts are made monthly; the payout method and any minimum amount
+          are confirmed with you when you're approved.
         </p>
       </Section>
       <Section title="6. No guarantee of earnings">

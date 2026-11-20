@@ -12,6 +12,7 @@ import {
 } from "../account";
 import { ErrorNote, Loading, Page, StatusBadge } from "../ui";
 import { ProgrammeLinks } from "../Links";
+import { MyConversions } from "../Conversions";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -121,6 +122,9 @@ function Dashboard() {
                 )
               );
             })}
+          {memberships.some((m) => m.status === "approved" || m.status === "suspended") && (
+            <MyConversions userId={session.user.id} programName={programName} />
+          )}
         </>
       )}
     </Page>

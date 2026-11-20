@@ -17,6 +17,7 @@ import { type ContactPayload } from "@/lib/contact";
 import { deliverViaWeb3Forms } from "@/lib/web3forms";
 import { SOCIAL_LINKS } from "@/lib/links";
 import { openCalendly } from "@/lib/calendly";
+import { getReferralToken } from "@/lib/referral";
 import { supabase, UPLOADS_BUCKET } from "@/lib/supabase";
 import { Honeypot } from "./Honeypot";
 
@@ -172,6 +173,8 @@ export function Contact() {
       message: form.message.trim(),
       source: "website",
       attachment_paths: uploadedUrls,
+      // Signed ambassador referral, if any; the database verifies it and keeps only the click id.
+      referral_token: getReferralToken(),
     });
     if (insertError) {
       console.error("Supabase insert failed", insertError);

@@ -71,7 +71,11 @@ function AmareProgram() {
             discounts are excluded. If an order is cancelled or refunded, the commission is reversed
             or reduced to match.
           </p>
-          <p>The commission rate will be published here before applications open.</p>
+          <p>
+            <strong>Rate: 10%</strong> of eligible net product revenue on each referred order. For
+            example, a $59.29 order (after discounts, excluding shipping and tax) earns $5.93.
+            Commission can be approved for payout 30 days after the order is paid.
+          </p>
         </Section>
       </div>
     </>
