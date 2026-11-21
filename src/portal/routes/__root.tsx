@@ -69,6 +69,9 @@ function Header() {
           <Link to="/faq" className={navLink} activeProps={navActive}>
             FAQ
           </Link>
+          <Link to="/resources" className={navLink} activeProps={navActive}>
+            Resources
+          </Link>
           {session ? (
             <>
               <Link to="/dashboard" className={navLink} activeProps={navActive}>

@@ -148,6 +148,42 @@ export function useSetLinkStatus() {
   });
 }
 
+export type FraudSignal = {
+  profile_id: string;
+  program_id: string;
+  clicks: number;
+  unique_visitors: number;
+  top_visitor_clicks: number;
+  duplicate_clicks: number;
+  sales: number;
+  self_referrals: number;
+};
+
+/** Last 30 days per ambassador and programme; aggregate counts only. */
+export function useFraudSignals() {
+  return useQuery({
+    queryKey: ["admin", "signals"],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("partner_fraud_signals");
+      if (error) throw error;
+      return (data ?? []) as FraudSignal[];
+    },
+  });
+}
+
+/** Plain-language warnings for review. Thresholds are deliberately simple. */
+export function fraudFlags(s: FraudSignal | undefined): string[] {
+  if (!s) return [];
+  const flags: string[] = [];
+  const unique = s.clicks - s.duplicate_clicks;
+  if (s.self_referrals > 0) flags.push("Possible own purchase");
+  if (s.clicks >= 20 && s.top_visitor_clicks / s.clicks > 0.5)
+    flags.push("Most clicks from one visitor");
+  if (s.clicks >= 20 && s.duplicate_clicks / s.clicks > 0.5) flags.push("Many repeat clicks");
+  if (unique >= 10 && s.sales / unique > 0.5) flags.push("Unusually high sales rate");
+  return flags;
+}
+
 export const formatDate = (iso: string) =>
   new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(
     new Date(iso),

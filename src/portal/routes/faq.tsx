@@ -21,7 +21,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "How much will I earn?",
-    a: "We don't promise or guarantee any income. Earnings depend entirely on genuine sales to customers you refer. Rates will be published on each programme page before applications open.",
+    a: "We don't promise or guarantee any income. Earnings depend entirely on genuine sales to customers you refer. Commission rates are on each programme page.",
   },
   {
     q: "Can I join both programmes?",

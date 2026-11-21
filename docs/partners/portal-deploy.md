@@ -343,6 +343,27 @@ portal's programme pages, terms and FAQ.
 
 Upload the portal only after step 1: until then its sales tables can't load.
 
+## Phases 5b–8: payouts, welcome pack, reports, new dashboards
+
+1. Supabase dashboard → project `prkdfkkhqncxkyehokop` → **SQL Editor** → paste
+   `supabase/migrations/20261123100000_partner_payouts.sql` → **Run**. Then in PowerShell:
+   `supabase migration repair --status applied 20261123100000`
+2. `npm run build:portal` and upload `dist-portal` to the `joat-partners` Cloudflare Pages project.
+   Upload only after step 1. joatkenya.com doesn't change.
+3. Finance needs **two** finance users (or a finance user plus a super admin) because the person
+   who creates a payout batch can't approve it. Add one with the `finance` SQL in section 3 above if needed.
+
+**Monthly payout run (finance):**
+1. Admin → **Payouts** → choose KES or USD → **Create batch**. It includes every commission past
+   its 30-day hold that hasn't been paid, minus refunds on sales already paid. Own purchases are
+   never included; disputed sales and ambassadors without payout details wait for the next run.
+2. Check Shopify's chargebacks list (Shopify admin → Finance → Payouts) and use **Hold back** on
+   anyone affected.
+3. A second finance user clicks **Approve**.
+4. Pay each ambassador by M-Pesa or bank (use **Export** for the list), then enter the
+   M-Pesa/bank reference and click **Mark paid**. The batch closes when everyone is paid, and the
+   ambassador sees the payout and reference on their dashboard.
+
 ## Rollback
 
 Cloudflare Pages keeps every deployment: Deployments → pick the previous one → Rollback.

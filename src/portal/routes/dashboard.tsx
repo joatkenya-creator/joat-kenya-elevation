@@ -13,6 +13,18 @@ import {
 import { ErrorNote, Loading, Page, StatusBadge } from "../ui";
 import { ProgrammeLinks } from "../Links";
 import { MyConversions } from "../Conversions";
+import { AmbassadorOverview } from "../AmbassadorOverview";
+import { PayoutSettings } from "../PayoutSettings";
+import {
+  BookOpen,
+  LayoutDashboard,
+  Link2,
+  Receipt,
+  Settings,
+  ShieldCheck,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -23,7 +35,7 @@ export const Route = createFileRoute("/dashboard")({
 
 const STATUS_TEXT: Record<MembershipStatus, string> = {
   pending: "We're reviewing your application.",
-  approved: "You're approved. Your referral links are below.",
+  approved: "You're approved. Create your referral links under Links.",
   rejected: "Not approved this time. You're welcome to apply again.",
   suspended: "This membership is suspended. Contact the partner team for details.",
   withdrawn: "You left this programme. You can apply again at any time.",
@@ -51,6 +63,71 @@ function Dashboard() {
       p.accepting_applications &&
       !memberships.some((m) => m.program_id === p.id && ACTIVE_STATUSES.includes(m.status)),
   );
+
+  const isMember = memberships.some((m) => m.status === "approved" || m.status === "suspended");
+  if (profile && isMember)
+    return (
+      <AmbassadorShell
+        name={profile.full_name}
+        email={session.user.email ?? ""}
+        isStaff={staff.length > 0}
+      >
+        {(section) => (
+          <>
+            {section === "overview" && (
+              <AmbassadorOverview userId={session.user.id} programName={programName} />
+            )}
+            {section === "links" &&
+              memberships
+                .filter((m) => m.status === "approved")
+                .map((m) => {
+                  const program = programs?.find((p) => p.id === m.program_id);
+                  return (
+                    program && (
+                      <ProgrammeLinks
+                        key={m.program_id}
+                        userId={session.user.id}
+                        publicCode={profile.public_code}
+                        program={program}
+                      />
+                    )
+                  );
+                })}
+            {section === "sales" && (
+              <MyConversions userId={session.user.id} programName={programName} />
+            )}
+            {section === "payouts" && <PayoutSettings />}
+            {section === "programmes" && (
+              <section className="rounded-2xl border border-border bg-card p-5">
+                <h2 className="text-lg font-semibold">Your programmes</h2>
+                <ul className="mt-3 divide-y divide-border">
+                  {memberships.map((m) => (
+                    <li
+                      key={m.program_id}
+                      className="flex flex-wrap items-start justify-between gap-3 py-3"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{programName(m.program_id)}</span>
+                          <StatusBadge status={m.status} />
+                        </div>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {STATUS_TEXT[m.status]}
+                        </p>
+                      </div>
+                      {(m.status === "pending" || m.status === "approved") && (
+                        <LeaveProgramme programId={m.program_id} name={programName(m.program_id)} />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+                {canApply && <ApplyLink label="Apply to another programme" />}
+              </section>
+            )}
+          </>
+        )}
+      </AmbassadorShell>
+    );
 
   return (
     <Page title="Dashboard" intro={<>Signed in as {session.user.email}</>}>
@@ -187,6 +264,72 @@ function LeaveProgramme({ programId, name }: { programId: string; name: string }
         </button>
       </div>
       {leave.error && <ErrorNote>{friendlyError(leave.error)}</ErrorNote>}
+    </div>
+  );
+}
+
+type SectionId = "overview" | "links" | "sales" | "payouts" | "programmes";
+const SECTIONS: { id: SectionId; label: string; icon: LucideIcon }[] = [
+  { id: "overview", label: "Dashboard", icon: LayoutDashboard },
+  { id: "links", label: "Links", icon: Link2 },
+  { id: "sales", label: "Sales & commission", icon: Receipt },
+  { id: "payouts", label: "Payouts", icon: Wallet },
+  { id: "programmes", label: "Programmes", icon: Settings },
+];
+
+/** Navy sidebar layout for ambassadors, modelled on the affiliate dashboard design. */
+function AmbassadorShell({
+  name,
+  email,
+  isStaff,
+  children,
+}: {
+  name: string;
+  email: string;
+  isStaff: boolean;
+  children: (section: SectionId) => React.ReactNode;
+}) {
+  const [section, setSection] = useState<SectionId>("overview");
+  const item =
+    "flex items-center gap-2.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm transition-colors";
+  return (
+    <div className="flex min-h-full flex-col bg-slate-100 md:flex-row">
+      <nav
+        aria-label="Dashboard"
+        className="flex gap-1 overflow-x-auto bg-[#0f2a5f] p-2 text-white md:w-56 md:shrink-0 md:flex-col md:p-3"
+      >
+        {SECTIONS.map((s) => (
+          <button
+            key={s.id}
+            type="button"
+            aria-current={section === s.id ? "page" : undefined}
+            onClick={() => setSection(s.id)}
+            className={`${item} ${section === s.id ? "bg-white/15 font-medium" : "text-white/75 hover:bg-white/10"}`}
+          >
+            <s.icon className="h-4 w-4" aria-hidden="true" />
+            {s.label}
+          </button>
+        ))}
+        <Link to="/resources" className={`${item} text-white/75 hover:bg-white/10`}>
+          <BookOpen className="h-4 w-4" aria-hidden="true" />
+          Resources
+        </Link>
+        {isStaff && (
+          <Link to="/admin" className={`${item} text-white/75 hover:bg-white/10`}>
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+            Admin
+          </Link>
+        )}
+      </nav>
+      <div className="min-w-0 flex-1 space-y-4 p-4 sm:p-6">
+        <header className="flex flex-wrap items-center justify-between gap-2">
+          <h1 className="text-xl font-semibold">{SECTIONS.find((s) => s.id === section)!.label}</h1>
+          <p className="text-sm text-muted-foreground">
+            {name} · {email}
+          </p>
+        </header>
+        {children(section)}
+      </div>
     </div>
   );
 }

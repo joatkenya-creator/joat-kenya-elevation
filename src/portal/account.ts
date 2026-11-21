@@ -134,6 +134,11 @@ const ERRORS: Record<string, string> = {
   invoice_not_found: "That invoice no longer exists. Refresh and try again.",
   future_date: "The payment date can't be in the future.",
   overpayment: "That would take payments above the invoice amount.",
+  nothing_to_pay:
+    "There's nothing to pay in that currency yet: commissions are still on hold, or ambassadors haven't added payout details.",
+  cannot_approve_own_payout: "You're paid in this batch, so another finance user must approve it.",
+  cannot_approve_own_batch: "Another finance user must approve a batch you created.",
+  reference_required: "Enter the M-Pesa or bank transfer reference.",
   duplicate_payment: "That payment reference has already been entered.",
   payment_not_found: "That payment no longer exists. Refresh and try again.",
   cannot_confirm_own_entry:

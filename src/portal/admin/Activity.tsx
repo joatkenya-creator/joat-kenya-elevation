@@ -1,22 +1,6 @@
 import { ErrorNote, Loading } from "../ui";
 import { formatDate, useActivity, useMembers } from "./data";
-
-const ACTION_LABEL: Record<string, string> = {
-  "application.submitted": "Application submitted",
-  "membership.approved": "Approved",
-  "membership.rejected": "Rejected",
-  "membership.suspended": "Suspended",
-  "membership.withdrawn": "Left the programme",
-  "program.applications_opened": "Applications opened",
-  "program.applications_closed": "Applications closed",
-  "link.disabled": "Link disabled",
-  "link.active": "Link re-enabled",
-  "joat.engagement_created": "JOAT engagement created",
-  "joat.invoice_added": "JOAT invoice added",
-  "joat.payment_recorded": "Payment recorded",
-  "joat.payment_confirmed": "Payment confirmed",
-  "joat.payment_rejected": "Payment rejected",
-};
+import { ACTION_LABEL } from "./labels";
 
 export function Activity({ programName }: { programName: (id: string) => string }) {
   const activity = useActivity();

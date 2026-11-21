@@ -17,6 +17,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ProgramsAmareRouteImport } from './routes/programs.amare'
 import { Route as ProgramsJoatRouteImport } from './routes/programs.joat'
@@ -61,6 +62,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
+  '/resources': typeof ResourcesRoute
   '/terms': typeof TermsRoute
   '/programs/amare': typeof ProgramsAmareRoute
   '/programs/joat': typeof ProgramsJoatRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
+  '/resources': typeof ResourcesRoute
   '/terms': typeof TermsRoute
   '/programs/amare': typeof ProgramsAmareRoute
   '/programs/joat': typeof ProgramsJoatRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
+  '/resources': typeof ResourcesRoute
   '/terms': typeof TermsRoute
   '/programs/amare': typeof ProgramsAmareRoute
   '/programs/joat': typeof ProgramsJoatRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/login'
     | '/privacy'
+    | '/resources'
     | '/terms'
     | '/programs/amare'
     | '/programs/joat'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/login'
     | '/privacy'
+    | '/resources'
     | '/terms'
     | '/programs/amare'
     | '/programs/joat'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/login'
     | '/privacy'
+    | '/resources'
     | '/terms'
     | '/programs/amare'
     | '/programs/joat'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
+  ResourcesRoute: typeof ResourcesRoute
   TermsRoute: typeof TermsRoute
   ProgramsAmareRoute: typeof ProgramsAmareRoute
   ProgramsJoatRoute: typeof ProgramsJoatRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,
+  ResourcesRoute: ResourcesRoute,
   TermsRoute: TermsRoute,
   ProgramsAmareRoute: ProgramsAmareRoute,
   ProgramsJoatRoute: ProgramsJoatRoute,
