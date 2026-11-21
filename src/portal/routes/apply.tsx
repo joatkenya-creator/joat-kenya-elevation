@@ -5,7 +5,7 @@ import { useSession } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { deliverPartnerApplicationViaWeb3Forms } from "@/lib/web3forms";
 import { ACTIVE_STATUSES, friendlyError, useAccount, usePrograms } from "../account";
-import { ErrorNote, Loading, Page, buttonClass, inputClass } from "../ui";
+import { ErrorNote, GoogleButton, Loading, Page, buttonClass, inputClass } from "../ui";
 
 export const Route = createFileRoute("/apply")({
   head: () => ({ meta: [{ title: "Apply | JOAT Global Partners" }] }),
@@ -21,7 +21,11 @@ function Apply() {
       intro="Free to join. No purchase required. You earn only on verified sales to customers you refer yourself."
     >
       {session ? (
-        <ApplicationForm userId={session.user.id} email={session.user.email ?? ""} />
+        <ApplicationForm
+          userId={session.user.id}
+          email={session.user.email ?? ""}
+          googleName={session.user.user_metadata?.full_name ?? ""}
+        />
       ) : (
         <CreateAccount />
       )}
@@ -83,7 +87,11 @@ function CreateAccount() {
         </Link>
         , then come back to this page.
       </p>
-      <form onSubmit={submit} className="mt-5 space-y-4">
+      <div className="mt-5">
+        <GoogleButton next="/apply" label="Sign up with Google" />
+      </div>
+      <p className="mt-4 text-center text-xs text-muted-foreground">or use your email</p>
+      <form onSubmit={submit} className="mt-4 space-y-4">
         <Field id="signup-email" label="Email">
           <input
             id="signup-email"
@@ -126,13 +134,21 @@ function CreateAccount() {
   );
 }
 
-function ApplicationForm({ userId, email }: { userId: string; email: string }) {
+function ApplicationForm({
+  userId,
+  email,
+  googleName,
+}: {
+  userId: string;
+  email: string;
+  googleName: string;
+}) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const programs = usePrograms();
   const account = useAccount(userId);
 
-  const [fullName, setFullName] = useState("");
+  const [fullName, setFullName] = useState(googleName);
   const [country, setCountry] = useState("");
   const [chosen, setChosen] = useState<string[]>([]);
   const [links, setLinks] = useState("");

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useSession } from "@/lib/auth";
 import { isPasswordRecovery, supabase } from "@/lib/supabase";
-import { ErrorNote, Page, buttonClass, inputClass } from "../ui";
+import { ErrorNote, GoogleButton, Page, buttonClass, inputClass } from "../ui";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -50,6 +50,10 @@ function SignInForm() {
 
   return (
     <Page title="Sign in" intro="Sign in to your ambassador or staff account.">
+      <div className="max-w-sm">
+        <GoogleButton next="/dashboard" />
+        <p className="my-4 text-center text-xs text-muted-foreground">or sign in with email</p>
+      </div>
       <form onSubmit={signIn} className="max-w-sm space-y-4">
         <div className="space-y-1">
           <label htmlFor="email" className="text-xs text-muted-foreground">

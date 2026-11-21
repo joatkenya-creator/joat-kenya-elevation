@@ -12,7 +12,13 @@ const repoRoot = fileURLToPath(new URL(".", import.meta.url));
 export default defineConfig({
   root: "portal",
   envDir: repoRoot,
-  resolve: { alias: { "@": `${repoRoot}src` } },
+  resolve: {
+    alias: [
+      { find: "@", replacement: `${repoRoot}src` },
+      // Dev server serves index.html's ../src/portal/main.tsx as /src/... under root (portal/); map it back.
+      { find: /^\/src\//, replacement: `${repoRoot}src/` },
+    ],
+  },
   plugins: [
     TanStackRouterVite({
       target: "react",
