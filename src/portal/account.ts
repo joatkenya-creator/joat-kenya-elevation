@@ -13,6 +13,7 @@ export type Program = {
   attribution_model: "first_touch" | "last_touch" | null;
   site_url: string | null;
   shop_url: string | null;
+  ambassador_discount_percent: number | null;
 };
 
 export type MembershipStatus = "pending" | "approved" | "rejected" | "suspended" | "withdrawn";
@@ -33,7 +34,7 @@ export function usePrograms() {
       const { data, error } = await supabase
         .from("affiliate_programs")
         .select(
-          "id, name, accepting_applications, attribution_window_days, attribution_model, site_url, shop_url",
+          "id, name, accepting_applications, attribution_window_days, attribution_model, site_url, shop_url, ambassador_discount_percent",
         )
         .order("id", { ascending: false });
       if (error) throw error;
@@ -147,6 +148,11 @@ const ERRORS: Record<string, string> = {
     "Someone other than the person who recorded this payment must confirm it.",
   nothing_to_withdraw: "There's nothing to leave: this membership is no longer active.",
   membership_not_found: "That membership no longer exists. Refresh and try again.",
+  invalid_percent:
+    "Enter a discount between 0 and 100 percent, or leave it empty to turn discounts off.",
+  no_shop: "Only programs with a shop can have ambassador discount codes.",
+  shopify_not_configured:
+    "The Shopify admin token isn't set up yet. See docs/partners/shopify-discounts.md.",
 };
 
 export function friendlyError(error: { message?: string } | null | undefined) {

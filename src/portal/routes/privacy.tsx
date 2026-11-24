@@ -13,8 +13,8 @@ function Privacy() {
       <Section title="Who we are">
         <p>
           JOAT Ambassadors is run by {BRAND.legalName}. This notice covers ambassadors and portal
-          users, including anyone who signs in with Google. The
-          main website privacy policies still apply to customers.
+          users, including anyone who signs in with Google. The main website privacy policies still
+          apply to customers.
         </p>
       </Section>
       <Section title="What we collect from ambassadors">

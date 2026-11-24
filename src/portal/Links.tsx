@@ -107,7 +107,12 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
       </p>
 
       {acceptsCodes(program.id) && (
-        <CodeCard programId={program.id} code={props.publicCode} siteUrl={program.site_url} />
+        <CodeCard
+          programId={program.id}
+          code={props.publicCode}
+          siteUrl={program.site_url}
+          discountPercent={program.ambassador_discount_percent}
+        />
       )}
 
       <ul className="divide-y divide-border rounded-md border border-border">
@@ -345,7 +350,12 @@ function ShareControl(props: { url: string; message: (url: string) => string; la
   );
 }
 
-function CodeCard(props: { programId: string; code: string; siteUrl: string }) {
+function CodeCard(props: {
+  programId: string;
+  code: string;
+  siteUrl: string;
+  discountPercent: number | null;
+}) {
   const [copied, setCopied] = useState(false);
   return (
     <div className="space-y-3 rounded-md border border-border bg-muted/40 p-4">
@@ -354,6 +364,8 @@ function CodeCard(props: { programId: string; code: string; siteUrl: string }) {
       <p className="text-sm text-muted-foreground">
         People who type the website address themselves can enter this code on the website or in the
         shop cart, so the sale is still credited to you.
+        {props.discountPercent != null &&
+          ` At checkout it also gives them ${props.discountPercent}% off (once per customer).`}
       </p>
       <div className="flex flex-wrap items-center gap-2">
         <button
