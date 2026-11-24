@@ -3,6 +3,18 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { friendlyError, type Program } from "./account";
 import { ErrorNote, Loading, buttonClass, inputClass } from "./ui";
+import { toast } from "sonner";
+import { Copy, Facebook, Instagram, MessageCircle, Send, Share2, Twitter } from "lucide-react";
+import {
+  NETWORKS,
+  NETWORK_LABEL,
+  acceptsCodes,
+  codeMessage,
+  networkShare,
+  shareMessage,
+  withUtm,
+  type Network,
+} from "./share";
 
 // An ambassador's referral links for one approved programme, with click
 // counts. Counts are the ambassador's own rows (RLS), duplicates excluded.
@@ -88,11 +100,17 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
         later clicks another ambassador's link, the newer link gets the credit.
       </p>
 
+      {acceptsCodes(program.id) && (
+        <CodeCard programId={program.id} code={props.publicCode} siteUrl={program.site_url} />
+      )}
+
       <ul className="divide-y divide-border rounded-md border border-border">
         <LinkItem
           label="Home page"
           url={referralUrl(program.site_url, props.publicCode)}
           clicks={clickCount(null)}
+          programId={program.id}
+          code={props.publicCode}
         />
         {mine.map((l) => (
           <LinkItem
@@ -101,6 +119,8 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
             url={referralUrl(program.site_url!, props.publicCode, l)}
             clicks={clickCount(l.id)}
             disabled={l.status === "disabled"}
+            programId={program.id}
+            code={props.publicCode}
           />
         ))}
       </ul>
@@ -110,7 +130,14 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
   );
 }
 
-function LinkItem(props: { label: string; url: string; clicks: number; disabled?: boolean }) {
+function LinkItem(props: {
+  label: string;
+  url: string;
+  clicks: number;
+  disabled?: boolean;
+  programId: string;
+  code: string;
+}) {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
@@ -147,6 +174,12 @@ function LinkItem(props: { label: string; url: string; clicks: number; disabled?
           </button>
         )}
       </div>
+      {!props.disabled && (
+        <ShareControl
+          url={props.url}
+          message={(u) => shareMessage(props.programId, u, props.code)}
+        />
+      )}
     </li>
   );
 }
@@ -219,5 +252,121 @@ function NewLink(props: { programId: string; siteUrl: string; userId: string }) 
       </div>
       {create.error && <ErrorNote>{friendlyError(create.error)}</ErrorNote>}
     </form>
+  );
+}
+
+const ICONS: Record<Network, typeof Share2> = {
+  whatsapp: MessageCircle,
+  facebook: Facebook,
+  telegram: Send,
+  x: Twitter, // ponytail: lucide has no X logo; swap in a brand SVG if it matters
+  instagram: Instagram,
+};
+
+async function copyText(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Share button plus one button per network. `url` is the page being shared;
+ * `message` builds the text for a given (UTM-tagged) URL.
+ */
+function ShareControl(props: { url: string; message: (url: string) => string; label?: string }) {
+  const [open, setOpen] = useState(false);
+  const tagged = (n: Network | "native") => withUtm(props.url, n);
+
+  const share = async () => {
+    setOpen(true);
+    if (typeof navigator.share !== "function") return;
+    const url = tagged("native");
+    try {
+      // The message already contains the URL, so it's sent as text only.
+      await navigator.share({ text: props.message(url) });
+    } catch {
+      /* cancelled: the network buttons are still showing */
+    }
+  };
+
+  const onNetwork = async (n: Network, e: React.MouseEvent<HTMLAnchorElement>) => {
+    const url = tagged(n);
+    const target = networkShare(n, props.message(url), url);
+    if (!target.copy) return; // plain link, let the browser open it
+    // Copy before opening: the clipboard only works while this tab has focus.
+    e.preventDefault();
+    const copied = await copyText(target.copy);
+    toast(copied ? target.toast : "Couldn't copy automatically. Copy the text above first.");
+    window.open(target.href, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <div className="flex w-full flex-wrap items-center gap-2">
+      <button
+        type="button"
+        onClick={() => void share()}
+        aria-expanded={open}
+        className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm hover:bg-muted"
+      >
+        <Share2 className="h-4 w-4" aria-hidden="true" />
+        {props.label ?? "Share"}
+      </button>
+      {open &&
+        NETWORKS.map((n) => {
+          const Icon = ICONS[n];
+          const url = tagged(n);
+          return (
+            <a
+              key={n}
+              href={networkShare(n, props.message(url), url).href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Share on ${NETWORK_LABEL[n]}`}
+              title={`Share on ${NETWORK_LABEL[n]}`}
+              onClick={(e) => void onNetwork(n, e)}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border hover:bg-muted"
+            >
+              <Icon className="h-4 w-4" aria-hidden="true" />
+            </a>
+          );
+        })}
+    </div>
+  );
+}
+
+function CodeCard(props: { programId: string; code: string; siteUrl: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <div className="space-y-3 rounded-md border border-border bg-muted/40 p-4">
+      <p className="text-sm font-medium">Your ambassador code</p>
+      <p className="font-mono text-3xl font-bold tracking-widest">{props.code}</p>
+      <p className="text-sm text-muted-foreground">
+        People who type the website address themselves can enter this code on the website or in the
+        shop cart, so the sale is still credited to you.
+      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          aria-live="polite"
+          onClick={async () => {
+            const ok = await copyText(props.code);
+            setCopied(ok);
+            if (ok) setTimeout(() => setCopied(false), 2000);
+          }}
+          className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm hover:bg-muted"
+        >
+          <Copy className="h-4 w-4" aria-hidden="true" />
+          {copied ? "Copied" : "Copy code"}
+        </button>
+      </div>
+      <ShareControl
+        url={props.siteUrl}
+        label="Share code"
+        message={() => codeMessage(props.programId, props.code)}
+      />
+    </div>
   );
 }

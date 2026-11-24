@@ -1,4 +1,5 @@
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 import { HeadContent, Link, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import joatLogo from "@/assets/joat-logo.png";
 import { useSession } from "@/lib/auth";
@@ -38,6 +39,7 @@ function Root() {
         </main>
         <Footer />
       </div>
+      <Toaster position="bottom-center" />
     </QueryClientProvider>
   );
 }
