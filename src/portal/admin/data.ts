@@ -13,6 +13,7 @@ export type MemberRow = {
   status_changed_at: string;
   created_at: string;
   commission_rate: string;
+  ref_code: string;
   affiliate_profiles: {
     full_name: string;
     country: string;
@@ -49,7 +50,7 @@ export function useMembers() {
       const { data, error } = await supabase
         .from("affiliate_memberships")
         .select(
-          "profile_id, program_id, status, status_changed_at, created_at, commission_rate, affiliate_profiles(full_name, country, social_links, public_code)",
+          "profile_id, program_id, status, status_changed_at, created_at, commission_rate, ref_code, affiliate_profiles(full_name, country, social_links, public_code)",
         )
         .order("status_changed_at", { ascending: false });
       if (error) throw error;

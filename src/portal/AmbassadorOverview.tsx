@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Area,
   AreaChart,
@@ -22,6 +23,8 @@ import { ErrorNote, Loading } from "./ui";
 const DAY = 86_400_000;
 const BLUE = "#2563eb";
 const GREEN = "#16a34a";
+// One colour per programme in the "All programs" charts.
+const PROGRAM_COLORS = ["#2563eb", "#E8603C", "#7c3aed", "#0891b2"];
 
 /** Sum exact decimal strings per currency, in cents. */
 function byCurrency(rows: { currency: string | null; amount: string }[]) {
@@ -74,12 +77,16 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 export function AmbassadorOverview({
   userId,
   programName,
+  programIds,
   country,
 }: {
   userId: string;
   country: string | null;
   programName: (id: string) => string;
+  /** Programmes the ambassador is (or was) active in; more than one shows a switcher. */
+  programIds: string[];
 }) {
+  const [view, setView] = useState<string>("all");
   const clicks = useMyClicks(userId);
   const conversions = useConversions(userId);
   const payouts = useMyPayouts();
@@ -95,9 +102,14 @@ export function AmbassadorOverview({
     const t = iso ? new Date(iso).getTime() : NaN;
     return t >= now - from * DAY && t < now - to * DAY;
   };
-  const sales: ConversionRow[] = conversions.data!.filter((c) => c.status !== "awaiting_payment");
-  const clicks30 = clicks.data!.filter((c) => within(c.at, 30, 0)).length;
-  const clicksPrev = clicks.data!.filter((c) => within(c.at, 60, 30)).length;
+  const inView = (programId: string) => view === "all" || programId === view;
+  const split = view === "all" && programIds.length > 1;
+  const myClicks = clicks.data!.filter((c) => inView(c.program_id));
+  const sales: ConversionRow[] = conversions.data!.filter(
+    (c) => c.status !== "awaiting_payment" && inView(c.program_id),
+  );
+  const clicks30 = myClicks.filter((c) => within(c.at, 30, 0)).length;
+  const clicksPrev = myClicks.filter((c) => within(c.at, 60, 30)).length;
   const sales30 = sales.filter((c) => within(c.occurred_at, 30, 0)).length;
   const salesPrev = sales.filter((c) => within(c.occurred_at, 60, 30)).length;
 
@@ -118,17 +130,30 @@ export function AmbassadorOverview({
       .map((p) => ({ currency: p.currency, amount: p.amount })),
   );
 
-  // Last 14 days of clicks and sales.
+  // Last 14 days of clicks and sales; clicks per programme in the "All" view.
+  const sameDay = (iso: string | null, key: string) =>
+    !!iso && new Date(iso).toDateString() === key;
   const traffic = Array.from({ length: 14 }, (_, i) => {
     const day = new Date(now - (13 - i) * DAY);
     const key = day.toDateString();
-    return {
+    const row: Record<string, string | number> = {
       day: day.toLocaleDateString(undefined, { weekday: "short" }),
-      Clicks: clicks.data!.filter((c) => new Date(c.at).toDateString() === key).length,
-      Sales: sales.filter((c) => c.occurred_at && new Date(c.occurred_at).toDateString() === key)
-        .length,
+      Sales: sales.filter((c) => sameDay(c.occurred_at, key)).length,
     };
+    if (split)
+      for (const id of programIds)
+        row[`${programName(id)} clicks`] = myClicks.filter(
+          (c) => c.program_id === id && sameDay(c.at, key),
+        ).length;
+    else row.Clicks = myClicks.filter((c) => sameDay(c.at, key)).length;
+    return row;
   });
+  const clickSeries = split
+    ? programIds.map((id, i) => ({
+        key: `${programName(id)} clicks`,
+        color: PROGRAM_COLORS[i % PROGRAM_COLORS.length],
+      }))
+    : [{ key: "Clicks", color: BLUE }];
 
   // Monthly commission for the last 6 months, in the ambassador's main currency.
   const mainCurrency = [...earned].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
@@ -143,15 +168,47 @@ export function AmbassadorOverview({
         new Date(c.occurred_at).getMonth() === d.getMonth() &&
         new Date(c.occurred_at).getFullYear() === d.getFullYear(),
     );
-    return {
+    const row: Record<string, string | number> = {
       month: d.toLocaleDateString(undefined, { month: "short" }),
-      Revenue: inMonth.reduce((n, c) => n + Number(c.revenue), 0),
-      Commission: inMonth.reduce((n, c) => n + Number(c.commission), 0),
     };
+    // "All" view: commission stacked per programme (revenue of different
+    // businesses isn't comparable). One programme: revenue and commission.
+    if (split)
+      for (const id of programIds)
+        row[programName(id)] = inMonth
+          .filter((c) => c.program_id === id)
+          .reduce((n, c) => n + Number(c.commission), 0);
+    else {
+      row.Revenue = inMonth.reduce((n, c) => n + Number(c.revenue), 0);
+      row.Commission = inMonth.reduce((n, c) => n + Number(c.commission), 0);
+    }
+    return row;
   });
+  // Payouts are paid per ambassador, not per programme.
+  const allPrograms = view === "all" ? "" : " (all programs)";
 
   return (
     <div className="space-y-4">
+      {programIds.length > 1 && (
+        <div role="tablist" aria-label="Program" className="flex flex-wrap gap-2">
+          {["all", ...programIds].map((id) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={view === id}
+              onClick={() => setView(id)}
+              className={`rounded-full border px-3 py-1 text-sm ${
+                view === id
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-border hover:bg-muted"
+              }`}
+            >
+              {id === "all" ? "All programs" : programName(id)}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <Kpi
           label="Clicks (30 days)"
@@ -160,7 +217,7 @@ export function AmbassadorOverview({
         />
         <Kpi label="Sales (30 days)" value={String(sales30)} delta={change(sales30, salesPrev)} />
         <Kpi label="Commission earned" value={showTotals(earned, local)} />
-        <Kpi label="Paid to you" value={showTotals(paid, local)} />
+        <Kpi label={`Paid to you${allPrograms}`} value={showTotals(paid, local)} />
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[2fr_1.3fr_1fr]">
@@ -173,14 +230,17 @@ export function AmbassadorOverview({
                 <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
                 <Tooltip />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Area
-                  type="monotone"
-                  dataKey="Clicks"
-                  stroke={BLUE}
-                  fill={BLUE}
-                  fillOpacity={0.12}
-                  dot
-                />
+                {clickSeries.map((c) => (
+                  <Area
+                    key={c.key}
+                    type="monotone"
+                    dataKey={c.key}
+                    stroke={c.color}
+                    fill={c.color}
+                    fillOpacity={0.12}
+                    dot
+                  />
+                ))}
                 <Area
                   type="monotone"
                   dataKey="Sales"
@@ -193,7 +253,9 @@ export function AmbassadorOverview({
             </ResponsiveContainer>
           </div>
         </Panel>
-        <Panel title={`Earnings by month${mainCurrency ? ` (${mainCurrency})` : ""}`}>
+        <Panel
+          title={`${split ? "Commission" : "Earnings"} by month${mainCurrency ? ` (${mainCurrency})` : ""}`}
+        >
           <div className="h-56">
             <ResponsiveContainer>
               <BarChart data={months} margin={{ top: 5, right: 5, left: -15, bottom: 0 }}>
@@ -202,8 +264,19 @@ export function AmbassadorOverview({
                 <YAxis tick={{ fontSize: 11 }} />
                 <Tooltip />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Bar dataKey="Revenue" fill={BLUE} radius={[3, 3, 0, 0]} />
-                <Bar dataKey="Commission" fill={GREEN} radius={[3, 3, 0, 0]} />
+                {split
+                  ? programIds.map((id, i) => (
+                      <Bar
+                        key={id}
+                        dataKey={programName(id)}
+                        stackId="commission"
+                        fill={PROGRAM_COLORS[i % PROGRAM_COLORS.length]}
+                      />
+                    ))
+                  : [
+                      <Bar key="r" dataKey="Revenue" fill={BLUE} radius={[3, 3, 0, 0]} />,
+                      <Bar key="c" dataKey="Commission" fill={GREEN} radius={[3, 3, 0, 0]} />,
+                    ]}
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -214,8 +287,8 @@ export function AmbassadorOverview({
               [
                 ["Total earned", showTotals(earned, local)],
                 ["On 30-day hold", showTotals(onHold, local)],
-                ["Approved, being paid", showTotals(approved, local)],
-                ["Paid to you", showTotals(paid, local)],
+                [`Approved, being paid${allPrograms}`, showTotals(approved, local)],
+                [`Paid to you${allPrograms}`, showTotals(paid, local)],
                 ["Payout schedule", "Monthly"],
               ] as const
             ).map(([k, v]) => (

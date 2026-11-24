@@ -42,15 +42,20 @@ type Message = { subject: string; lines: string[]; highlight?: Highlight | null 
 
 async function shareFor(r: Row): Promise<{ lines: string[]; highlight: Highlight | null }> {
   const [{ data: prof }, { data: prog }] = await Promise.all([
-    db.from("affiliate_profiles").select("public_code").eq("id", r.subject_id!).maybeSingle(),
+    db
+      .from("affiliate_memberships")
+      .select("ref_code")
+      .eq("profile_id", r.subject_id!)
+      .eq("program_id", r.program_id!)
+      .maybeSingle(),
     db
       .from("affiliate_programs")
       .select("site_url, shop_url")
       .eq("id", r.program_id!)
       .maybeSingle(),
   ]);
-  if (!prof?.public_code || !prog?.site_url) return { lines: [], highlight: null };
-  const code = prof.public_code as string;
+  if (!prof?.ref_code || !prog?.site_url) return { lines: [], highlight: null };
+  const code = prof.ref_code as string;
   const s = shareLines({ code, siteUrl: prog.site_url, hasShop: !!prog.shop_url, portal: PORTAL });
   return { lines: s.lines, highlight: { code: prog.shop_url ? code : null, link: s.link } };
 }

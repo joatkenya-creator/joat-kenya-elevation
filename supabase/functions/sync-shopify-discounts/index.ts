@@ -1,6 +1,6 @@
 // sync-shopify-discounts: makes Shopify's discount codes match the programme's
 // ambassador discount setting. One code per approved ambassador (code =
-// public_code, ambassador_discount_percent off, once per customer); codes of
+// the Amare membership's ref_code, ambassador_discount_percent off, once per customer); codes of
 // ambassadors who are no longer approved, or all codes when the setting is
 // empty, are switched off. Pressed from Admin → Programs → "Sync to Shopify".
 //

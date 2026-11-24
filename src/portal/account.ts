@@ -21,7 +21,13 @@ export type StaffRole = "super_admin" | "program_manager" | "finance" | "support
 
 export type Account = {
   profile: { public_code: string; full_name: string; country: string } | null;
-  memberships: { program_id: string; status: MembershipStatus; commission_rate: string }[];
+  memberships: {
+    program_id: string;
+    status: MembershipStatus;
+    commission_rate: string;
+    /** This programme's referral code (one per membership). */
+    ref_code: string;
+  }[];
   staff: { role: StaffRole; program_id: string | null }[];
   /** "aal2" once the user has passed two-factor sign-in this session. */
   aal: string | null;
@@ -56,7 +62,7 @@ export function useAccount(userId: string | undefined) {
           .maybeSingle(),
         supabase
           .from("affiliate_memberships")
-          .select("program_id, status, commission_rate")
+          .select("program_id, status, commission_rate, ref_code")
           .eq("profile_id", userId!),
         supabase.from("partner_staff").select("role, program_id").eq("user_id", userId!),
         supabase.auth.mfa.getAuthenticatorAssuranceLevel(),

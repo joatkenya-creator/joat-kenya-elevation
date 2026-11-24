@@ -78,6 +78,9 @@ function Dashboard() {
               <AmbassadorOverview
                 userId={session.user.id}
                 programName={programName}
+                programIds={memberships
+                  .filter((m) => m.status === "approved" || m.status === "suspended")
+                  .map((m) => m.program_id)}
                 country={profile.country}
               />
             )}
@@ -91,7 +94,7 @@ function Dashboard() {
                       <ProgrammeLinks
                         key={m.program_id}
                         userId={session.user.id}
-                        publicCode={profile.public_code}
+                        publicCode={m.ref_code}
                         program={program}
                       />
                     )
@@ -205,7 +208,7 @@ function Dashboard() {
                   <ProgrammeLinks
                     key={m.program_id}
                     userId={session.user.id}
-                    publicCode={profile.public_code}
+                    publicCode={m.ref_code}
                     program={program}
                   />
                 )

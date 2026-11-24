@@ -155,7 +155,7 @@ function MemberCard(props: {
           <p className="text-sm text-muted-foreground">
             {p?.country} · {props.programName} · {m.status === "pending" ? "applied" : "since"}{" "}
             {formatDate(m.status_changed_at)}
-            {m.status !== "pending" && p && ` · code ${p.public_code}`}
+            {m.status !== "pending" && ` · code ${m.ref_code}`}
             {m.status !== "pending" && ` · ${Math.round(Number(m.commission_rate) * 100)}% rate`}
           </p>
         </div>
