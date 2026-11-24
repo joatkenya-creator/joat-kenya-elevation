@@ -94,6 +94,42 @@ expect(
   null,
 );
 
+console.log("— shop host (Part 3)");
+const AMARE = ["https://amaresbigplanet.com", "https://amares-big-planet.myshopify.com"];
+expect(
+  "shop product link parses",
+  parseLanding(
+    "https://amares-big-planet.myshopify.com/products/hoodie?ref=98nxcr22&ln=ab12cd34&utm_source=x",
+    AMARE,
+  ),
+  {
+    ref: "98NXCR22",
+    linkCode: "AB12CD34",
+    path: "/products/hoodie?utm_source=x",
+    utm: { source: "x" },
+  },
+);
+expect(
+  "site still parses with both hosts",
+  parseLanding("https://www.amaresbigplanet.com/?ref=98NXCR22", AMARE)?.ref,
+  "98NXCR22",
+);
+expect(
+  "another shop is refused",
+  parseLanding("https://other.myshopify.com/?ref=98NXCR22", AMARE),
+  null,
+);
+expect(
+  "null shop is ignored",
+  parseLanding("https://joatkenya.com/?ref=AB12CD34", [SITE, null])?.ref,
+  "AB12CD34",
+);
+expect(
+  "referrer from the shop is dropped",
+  referrerDomain("https://amares-big-planet.myshopify.com/cart", AMARE),
+  null,
+);
+
 // ─── Database ─────────────────────────────────────────────────────────────────
 const db = new PGlite();
 await db.exec(`

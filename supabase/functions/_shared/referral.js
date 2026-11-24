@@ -66,25 +66,32 @@ export async function verifyToken(token, secret, now = Date.now()) {
   }
 }
 
-/** True when `host` is the site's host or its www. variant. */
-export function isSiteHost(host, siteUrl) {
-  const site = new URL(siteUrl).host;
-  return host === site || host === `www.${site}`;
+/**
+ * True when `host` is one of the programme's hosts (or its www. variant).
+ * `siteUrls`: the site URL, or [site_url, shop_url] (nulls ignored).
+ */
+export function isSiteHost(host, siteUrls) {
+  return [siteUrls].flat().some((u) => {
+    if (!u) return false;
+    const site = new URL(u).host;
+    return host === site || host === `www.${site}`;
+  });
 }
 
 /**
  * Splits the page a visitor landed on into what gets stored. Returns null
- * unless the URL is on the programme's own site. The ref/ln parameters are
+ * unless the URL is on the programme's own site or shop (`siteUrls` as for
+ * isSiteHost). The ref/ln parameters are
  * removed from the stored path; UTM tags are kept, trimmed.
  */
-export function parseLanding(landingUrl, siteUrl) {
+export function parseLanding(landingUrl, siteUrls) {
   let url;
   try {
     url = new URL(landingUrl);
   } catch {
     return null;
   }
-  if (url.protocol !== "https:" || !isSiteHost(url.host, siteUrl)) return null;
+  if (url.protocol !== "https:" || !isSiteHost(url.host, siteUrls)) return null;
 
   const ref = (url.searchParams.get("ref") ?? "").trim().toUpperCase();
   const linkCode = (url.searchParams.get("ln") ?? "").trim().toUpperCase() || null;
@@ -99,10 +106,10 @@ export function parseLanding(landingUrl, siteUrl) {
 }
 
 /** Domain of the page that sent the visitor, or null for the site itself / none. */
-export function referrerDomain(referrer, siteUrl) {
+export function referrerDomain(referrer, siteUrls) {
   try {
     const host = new URL(referrer).hostname;
-    return isSiteHost(host, siteUrl) ? null : host.slice(0, 255);
+    return isSiteHost(host, siteUrls) ? null : host.slice(0, 255);
   } catch {
     return null;
   }

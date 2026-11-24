@@ -24,6 +24,7 @@ type LinkRow = {
   code: string;
   program_id: string;
   destination_path: string;
+  destination_host: "site" | "shop";
   campaign: string | null;
   status: "active" | "disabled";
 };
@@ -37,7 +38,7 @@ function useMyLinks(userId: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("affiliate_links")
-        .select("id, code, program_id, destination_path, campaign, status")
+        .select("id, code, program_id, destination_path, destination_host, campaign, status")
         .eq("profile_id", userId)
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -64,12 +65,17 @@ function useMyClicks(userId: string) {
   });
 }
 
-function referralUrl(siteUrl: string, publicCode: string, link?: LinkRow) {
-  const url = new URL(link ? link.destination_path : "/", siteUrl);
+function referralUrl(program: Program, publicCode: string, link?: LinkRow) {
+  const base =
+    link?.destination_host === "shop" && program.shop_url ? program.shop_url : program.site_url!;
+  const url = new URL(link ? link.destination_path : "/", base);
   url.searchParams.set("ref", publicCode);
   if (link) url.searchParams.set("ln", link.code);
   return url.toString();
 }
+
+const linkLabel = (program: Program, l: LinkRow) =>
+  `${l.destination_host === "shop" ? `${program.name} shop ` : ""}${l.destination_path}${l.campaign ? ` · ${l.campaign}` : ""}`;
 
 export function ProgrammeLinks(props: { userId: string; publicCode: string; program: Program }) {
   const { program } = props;
@@ -107,7 +113,7 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
       <ul className="divide-y divide-border rounded-md border border-border">
         <LinkItem
           label="Home page"
-          url={referralUrl(program.site_url, props.publicCode)}
+          url={referralUrl(program, props.publicCode)}
           clicks={clickCount(null)}
           programId={program.id}
           code={props.publicCode}
@@ -115,8 +121,8 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
         {mine.map((l) => (
           <LinkItem
             key={l.id}
-            label={`${l.destination_path}${l.campaign ? ` · ${l.campaign}` : ""}`}
-            url={referralUrl(program.site_url!, props.publicCode, l)}
+            label={linkLabel(program, l)}
+            url={referralUrl(program, props.publicCode, l)}
             clicks={clickCount(l.id)}
             disabled={l.status === "disabled"}
             programId={program.id}
@@ -125,7 +131,7 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
         ))}
       </ul>
 
-      <NewLink programId={program.id} siteUrl={program.site_url} userId={props.userId} />
+      <NewLink program={program} userId={props.userId} />
     </section>
   );
 }
@@ -184,14 +190,15 @@ function LinkItem(props: {
   );
 }
 
-function NewLink(props: { programId: string; siteUrl: string; userId: string }) {
+function NewLink(props: { program: Program; userId: string }) {
+  const { program } = props;
   const queryClient = useQueryClient();
   const [destination, setDestination] = useState("");
   const [campaign, setCampaign] = useState("");
   const create = useMutation({
     mutationFn: async () => {
       const { error } = await supabase.rpc("create_partner_link", {
-        p_program_id: props.programId,
+        p_program_id: program.id,
         p_destination: destination,
         p_campaign: campaign || null,
       });
@@ -203,8 +210,8 @@ function NewLink(props: { programId: string; siteUrl: string; userId: string }) 
       return queryClient.invalidateQueries({ queryKey: ["links", props.userId] });
     },
   });
-  const destId = `dest-${props.programId}`;
-  const campId = `camp-${props.programId}`;
+  const destId = `dest-${program.id}`;
+  const campId = `camp-${program.id}`;
 
   return (
     <form
@@ -218,12 +225,13 @@ function NewLink(props: { programId: string; siteUrl: string; userId: string }) 
       <div className="grid gap-3 sm:grid-cols-[2fr_1fr_auto] sm:items-end">
         <div className="space-y-1">
           <label htmlFor={destId} className="text-xs text-muted-foreground">
-            Page on {new URL(props.siteUrl).host}
+            Page on {new URL(program.site_url!).host}
+            {program.shop_url && ` or the ${program.name} shop`}
           </label>
           <input
             id={destId}
             className={inputClass}
-            placeholder={`${props.siteUrl}/…`}
+            placeholder={`${program.shop_url ?? program.site_url}/…`}
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             required

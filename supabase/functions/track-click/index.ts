@@ -23,7 +23,7 @@ import {
   referrerDomain,
   signToken,
 } from "../_shared/referral.js";
-import { KEY, db, gate, reply } from "../_shared/site.ts";
+import { KEY, db, gate, hostsOf, reply } from "../_shared/site.ts";
 
 type ClickRow = { click_id: number; window_days: number; model: string; display_name?: string };
 
@@ -55,7 +55,7 @@ Deno.serve(async (req) => {
     const code = normaliseCode(body.code);
     const source = body.source === "code_cart" ? "code_cart" : "code_site";
     if (!code) return reply({ ok: false }, 200, cors);
-    const landing = parseLanding(String(body.landing_url ?? ""), site.site_url!);
+    const landing = parseLanding(String(body.landing_url ?? ""), hostsOf(site));
     const { data, error } = await db.rpc("record_partner_code_click", {
       p_program_id: site.id,
       p_code: code,
@@ -84,7 +84,7 @@ Deno.serve(async (req) => {
     return reply(await withToken((data as ClickRow[])?.[0], site.id, true), 200, cors);
   }
 
-  const landing = parseLanding(String(body.landing_url ?? ""), site.site_url!);
+  const landing = parseLanding(String(body.landing_url ?? ""), hostsOf(site));
   if (!landing || !REF_PATTERN.test(landing.ref)) return reply({ ok: false }, 200, cors);
 
   const { data, error } = await db.rpc("record_partner_click", {
@@ -93,7 +93,7 @@ Deno.serve(async (req) => {
     p_link_code: landing.linkCode,
     p_landing_path: landing.path,
     p_utm: landing.utm,
-    p_referrer_domain: referrerDomain(String(body.referrer ?? ""), site.site_url!),
+    p_referrer_domain: referrerDomain(String(body.referrer ?? ""), hostsOf(site)),
     p_ip_hash: ipHash,
     p_consent: consent,
   });

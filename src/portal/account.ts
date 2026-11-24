@@ -12,6 +12,7 @@ export type Program = {
   attribution_window_days: number;
   attribution_model: "first_touch" | "last_touch" | null;
   site_url: string | null;
+  shop_url: string | null;
 };
 
 export type MembershipStatus = "pending" | "approved" | "rejected" | "suspended" | "withdrawn";
@@ -32,7 +33,7 @@ export function usePrograms() {
       const { data, error } = await supabase
         .from("affiliate_programs")
         .select(
-          "id, name, accepting_applications, attribution_window_days, attribution_model, site_url",
+          "id, name, accepting_applications, attribution_window_days, attribution_model, site_url, shop_url",
         )
         .order("id", { ascending: false });
       if (error) throw error;
@@ -121,7 +122,8 @@ const ERRORS: Record<string, string> = {
     "That change isn't allowed from the membership's current status. Refresh and try again.",
   reason_required: "Add a reason. It's kept in the activity log, not shown to the ambassador.",
   not_approved: "You can create links once your membership is approved.",
-  invalid_destination: "Links can only point to a page on this program's own website.",
+  invalid_destination:
+    "Links can only point to amaresbigplanet.com or the Amare shop (joatkenya.com for JOAT Global).",
   invalid_campaign: "Campaign labels use lowercase letters, numbers and dashes (up to 40).",
   link_exists: "You already have a link for that page and campaign.",
   link_not_found: "That link no longer exists. Refresh and try again.",

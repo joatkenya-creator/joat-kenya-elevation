@@ -5,7 +5,10 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { hashIp, isSiteHost } from "./referral.js";
 
-export type Program = { id: string; site_url: string | null };
+export type Program = { id: string; site_url: string | null; shop_url: string | null };
+
+/** The hosts a programme's visitors arrive on: its site and, if it has one, its shop. */
+export const hostsOf = (p: Program) => [p.site_url, p.shop_url];
 
 export const KEY = Deno.env.get("REFERRAL_TOKEN_KEY") ?? "";
 export const db = createClient(
@@ -17,7 +20,7 @@ export const db = createClient(
 let cache: { at: number; programs: Program[] } | null = null;
 async function programs(): Promise<Program[]> {
   if (cache && Date.now() - cache.at < 60_000) return cache.programs;
-  const { data, error } = await db.from("affiliate_programs").select("id, site_url");
+  const { data, error } = await db.from("affiliate_programs").select("id, site_url, shop_url");
   if (error) throw error;
   cache = { at: Date.now(), programs: (data ?? []) as Program[] };
   return cache.programs;
@@ -44,7 +47,7 @@ export async function gate(
   let site: Program | undefined;
   try {
     const host = origin ? new URL(origin).host : "";
-    site = (await programs()).find((p) => p.site_url && isSiteHost(host, p.site_url));
+    site = (await programs()).find((p) => p.site_url && isSiteHost(host, hostsOf(p)));
   } catch {
     site = undefined;
   }
