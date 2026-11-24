@@ -10,6 +10,7 @@
 // Secrets: same as payout-details-notify (RESEND_API_KEY, EMAIL_FROM, optional EMAIL_REPLY_TO).
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { approvalHtml, shareLines } from "../_shared/approval-email.js";
 
 const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
   auth: { persistSession: false },
@@ -36,7 +37,25 @@ async function programNames(ids: string[]) {
   return ids.map((id) => data?.find((p) => p.id === id)?.name ?? id).join(" and ");
 }
 
-async function compose(r: Row): Promise<{ subject: string; lines: string[] } | null> {
+type Highlight = { code: string | null; link: string };
+type Message = { subject: string; lines: string[]; highlight?: Highlight | null };
+
+async function shareFor(r: Row): Promise<{ lines: string[]; highlight: Highlight | null }> {
+  const [{ data: prof }, { data: prog }] = await Promise.all([
+    db.from("affiliate_profiles").select("public_code").eq("id", r.subject_id!).maybeSingle(),
+    db
+      .from("affiliate_programs")
+      .select("site_url, shop_url")
+      .eq("id", r.program_id!)
+      .maybeSingle(),
+  ]);
+  if (!prof?.public_code || !prog?.site_url) return { lines: [], highlight: null };
+  const code = prof.public_code as string;
+  const s = shareLines({ code, siteUrl: prog.site_url, hasShop: !!prog.shop_url, portal: PORTAL });
+  return { lines: s.lines, highlight: { code: prog.shop_url ? code : null, link: s.link } };
+}
+
+async function compose(r: Row): Promise<Message | null> {
   const reason = r.details.reason?.trim() || "No reason was given.";
   switch (r.action) {
     case "account.created":
@@ -71,24 +90,29 @@ async function compose(r: Row): Promise<{ subject: string; lines: string[] } | n
     }
     case "membership.approved": {
       const name = await programNames([r.program_id!]);
+      const share = await shareFor(r);
       return r.details.from === "suspended"
         ? {
             subject: `Your ${name} ambassador account is active again`,
             lines: [
               `Good news: your ${name} ambassador account has been reinstated.`,
               "Your referral links work again from now on.",
+              ...share.lines,
               "",
               `Sign in at ${PORTAL}/login to pick up where you left off.`,
             ],
+            highlight: share.highlight,
           }
         : {
             subject: `You're approved as a ${name} ambassador`,
             lines: [
               `Congratulations! Your application to the ${name} ambassador program has been approved.`,
+              ...share.lines,
               "",
-              `Sign in at ${PORTAL}/login to create your referral links, find marketing`,
-              `resources (${PORTAL}/resources) and add your payout details.`,
+              `Sign in at ${PORTAL}/login to find marketing resources (${PORTAL}/resources)`,
+              "and add your payout details.",
             ],
+            highlight: share.highlight,
           };
     }
     case "membership.rejected": {
@@ -177,6 +201,9 @@ Deno.serve(async (req) => {
       reply_to: REPLY_TO,
       subject: msg.subject,
       text: [hello, "", ...msg.lines, ...SIGN_OFF].join("\n"),
+      html: msg.highlight
+        ? approvalHtml({ hello, lines: msg.lines, signOff: SIGN_OFF, ...msg.highlight })
+        : undefined,
     }),
   });
   if (!res.ok) {
