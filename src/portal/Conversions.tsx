@@ -35,8 +35,9 @@ export function MyConversions({
       <h2 className="text-lg font-semibold">Referred sales</h2>
       <p className="mt-1 text-sm text-muted-foreground">
         Sales count once the customer's payment is verified. Amare amounts exclude shipping, tax and
-        discounts; refunds and chargebacks reduce or reverse them. Commission is 10% (JOAT: of the
-        client's first invoice) and can be approved for payout after a 30-day hold.
+        discounts; refunds and chargebacks reduce or reverse them. Commission is your rate (8% to
+        start, up to 10% as you grow; JOAT: on the client's first invoice), in US dollars, and can
+        be approved for payout after a 30-day hold.
       </p>
       {rows.length === 0 ? (
         <p className="mt-3 rounded-lg border border-border bg-card p-5 text-muted-foreground">
@@ -48,7 +49,7 @@ export function MyConversions({
             <thead className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
               <tr>
                 <th className="p-3">Date</th>
-                <th className="p-3">Programme</th>
+                <th className="p-3">Program</th>
                 <th className="p-3">Reference</th>
                 <th className="p-3 text-right">Eligible revenue</th>
                 <th className="p-3 text-right">Commission</th>

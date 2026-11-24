@@ -5,7 +5,7 @@ import { usePrograms } from "../account";
 import { ApplicationStatus, Page, Section } from "../ui";
 
 export const Route = createFileRoute("/programs/joat")({
-  head: () => ({ meta: [{ title: "JOAT Global programme | JOAT Global Partners" }] }),
+  head: () => ({ meta: [{ title: "JOAT Global program | JOAT Global Partners" }] }),
   component: JoatProgram,
 });
 
@@ -15,7 +15,7 @@ function JoatProgram() {
 
   return (
     <Page
-      title="JOAT Global programme"
+      title="JOAT Global program"
       intro={
         <>
           Introduce businesses that need help to JOAT Global, and earn commission when a client you
@@ -50,16 +50,17 @@ function JoatProgram() {
         <p>A JOAT Global referral qualifies only when every step below is verified by our team:</p>
         <ol className="list-decimal space-y-1 pl-6">
           <li>The business contacts us through your referral link.</li>
-          <li>It becomes a genuine client and agrees an engagement with us.</li>
+          <li>It becomes a genuine client and agrees to an engagement with us.</li>
           <li>We issue an eligible invoice.</li>
           <li>The client pays, and we confirm the payment has been received.</li>
         </ol>
-        <p>Unpaid invoices, proposals and enquiries do not earn commission.</p>
+        <p>Unpaid invoices, proposals and inquiries do not earn commission.</p>
         <p>
-          <strong>Rate: 10% of the client's first invoice</strong>, on the amount actually paid.
-          Later invoices to the same client don't earn commission. For example, a first invoice of
-          KES 200,000, paid in full, earns KES 20,000. Commission can be approved for payout 30 days
-          after the payment is confirmed.
+          <strong>Rate: 8% of the client's first invoice, rising to 10%</strong>, on the amount
+          actually paid. Everyone starts at 8%; ambassadors who grow their referrals can move up to
+          10% within their first 6 months. Later invoices to the same client don't earn commission.
+          For example, a first invoice of $2,000, paid in full, earns $160 at 8% or $200 at 10%.
+          Commission can be approved for payout 30 days after the payment is confirmed.
         </p>
       </Section>
     </Page>

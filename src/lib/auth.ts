@@ -84,7 +84,8 @@ export function useSession() {
 }
 
 export async function signUpStudent(email: string, password: string) {
-  return supabase.auth.signUp({ email, password });
+  // source=course: no partner-portal welcome email (migration 20261125100000).
+  return supabase.auth.signUp({ email, password, options: { data: { source: "course" } } });
 }
 
 export async function signInStudent(email: string, password: string) {

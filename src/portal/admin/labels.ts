@@ -1,10 +1,11 @@
 // Human-readable names for audit-log actions.
 export const ACTION_LABEL: Record<string, string> = {
+  "account.created": "Account created",
   "application.submitted": "Application submitted",
   "membership.approved": "Approved",
   "membership.rejected": "Rejected",
   "membership.suspended": "Suspended",
-  "membership.withdrawn": "Left the programme",
+  "membership.withdrawn": "Left the program",
   "program.applications_opened": "Applications opened",
   "program.applications_closed": "Applications closed",
   "link.disabled": "Link disabled",
@@ -17,7 +18,8 @@ export const ACTION_LABEL: Record<string, string> = {
   "payout_details.updated": "Payout details changed",
   "payout.batch_created": "Payout batch created",
   "payout.batch_approved": "Payout batch approved",
-  "payout.batch_cancelled": "Payout batch cancelled",
+  "payout.batch_cancelled": "Payout batch canceled",
   "payout.payee_removed": "Removed from payout batch",
   "payout.paid": "Payout sent",
+  "ambassadors.exported": "Ambassador list downloaded",
 };

@@ -3,11 +3,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { friendlyError, isFinance, type Account } from "../account";
 import { downloadCsv } from "../csv";
-import { formatMoney } from "../money";
+import { approxLocal, formatMoney, useLocalRate } from "../money";
 import { ErrorNote, Loading, buttonClass, inputClass } from "../ui";
 import { formatDate, useMembers } from "./data";
 
-// Monthly payouts: finance creates a batch per currency, a second finance user
+// Monthly payouts in USD: the payouts manager creates a batch, reviews and
 // approves it, then each ambassador is paid by M-Pesa or bank outside the
 // portal and the transaction reference is recorded here.
 
@@ -71,11 +71,10 @@ function useRpc() {
   });
 }
 
-export function Payouts({ staff, userId }: { staff: Account["staff"]; userId: string }) {
+export function Payouts({ staff }: { staff: Account["staff"] }) {
   const data = usePayoutData();
   const members = useMembers();
   const rpc = useRpc();
-  const [currency, setCurrency] = useState("KES");
 
   if (!isFinance(staff))
     return (
@@ -99,27 +98,15 @@ export function Payouts({ staff, userId }: { staff: Account["staff"]; userId: st
           sales already paid. Own purchases are never included. Disputed sales, suspended
           ambassadors, and anyone without payout details (or who changed them in the last 7 days)
           wait for the next run. Check Shopify's chargebacks list (Finance → Payouts) before
-          approving.
+          approving. Amounts are in US dollars; M-Pesa payouts show an estimate in Kenyan shillings
+          at today's rate.
         </p>
         <div className="mt-4 flex flex-wrap items-end gap-3">
-          <label className="text-sm">
-            Currency
-            <select
-              className={`${inputClass} mt-1 w-28`}
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-            >
-              <option>KES</option>
-              <option>USD</option>
-            </select>
-          </label>
           <button
             type="button"
             className={buttonClass}
             disabled={rpc.isPending}
-            onClick={() =>
-              rpc.mutate({ fn: "create_payout_batch", args: { p_currency: currency } })
-            }
+            onClick={() => rpc.mutate({ fn: "create_payout_batch", args: { p_currency: "USD" } })}
           >
             Create batch
           </button>
@@ -142,7 +129,6 @@ export function Payouts({ staff, userId }: { staff: Account["staff"]; userId: st
             batch={b}
             payees={data.data!.payees.filter((p) => p.batch_id === b.id)}
             nameOf={nameOf}
-            ownBatch={b.created_by === userId}
           />
         ))
       )}
@@ -154,14 +140,13 @@ function BatchCard({
   batch,
   payees,
   nameOf,
-  ownBatch,
 }: {
   batch: Batch;
   payees: Payee[];
   nameOf: (id: string) => string;
-  ownBatch: boolean;
 }) {
   const rpc = useRpc();
+  const kes = useLocalRate("kenya");
   const [refs, setRefs] = useState<Record<string, string>>({});
   const [reason, setReason] = useState("");
   const [cancelling, setCancelling] = useState(false);
@@ -172,14 +157,16 @@ function BatchCard({
     <section className="rounded-2xl border border-border bg-card">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-5">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <h3 className="font-semibold">
               {batch.currency} batch · {formatDate(batch.created_at)}
             </h3>
             <span
               className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLE[batch.status]}`}
             >
-              {batch.status[0].toUpperCase() + batch.status.slice(1)}
+              {batch.status === "cancelled"
+                ? "Canceled"
+                : batch.status[0].toUpperCase() + batch.status.slice(1)}
             </span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -222,13 +209,12 @@ function BatchCard({
             <button
               type="button"
               className={buttonClass}
-              disabled={rpc.isPending || ownBatch}
-              title={ownBatch ? "Another finance user must approve" : undefined}
+              disabled={rpc.isPending}
               onClick={() =>
                 rpc.mutate({ fn: "approve_payout_batch", args: { p_batch: batch.id } })
               }
             >
-              {ownBatch ? "Awaiting second approver" : "Approve"}
+              Approve
             </button>
           )}
           {open && !cancelling && (
@@ -245,8 +231,8 @@ function BatchCard({
 
       {cancelling && (
         <div className="flex flex-wrap items-end gap-2 border-b border-border p-5">
-          <label className="flex-1 text-sm">
-            Reason for cancelling (kept in the activity log)
+          <label className="w-full text-sm sm:w-auto sm:flex-1">
+            Reason for canceling (kept in the activity log)
             <input
               className={`${inputClass} mt-1`}
               value={reason}
@@ -281,7 +267,7 @@ function BatchCard({
           <li key={p.profile_id} className="flex flex-wrap items-center justify-between gap-3 p-4">
             <div className="min-w-0">
               <p className="font-medium">{nameOf(p.profile_id)}</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="break-all text-sm text-muted-foreground">
                 {p.method === "mpesa" ? "M-Pesa" : "Bank"} · {p.account_name} ·{" "}
                 <span className="font-mono">{p.destination}</span>
               </p>
@@ -289,6 +275,11 @@ function BatchCard({
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-semibold tabular-nums">
                 {formatMoney(p.amount, batch.currency)}
+                {p.method === "mpesa" && batch.currency === "USD" && (
+                  <span className="ml-1 text-xs font-normal text-muted-foreground">
+                    {approxLocal(Number(p.amount), kes)}
+                  </span>
+                )}
               </span>
               {p.paid_reference ? (
                 <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs text-emerald-900">
@@ -299,7 +290,7 @@ function BatchCard({
                   <input
                     aria-label={`Payment reference for ${nameOf(p.profile_id)}`}
                     placeholder="M-Pesa / bank ref"
-                    className={`${inputClass} w-40`}
+                    className={`${inputClass} w-full sm:w-40`}
                     value={refs[p.profile_id] ?? ""}
                     onChange={(e) => setRefs({ ...refs, [p.profile_id]: e.target.value })}
                   />

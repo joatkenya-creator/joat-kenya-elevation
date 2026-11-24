@@ -21,9 +21,9 @@ export function Programmes({ superAdmin }: { superAdmin: boolean }) {
     onSuccess: () => queryClient.invalidateQueries(),
   });
 
-  if (programs.isLoading || members.isLoading) return <Loading label="Loading programmes" />;
+  if (programs.isLoading || members.isLoading) return <Loading label="Loading programs" />;
   if (programs.error || members.error)
-    return <ErrorNote>We couldn't load programme data. Refresh to try again.</ErrorNote>;
+    return <ErrorNote>We couldn't load program data. Refresh to try again.</ErrorNote>;
 
   const count = (program: string, status: MembershipStatus) =>
     members.data!.filter((m) => m.program_id === program && m.status === status).length;
@@ -34,7 +34,7 @@ export function Programmes({ superAdmin }: { superAdmin: boolean }) {
         <table className="w-full min-w-[720px] text-left text-sm">
           <thead className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
             <tr>
-              <th className="p-3">Programme</th>
+              <th className="p-3">Program</th>
               <th className="p-3">Applications</th>
               <th className="p-3">Attribution</th>
               {STATUSES.map((s) => (
@@ -82,7 +82,7 @@ export function Programmes({ superAdmin }: { superAdmin: boolean }) {
       {toggle.error && <ErrorNote>{friendlyError(toggle.error)}</ErrorNote>}
       {superAdmin && (
         <p className="text-sm text-muted-foreground">
-          Opening a programme makes the application form available for it straight away. Publish its
+          Opening a program makes the application form available for it right away. Publish its
           commission rate and final terms first.
         </p>
       )}

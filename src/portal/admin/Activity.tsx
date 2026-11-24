@@ -28,7 +28,7 @@ export function Activity({ programName }: { programName: (id: string) => string 
           <tr>
             <th className="p-3">When</th>
             <th className="p-3">What</th>
-            <th className="p-3">Programme</th>
+            <th className="p-3">Program</th>
             <th className="p-3">Ambassador</th>
             <th className="p-3">By</th>
             <th className="p-3">Reason</th>

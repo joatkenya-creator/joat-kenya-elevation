@@ -17,15 +17,15 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Do I earn anything for recruiting other ambassadors?",
-    a: "No. This is a single-level programme. You earn only on verified sales to customers you refer yourself. There are no recruitment rewards and no recruitment targets.",
+    a: "No. This is a single-level program. You earn only on verified sales to customers you refer yourself. There are no recruitment rewards and no recruitment targets.",
   },
   {
     q: "How much will I earn?",
-    a: "We don't promise or guarantee any income. Earnings depend entirely on genuine sales to customers you refer. Commission rates are on each programme page.",
+    a: "We don't promise or guarantee any income. Earnings depend entirely on genuine sales to customers you refer. Commission rates are on each program page.",
   },
   {
-    q: "Can I join both programmes?",
-    a: "Yes. You can apply to JOAT Global, Amare's Big Planet, or both. Each programme reviews and approves you separately, and you only see the programmes you're approved for.",
+    q: "Can I join both programs?",
+    a: "Yes. You can apply to JOAT Global, Amare's Big Planet, or both. Each program reviews and approves you separately, and you only see the programs you're approved for.",
   },
   {
     q: "Do I have to say I'm an ambassador when I post?",
@@ -33,15 +33,15 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "How are my referrals tracked?",
-    a: "Through your personal referral links. A referral is credited if the customer buys within the programme's attribution window after clicking your link. We use first-party tracking only and respect cookie choices.",
+    a: "Through your personal referral links. A referral is credited if the customer buys within the program's attribution window after clicking your link. We use first-party tracking only and respect cookie choices.",
   },
   {
     q: "How much commission do I earn?",
-    a: "10% on both programmes. Amare's Big Planet: 10% of eligible net product revenue on each referred order (after discounts, excluding shipping and tax). JOAT Global: 10% of the amount the referred client pays on their first invoice.",
+    a: "Everyone starts at 8% on both programs, and ambassadors who grow their sales can move up to 10% within their first 6 months. Commission is paid in US dollars. Amare's Big Planet: your rate on eligible net product revenue on each referred order (after discounts, excluding shipping and tax). JOAT Global: your rate on the amount the referred client pays on their first invoice.",
   },
   {
     q: "When is commission paid?",
-    a: "After the customer's payment is verified and the programme's hold period has passed. Every sale has a 30-day hold after the payment is verified, then our team reviews and approves the commission. Payouts are made monthly; the payout method is confirmed with you when you're approved.",
+    a: "After the customer's payment is verified and the program's hold period has passed. Every sale has a 30-day hold after the payment is verified, then our team reviews and approves the commission. Payouts are made monthly; the payout method is confirmed with you when you're approved.",
   },
   {
     q: "What happens if a customer gets a refund?",

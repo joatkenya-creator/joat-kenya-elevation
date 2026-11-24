@@ -183,5 +183,45 @@ expect(
   "payout.batch_approved,payout.batch_cancelled,payout.batch_created,payout.paid,payout.payee_removed,payout_details.updated",
 );
 
+console.log("— Tiers, frozen rates, USD, single-person payouts (20261124100000)");
+await db.exec(readFileSync("supabase/migrations/20261124100000_partner_rates_usd.sql", "utf8"));
+const rateOf = (ref) => run(`select commission::text || ' ' || commission_rate::text from public.affiliate_conversions where reference='${ref}'`, staff(FIN));
+expect("earlier sales keep 10%", await rateOf("#2"), "5.93 0.1000");
+expect("new members start at 8%", (await q(`select commission_rate::text r from public.affiliate_memberships where profile_id='${AMB_B}'`))[0].r, "0.0800");
+await q(`insert into public.shopify_orders (order_id, order_name, currency, paid_at, eligible_revenue, profile_id) values ('7', '#7', 'USD', now() - interval '40 days', 100.00, '${AMB_B}')`);
+expect("new sale frozen at 8%", await rateOf("#7"), "8.00 0.0800");
+const setRate = (who, rate, reason = "'grew sales'") => run(`select public.set_commission_rate('${AMB_B}', 'amare', ${rate}, ${reason})`, who);
+expect("other program's manager can't change the rate", await setRate(staff(MGR_J), 0.10), /not_authorised/);
+expect("only 8% or 10%", await setRate(staff(MGR_A), 0.09), /invalid_rate/);
+expect("reason required", await setRate(staff(MGR_A), 0.10, "''"), /reason_required/);
+expect("manager moves ambassador to 10%", await setRate(staff(MGR_A), 0.10), "ok");
+expect("ambassador can't change their rate", await run(`update public.affiliate_memberships set commission_rate = 0.5`, amb(AMB_B)), "err");
+await q(`insert into public.shopify_orders (order_id, order_name, currency, paid_at, eligible_revenue, profile_id) values ('8', '#8', 'USD', now() - interval '40 days', 100.00, '${AMB_B}')`);
+expect("old sale unchanged after the upgrade", await rateOf("#7"), "8.00 0.0800");
+expect("new sale at 10%", await rateOf("#8"), "10.00 0.1000");
+await q(`update public.shopify_orders set eligible_revenue = 100.00 where order_id = '7'`);
+expect("reprocessing an order keeps its rate", await rateOf("#7"), "8.00 0.0800");
+expect("rate change audited", (await q("select details->>'to' t from public.partner_audit_log where action = 'membership.rate_changed'"))[0].t, "0.1");
+expect("KES batch refused", await create(staff(FIN), "KES"), "err");
+await save(amb(AMB_B), "'mpesa', 'Bee Amb', '+254711111111'");
+await ageDetails();
+const b5 = await create(staff(FIN));
+expect("AMB_B: 3.00 (10%, old) + 8.00 + 10.00", await run(`select amount::text from public.affiliate_payout_payees where batch_id='${b5}' and profile_id='${AMB_B}'`, staff(FIN)), "21.00");
+expect("one person creates and approves", await run(`select public.approve_payout_batch('${b5}')`, staff(FIN)), "ok");
+
+console.log("— Ambassador emails (20261125100000)");
+await db.exec(readFileSync("supabase/migrations/20261125100000_partner_emails.sql", "utf8"));
+expect("ambassadors can't read the sent-email log", await run(`select * from public.partner_emails_sent`, amb(AMB_B)), "err");
+
+console.log("— Active ambassadors export (20261126100000)");
+await db.exec(readFileSync("supabase/migrations/20261126100000_partner_ambassador_export.sql", "utf8"));
+const SUPER = id(8);
+await db.exec(`insert into auth.users values ('${SUPER}', 's@x.y'); insert into public.partner_staff (user_id, role) values ('${SUPER}', 'super_admin')`);
+const exportAs = (who) => run("select string_agg(email || ' ' || program_id || ' ' || commission_rate::text, ',' order by email) from public.export_active_ambassadors()", who);
+expect("super admin gets approved ambassadors with emails", await exportAs(staff(SUPER)), "b@x.y amare 0.1000,buyer@example.com amare 0.0800,joat.amb@example.com joat 0.0800");
+expect("needs two-factor sign-in", await exportAs({ sub: SUPER }), /not_authorised/);
+expect("finance can't export", await exportAs(staff(FIN)), /not_authorised/);
+expect("export is logged", (await q("select count(*)::int n from public.partner_audit_log where action = 'ambassadors.exported'"))[0].n, 1);
+
 console.log(fails ? `\n${fails} FAILED` : "\nall passed");
 process.exit(fails ? 1 : 0);

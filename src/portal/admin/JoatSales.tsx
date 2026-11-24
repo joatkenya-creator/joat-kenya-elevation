@@ -148,23 +148,23 @@ export function JoatSales({ staff, userId }: { staff: Account["staff"]; userId: 
   return (
     <div className="space-y-10">
       <section className="space-y-3">
-        <h3 className="text-lg font-semibold">Referred enquiries</h3>
+        <h3 className="text-lg font-semibold">Referred inquiries</h3>
         <p className="text-sm text-muted-foreground">
-          Enquiries that arrived through an ambassador link. When one becomes a client, create an
+          Inquiries that arrived through an ambassador link. When one becomes a client, create an
           engagement to start tracking invoices and payments.
         </p>
         {open.length === 0 ? (
           <p className="rounded-lg border border-border bg-card p-5 text-muted-foreground">
-            No referred enquiries waiting.
+            No referred inquiries waiting.
           </p>
         ) : (
           <ul className="space-y-3">
             {open.map((l) => (
               <li key={`${l.type}-${l.id}`} className="rounded-lg border border-border bg-card p-4">
                 <div className="flex flex-wrap justify-between gap-2">
-                  <div>
+                  <div className="min-w-0">
                     <p className="font-medium">{l.name}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="break-all text-sm text-muted-foreground">
                       {l.email} · {l.detail} · {formatDay(l.created_at)}
                     </p>
                   </div>
@@ -193,8 +193,8 @@ export function JoatSales({ staff, userId }: { staff: Account["staff"]; userId: 
               return (
                 <li key={e.id} className="rounded-lg border border-border bg-card p-5">
                   <div className="flex flex-wrap items-start justify-between gap-2">
-                    <div>
-                      <p className="font-semibold">
+                    <div className="min-w-0">
+                      <p className="break-words font-semibold">
                         <span className="font-mono">{e.reference}</span> · {e.client_name}
                       </p>
                       <p className="text-sm text-muted-foreground">
@@ -237,7 +237,7 @@ export function JoatSales({ staff, userId }: { staff: Account["staff"]; userId: 
                         userId={userId}
                       />
                     ))}
-                    {canBill && <NewInvoice engagementId={e.id} currency={mine[0]?.currency} />}
+                    {canBill && <NewInvoice engagementId={e.id} />}
                   </div>
                 </li>
               );
@@ -322,7 +322,7 @@ function NewEngagement({ lead }: { lead: Lead }) {
           onChange={(e) => setContract(e.target.value)}
         />
       </Field>
-      <div className="flex gap-2 sm:col-span-2">
+      <div className="flex flex-wrap gap-2 sm:col-span-2">
         <button type="submit" className={buttonClass} disabled={create.isPending}>
           {create.isPending ? "Creating…" : "Create engagement"}
         </button>
@@ -339,12 +339,11 @@ function NewEngagement({ lead }: { lead: Lead }) {
   );
 }
 
-function NewInvoice({ engagementId, currency }: { engagementId: string; currency?: string }) {
+function NewInvoice({ engagementId }: { engagementId: string }) {
   const add = useRpc("add_joat_invoice");
   const [open, setOpen] = useState(false);
   const [number, setNumber] = useState("");
   const [amount, setAmount] = useState("");
-  const [cur, setCur] = useState(currency ?? "KES");
   const [issued, setIssued] = useState(new Date().toISOString().slice(0, 10));
   const [error, setError] = useState<string | null>(null);
   const idp = `inv-${engagementId}`;
@@ -361,18 +360,18 @@ function NewInvoice({ engagementId, currency }: { engagementId: string; currency
     );
   return (
     <form
-      className="grid gap-3 rounded-md border border-border p-3 sm:grid-cols-4"
+      className="grid gap-3 rounded-md border border-border p-3 sm:grid-cols-2 lg:grid-cols-4"
       onSubmit={(ev) => {
         ev.preventDefault();
         if (!MONEY_PATTERN.test(amount))
-          return setError("Enter the amount as a number, e.g. 25000 or 25000.50.");
+          return setError("Enter the amount as a number, e.g. 2000 or 2000.50.");
         setError(null);
         add.mutate(
           {
             p_engagement_id: engagementId,
             p_invoice_number: number,
             p_amount: amount,
-            p_currency: cur,
+            p_currency: "USD",
             p_issued_on: issued,
           },
           { onSuccess: () => setOpen(false) },
@@ -389,7 +388,7 @@ function NewInvoice({ engagementId, currency }: { engagementId: string; currency
           onChange={(e) => setNumber(e.target.value)}
         />
       </Field>
-      <Field id={`${idp}-amt`} label="Amount">
+      <Field id={`${idp}-amt`} label="Amount (USD)">
         <input
           id={`${idp}-amt`}
           className={inputClass}
@@ -398,18 +397,6 @@ function NewInvoice({ engagementId, currency }: { engagementId: string; currency
           value={amount}
           onChange={(e) => setAmount(e.target.value.trim())}
         />
-      </Field>
-      <Field id={`${idp}-cur`} label="Currency">
-        <select
-          id={`${idp}-cur`}
-          className={inputClass}
-          value={cur}
-          disabled={!!currency}
-          onChange={(e) => setCur(e.target.value)}
-        >
-          <option value="KES">KES</option>
-          <option value="USD">USD</option>
-        </select>
       </Field>
       <Field id={`${idp}-date`} label="Issued on">
         <input
@@ -421,7 +408,7 @@ function NewInvoice({ engagementId, currency }: { engagementId: string; currency
           onChange={(e) => setIssued(e.target.value)}
         />
       </Field>
-      <div className="flex gap-2 sm:col-span-4">
+      <div className="flex flex-wrap gap-2 sm:col-span-2 lg:col-span-4">
         <button type="submit" className={buttonClass} disabled={add.isPending}>
           {add.isPending ? "Saving…" : "Add invoice"}
         </button>
@@ -472,7 +459,7 @@ function InvoiceBlock(props: {
                 <span className="font-mono">{p.reference}</span> · {formatDay(p.received_on)}
                 {p.review_note && <span className="text-muted-foreground"> · {p.review_note}</span>}
               </span>
-              <span className="flex items-center gap-2">
+              <span className="flex flex-wrap items-center gap-2">
                 <span className={`rounded-full px-2 py-0.5 text-xs ${PAYMENT_STYLE[p.status]}`}>
                   {PAYMENT_LABEL[p.status]}
                 </span>
@@ -511,11 +498,11 @@ function RecordPayment({ invoiceId }: { invoiceId: string }) {
     );
   return (
     <form
-      className="mt-3 grid gap-3 sm:grid-cols-4"
+      className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
       onSubmit={(ev) => {
         ev.preventDefault();
         if (!MONEY_PATTERN.test(amount))
-          return setError("Enter the amount as a number, e.g. 25000 or 25000.50.");
+          return setError("Enter the amount as a number, e.g. 2000 or 2000.50.");
         setError(null);
         record.mutate(
           {
@@ -577,11 +564,11 @@ function RecordPayment({ invoiceId }: { invoiceId: string }) {
           onChange={(e) => setReceived(e.target.value)}
         />
       </Field>
-      <p className="text-xs text-muted-foreground sm:col-span-4">
+      <p className="text-xs text-muted-foreground sm:col-span-2 lg:col-span-4">
         A second staff member (finance) confirms the payment against the M-Pesa statement before it
         counts.
       </p>
-      <div className="flex gap-2 sm:col-span-4">
+      <div className="flex flex-wrap gap-2 sm:col-span-2 lg:col-span-4">
         <button type="submit" className={buttonClass} disabled={record.isPending}>
           {record.isPending ? "Saving…" : "Record payment"}
         </button>
@@ -612,7 +599,7 @@ function ReviewPayment({ payment }: { payment: Payment }) {
         </label>
         <input
           id={noteId}
-          className={`${inputClass} w-48 py-1`}
+          className={`${inputClass} w-full py-1 sm:w-48`}
           placeholder="Reason"
           value={note}
           onChange={(e) => setNote(e.target.value)}
@@ -634,7 +621,7 @@ function ReviewPayment({ payment }: { payment: Payment }) {
       </span>
     );
   return (
-    <span className="flex items-center gap-2">
+    <span className="flex flex-wrap items-center gap-2">
       <button
         type="button"
         disabled={review.isPending}

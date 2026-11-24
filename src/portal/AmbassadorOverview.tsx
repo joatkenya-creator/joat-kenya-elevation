@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import { ConversionStatus } from "./Conversions";
 import { useConversions, type ConversionRow } from "./conversions-data";
-import { formatDay, formatMoney } from "./money";
+import { approxLocal, formatDay, formatMoney, useLocalRate } from "./money";
 import { useMyClicks, useMyPayouts } from "./payouts-data";
 import { ErrorNote, Loading } from "./ui";
 
@@ -31,10 +31,12 @@ function byCurrency(rows: { currency: string | null; amount: string }[]) {
       m.set(r.currency, (m.get(r.currency) ?? 0) + Math.round(Number(r.amount) * 100));
   return m;
 }
-const showTotals = (m: Map<string, number>) =>
-  m.size === 0
-    ? "0.00"
-    : [...m].map(([cur, cents]) => formatMoney((cents / 100).toFixed(2), cur)).join(" + ");
+const showTotals = (m: Map<string, number>, local: Parameters<typeof approxLocal>[1] = null) => {
+  if (m.size === 0) return formatMoney(0, "USD");
+  const text = [...m].map(([cur, cents]) => formatMoney((cents / 100).toFixed(2), cur)).join(" + ");
+  const usd = m.get("USD");
+  return usd && local ? `${text} (${approxLocal(usd / 100, local)})` : text;
+};
 
 function change(now: number, before: number) {
   if (before === 0) return null;
@@ -46,8 +48,8 @@ function Kpi({ label, value, delta }: { label: string; value: string; delta?: st
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
-      <p className="mt-1 flex items-baseline gap-2">
-        <span className="text-2xl font-semibold tabular-nums">{value}</span>
+      <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
+        <span className="min-w-0 break-words text-2xl font-semibold tabular-nums">{value}</span>
         {delta && (
           <span
             className={`text-xs font-medium ${delta.startsWith("-") ? "text-red-700" : "text-emerald-700"}`}
@@ -62,7 +64,7 @@ function Kpi({ label, value, delta }: { label: string; value: string; delta?: st
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-xl border border-border bg-card p-4 shadow-sm">
+    <section className="min-w-0 rounded-xl border border-border bg-card p-4 shadow-sm">
       <h3 className="text-sm font-semibold">{title}</h3>
       <div className="mt-3">{children}</div>
     </section>
@@ -72,13 +74,16 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 export function AmbassadorOverview({
   userId,
   programName,
+  country,
 }: {
   userId: string;
+  country: string | null;
   programName: (id: string) => string;
 }) {
   const clicks = useMyClicks(userId);
   const conversions = useConversions(userId);
   const payouts = useMyPayouts();
+  const local = useLocalRate(country);
 
   if (clicks.isLoading || conversions.isLoading || payouts.isLoading)
     return <Loading label="Loading your dashboard" />;
@@ -154,11 +159,11 @@ export function AmbassadorOverview({
           delta={change(clicks30, clicksPrev)}
         />
         <Kpi label="Sales (30 days)" value={String(sales30)} delta={change(sales30, salesPrev)} />
-        <Kpi label="Commission earned" value={showTotals(earned)} />
-        <Kpi label="Paid to you" value={showTotals(paid)} />
+        <Kpi label="Commission earned" value={showTotals(earned, local)} />
+        <Kpi label="Paid to you" value={showTotals(paid, local)} />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[2fr_1.3fr_1fr]">
+      <div className="grid gap-4 xl:grid-cols-[2fr_1.3fr_1fr]">
         <Panel title="Traffic & sales (14 days)">
           <div className="h-56">
             <ResponsiveContainer>
@@ -207,10 +212,10 @@ export function AmbassadorOverview({
           <dl className="space-y-3 text-sm">
             {(
               [
-                ["Total earned", showTotals(earned)],
-                ["On 30-day hold", showTotals(onHold)],
-                ["Approved, being paid", showTotals(approved)],
-                ["Paid to you", showTotals(paid)],
+                ["Total earned", showTotals(earned, local)],
+                ["On 30-day hold", showTotals(onHold, local)],
+                ["Approved, being paid", showTotals(approved, local)],
+                ["Paid to you", showTotals(paid, local)],
                 ["Payout schedule", "Monthly"],
               ] as const
             ).map(([k, v]) => (
@@ -237,7 +242,7 @@ export function AmbassadorOverview({
               <thead className="text-xs uppercase tracking-wide text-muted-foreground">
                 <tr>
                   <th className="py-2">Date</th>
-                  <th className="py-2">Programme</th>
+                  <th className="py-2">Program</th>
                   <th className="py-2">Reference</th>
                   <th className="py-2 text-right">Commission</th>
                   <th className="py-2 pl-4">Status</th>

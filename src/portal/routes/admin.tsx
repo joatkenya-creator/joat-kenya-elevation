@@ -89,7 +89,7 @@ function AdminHome({
     ...(canSee(staff, "amare") ? [{ id: "shop" as const, label: "Shop orders" }] : []),
     ...(isFinance(staff) ? [{ id: "payouts" as const, label: "Payouts" }] : []),
     { id: "reports", label: "Reports" },
-    { id: "programmes", label: "Programmes" },
+    { id: "programmes", label: "Programs" },
     { id: "activity", label: "Activity" },
   ];
 
@@ -100,7 +100,7 @@ function AdminHome({
           <div
             role="tablist"
             aria-label="Admin sections"
-            className="flex flex-wrap gap-1 rounded-2xl border border-border bg-card p-1"
+            className="flex min-w-0 max-w-full gap-1 overflow-x-auto rounded-2xl border border-border bg-card p-1"
           >
             {tabs.map((t) => (
               <button
@@ -111,7 +111,7 @@ function AdminHome({
                 aria-selected={tab === t.id}
                 aria-controls={`panel-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`rounded-xl px-3.5 py-1.5 text-sm ${tab === t.id ? "bg-zinc-900 font-medium text-white" : "text-muted-foreground hover:text-foreground"}`}
+                className={`shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-sm ${tab === t.id ? "bg-zinc-900 font-medium text-white" : "text-muted-foreground hover:text-foreground"}`}
               >
                 {t.label}
               </button>
@@ -137,7 +137,7 @@ function AdminHome({
           )}
           {tab === "joat" && <JoatSales staff={staff} userId={userId} />}
           {tab === "shop" && <ShopOrders />}
-          {tab === "payouts" && <Payouts staff={staff} userId={userId} />}
+          {tab === "payouts" && <Payouts staff={staff} />}
           {tab === "reports" && <Reports programName={programName} />}
           {tab === "programmes" && <Programmes superAdmin={isSuperAdmin(staff)} />}
           {tab === "activity" && <Activity programName={programName} />}

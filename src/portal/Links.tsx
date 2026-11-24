@@ -124,7 +124,7 @@ function LinkItem(props: { label: string; url: string; clicks: number; disabled?
   return (
     <li className="flex flex-wrap items-center justify-between gap-3 p-3">
       <div className="min-w-0">
-        <p className="text-sm font-medium">
+        <p className="break-all text-sm font-medium">
           {props.label}
           {props.disabled && (
             <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-900">

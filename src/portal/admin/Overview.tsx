@@ -144,7 +144,7 @@ export function Overview({
     drafts.data! > 0 && {
       icon: Wallet,
       title: `${drafts.data} payout batch${drafts.data === 1 ? "" : "es"} to approve`,
-      body: "Needs a second finance user.",
+      body: "Check chargebacks, then approve and pay.",
       tab: "payouts" as const,
     },
     ...flagged.slice(0, 3).map((m) => ({
@@ -186,7 +186,7 @@ export function Overview({
       <section className="grid gap-4 lg:grid-cols-3">
         <div className="rounded-2xl border border-border bg-card p-5">
           <h3 className="font-semibold">Ambassador mix</h3>
-          <p className="text-xs text-muted-foreground">By programme</p>
+          <p className="text-xs text-muted-foreground">By program</p>
           <div className="mt-4 flex items-center gap-5">
             <div className="relative h-36 w-36 shrink-0" aria-hidden="true">
               {[0, 1, 2].map((i) => (
@@ -243,7 +243,7 @@ export function Overview({
                   <p className="truncate text-xs text-muted-foreground">
                     {[nameOf(a.subject_id), a.program_id && programName(a.program_id)]
                       .filter(Boolean)
-                      .join(" · ") || "Programme"}
+                      .join(" · ") || "Program"}
                   </p>
                 </div>
                 <span className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
@@ -288,8 +288,8 @@ export function Overview({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div
             role="group"
-            aria-label="Filter by programme"
-            className="flex rounded-xl bg-muted p-1"
+            aria-label="Filter by program"
+            className="flex max-w-full overflow-x-auto rounded-xl bg-muted p-1"
           >
             {(
               [
@@ -303,7 +303,7 @@ export function Overview({
                 type="button"
                 aria-pressed={filter === id}
                 onClick={() => setFilter(id)}
-                className={`rounded-lg px-4 py-1.5 text-sm ${filter === id ? "bg-card font-medium shadow-sm" : "text-muted-foreground"}`}
+                className={`shrink-0 whitespace-nowrap rounded-lg px-4 py-1.5 text-sm ${filter === id ? "bg-card font-medium shadow-sm" : "text-muted-foreground"}`}
               >
                 {label}
               </button>
@@ -334,7 +334,7 @@ export function Overview({
               const mine = conversions.data!.filter(
                 (c) => c.profile_id === m.profile_id && c.program_id === m.program_id,
               );
-              const cur = mine[0]?.currency ?? (m.program_id === "joat" ? "KES" : "USD");
+              const cur = mine[0]?.currency ?? "USD";
               const cents = mine
                 .filter((c) => c.currency === cur)
                 .reduce((n, c) => n + Math.round(Number(c.commission) * 100), 0);
@@ -380,7 +380,7 @@ export function Overview({
                       }}
                     />
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-xs">
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <span
                       className={`flex items-center gap-1 rounded-full border px-2 py-0.5 ${flags.length ? "border-red-200 text-red-800" : "border-border"}`}
                       title={flags.join(" · ") || undefined}

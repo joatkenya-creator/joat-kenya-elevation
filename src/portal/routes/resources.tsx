@@ -4,7 +4,7 @@ import amarePlanet from "@/assets/amare-planet.webp";
 import joatLogo from "@/assets/joat-logo.png";
 import { FALLBACK_SERVICES } from "@/data/services-catalog";
 import { AMARE_SITE_URL, JOAT_SITE_URL } from "../config";
-import { DraftNotice, Page, Section } from "../ui";
+import { Page, Section } from "../ui";
 
 export const Route = createFileRoute("/resources")({
   head: () => ({ meta: [{ title: "Ambassador resources | JOAT Global Partners" }] }),
@@ -58,7 +58,7 @@ const DONTS = [
   "Don't make claims about results, prices or features that aren't on the official websites.",
   "Don't buy through your own link to earn commission. Self-referrals are flagged for review.",
   "Don't aim Amare's Big Planet links or sales messages at children, or place them in content made for children.",
-  "Don't recruit other ambassadors for a reward: the programme pays only on your own referrals.",
+  "Don't recruit other ambassadors for a reward: the program pays only on your own referrals.",
 ];
 
 function CopyButton({ text, label }: { text: string; label: string }) {
@@ -246,18 +246,17 @@ function Resources() {
           ))}
         </div>
         <ul className="list-disc space-y-1 pl-6 text-sm">
-          <li>Use the logos as they are: don't stretch, recolour, crop or add effects.</li>
+          <li>Use the logos as they are: don't stretch, recolor, crop or add effects.</li>
           <li>Keep the two brands separate; don't combine their logos into one design.</li>
           <li>Don't use the logos in a way that suggests you are the company or speak for it.</li>
         </ul>
       </Section>
 
-      <Section title="Programme rules">
-        <DraftNotice />
+      <Section title="Program rules">
         <p>
           The full rules are in the{" "}
           <Link to="/terms" className="text-primary underline">
-            programme terms
+            program terms
           </Link>{" "}
           and the{" "}
           <Link to="/faq" className="text-primary underline">

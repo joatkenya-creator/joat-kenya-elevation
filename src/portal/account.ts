@@ -19,7 +19,7 @@ export type StaffRole = "super_admin" | "program_manager" | "finance" | "support
 
 export type Account = {
   profile: { public_code: string; full_name: string; country: string } | null;
-  memberships: { program_id: string; status: MembershipStatus }[];
+  memberships: { program_id: string; status: MembershipStatus; commission_rate: string }[];
   staff: { role: StaffRole; program_id: string | null }[];
   /** "aal2" once the user has passed two-factor sign-in this session. */
   aal: string | null;
@@ -54,7 +54,7 @@ export function useAccount(userId: string | undefined) {
           .maybeSingle(),
         supabase
           .from("affiliate_memberships")
-          .select("program_id, status")
+          .select("program_id, status, commission_rate")
           .eq("profile_id", userId!),
         supabase.from("partner_staff").select("role, program_id").eq("user_id", userId!),
         supabase.auth.mfa.getAuthenticatorAssuranceLevel(),
@@ -73,7 +73,7 @@ export function useAccount(userId: string | undefined) {
 
 export const ROLE_LABEL: Record<StaffRole, string> = {
   super_admin: "Super administrator",
-  program_manager: "Programme manager",
+  program_manager: "Program manager",
   finance: "Finance",
   support: "Support (read-only)",
 };
@@ -104,16 +104,15 @@ export const ACTIVE_STATUSES: MembershipStatus[] = ["pending", "approved", "susp
 
 // The database functions raise short codes; this turns them into sentences.
 const ERRORS: Record<string, string> = {
-  programme_closed: "That programme isn't accepting applications right now.",
-  already_applied: "You've already applied to, or are a member of, that programme.",
-  no_programme: "Choose at least one programme.",
+  programme_closed: "That program isn't accepting applications right now.",
+  already_applied: "You've already applied to, or are a member of, that program.",
+  no_programme: "Choose at least one program.",
   invalid_link: "Each link must be a full web address starting with https://",
   invalid_name: "Enter your full name.",
   invalid_country: "Enter your country of residence.",
-  too_many_links:
-    "You've reached the limit of 10 profile links, or 50 referral links per programme.",
+  too_many_links: "You've reached the limit of 10 profile links, or 50 referral links per program.",
   text_too_long: "One of the answers is too long. Please shorten it.",
-  terms_not_accepted: "Please accept the programme terms, privacy notice and disclosure rules.",
+  terms_not_accepted: "Please accept the program terms, privacy notice and disclosure rules.",
   too_many_applications: "You've applied several times today. Please try again tomorrow.",
   not_signed_in: "Your session has ended. Please sign in again.",
   not_authorised: "You don't have permission to do that.",
@@ -122,18 +121,19 @@ const ERRORS: Record<string, string> = {
     "That change isn't allowed from the membership's current status. Refresh and try again.",
   reason_required: "Add a reason. It's kept in the activity log, not shown to the ambassador.",
   not_approved: "You can create links once your membership is approved.",
-  invalid_destination: "Links can only point to a page on this programme's own website.",
+  invalid_destination: "Links can only point to a page on this program's own website.",
   invalid_campaign: "Campaign labels use lowercase letters, numbers and dashes (up to 40).",
   link_exists: "You already have a link for that page and campaign.",
   link_not_found: "That link no longer exists. Refresh and try again.",
-  lead_not_referred: "That enquiry didn't come through an ambassador link.",
-  engagement_exists: "There's already an engagement for that enquiry.",
+  lead_not_referred: "That inquiry didn't come through an ambassador link.",
+  engagement_exists: "There's already an engagement for that inquiry.",
   engagement_not_found: "That engagement no longer exists. Refresh and try again.",
   currency_mismatch: "All invoices on one engagement must use the same currency.",
   invoice_exists: "That invoice number is already used.",
   invoice_not_found: "That invoice no longer exists. Refresh and try again.",
   future_date: "The payment date can't be in the future.",
   overpayment: "That would take payments above the invoice amount.",
+  invalid_rate: "The rate can only be 8% or 10%.",
   nothing_to_pay:
     "There's nothing to pay in that currency yet: commissions are still on hold, or ambassadors haven't added payout details.",
   cannot_approve_own_payout: "You're paid in this batch, so another finance user must approve it.",

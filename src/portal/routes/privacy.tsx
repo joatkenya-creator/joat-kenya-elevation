@@ -1,18 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BRAND } from "../config";
-import { DraftNotice, Page, Section } from "../ui";
+import { Page, Section } from "../ui";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({ meta: [{ title: "Privacy (draft) | JOAT Global Partners" }] }),
+  head: () => ({ meta: [{ title: "Privacy | JOAT Ambassadors" }] }),
   component: Privacy,
 });
 
 function Privacy() {
   return (
-    <Page title="Partner portal privacy notice" intro={<DraftNotice />}>
+    <Page title="JOAT Ambassadors privacy notice">
       <Section title="Who we are">
         <p>
-          {BRAND.legalName} runs this portal. This notice covers ambassadors and portal users. The
+          JOAT Ambassadors is run by {BRAND.legalName}. This notice covers ambassadors and portal
+          users, including anyone who signs in with Google. The
           main website privacy policies still apply to customers.
         </p>
       </Section>
@@ -20,7 +21,7 @@ function Privacy() {
         <ul className="list-disc space-y-1 pl-6">
           <li>Account details: your name, email address and country.</li>
           <li>Application details: your social profiles, website, audience and experience.</li>
-          <li>Programme records: your referral links, memberships, commissions and payouts.</li>
+          <li>Program records: your referral links, memberships, commissions and payouts.</li>
           <li>Payout details you provide, stored securely and never shown in full after saving.</li>
         </ul>
       </Section>

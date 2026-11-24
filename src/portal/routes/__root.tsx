@@ -14,7 +14,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       <h1 className="text-3xl font-bold">Page not found</h1>
       <p className="mt-3 text-muted-foreground">That page doesn't exist on the partner portal.</p>
       <Link to="/" className="mt-6 inline-block text-primary underline">
-        Back to the programme home
+        Back to the program home
       </Link>
     </div>
   ),
@@ -59,7 +59,10 @@ function Header() {
             {BRAND.name} <span className="font-normal text-muted-foreground">Partners</span>
           </span>
         </Link>
-        <nav aria-label="Main" className="flex flex-wrap items-center gap-1">
+        <nav
+          aria-label="Main"
+          className="-mx-2 flex w-full flex-wrap items-center gap-1 sm:mx-0 sm:w-auto"
+        >
           <Link to="/programs/joat" className={navLink} activeProps={navActive}>
             JOAT Global
           </Link>
@@ -116,9 +119,9 @@ function Footer() {
         <p>
           © {new Date().getFullYear()} {BRAND.legalName}. {BRAND.tagline}
         </p>
-        <nav aria-label="Legal" className="flex gap-4">
+        <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-2">
           <Link to="/terms" className="hover:text-foreground">
-            Programme terms
+            Program terms
           </Link>
           <Link to="/privacy" className="hover:text-foreground">
             Privacy

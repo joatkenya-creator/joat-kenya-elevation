@@ -185,8 +185,8 @@ function ApplicationForm({
       <section className="rounded-lg border border-border bg-card p-6">
         <h2 className="text-lg font-semibold">Nothing to apply for right now</h2>
         <p className="mt-2 text-muted-foreground">
-          Either applications aren't open yet, or you've already applied to every open programme.
-          Your applications are on your{" "}
+          Either applications aren't open yet, or you've already applied to every open program. Your
+          applications are on your{" "}
           <Link to="/dashboard" className="text-primary underline">
             dashboard
           </Link>
@@ -202,11 +202,11 @@ function ApplicationForm({
       .split(/\s+/)
       .map((l) => l.trim())
       .filter(Boolean);
-    if (chosen.length === 0) return setError("Choose at least one programme.");
+    if (chosen.length === 0) return setError("Choose at least one program.");
     if ([...linkList, website.trim()].some((l) => l && !/^https?:\/\/\S+$/i.test(l)))
       return setError("Each link must be a full web address starting with https://");
     if (!(terms && privacy && disclosure))
-      return setError("Please tick all three boxes at the end of the form.");
+      return setError("Please check all three boxes at the end of the form.");
 
     setBusy(true);
     setError(null);
@@ -241,7 +241,7 @@ function ApplicationForm({
   return (
     <form onSubmit={submit} className="max-w-2xl space-y-8" noValidate>
       <fieldset className="space-y-3">
-        <legend className="text-lg font-semibold">Programmes</legend>
+        <legend className="text-lg font-semibold">Programs</legend>
         <p className="text-sm text-muted-foreground">
           Choose one or both. Each reviews you separately.
         </p>
@@ -363,9 +363,9 @@ function ApplicationForm({
         <Check checked={terms} onChange={setTerms}>
           I have read the{" "}
           <Link to="/terms" target="_blank" className="text-primary underline">
-            programme terms
+            program terms
           </Link>{" "}
-          (draft pending legal review) and agree to them.
+          and agree to them.
         </Check>
         <Check checked={privacy} onChange={setPrivacy}>
           I have read the{" "}

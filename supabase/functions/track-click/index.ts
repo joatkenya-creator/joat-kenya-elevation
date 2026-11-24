@@ -89,8 +89,12 @@ Deno.serve(async (req) => {
     return reply({ ok: false }, 400, cors);
   }
   const consent = body.consent === true;
-  // Cloudflare sets cf-connecting-ip in front of Supabase; the client can't forge it.
-  const ipHash = await hashIp(req.headers.get("cf-connecting-ip") ?? "", KEY);
+  // Supabase is served through Cloudflare, which overwrites cf-connecting-ip
+  // with the real client IP (checked 2026-11-21), so a visitor can't forge it.
+  // No header means the request didn't come through Cloudflare: refuse it.
+  const ip = req.headers.get("cf-connecting-ip");
+  if (!ip) return reply({ ok: false }, 400, cors);
+  const ipHash = await hashIp(ip, KEY);
 
   if (typeof body.click_id === "number") {
     if (!consent) return reply({ ok: false }, 400, cors);

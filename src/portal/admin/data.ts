@@ -11,6 +11,8 @@ export type MemberRow = {
   program_id: string;
   status: MembershipStatus;
   status_changed_at: string;
+  created_at: string;
+  commission_rate: string;
   affiliate_profiles: {
     full_name: string;
     country: string;
@@ -47,7 +49,7 @@ export function useMembers() {
       const { data, error } = await supabase
         .from("affiliate_memberships")
         .select(
-          "profile_id, program_id, status, status_changed_at, affiliate_profiles(full_name, country, social_links, public_code)",
+          "profile_id, program_id, status, status_changed_at, created_at, commission_rate, affiliate_profiles(full_name, country, social_links, public_code)",
         )
         .order("status_changed_at", { ascending: false });
       if (error) throw error;
@@ -102,6 +104,28 @@ export function useReview() {
         p_program_id: v.programId,
         p_status: v.status,
         p_reason: v.reason ?? null,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin"] }),
+  });
+}
+
+/** Moves an ambassador between the 8% starting rate and the 10% growth rate. */
+export function useSetRate() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (v: {
+      profileId: string;
+      programId: string;
+      rate: number;
+      reason: string;
+    }) => {
+      const { error } = await supabase.rpc("set_commission_rate", {
+        p_profile: v.profileId,
+        p_program: v.programId,
+        p_rate: v.rate,
+        p_reason: v.reason,
       });
       if (error) throw error;
     },

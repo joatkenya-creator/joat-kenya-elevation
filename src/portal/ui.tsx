@@ -36,15 +36,6 @@ export function Section({ title, children }: { title: string; children: ReactNod
   );
 }
 
-export function DraftNotice() {
-  return (
-    <p className="rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-      <strong>Draft pending legal review.</strong> This text is a working draft prepared for review
-      by a qualified US attorney. It is not legal advice and is not the final programme terms.
-    </p>
-  );
-}
-
 export function Loading({ label = "Loading" }: { label?: string }) {
   return (
     <div

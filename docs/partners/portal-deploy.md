@@ -350,19 +350,75 @@ Upload the portal only after step 1: until then its sales tables can't load.
    `supabase migration repair --status applied 20261123100000`
 2. `npm run build:portal` and upload `dist-portal` to the `joat-partners` Cloudflare Pages project.
    Upload only after step 1. joatkenya.com doesn't change.
-3. Finance needs **two** finance users (or a finance user plus a super admin) because the person
-   who creates a payout batch can't approve it. Add one with the `finance` SQL in section 3 above if needed.
+3. One person runs payouts: the batch creator can approve it (see the next section).
 
-**Monthly payout run (finance):**
-1. Admin → **Payouts** → choose KES or USD → **Create batch**. It includes every commission past
-   its 30-day hold that hasn't been paid, minus refunds on sales already paid. Own purchases are
-   never included; disputed sales and ambassadors without payout details wait for the next run.
+**Monthly payout run (payouts manager):**
+1. Admin → **Payouts** → **Create USD batch**. It includes every commission past its 30-day
+   hold that hasn't been paid, minus refunds on sales already paid. Own purchases are never
+   included; disputed sales and ambassadors without payout details wait for the next run.
 2. Check Shopify's chargebacks list (Shopify admin → Finance → Payouts) and use **Hold back** on
    anyone affected.
-3. A second finance user clicks **Approve**.
-4. Pay each ambassador by M-Pesa or bank (use **Export** for the list), then enter the
-   M-Pesa/bank reference and click **Mark paid**. The batch closes when everyone is paid, and the
-   ambassador sees the payout and reference on their dashboard.
+3. Click **Approve**.
+4. Pay each ambassador by M-Pesa or bank (use **Export** for the list). M-Pesa rows show an
+   estimate in KES at today's rate; send the KES equivalent of the USD amount on the day. Enter
+   the M-Pesa/bank reference and click **Mark paid**. The batch closes when everyone is paid.
+
+## 2026-11-21: 8%→10% tiers, USD, single-person payouts, payout-change email
+
+1. **SQL Editor** → paste `supabase/migrations/20261124100000_partner_rates_usd.sql` → **Run**.
+   Then in PowerShell: `supabase migration repair --status applied 20261124100000`
+2. **Email provider (Resend):** create an account at resend.com, add and verify the domain
+   `joatkenya.com` (it gives you DNS records to add), and create an API key. Then:
+
+   ```powershell
+   supabase secrets set RESEND_API_KEY=<the key> EMAIL_FROM="JOAT Global Partners <partners@joatkenya.com>" EMAIL_REPLY_TO=<team inbox>
+   supabase functions deploy payout-details-notify --no-verify-jwt
+   supabase functions deploy track-click --no-verify-jwt
+   ```
+
+3. `npm run build:portal` and upload `dist-portal` to `joat-partners` (after step 1).
+4. Add the second super admin (they must have signed in to the portal once, or be added under
+   Authentication → Users first), then set up two-factor sign-in on their first admin visit:
+
+   ```sql
+   insert into public.partner_staff (user_id, role)
+   select id, 'super_admin' from auth.users where email = 'joatkenya120@gmail.com';
+   ```
+
+## 2026-11-21: Ambassador emails (welcome, application, approved, rejected, suspended)
+
+Needs the Resend secrets from the step above.
+
+1. **SQL Editor** → paste `supabase/migrations/20261125100000_partner_emails.sql` → **Run**.
+   Then: `supabase migration repair --status applied 20261125100000`
+2. `supabase functions deploy partner-email --no-verify-jwt`
+3. `npm run build:portal` and upload `dist-portal` (admin form now says the reason is emailed),
+   and rebuild/upload the main site (course sign-ups are tagged so they get no partner welcome).
+
+Emails go to the ambassador's sign-in address: welcome when an account is confirmed (or on first
+Google sign-in), one "application received" per application, and approved / reinstated /
+rejected / suspended per program. **Rejection and suspension reasons are sent to the
+ambassador word for word**, so write them for the ambassador to read. Failed sends show in
+Edge Functions → partner-email → Logs.
+
+**Rates:** everyone starts at 8%. To move an ambassador to 10%: Admin → **Ambassadors** → their
+card → **Move to 10%…** with a reason. Only sales after the change use the new rate; every sale
+keeps the rate it was attributed at. Sales recorded before this release keep 10%.
+
+**Currency:** both programs are USD. New JOAT invoices are entered in USD. Ambassadors outside
+the US see an approximate local amount next to their USD totals (rates from open.er-api.com,
+display only). Check that the Amare Shopify store's currency is USD: orders in another currency
+are never paid out.
+
+## Download active ambassadors (super admins)
+
+1. **SQL Editor** → paste `supabase/migrations/20261126100000_partner_ambassador_export.sql` →
+   **Run** (after 20261125100000). Then: `supabase migration repair --status applied 20261126100000`
+2. Rebuild and upload the portal.
+
+Admin → **Ambassadors** → **Download active ambassadors (CSV)**: name, sign-in email, country,
+program, rate, member since, referral code and profile links, one row per program. Only super
+admins (with two-factor sign-in) see the button, and every download is in the activity log.
 
 ## Rollback
 

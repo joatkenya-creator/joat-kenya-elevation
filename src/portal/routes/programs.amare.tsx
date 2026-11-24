@@ -5,7 +5,7 @@ import { usePrograms } from "../account";
 import { ApplicationStatus, Section } from "../ui";
 
 export const Route = createFileRoute("/programs/amare")({
-  head: () => ({ meta: [{ title: "Amare's Big Planet programme | JOAT Global Partners" }] }),
+  head: () => ({ meta: [{ title: "Amare's Big Planet program | JOAT Global Partners" }] }),
   component: AmareProgram,
 });
 
@@ -26,7 +26,7 @@ function AmareProgram() {
           />
           <div>
             <h1 className="text-3xl font-bold text-white sm:text-4xl">
-              Amare's Big Planet programme
+              Amare's Big Planet program
             </h1>
             <p className="mt-3 max-w-2xl text-white/85">
               Recommend Amare's Big Planet to parents and families, and earn commission on eligible
@@ -68,13 +68,15 @@ function AmareProgram() {
           <p>
             Commission is calculated on eligible net product revenue from orders placed through your
             referral, after the order is paid and verified with the shop. Shipping, taxes and
-            discounts are excluded. If an order is cancelled or refunded, the commission is reversed
+            discounts are excluded. If an order is canceled or refunded, the commission is reversed
             or reduced to match.
           </p>
           <p>
-            <strong>Rate: 10%</strong> of eligible net product revenue on each referred order. For
-            example, a $59.29 order (after discounts, excluding shipping and tax) earns $5.93.
-            Commission can be approved for payout 30 days after the order is paid.
+            <strong>Rate: 8%, rising to 10%</strong> of eligible net product revenue on each
+            referred order. Everyone starts at 8%; ambassadors who grow their sales can move up to
+            10% within their first 6 months. For example, a $59.29 order (after discounts, excluding
+            shipping and tax) earns $4.74 at 8% or $5.93 at 10%. Commission can be approved for
+            payout 30 days after the order is paid.
           </p>
         </Section>
       </div>

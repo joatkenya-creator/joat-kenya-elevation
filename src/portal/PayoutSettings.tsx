@@ -48,14 +48,14 @@ export function PayoutSettings() {
     <section className="rounded-2xl border border-border bg-card p-5">
       <h2 className="text-lg font-semibold">How you're paid</h2>
       <p className="mt-1 text-sm text-muted-foreground">
-        Payouts run monthly by M-Pesa or bank transfer, in the currency of the sale. Commission is
-        included once its 30-day hold has passed.
+        Payouts run monthly by M-Pesa or bank transfer. Commission is in US dollars and converted to
+        your local currency when it's sent. Commission is included once its 30-day hold has passed.
       </p>
 
       {current && !editing ? (
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border p-4">
-          <div>
-            <p className="font-medium">{current.destination}</p>
+          <div className="min-w-0">
+            <p className="break-all font-medium">{current.destination}</p>
             <p className="text-sm text-muted-foreground">
               {current.account_name} · updated {formatDay(current.updated_at)}
             </p>
@@ -138,7 +138,7 @@ export function PayoutSettings() {
             days later, and the change is recorded. Payouts already approved go to the details you
             had then.
           </p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button type="submit" className={buttonClass} disabled={save.isPending}>
               {save.isPending ? "Saving…" : "Save payout details"}
             </button>

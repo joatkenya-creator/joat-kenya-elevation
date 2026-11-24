@@ -27,13 +27,21 @@ Edge Functions, and the portal's CSV export. Independent code review plus live c
 All covered by `tests/partners-payouts.test.mjs` and `tests/partners-csv.test.mjs`
 (`npm run test:security`).
 
+## Closed on 2026-11-21 (20261124100000_partner_rates_usd.sql)
+
+- **Click IP header:** Supabase is served through Cloudflare, which overwrites `cf-connecting-ip`
+  with the real client IP; `track-click` now refuses requests without it.
+- **Commission rates:** frozen per sale when the sale is attributed (`commission_rate` on
+  `shopify_orders` and `joat_engagements`).
+- **Payout-details change email:** `payout-details-notify`, triggered from the database, emails the
+  ambassador's sign-in address once per change.
+- **Changed by decision:** the two-person payout approval was removed (one person runs payouts).
+  Every step is still in the activity log, and a payouts manager who is also an ambassador can't
+  approve a batch paying themselves.
+
 ## Open, lower risk (track)
 
-1. **Click IP header** (`track-click`): confirm the platform overwrites `cf-connecting-ip`, and
-   reject clicks without it. Clicks earn nothing, so impact is limited to fraud-signal accuracy.
-2. **Shopify timestamps** come from the unsigned `x-shopify-triggered-at` header; take them from
+1. **Shopify timestamps** come from the unsigned `x-shopify-triggered-at` header; take them from
    the signed body instead. Needs a captured signed webhook to exploit.
-3. **Commission rates** are read live: freeze the rate per sale before ever changing a rate.
-4. **Payout-details change email** to the ambassador (needs the transactional email provider, D7).
-5. Self-referral detection is by account email only; a different email gets past it. Review
+2. Self-referral detection is by account email only; a different email gets past it. Review
    "Own purchase?" flags and unusual sales rates in Reports.

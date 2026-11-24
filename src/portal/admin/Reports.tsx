@@ -48,7 +48,7 @@ export function Reports({ programName }: { programName: (id: string) => string }
       `ambassadors-${new Date().toISOString().slice(0, 10)}.csv`,
       [
         "Ambassador",
-        "Programme",
+        "Program",
         "Status",
         "Clicks (30d)",
         "Unique visitors (30d)",
@@ -74,7 +74,7 @@ export function Reports({ programName }: { programName: (id: string) => string }
       `referred-sales-${new Date().toISOString().slice(0, 10)}.csv`,
       [
         "Date",
-        "Programme",
+        "Program",
         "Reference",
         "Ambassador",
         "Status",
@@ -105,7 +105,7 @@ export function Reports({ programName }: { programName: (id: string) => string }
           Last 30 days of clicks; sales and commission cover all time. Flags are prompts to look
           closer, not proof of fraud.
         </p>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             className="rounded-md border border-border px-3 py-1.5 text-sm"
@@ -127,7 +127,7 @@ export function Reports({ programName }: { programName: (id: string) => string }
           <thead className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
             <tr>
               <th className="p-3">Ambassador</th>
-              <th className="p-3">Programme</th>
+              <th className="p-3">Program</th>
               <th className="p-3 text-right">Clicks</th>
               <th className="p-3 text-right">Visitors</th>
               <th className="p-3 text-right">Sales 30d</th>

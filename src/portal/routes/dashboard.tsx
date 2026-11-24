@@ -38,7 +38,7 @@ const STATUS_TEXT: Record<MembershipStatus, string> = {
   approved: "You're approved. Create your referral links under Links.",
   rejected: "Not approved this time. You're welcome to apply again.",
   suspended: "This membership is suspended. Contact the partner team for details.",
-  withdrawn: "You left this programme. You can apply again at any time.",
+  withdrawn: "You left this program. You can apply again at any time.",
 };
 
 function Dashboard() {
@@ -75,7 +75,11 @@ function Dashboard() {
         {(section) => (
           <>
             {section === "overview" && (
-              <AmbassadorOverview userId={session.user.id} programName={programName} />
+              <AmbassadorOverview
+                userId={session.user.id}
+                programName={programName}
+                country={profile.country}
+              />
             )}
             {section === "links" &&
               memberships
@@ -99,7 +103,7 @@ function Dashboard() {
             {section === "payouts" && <PayoutSettings />}
             {section === "programmes" && (
               <section className="rounded-2xl border border-border bg-card p-5">
-                <h2 className="text-lg font-semibold">Your programmes</h2>
+                <h2 className="text-lg font-semibold">Your programs</h2>
                 <ul className="mt-3 divide-y divide-border">
                   {memberships.map((m) => (
                     <li
@@ -114,6 +118,14 @@ function Dashboard() {
                         <p className="mt-1 text-sm text-muted-foreground">
                           {STATUS_TEXT[m.status]}
                         </p>
+                        {m.status === "approved" && (
+                          <p className="mt-1 text-sm">
+                            Your rate:{" "}
+                            <strong>{Math.round(Number(m.commission_rate) * 100)}%</strong>
+                            {Number(m.commission_rate) < 0.1 &&
+                              " · grow your sales to move up to 10% within your first 6 months"}
+                          </p>
+                        )}
                       </div>
                       {(m.status === "pending" || m.status === "approved") && (
                         <LeaveProgramme programId={m.program_id} name={programName(m.program_id)} />
@@ -121,7 +133,7 @@ function Dashboard() {
                     </li>
                   ))}
                 </ul>
-                {canApply && <ApplyLink label="Apply to another programme" />}
+                {canApply && <ApplyLink label="Apply to another program" />}
               </section>
             )}
           </>
@@ -146,7 +158,7 @@ function Dashboard() {
           <h2 className="text-lg font-semibold">You're not an ambassador yet</h2>
           <p className="mt-2 text-muted-foreground">
             {canApply
-              ? "Apply to one or both programmes. It's free and takes a few minutes."
+              ? "Apply to one or both programs. It's free and takes a few minutes."
               : "Applications open soon. When they do, you'll be able to apply from here."}
           </p>
           {canApply && <ApplyLink />}
@@ -158,9 +170,9 @@ function Dashboard() {
             <p className="mt-1 text-sm text-muted-foreground">{profile.country}</p>
           </section>
           <section>
-            <h2 className="text-lg font-semibold">Your programmes</h2>
+            <h2 className="text-lg font-semibold">Your programs</h2>
             {memberships.length === 0 ? (
-              <p className="mt-2 text-muted-foreground">You haven't joined a programme yet.</p>
+              <p className="mt-2 text-muted-foreground">You haven't joined a program yet.</p>
             ) : (
               <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
                 {memberships.map((m) => (
@@ -182,7 +194,7 @@ function Dashboard() {
                 ))}
               </ul>
             )}
-            {canApply && <ApplyLink label="Apply to another programme" />}
+            {canApply && <ApplyLink label="Apply to another program" />}
           </section>
           {memberships
             .filter((m) => m.status === "approved")
@@ -240,7 +252,7 @@ function LeaveProgramme({ programId, name }: { programId: string; name: string }
         onClick={() => setConfirming(true)}
         className="text-sm text-muted-foreground underline-offset-4 hover:underline"
       >
-        Leave programme
+        Leave program
       </button>
     );
   return (
@@ -274,7 +286,7 @@ const SECTIONS: { id: SectionId; label: string; icon: LucideIcon }[] = [
   { id: "links", label: "Links", icon: Link2 },
   { id: "sales", label: "Sales & commission", icon: Receipt },
   { id: "payouts", label: "Payouts", icon: Wallet },
-  { id: "programmes", label: "Programmes", icon: Settings },
+  { id: "programmes", label: "Programs", icon: Settings },
 ];
 
 /** Navy sidebar layout for ambassadors, modelled on the affiliate dashboard design. */
@@ -324,7 +336,7 @@ function AmbassadorShell({
       <div className="min-w-0 flex-1 space-y-4 p-4 sm:p-6">
         <header className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="text-xl font-semibold">{SECTIONS.find((s) => s.id === section)!.label}</h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="min-w-0 break-all text-sm text-muted-foreground">
             {name} · {email}
           </p>
         </header>

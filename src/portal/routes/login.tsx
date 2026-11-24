@@ -89,7 +89,7 @@ function SignInForm() {
             {notice}
           </p>
         )}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <button type="submit" className={buttonClass} disabled={busy}>
             {busy ? "Signing in…" : "Sign in"}
           </button>
@@ -102,7 +102,7 @@ function SignInForm() {
           </button>
         </div>
         <p className="text-sm text-muted-foreground">
-          New to the programme?{" "}
+          New to the program?{" "}
           <Link to="/apply" className="text-primary underline">
             Create an account and apply
           </Link>
