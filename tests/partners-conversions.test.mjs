@@ -49,10 +49,15 @@ const paidPayload = {
   ],
 };
 const extracted = extract("orders/paid", paidPayload);
+// browser_ip and email are hashed then dropped by shopify-webhook before storage.
 expect("order data keeps no names or addresses", Object.keys(extracted).sort(), [
+  "browser_ip",
+  "code",
   "created_at",
   "currency",
+  "discount_codes",
   "email",
+  "landing_site",
   "lines",
   "name",
   "order_id",
