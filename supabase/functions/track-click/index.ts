@@ -1,5 +1,6 @@
 // track-click: records an ambassador referral click and, when the visitor has
-// accepted cookies, returns a signed referral token for the site to keep.
+// accepted cookies (or typed an ambassador code), returns a signed referral
+// token for the site to keep.
 //
 // Called from the browser on joatkenya.com and amaresbigplanet.com. Deploy
 // without JWT verification (visitors aren't signed in):
@@ -10,40 +11,21 @@
 // Request (POST, JSON):
 //   { landing_url, referrer?, consent }      a new click
 //   { click_id, consent: true }              visitor accepted cookies after landing
-// Response: { ok, click_id?, token?, max_age?, model? }
+//   { code, source, landing_url? }           visitor typed an ambassador code
+//                                            (source: "code_site" | "code_cart");
+//                                            always consented, always gets a token
+// Response: { ok, click_id?, token?, max_age?, model?, display_name? }
 
-import { createClient } from "jsr:@supabase/supabase-js@2";
 import {
   REF_PATTERN,
-  hashIp,
-  isSiteHost,
+  normaliseCode,
   parseLanding,
   referrerDomain,
   signToken,
 } from "../_shared/referral.js";
+import { KEY, db, gate, reply } from "../_shared/site.ts";
 
-type Program = { id: string; site_url: string | null };
-type ClickRow = { click_id: number; window_days: number; model: string };
-
-const KEY = Deno.env.get("REFERRAL_TOKEN_KEY") ?? "";
-const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
-  auth: { persistSession: false },
-});
-
-let cache: { at: number; programs: Program[] } | null = null;
-async function programs(): Promise<Program[]> {
-  if (cache && Date.now() - cache.at < 60_000) return cache.programs;
-  const { data, error } = await db.from("affiliate_programs").select("id, site_url");
-  if (error) throw error;
-  cache = { at: Date.now(), programs: (data ?? []) as Program[] };
-  return cache.programs;
-}
-
-const reply = (body: unknown, status: number, headers: Record<string, string>) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...headers, "content-type": "application/json", "cache-control": "no-store" },
-  });
+type ClickRow = { click_id: number; window_days: number; model: string; display_name?: string };
 
 async function withToken(row: ClickRow | undefined, programId: string, consent: boolean) {
   if (!row) return { ok: false };
@@ -53,48 +35,40 @@ async function withToken(row: ClickRow | undefined, programId: string, consent: 
     { v: 1, k: row.click_id, p: programId, exp: Math.floor(Date.now() / 1000) + maxAge },
     KEY,
   );
-  return { ok: true, click_id: row.click_id, token, max_age: maxAge, model: row.model };
+  return {
+    ok: true,
+    click_id: row.click_id,
+    token,
+    max_age: maxAge,
+    model: row.model,
+    ...(row.display_name ? { display_name: row.display_name } : {}),
+  };
 }
 
 Deno.serve(async (req) => {
-  const origin = req.headers.get("origin") ?? "";
-  let site: Program | undefined;
-  try {
-    const host = origin ? new URL(origin).host : "";
-    site = (await programs()).find((p) => p.site_url && isSiteHost(host, p.site_url));
-  } catch {
-    site = undefined;
-  }
-
-  // Only the programmes' own sites may call this from a browser.
-  if (!site) return reply({ ok: false }, 403, {});
-  const cors = {
-    "access-control-allow-origin": origin,
-    "access-control-allow-methods": "POST, OPTIONS",
-    "access-control-allow-headers": "content-type",
-    "access-control-max-age": "86400",
-    vary: "origin",
-  };
-  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-  if (req.method !== "POST") return reply({ ok: false }, 405, cors);
-  if (KEY.length < 32) {
-    console.error("REFERRAL_TOKEN_KEY is missing or too short");
-    return reply({ ok: false }, 503, cors);
-  }
-
-  let body: Record<string, unknown>;
-  try {
-    body = await req.json();
-  } catch {
-    return reply({ ok: false }, 400, cors);
-  }
+  const g = await gate(req);
+  if (g instanceof Response) return g;
+  const { site, cors, ipHash, body } = g;
   const consent = body.consent === true;
-  // Supabase is served through Cloudflare, which overwrites cf-connecting-ip
-  // with the real client IP (checked 2026-11-21), so a visitor can't forge it.
-  // No header means the request didn't come through Cloudflare: refuse it.
-  const ip = req.headers.get("cf-connecting-ip");
-  if (!ip) return reply({ ok: false }, 400, cors);
-  const ipHash = await hashIp(ip, KEY);
+
+  if ("code" in body) {
+    const code = normaliseCode(body.code);
+    const source = body.source === "code_cart" ? "code_cart" : "code_site";
+    if (!code) return reply({ ok: false }, 200, cors);
+    const landing = parseLanding(String(body.landing_url ?? ""), site.site_url!);
+    const { data, error } = await db.rpc("record_partner_code_click", {
+      p_program_id: site.id,
+      p_code: code,
+      p_source: source,
+      p_landing_path: landing?.path ?? "/",
+      p_ip_hash: ipHash,
+    });
+    if (error) {
+      console.error("record_partner_code_click failed", error.message);
+      return reply({ ok: false }, 500, cors);
+    }
+    return reply(await withToken((data as ClickRow[])?.[0], site.id, true), 200, cors);
+  }
 
   if (typeof body.click_id === "number") {
     if (!consent) return reply({ ok: false }, 400, cors);

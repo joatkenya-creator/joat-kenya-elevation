@@ -143,7 +143,8 @@ Deno.serve(async (req) => {
     .eq("id", id)
     .maybeSingle<Row>();
   // Old rows (including everything logged before this function existed) never send.
-  if (!r?.subject_id || Date.now() - Date.parse(r.at) > 3600_000) return reply(200, "nothing to send");
+  if (!r?.subject_id || Date.now() - Date.parse(r.at) > 3600_000)
+    return reply(200, "nothing to send");
 
   const msg = await compose(r);
   if (!msg) return reply(200, "nothing to send");
@@ -157,9 +158,14 @@ Deno.serve(async (req) => {
       ? `app:${r.details.application_id}`
       : `audit:${r.id}`;
   const claim = await db.from("partner_emails_sent").insert({ key });
-  if (claim.error) return reply(200, claim.error.code === "23505" ? "already sent" : "claim failed");
+  if (claim.error)
+    return reply(200, claim.error.code === "23505" ? "already sent" : "claim failed");
 
-  const { data: p } = await db.from("affiliate_profiles").select("full_name").eq("id", r.subject_id).maybeSingle();
+  const { data: p } = await db
+    .from("affiliate_profiles")
+    .select("full_name")
+    .eq("id", r.subject_id)
+    .maybeSingle();
   const hello = p?.full_name ? `Hello ${p.full_name.split(/\s+/)[0]},` : "Hello,";
 
   const res = await fetch("https://api.resend.com/emails", {

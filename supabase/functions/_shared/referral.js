@@ -23,6 +23,17 @@ const hmacKey = (secret) =>
 export const REF_PATTERN = /^[0-9A-HJKMNP-TV-Z]{8}$/;
 
 /**
+ * A code as a person typed it → canonical form, or null if it can't be one.
+ * Trims, drops spaces and dashes, uppercases, and maps Crockford look-alikes
+ * (O → 0, I/L → 1).
+ */
+export function normaliseCode(input) {
+  if (typeof input !== "string" || input.length > 40) return null;
+  const code = input.toUpperCase().replace(/[\s-]/g, "").replace(/O/g, "0").replace(/[IL]/g, "1");
+  return REF_PATTERN.test(code) ? code : null;
+}
+
+/**
  * Signed, tamper-proof referral token: "<payload>.<signature>". The payload
  * holds only the click id, programme and expiry, never personal data.
  * Shopify and lead verification (Phase 4) check it with verifyToken.

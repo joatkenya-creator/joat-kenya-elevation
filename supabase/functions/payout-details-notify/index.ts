@@ -43,7 +43,10 @@ Deno.serve(async (req) => {
   if (error || !u.user?.email) return reply(200, "no email");
 
   const last4 = String(d.method === "mpesa" ? d.mpesa_phone : d.account_number).slice(-4);
-  const where = d.method === "mpesa" ? `M-Pesa number ending ${last4}` : `${d.bank_name} account ending ${last4}`;
+  const where =
+    d.method === "mpesa"
+      ? `M-Pesa number ending ${last4}`
+      : `${d.bank_name} account ending ${last4}`;
   const when = new Date(d.updated_at).toUTCString();
   const text = [
     "Hello,",
@@ -74,6 +77,9 @@ Deno.serve(async (req) => {
     console.error("Resend refused the email", res.status, await res.text());
     return reply(502, "send failed");
   }
-  await db.from("affiliate_payout_details").update({ notified_at: d.updated_at }).eq("profile_id", id);
+  await db
+    .from("affiliate_payout_details")
+    .update({ notified_at: d.updated_at })
+    .eq("profile_id", id);
   return reply(200, "sent");
 });
