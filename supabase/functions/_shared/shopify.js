@@ -32,6 +32,23 @@ export async function emailHash(email) {
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
+const attr = (p, name) => (p.note_attributes ?? []).find((a) => a?.name === name)?.value ?? null;
+
+/**
+ * Shopify's landing_site ("/products/x?ref=…&utm_source=…") → the path kept on
+ * a click: referral parameters removed, at most 500 characters. Null if absent.
+ */
+export function landingPath(landingSite) {
+  if (typeof landingSite !== "string" || !landingSite) return null;
+  try {
+    const url = new URL(landingSite, "https://shop.invalid");
+    for (const k of ["ref", "ln", "abp_ref"]) url.searchParams.delete(k);
+    return (url.pathname + url.search).slice(0, 500);
+  } catch {
+    return null;
+  }
+}
+
 const amount = (set, fallback) => String(set?.shop_money?.amount ?? fallback ?? "0");
 
 /**
@@ -48,7 +65,14 @@ export function extract(topic, p) {
         currency: p.currency ?? null,
         created_at: p.created_at ?? null,
         email: p.email ?? p.contact_email ?? p.customer?.email ?? null,
-        token: (p.note_attributes ?? []).find((a) => a?.name === "_abp_ref")?.value ?? null,
+        token: attr(p, "_abp_ref"),
+        // Fallbacks when there's no valid token (see ingest_shopify_event).
+        // browser_ip never leaves the Edge Function: it's turned into the same
+        // daily-salted hash clicks use, then dropped.
+        code: attr(p, "_abp_code"),
+        discount_codes: (p.discount_codes ?? []).map((d) => d?.code).filter(Boolean),
+        browser_ip: p.browser_ip ?? p.client_details?.browser_ip ?? null,
+        landing_site: p.landing_site ?? null,
         lines: (p.line_items ?? []).map((l) => ({
           price: amount(l.price_set, l.price),
           qty: Number(l.quantity) || 0,

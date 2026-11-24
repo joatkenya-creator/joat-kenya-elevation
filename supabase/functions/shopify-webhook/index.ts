@@ -12,11 +12,12 @@
 //   REFERRAL_TOKEN_KEY            already set for track-click
 //
 // Never credits a sale from the browser: only a correctly signed webhook
-// whose order carries a valid, unexpired referral token counts.
+// counts, and only when its order carries a valid, unexpired referral token,
+// a cart code backed by its Apply click, or an ambassador discount code.
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
-import { emailHash, extract, verifyShopifyHmac } from "../_shared/shopify.js";
-import { verifyToken } from "../_shared/referral.js";
+import { emailHash, extract, landingPath, verifyShopifyHmac } from "../_shared/shopify.js";
+import { hashIp, normaliseCode, verifyToken } from "../_shared/referral.js";
 
 const SECRET = Deno.env.get("SHOPIFY_AMARE_WEBHOOK_SECRET") ?? "";
 const SHOP = Deno.env.get("SHOPIFY_AMARE_SHOP_DOMAIN") ?? "wu0b1t-n6.myshopify.com";
@@ -71,6 +72,15 @@ Deno.serve(async (req) => {
     data.email_hash = await emailHash(data.email);
     delete data.email; // only the hash is kept, for the self-referral check
     delete data.token;
+    // Fallbacks for orders without a valid token: a code applied in the cart
+    // (matched to its Apply click by IP hash) or an ambassador discount code.
+    data.code = normaliseCode(data.code);
+    data.discount_codes = (data.discount_codes as unknown[]).map(normaliseCode).filter(Boolean);
+    const ip = typeof data.browser_ip === "string" ? data.browser_ip : "";
+    data.ip_hash = ip ? await hashIp(ip, REF_KEY, placedAt) : null;
+    data.landing_path = landingPath(data.landing_site);
+    delete data.browser_ip;
+    delete data.landing_site;
   }
 
   const { data: outcome, error } = await db.rpc("ingest_shopify_event", {
