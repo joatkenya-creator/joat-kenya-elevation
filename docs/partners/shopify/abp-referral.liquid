@@ -1,0 +1,221 @@
+{%- comment -%}
+  Amare's Big Planet: JOAT Global ambassador referrals for the Shopify theme.
+  Install: docs/shopify-theme-install.md (one render line in layout/theme.liquid).
+
+  1. Arriving from amaresbigplanet.com with ?abp_ref=<token>: the signed token
+     goes into the hidden cart attribute _abp_ref.
+  2. Arriving through an ambassador's shop link (?ref=CODE[&ln=LINK]): the
+     visit is counted by track-click. With the visitor's marketing consent
+     (Shopify Customer Privacy API) a token comes back and goes into _abp_ref;
+     without it the visit is counted and nothing is stored.
+  3. Cart page and cart drawer: "Ambassador code (optional)". Apply looks the
+     code up, shows "Referred by Erick O. ✓", records the code and writes
+     _abp_ref + _abp_code. Not a discount: the price doesn't change.
+
+  Attributes starting with "_" are hidden at checkout and reach the order as
+  note_attributes; the shopify-webhook function verifies them. Nothing here
+  can credit a sale by itself. Tokens hold a click number and expiry only.
+{%- endcomment -%}
+<style>
+  .abp-code { margin: 0 0 12px; font-size: 0.875em; }
+  .abp-code label { display: block; font-weight: 600; margin-bottom: 4px; }
+  .abp-code__row { display: flex; gap: 8px; }
+  .abp-code__row input {
+    flex: 1; min-width: 0; padding: 8px 10px; font: inherit; text-transform: uppercase;
+    color: inherit; background: transparent;
+    border: 1px solid rgb(var(--color-foreground-rgb, 0 0 0) / 0.3);
+    border-radius: var(--style-border-radius-inputs, 4px);
+  }
+  .abp-code__row button { white-space: nowrap; }
+  .abp-code__note { margin: 4px 0 0; opacity: 0.75; font-size: 0.9em; }
+  .abp-code__done { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+  .abp-code__link { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+</style>
+<script>
+  (function () {
+    var FN = "https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/";
+    var TOKEN = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
+    var NAME_KEY = "abp_ref_name";
+    var PENDING = "abp_pending_click";
+
+    function post(path, body) {
+      return fetch(FN + path, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+      })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    }
+    function setAttrs(attrs) {
+      return fetch("/cart/update.js", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ attributes: attrs }),
+      }).catch(function () {});
+    }
+    function session(key, value) {
+      try {
+        if (value === undefined) return sessionStorage.getItem(key);
+        if (value === null) sessionStorage.removeItem(key);
+        else sessionStorage.setItem(key, value);
+      } catch (e) {}
+      return null;
+    }
+    function stripParams(names) {
+      var url = new URL(location.href);
+      names.forEach(function (n) { url.searchParams.delete(n); });
+      history.replaceState(history.state, "", url.pathname + url.search + url.hash);
+    }
+    // Calls back with true/false once Shopify knows the visitor's choice.
+    function marketingConsent(cb) {
+      function ask() {
+        var cp = window.Shopify && window.Shopify.customerPrivacy;
+        cb(!!(cp && cp.marketingAllowed && cp.marketingAllowed()));
+      }
+      if (window.Shopify && window.Shopify.loadFeatures)
+        window.Shopify.loadFeatures([{ name: "consent-tracking-api", version: "0.1" }], ask);
+      else ask();
+    }
+    function keepToken(token, name) {
+      session(NAME_KEY, name || null);
+      // A newer referral replaces an earlier typed code.
+      return setAttrs({ _abp_ref: token, _abp_code: "" }).then(refreshWidgets);
+    }
+
+    // 1. Token handed over by amaresbigplanet.com.
+    var params = new URLSearchParams(location.search);
+    var handed = params.get("abp_ref");
+    if (handed) {
+      stripParams(["abp_ref"]);
+      if (handed.length <= 600 && TOKEN.test(handed)) keepToken(handed, null);
+    }
+
+    // 2. An ambassador's shop link.
+    if (params.has("ref")) {
+      var landing = location.href;
+      stripParams(["ref", "ln"]);
+      marketingConsent(function (consent) {
+        post("track-click", { landing_url: landing, referrer: document.referrer, consent: consent }).then(
+          function (res) {
+            if (res && res.token) keepToken(res.token, null);
+            else if (res && res.click_id && !consent) session(PENDING, String(res.click_id));
+          },
+        );
+      });
+    }
+    // Consent given after landing: upgrade the counted visit to a referral.
+    document.addEventListener("visitorConsentCollected", function (e) {
+      var pending = session(PENDING);
+      if (!pending || !(e.detail && e.detail.marketingAllowed)) return;
+      session(PENDING, null);
+      post("track-click", { click_id: Number(pending), consent: true }).then(function (res) {
+        if (res && res.token) keepToken(res.token, null);
+      });
+    });
+
+    // 3. "Ambassador code (optional)" on the cart page and in the cart drawer.
+    function cart() {
+      return fetch("/cart.js")
+        .then(function (r) { return r.json(); })
+        .catch(function () { return { attributes: {} }; });
+    }
+    function el(tag, props, children) {
+      var n = document.createElement(tag);
+      Object.keys(props || {}).forEach(function (k) {
+        if (k === "text") n.textContent = props[k];
+        else n.setAttribute(k, props[k]);
+      });
+      (children || []).forEach(function (c) { n.appendChild(c); });
+      return n;
+    }
+    var NOTE = "This isn't a discount code and won't change your price. It tells us which JOAT Global ambassador sent you, so they get the credit.";
+
+    function render(box, state) {
+      box.textContent = "";
+      if (state.name) {
+        var change = el("button", { type: "button", class: "abp-code__link", text: "Use a different code" });
+        var remove = el("button", { type: "button", class: "abp-code__link", text: "Remove" });
+        change.onclick = function () { render(box, { name: null, value: "" }); };
+        remove.onclick = function () {
+          session(NAME_KEY, null);
+          setAttrs({ _abp_ref: "", _abp_code: "" }).then(refreshWidgets);
+        };
+        box.appendChild(el("p", { class: "abp-code__done", role: "status" }, [
+          el("span", { text: "Referred by " + state.name + " ✓" }), change, remove,
+        ]));
+        return;
+      }
+      var id = "abp-code-" + Math.random().toString(36).slice(2, 8);
+      var input = el("input", { id: id, type: "text", maxlength: "12", autocomplete: "off", autocapitalize: "characters", spellcheck: "false", placeholder: "e.g. 98NXCR22" });
+      input.value = state.value || "";
+      var apply = el("button", { type: "submit", class: "button button-secondary", text: "Apply" });
+      var note = el("p", { class: "abp-code__note", "aria-live": "polite", text: state.error || NOTE });
+      var form = el("form", {}, [
+        el("label", { for: id, text: "Ambassador code (optional)" }),
+        el("div", { class: "abp-code__row" }, [input, apply]),
+        note,
+      ]);
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var code = input.value.trim();
+        if (!code) return;
+        apply.disabled = true;
+        apply.textContent = "Checking…";
+        post("lookup-ambassador", { code: code })
+          .then(function (found) {
+            if (!found || !found.ok) return null;
+            return post("track-click", { code: code, source: "code_cart", landing_url: location.href });
+          })
+          .then(function (res) {
+            if (!res || !res.token) {
+              render(box, { value: code, error: "We couldn't find that code" });
+              return;
+            }
+            session(NAME_KEY, res.display_name);
+            return setAttrs({ _abp_ref: res.token, _abp_code: code.toUpperCase() }).then(refreshWidgets);
+          });
+      };
+      box.appendChild(form);
+    }
+
+    function refreshWidgets() {
+      var boxes = document.querySelectorAll(".abp-code");
+      if (!boxes.length) return;
+      cart().then(function (c) {
+        var token = (c.attributes || {})._abp_ref;
+        var known = session(NAME_KEY);
+        var show = function (name) {
+          boxes.forEach(function (b) { render(b, { name: token ? name : null }); });
+        };
+        if (!token) return show(null);
+        if (known) return show(known);
+        post("lookup-ambassador", { token: token }).then(function (r) {
+          if (r && r.ok) session(NAME_KEY, r.display_name);
+          show(r && r.ok ? r.display_name : null);
+        });
+      });
+    }
+
+    // Horizon re-draws the cart drawer and cart page, so the field is put back
+    // above every checkout button whenever it goes missing.
+    function mount() {
+      var added = false;
+      document.querySelectorAll('[name="checkout"]').forEach(function (btn) {
+        var spot = btn.parentElement;
+        if (!spot || !spot.parentElement || spot.querySelector(".abp-code") || (spot.previousElementSibling && spot.previousElementSibling.classList.contains("abp-code"))) return;
+        spot.parentElement.insertBefore(el("div", { class: "abp-code" }), spot);
+        added = true;
+      });
+      if (added) refreshWidgets();
+    }
+    var queued = false;
+    new MutationObserver(function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; mount(); });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
+    else mount();
+  })();
+</script>

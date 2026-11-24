@@ -277,10 +277,10 @@ domain later would also credit shoppers who reach the shop some other way.
 
 ### 4. Add the referral snippet to the Shopify theme
 
-1. Shopify admin → **Online Store → Themes** → on the live theme, **⋯ → Edit code**.
-2. Open **layout/theme.liquid**, find `</body>` near the end, and paste the whole contents of
-   `docs/partners/shopify/abp-referral-snippet.html` just above it. **Save**.
-3. **Customize** the theme → a product page → the buy buttons block → untick **Show dynamic
+Superseded: follow [docs/shopify-theme-install.md](../shopify-theme-install.md), which installs
+`docs/partners/shopify/abp-referral.liquid` (shop links and the cart code field as well).
+
+1. **Customize** the theme → a product page → the buy buttons block → untick **Show dynamic
    checkout buttons**. "Buy it now" skips the cart, so the referral wouldn't reach the order.
 
 ### 5. Shopify webhooks

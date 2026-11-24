@@ -32,6 +32,7 @@ for (const f of [
   "20261119100000_partner_onboarding.sql",
   "20261120100000_partner_tracking.sql",
   "20261127100000_partner_ambassador_codes.sql",
+  "20261129100000_partner_referral_name.sql",
 ])
   await db.exec(readFileSync(`supabase/migrations/${f}`, "utf8"));
 
@@ -143,4 +144,18 @@ await assert.rejects(
   ),
   /check constraint/,
 );
+
+// ─── Name for a token's click (cart shows who referred via a link) ───────────
+const nameFor = (clickId, program = "amare") =>
+  one(`select public.referral_display_name(${clickId}, '${program}')`);
+assert.equal(await nameFor(r.click_id), "Erick O.");
+assert.equal(await nameFor(r.click_id, "joat"), null, "wrong programme");
+assert.match(
+  String(await one(`select public.referral_display_name(${r.click_id}, 'amare')`, "anon")),
+  /permission denied/,
+);
+await db.exec(
+  `update public.affiliate_memberships set status = 'suspended' where profile_id = '${id(1)}'`,
+);
+assert.equal(await nameFor(r.click_id), null, "suspended ambassador not shown");
 console.log("all passed");
