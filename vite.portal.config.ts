@@ -19,6 +19,8 @@ export default defineConfig({
       { find: /^\/src\//, replacement: `${repoRoot}src/` },
     ],
   },
+  // Tab-scoped Supabase sessions for the portal only (src/lib/supabase.ts).
+  define: { "import.meta.env.VITE_PORTAL_TAB_SESSIONS": JSON.stringify("true") },
   plugins: [
     TanStackRouterVite({
       target: "react",

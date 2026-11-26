@@ -25,7 +25,11 @@ function SignInForm() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [notice, setNotice] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(() =>
+    new URLSearchParams(window.location.search).get("reason") === "idle"
+      ? "You were signed out after 30 minutes of inactivity. Please sign in again."
+      : null,
+  );
 
   const signIn = async (ev: React.FormEvent) => {
     ev.preventDefault();

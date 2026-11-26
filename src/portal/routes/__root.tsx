@@ -3,9 +3,9 @@ import { Toaster } from "sonner";
 import { HeadContent, Link, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import joatLogo from "@/assets/joat-logo.png";
 import { useSession } from "@/lib/auth";
-import { supabase } from "@/lib/supabase";
 import { BRAND } from "../config";
 import { useAccount } from "../account";
+import { IdleTimeout, secureSignOut } from "../IdleTimeout";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({ meta: [{ title: "JOAT Global Partners" }] }),
@@ -23,6 +23,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function Root() {
   const { queryClient } = Route.useRouteContext();
+  const { session, loading } = useSession();
   return (
     <QueryClientProvider client={queryClient}>
       <HeadContent />
@@ -40,6 +41,7 @@ function Root() {
         <Footer />
       </div>
       <Toaster position="bottom-center" />
+      <IdleTimeout userId={session?.user.id} loading={loading} />
     </QueryClientProvider>
   );
 }
@@ -90,7 +92,7 @@ function Header() {
               <button
                 type="button"
                 className={navLink}
-                onClick={() => void supabase.auth.signOut()}
+                onClick={() => void secureSignOut()}
               >
                 Sign out
               </button>
