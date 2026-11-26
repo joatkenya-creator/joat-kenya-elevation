@@ -1,11 +1,17 @@
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { Toaster } from "sonner";
-import { HeadContent, Link, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import {
+  HeadContent,
+  Link,
+  Outlet,
+  createRootRouteWithContext,
+  useRouterState,
+} from "@tanstack/react-router";
 import joatLogo from "@/assets/joat-logo.png";
 import { useSession } from "@/lib/auth";
 import { BRAND } from "../config";
-import { useAccount } from "../account";
-import { IdleTimeout, secureSignOut } from "../IdleTimeout";
+import { IdleTimeout } from "../IdleTimeout";
+import { NavLinks } from "../nav";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({ meta: [{ title: "JOAT Global Partners" }] }),
@@ -24,6 +30,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function Root() {
   const { queryClient } = Route.useRouteContext();
   const { session, loading } = useSession();
+  // The landing page draws its own navbar and footer.
+  const isLanding = useRouterState({ select: (s) => s.location.pathname === "/" });
   return (
     <QueryClientProvider client={queryClient}>
       <HeadContent />
@@ -34,11 +42,11 @@ function Root() {
         >
           Skip to content
         </a>
-        <Header />
+        {!isLanding && <Header />}
         <main id="main" className="flex-1">
           <Outlet />
         </main>
-        <Footer />
+        {!isLanding && <Footer />}
       </div>
       <Toaster position="bottom-center" />
       <IdleTimeout userId={session?.user.id} loading={loading} />
@@ -47,13 +55,9 @@ function Root() {
 }
 
 const navLink = "rounded px-2 py-1 text-sm text-muted-foreground hover:text-foreground";
-const navActive = { className: "rounded px-2 py-1 text-sm font-medium text-foreground" };
+const navActive = "rounded px-2 py-1 text-sm font-medium text-foreground";
 
 function Header() {
-  const { session } = useSession();
-  const { data: account } = useAccount(session?.user.id);
-  const isStaff = (account?.staff.length ?? 0) > 0;
-
   return (
     <header className="border-b border-border bg-card">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
@@ -67,49 +71,11 @@ function Header() {
           aria-label="Main"
           className="-mx-2 flex w-full flex-wrap items-center gap-1 sm:mx-0 sm:w-auto"
         >
-          <Link to="/programs/joat" className={navLink} activeProps={navActive}>
-            JOAT Global
-          </Link>
-          <Link to="/programs/amare" className={navLink} activeProps={navActive}>
-            Amare's Big Planet
-          </Link>
-          <Link to="/faq" className={navLink} activeProps={navActive}>
-            FAQ
-          </Link>
-          <Link to="/resources" className={navLink} activeProps={navActive}>
-            Resources
-          </Link>
-          {session ? (
-            <>
-              <Link to="/dashboard" className={navLink} activeProps={navActive}>
-                Dashboard
-              </Link>
-              {isStaff && (
-                <Link to="/admin" className={navLink} activeProps={navActive}>
-                  Admin
-                </Link>
-              )}
-              <button
-                type="button"
-                className={navLink}
-                onClick={() => void secureSignOut()}
-              >
-                Sign out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className={navLink} activeProps={navActive}>
-                Sign in
-              </Link>
-              <Link
-                to="/apply"
-                className="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-              >
-                Apply
-              </Link>
-            </>
-          )}
+          <NavLinks
+            linkClass={navLink}
+            activeClass={navActive}
+            applyClass="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          />
         </nav>
       </div>
     </header>

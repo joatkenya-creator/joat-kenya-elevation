@@ -5,7 +5,15 @@ import { useSession } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { deliverPartnerApplicationViaWeb3Forms } from "@/lib/web3forms";
 import { ACTIVE_STATUSES, friendlyError, useAccount, usePrograms } from "../account";
-import { ErrorNote, GoogleButton, Loading, Page, buttonClass, inputClass } from "../ui";
+import {
+  ErrorNote,
+  GoogleButton,
+  Loading,
+  Page,
+  PasswordInput,
+  buttonClass,
+  inputClass,
+} from "../ui";
 
 export const Route = createFileRoute("/apply")({
   head: () => ({ meta: [{ title: "Apply | JOAT Global Partners" }] }),
@@ -104,10 +112,8 @@ function CreateAccount() {
           />
         </Field>
         <Field id="signup-password" label="Password (at least 8 characters)">
-          <input
+          <PasswordInput
             id="signup-password"
-            className={inputClass}
-            type="password"
             autoComplete="new-password"
             required
             value={password}
@@ -115,10 +121,8 @@ function CreateAccount() {
           />
         </Field>
         <Field id="signup-confirm" label="Confirm password">
-          <input
+          <PasswordInput
             id="signup-confirm"
-            className={inputClass}
-            type="password"
             autoComplete="new-password"
             required
             value={confirm}

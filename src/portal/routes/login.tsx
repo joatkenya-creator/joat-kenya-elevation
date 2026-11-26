@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useSession } from "@/lib/auth";
 import { isPasswordRecovery, supabase } from "@/lib/supabase";
-import { ErrorNote, GoogleButton, Page, buttonClass, inputClass } from "../ui";
+import { ErrorNote, GoogleButton, Page, PasswordInput, buttonClass, inputClass } from "../ui";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -77,10 +77,8 @@ function SignInForm() {
           <label htmlFor="password" className="text-xs text-muted-foreground">
             Password
           </label>
-          <input
+          <PasswordInput
             id="password"
-            className={inputClass}
-            type="password"
             autoComplete="current-password"
             required
             value={password}
@@ -144,10 +142,8 @@ function SetNewPassword({ onDone }: { onDone: () => void }) {
           <label htmlFor="new-password" className="text-xs text-muted-foreground">
             New password
           </label>
-          <input
+          <PasswordInput
             id="new-password"
-            className={inputClass}
-            type="password"
             autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -157,10 +153,8 @@ function SetNewPassword({ onDone }: { onDone: () => void }) {
           <label htmlFor="confirm-password" className="text-xs text-muted-foreground">
             Confirm new password
           </label>
-          <input
+          <PasswordInput
             id="confirm-password"
-            className={inputClass}
-            type="password"
             autoComplete="new-password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}

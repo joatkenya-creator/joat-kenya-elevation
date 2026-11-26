@@ -61,6 +61,23 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Partner portal landing palette (black / gold / brown): bg-joat-black, text-joat-gold, … */
+@theme {
+  --color-joat-black: #0e0b08;
+  --color-joat-black-alt: #1a130e;
+  --color-joat-surface: #2b1f16;
+  --color-joat-border: #4a3626;
+  --color-joat-gold: #c9a227;
+  --color-joat-gold-hover: #e0bc4a;
+  --color-joat-brown: #6b4a2f;
+  --color-joat-cream: #f5efe6;
+  --color-joat-body: #cbbba6;
+  --color-joat-muted: #8c7a66;
+  --font-gilda: "Gilda Display", serif;
+  --font-glory: "Give You Glory", cursive;
+  --font-inter-tight: "Inter Tight", sans-serif;
+}
+
 :root {
   --radius: 0.75rem;
 

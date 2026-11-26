@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { Loader2 } from "lucide-react";
+import { useState, type ComponentProps, type ReactNode } from "react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { MembershipStatus, Program } from "./account";
 
@@ -8,6 +8,30 @@ export const inputClass =
 
 export const buttonClass =
   "inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
+
+/** Password field with a show/hide toggle so people can check what they typed. */
+export function PasswordInput(props: Omit<ComponentProps<"input">, "type" | "className">) {
+  const [shown, setShown] = useState(false);
+  return (
+    <div className="relative">
+      <input {...props} type={shown ? "text" : "password"} className={`${inputClass} pr-11`} />
+      <button
+        type="button"
+        onClick={() => setShown((v) => !v)}
+        aria-label={shown ? "Hide password" : "Show password"}
+        aria-pressed={shown}
+        aria-controls={props.id}
+        className="absolute inset-y-0 right-0 flex w-10 items-center justify-center rounded-r-md text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+      >
+        {shown ? (
+          <EyeOff className="h-4 w-4" aria-hidden="true" />
+        ) : (
+          <Eye className="h-4 w-4" aria-hidden="true" />
+        )}
+      </button>
+    </div>
+  );
+}
 
 export function Page({
   title,
