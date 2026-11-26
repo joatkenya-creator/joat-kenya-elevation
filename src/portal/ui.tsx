@@ -1,27 +1,39 @@
 import { useState, type ComponentProps, type ReactNode } from "react";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { AlertCircle, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { MembershipStatus, Program } from "./account";
 
-export const inputClass =
-  "w-full rounded-md border border-border bg-card px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
+// Shared portal UI in the JOAT palette (see html.portal in src/styles.css).
+// 16px inputs (no iOS zoom), 44px touch targets, gold focus rings.
 
-export const buttonClass =
-  "inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
+const ring =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-joat-gold focus-visible:ring-offset-2 focus-visible:ring-offset-joat-black";
+
+export const inputClass = `w-full min-h-11 rounded-[10px] border border-joat-border bg-joat-black px-3.5 py-2.5 text-base text-joat-cream placeholder:text-joat-muted transition-colors focus:outline-none focus-visible:border-joat-gold focus-visible:ring-2 focus-visible:ring-joat-gold/40 disabled:opacity-60`;
+
+export const buttonClass = `inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] bg-joat-gold px-5 py-2.5 text-[15px] font-medium text-joat-black transition-[background-color,transform] hover:bg-joat-gold-hover active:scale-[0.98] disabled:opacity-60 ${ring}`;
+
+export const outlineButtonClass = `inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-joat-border bg-transparent px-5 py-2.5 text-[15px] font-medium text-joat-cream transition-colors hover:border-joat-gold hover:bg-joat-surface disabled:opacity-60 ${ring}`;
+
+/** Destructive actions (reject, delete, leave): error outline, cream text. Pair with an icon. */
+export const dangerButtonClass = `inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-joat-error bg-transparent px-4 py-2 text-[15px] font-medium text-joat-cream transition-colors hover:bg-joat-error/15 disabled:opacity-60 [&_svg]:text-joat-error ${ring}`;
+
+export const linkClass =
+  "text-joat-gold underline underline-offset-4 hover:text-joat-gold-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-joat-gold";
 
 /** Password field with a show/hide toggle so people can check what they typed. */
 export function PasswordInput(props: Omit<ComponentProps<"input">, "type" | "className">) {
   const [shown, setShown] = useState(false);
   return (
     <div className="relative">
-      <input {...props} type={shown ? "text" : "password"} className={`${inputClass} pr-11`} />
+      <input {...props} type={shown ? "text" : "password"} className={`${inputClass} pr-12`} />
       <button
         type="button"
         onClick={() => setShown((v) => !v)}
         aria-label={shown ? "Hide password" : "Show password"}
         aria-pressed={shown}
         aria-controls={props.id}
-        className="absolute inset-y-0 right-0 flex w-10 items-center justify-center rounded-r-md text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        className={`absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-[10px] text-joat-body hover:text-joat-gold ${ring}`}
       >
         {shown ? (
           <EyeOff className="h-4 w-4" aria-hidden="true" />
@@ -33,41 +45,89 @@ export function PasswordInput(props: Omit<ComponentProps<"input">, "type" | "cla
   );
 }
 
-export function Page({
+/** Compact page hero (the Miles hero layout without the rope) on a faint gold glow. */
+export function PageHero({
+  eyebrow,
   title,
   intro,
   children,
 }: {
-  title: string;
+  eyebrow?: string;
+  title: ReactNode;
   intro?: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:py-16">
-      <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{title}</h1>
-      {intro && <div className="mt-3 max-w-2xl text-muted-foreground">{intro}</div>}
-      <div className="mt-10 space-y-10">{children}</div>
-    </div>
-  );
-}
-
-export function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section>
-      <h2 className="text-xl font-semibold text-foreground">{title}</h2>
-      <div className="mt-3 space-y-3 text-foreground/90 leading-relaxed">{children}</div>
+    <section className="relative overflow-hidden border-b border-joat-border bg-joat-black-alt">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_80%_at_85%_0%,color-mix(in_srgb,var(--color-joat-gold)_16%,transparent),transparent_70%)]"
+      />
+      <div className="relative mx-auto max-w-[1200px] px-5 pb-12 pt-12 sm:px-10 lg:pb-16 lg:pt-16">
+        {eyebrow && (
+          <p className="text-[13px] font-medium uppercase tracking-[0.18em] text-joat-gold">
+            {eyebrow}
+          </p>
+        )}
+        <h1 className="mt-3 max-w-3xl text-[38px] leading-[44px] sm:text-[54px] sm:leading-[62px]">
+          {title}
+        </h1>
+        {intro && (
+          <div className="mt-4 max-w-2xl text-[17px] leading-[27px] text-joat-body">{intro}</div>
+        )}
+        {children && <div className="mt-7">{children}</div>}
+      </div>
     </section>
   );
 }
 
-export function Loading({ label = "Loading" }: { label?: string }) {
+export function Page({
+  title,
+  intro,
+  eyebrow,
+  children,
+}: {
+  title: string;
+  intro?: ReactNode;
+  eyebrow?: string;
+  children: ReactNode;
+}) {
   return (
-    <div
-      role="status"
-      className="flex items-center gap-2 py-16 text-sm text-muted-foreground justify-center"
-    >
-      <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-      {label}…
+    <>
+      <PageHero eyebrow={eyebrow} title={title} intro={intro} />
+      <div className="mx-auto max-w-[1200px] space-y-12 px-5 py-12 sm:px-10 lg:py-16">
+        {children}
+      </div>
+    </>
+  );
+}
+
+/** Long-form reading section: Gilda heading, ~70 characters per line. */
+export function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="max-w-[70ch]">
+      <h2 className="text-[28px] leading-[34px] sm:text-[32px] sm:leading-[40px]">{title}</h2>
+      <div className="mt-4 space-y-4 text-[16px] leading-[28px] text-joat-body [&_a]:text-joat-gold [&_strong]:text-joat-cream">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+/** Gold shimmer skeleton on joat-surface. */
+export function Loading({ label = "Loading" }: { label?: string }) {
+  const bar =
+    "rounded-[10px] bg-[linear-gradient(90deg,var(--color-joat-surface)_0%,color-mix(in_srgb,var(--color-joat-gold)_22%,var(--color-joat-surface))_50%,var(--color-joat-surface)_100%)] bg-[length:200%_100%] animate-[joat-shimmer_1.6s_linear_infinite] motion-reduce:animate-none";
+  return (
+    <div role="status" className="w-full space-y-4 py-8">
+      <span className="sr-only">{label}…</span>
+      <div aria-hidden className={`h-10 w-2/3 max-w-md ${bar}`} />
+      <div aria-hidden className={`h-4 w-full max-w-xl ${bar}`} />
+      <div aria-hidden className="grid gap-4 sm:grid-cols-3">
+        <div className={`h-28 ${bar}`} />
+        <div className={`h-28 ${bar}`} />
+        <div className={`h-28 ${bar}`} />
+      </div>
     </div>
   );
 }
@@ -76,45 +136,57 @@ export function ErrorNote({ children }: { children: ReactNode }) {
   return (
     <p
       role="alert"
-      className="rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800"
+      className="flex items-start gap-2.5 rounded-[10px] border border-joat-error bg-joat-error/10 px-4 py-3 text-sm text-joat-cream"
     >
-      {children}
+      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-joat-error" aria-hidden="true" />
+      <span>{children}</span>
     </p>
   );
 }
 
-const STATUS_STYLE: Record<MembershipStatus, string> = {
-  pending: "bg-amber-100 text-amber-900",
-  approved: "bg-emerald-100 text-emerald-900",
-  rejected: "bg-zinc-200 text-zinc-800",
-  suspended: "bg-red-100 text-red-900",
-  withdrawn: "bg-zinc-200 text-zinc-800",
+/** Status pill: colour plus text, never colour alone. */
+export const badgeStyle = {
+  gold: "bg-joat-gold text-joat-black",
+  brown: "bg-joat-brown text-joat-cream",
+  error: "border border-joat-error text-joat-cream",
+  muted: "border border-joat-border text-joat-body",
+} as const;
+
+export function Badge({ tone, children }: { tone: keyof typeof badgeStyle; children: ReactNode }) {
+  return (
+    <span
+      className={`inline-block whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${badgeStyle[tone]}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+const STATUS_TONE: Record<MembershipStatus, keyof typeof badgeStyle> = {
+  pending: "brown",
+  approved: "gold",
+  rejected: "error",
+  suspended: "error",
+  withdrawn: "muted",
 };
 
 export function StatusBadge({ status }: { status: MembershipStatus }) {
-  return (
-    <span
-      className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${STATUS_STYLE[status]}`}
-    >
-      {status}
-    </span>
-  );
+  return <Badge tone={STATUS_TONE[status]}>{status}</Badge>;
 }
 
 export function ApplicationStatus({ program }: { program: Program | undefined }) {
   if (!program) return <span />;
   return program.accepting_applications ? (
-    <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-900">
-      Accepting applications
-    </span>
+    <Badge tone="gold">Accepting applications</Badge>
   ) : (
-    <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-      Applications open soon
-    </span>
+    <Badge tone="muted">Applications open soon</Badge>
   );
 }
 
-/** One-click sign-up / sign-in. Google returns the user to `next` already signed in. */
+/**
+ * One-click sign-up / sign-in. Google returns the user to `next` already signed in.
+ * Uses Google's own dark-theme button colours (#131314 / #8E918F / #E3E3E3), as Google requires.
+ */
 export function GoogleButton({
   next,
   label = "Continue with Google",
@@ -131,9 +203,9 @@ export function GoogleButton({
           options: { redirectTo: `${window.location.origin}${next}` },
         })
       }
-      className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm font-medium hover:bg-muted"
+      className={`inline-flex min-h-11 w-full items-center justify-center gap-2.5 rounded-[10px] border border-[#8E918F] bg-[#131314] px-4 py-2 text-[15px] font-medium text-[#E3E3E3] hover:bg-[#1f1f20] ${ring}`}
     >
-      <svg aria-hidden="true" viewBox="0 0 48 48" className="h-4 w-4">
+      <svg aria-hidden="true" viewBox="0 0 48 48" className="h-[18px] w-[18px]">
         <path
           fill="#FFC107"
           d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"

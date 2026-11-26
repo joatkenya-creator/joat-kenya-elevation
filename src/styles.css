@@ -73,6 +73,8 @@
   --color-joat-cream: #f5efe6;
   --color-joat-body: #cbbba6;
   --color-joat-muted: #8c7a66;
+  /* forms errors and destructive actions only, always with an icon and text */
+  --color-joat-error: #c0533a;
   --font-gilda: "Gilda Display", serif;
   --font-glory: "Give You Glory", cursive;
   --font-inter-tight: "Inter Tight", sans-serif;
@@ -301,4 +303,72 @@
 
 @media (prefers-reduced-motion: reduce) {
   .navbar-enter { animation: none; }
+}
+
+/*
+ * Partner portal (partners.joatkenya.com) — <html class="portal"> in portal/index.html.
+ * Remaps the shared semantic tokens to the JOAT black / gold / brown palette so every
+ * portal page (forms, tables, dashboard, admin) picks it up. The public site is untouched.
+ */
+html.portal {
+  color-scheme: dark;
+  --background: var(--color-joat-black);
+  --foreground: var(--color-joat-cream);
+  --card: var(--color-joat-surface);
+  --card-foreground: var(--color-joat-cream);
+  --popover: var(--color-joat-surface);
+  --popover-foreground: var(--color-joat-cream);
+  --primary: var(--color-joat-gold);
+  --primary-foreground: var(--color-joat-black);
+  --secondary: var(--color-joat-brown);
+  --secondary-foreground: var(--color-joat-cream);
+  /* muted is a background; muted-foreground is the body text colour (AA on every surface) */
+  --muted: var(--color-joat-black-alt);
+  --muted-foreground: var(--color-joat-body);
+  --accent: var(--color-joat-brown);
+  --accent-foreground: var(--color-joat-cream);
+  --destructive: var(--color-joat-error);
+  --destructive-foreground: var(--color-joat-cream);
+  --border: var(--color-joat-border);
+  --input: var(--color-joat-border);
+  --ring: var(--color-joat-gold);
+  --gold-ink: var(--color-joat-gold);
+  --chart-1: var(--color-joat-gold);
+  --chart-2: var(--color-joat-cream);
+  --chart-3: var(--color-joat-muted);
+  --chart-4: var(--color-joat-gold-hover);
+  --chart-5: var(--color-joat-brown);
+  scrollbar-color: var(--color-joat-brown) var(--color-joat-black);
+  background: var(--color-joat-black);
+}
+html.portal body {
+  font-family: var(--font-inter-tight);
+  background: var(--color-joat-black);
+  color: var(--color-joat-body);
+}
+html.portal ::selection {
+  background: var(--color-joat-gold);
+  color: var(--color-joat-black);
+}
+/* Gilda Display has one weight: headings use it at 400 instead of a faked bold. */
+html.portal :is(h1, h2) {
+  font-family: var(--font-gilda);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--color-joat-cream);
+}
+html.portal :focus-visible {
+  outline-color: var(--color-joat-gold);
+}
+html.portal input[type="checkbox"],
+html.portal input[type="radio"] {
+  accent-color: var(--color-joat-gold);
+}
+@keyframes joat-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
 }

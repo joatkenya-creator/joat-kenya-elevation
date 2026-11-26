@@ -2,105 +2,69 @@ import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import {
   HeadContent,
-  Link,
   Outlet,
   createRootRouteWithContext,
   useRouterState,
 } from "@tanstack/react-router";
-import joatLogo from "@/assets/joat-logo.png";
 import { useSession } from "@/lib/auth";
-import { BRAND } from "../config";
 import { IdleTimeout } from "../IdleTimeout";
-import { NavLinks } from "../nav";
+import { Navbar } from "../landing/Navbar";
+import { SiteFooter, SlimFooter } from "../landing/FooterMiles";
+import { Button } from "../landing/kit";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({ meta: [{ title: "JOAT Global Partners" }] }),
   component: Root,
   notFoundComponent: () => (
-    <div className="mx-auto max-w-md px-4 py-24 text-center">
-      <h1 className="text-3xl font-bold">Page not found</h1>
-      <p className="mt-3 text-muted-foreground">That page doesn't exist on the partner portal.</p>
-      <Link to="/" className="mt-6 inline-block text-primary underline">
-        Back to the program home
-      </Link>
-    </div>
+    <section className="relative overflow-hidden bg-joat-black-alt px-5 py-24 text-center sm:py-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,color-mix(in_srgb,var(--color-joat-gold)_16%,transparent),transparent_70%)]"
+      />
+      <div className="relative">
+        <p className="text-[13px] font-medium uppercase tracking-[0.18em] text-joat-gold">404</p>
+        <h1 className="mt-3 text-[44px] leading-[52px] sm:text-[60px] sm:leading-[68px]">
+          Page not found
+        </h1>
+        <p className="mx-auto mt-4 max-w-md text-joat-body">
+          That page doesn't exist on the partner portal.
+        </p>
+        <div className="mt-8 flex justify-center">
+          <Button to="/">Back to the program home</Button>
+        </div>
+      </div>
+    </section>
   ),
 });
+
+/** App pages get a sticky navbar and a one-line footer; public pages get the Miles footer. */
+const APP_PAGES = ["/dashboard", "/admin", "/apply", "/login"];
 
 function Root() {
   const { queryClient } = Route.useRouteContext();
   const { session, loading } = useSession();
-  // The landing page draws its own navbar and footer.
-  const isLanding = useRouterState({ select: (s) => s.location.pathname === "/" });
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  // The landing page draws its own navbar (over the hero) and footer.
+  const isLanding = path === "/";
+  const isApp = APP_PAGES.some((p) => path === p || path.startsWith(`${p}/`));
   return (
     <QueryClientProvider client={queryClient}>
       <HeadContent />
-      <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <div className="flex min-h-screen flex-col bg-joat-black font-inter-tight text-joat-body">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-joat-gold focus:px-3 focus:py-2 focus:text-joat-black"
         >
           Skip to content
         </a>
-        {!isLanding && <Header />}
+        {!isLanding && <Navbar variant={isApp ? "sticky" : "static"} />}
         <main id="main" className="flex-1">
           <Outlet />
         </main>
-        {!isLanding && <Footer />}
+        {!isLanding && (isApp ? <SlimFooter /> : <SiteFooter />)}
       </div>
-      <Toaster position="bottom-center" />
+      <Toaster position="bottom-center" theme="dark" />
       <IdleTimeout userId={session?.user.id} loading={loading} />
     </QueryClientProvider>
-  );
-}
-
-const navLink = "rounded px-2 py-1 text-sm text-muted-foreground hover:text-foreground";
-const navActive = "rounded px-2 py-1 text-sm font-medium text-foreground";
-
-function Header() {
-  return (
-    <header className="border-b border-border bg-card">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
-        <Link to="/" className="flex items-center gap-2.5">
-          <img src={joatLogo} alt="" className="h-9 w-9 object-contain" />
-          <span className="font-semibold leading-tight">
-            {BRAND.name} <span className="font-normal text-muted-foreground">Partners</span>
-          </span>
-        </Link>
-        <nav
-          aria-label="Main"
-          className="-mx-2 flex w-full flex-wrap items-center gap-1 sm:mx-0 sm:w-auto"
-        >
-          <NavLinks
-            linkClass={navLink}
-            activeClass={navActive}
-            applyClass="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          />
-        </nav>
-      </div>
-    </header>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-card">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <p>
-          © {new Date().getFullYear()} {BRAND.legalName}. {BRAND.tagline}
-        </p>
-        <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-2">
-          <Link to="/terms" className="hover:text-foreground">
-            Program terms
-          </Link>
-          <Link to="/privacy" className="hover:text-foreground">
-            Privacy
-          </Link>
-          <Link to="/contact" className="hover:text-foreground">
-            Contact
-          </Link>
-        </nav>
-      </div>
-    </footer>
   );
 }

@@ -117,7 +117,7 @@ export function Reveal({
 export const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-joat-gold";
 
-type InternalPath = "/apply" | "/faq" | "/terms" | "/login";
+type InternalPath = "/" | "/apply" | "/faq" | "/terms" | "/login" | "/dashboard" | "/resources";
 
 /** Gold button: lighter fill sweeps in from the left, label rolls up, button lifts. */
 export function Button({
@@ -186,5 +186,93 @@ export function Heading({
     >
       {children}
     </h2>
+  );
+}
+
+/** Renders the desktop artboard or the mobile layout (switches at 1024px, see useIsDesktop). */
+export function Responsive({ desktop, mobile }: { desktop: ReactNode; mobile: ReactNode }) {
+  const isDesktop = useIsDesktop();
+  return (
+    <div className="font-inter-tight text-joat-body antialiased">
+      {isDesktop ? desktop : mobile}
+    </div>
+  );
+}
+
+/** Small section label: ■ Label ■ (gold squares). */
+export function Badge({ children, dark = false }: { children: ReactNode; dark?: boolean }) {
+  return (
+    <div className="flex items-center gap-[5px]">
+      <span
+        className={`block size-[8px] rounded-[2px] ${dark ? "bg-joat-black" : "bg-joat-gold"}`}
+      />
+      <p
+        className={`m-0 whitespace-nowrap text-[18px] capitalize leading-[24px] ${dark ? "text-joat-black" : "text-joat-cream"}`}
+      >
+        {children}
+      </p>
+      <span
+        className={`block size-[8px] rounded-[2px] ${dark ? "bg-joat-black" : "bg-joat-gold"}`}
+      />
+    </div>
+  );
+}
+
+/** Infinite horizontal loop (Web Animations API). Children are repeated `copies` times; pauses on hover. */
+export function Marquee({
+  children,
+  copies = 2,
+  duration = 40,
+  reverse = false,
+  gap = 0,
+  offset = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  copies?: number;
+  duration?: number;
+  reverse?: boolean;
+  gap?: number;
+  offset?: number;
+  className?: string;
+}) {
+  const track = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = track.current;
+    if (!el || prefersReducedMotion()) return;
+    const anim = el.animate(
+      [{ transform: "translateX(0)" }, { transform: `translateX(-${100 / copies}%)` }],
+      {
+        duration: duration * 1000,
+        iterations: Infinity,
+        direction: reverse ? "reverse" : "normal",
+      },
+    );
+    const pause = () => anim.pause();
+    const play = () => anim.play();
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", play);
+    return () => {
+      el.removeEventListener("mouseenter", pause);
+      el.removeEventListener("mouseleave", play);
+      anim.cancel();
+    };
+  }, [copies, duration, reverse]);
+  return (
+    <div className={`overflow-hidden ${className}`}>
+      <div ref={track} className="flex w-max" style={{ marginLeft: offset }}>
+        {Array.from({ length: copies }, (_, i) => (
+          <div
+            key={i}
+            aria-hidden={i > 0}
+            inert={i > 0}
+            className="flex shrink-0 items-stretch"
+            style={{ gap, paddingRight: gap }}
+          >
+            {children}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

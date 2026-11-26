@@ -5,20 +5,10 @@
  * `three` package only when the hero mounts.
  */
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Link } from "@tanstack/react-router";
 import joatLogo from "@/assets/joat-logo.png";
 import { usePrograms } from "../account";
-import { NavLinks } from "../nav";
-import {
-  Artboard,
-  Button,
-  Reveal,
-  at,
-  focusRing,
-  prefersReducedMotion,
-  useDesignScale,
-  useIsDesktop,
-} from "./kit";
+import { Navbar } from "./Navbar";
+import { Artboard, Button, Reveal, at, prefersReducedMotion, useIsDesktop } from "./kit";
 
 function Eyebrow({ className = "" }: { className?: string }) {
   return (
@@ -137,95 +127,11 @@ function HeroMobile() {
   );
 }
 
-// ── Navbar: sits on top of the hero and scrolls away with it (not sticky) ──
-function Navbar() {
-  const [open, setOpen] = useState(false);
-  const isDesktop = useIsDesktop();
-  const s = useDesignScale();
-  const close = () => setOpen(false);
-  const link = `inline-block bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat py-[6px] text-left text-[16px] text-joat-cream no-underline transition-[background-size,color] duration-300 hover:bg-[length:100%_1px] hover:text-joat-gold ${focusRing}`;
-
-  const bar = (
-    <div
-      className={`relative rounded-[8px] border border-joat-border bg-joat-surface transition-shadow duration-300 ${
-        open ? "shadow-[0_10px_30px_-12px_rgba(0,0,0,0.8)]" : ""
-      }`}
-    >
-      <div className="flex h-[42px] items-center justify-between px-[14px]">
-        <Link
-          to="/"
-          className={`flex items-center gap-[8px] text-joat-cream no-underline ${focusRing}`}
-          onClick={close}
-        >
-          <img src={joatLogo} alt="" className="h-[24px] w-[24px] object-contain" />
-          <span className="font-gilda text-[16px] leading-none">JOAT Global Partners</span>
-        </Link>
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="landing-menu"
-          onClick={() => setOpen((o) => !o)}
-          className={`group relative flex h-[22px] w-[30px] cursor-pointer flex-col items-end justify-center gap-[5px] border-0 bg-transparent p-0 ${focusRing}`}
-        >
-          <span
-            className={`block h-[2px] rounded-[10px] bg-joat-cream transition-all duration-300 ${
-              open ? "w-[24px] translate-y-[7px] rotate-45" : "w-[28px]"
-            }`}
-          />
-          <span
-            className={`block h-[2px] rounded-[10px] bg-joat-cream transition-all duration-300 ${
-              open ? "w-0 opacity-0" : "w-[23px] group-hover:w-[28px]"
-            }`}
-          />
-          <span
-            className={`block h-[2px] rounded-[10px] bg-joat-cream transition-all duration-300 ${
-              open ? "w-[24px] -translate-y-[7px] -rotate-45" : "w-[17px] group-hover:w-[28px]"
-            }`}
-          />
-        </button>
-      </div>
-      <div
-        className="grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-        style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
-      >
-        {/* inert while closed so the hidden links aren't tabbable */}
-        <nav id="landing-menu" aria-label="Main" className="overflow-hidden" inert={!open}>
-          <div className="flex flex-col items-start gap-[2px] px-[14px] pb-[14px] pt-[4px]">
-            <NavLinks
-              linkClass={link}
-              activeClass={`${link} text-joat-gold`}
-              applyClass={`${link} font-medium text-joat-gold`}
-              onNavigate={close}
-            />
-          </div>
-        </nav>
-      </div>
-    </div>
-  );
-
-  if (isDesktop) {
-    return (
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-50 flex justify-center font-inter-tight">
-        <div
-          className="pointer-events-auto w-[384px]"
-          style={{ marginTop: 21 * s, transform: `scale(${s})`, transformOrigin: "top center" }}
-        >
-          {bar}
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="absolute left-[20px] right-[20px] top-[14px] z-50 font-inter-tight">{bar}</div>
-  );
-}
-
 export default function Hero() {
   const isDesktop = useIsDesktop();
   return (
     <div className="relative font-inter-tight antialiased">
-      <Navbar />
+      <Navbar variant="overlay" />
       {isDesktop ? <HeroDesktop /> : <HeroMobile />}
     </div>
   );
