@@ -9,7 +9,7 @@ export const Route = createFileRoute("/privacy")({
 
 function Privacy() {
   return (
-    <Page title="JOAT Ambassadors privacy notice">
+    <Page eyebrow="Legal" title="JOAT Ambassadors privacy notice">
       <Section title="Who we are">
         <p>
           JOAT Ambassadors is run by {BRAND.legalName}. This notice covers ambassadors and portal

@@ -10,10 +10,11 @@ export const Route = createFileRoute("/contact")({
 function Contact() {
   return (
     <Page
+      eyebrow="Contact"
       title="Contact the partner team"
       intro="Questions about the program, your application or a commission? We're happy to help."
     >
-      <div className="rounded-lg border border-border bg-card p-6">
+      <div className="max-w-[70ch] rounded-[12px] border border-joat-border bg-joat-surface p-6 text-[16px] leading-[28px] text-joat-body">
         {SUPPORT_EMAIL ? (
           <p>
             Email us at{" "}

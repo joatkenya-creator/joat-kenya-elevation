@@ -9,7 +9,7 @@ export const Route = createFileRoute("/terms")({
 
 function Terms() {
   return (
-    <Page title="Program terms">
+    <Page eyebrow="Legal" title="Program terms">
       <Section title="1. The program">
         <p>
           The {BRAND.name} Brand Ambassador Program is run by {BRAND.legalName}. It has two

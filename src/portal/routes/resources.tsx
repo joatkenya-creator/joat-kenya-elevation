@@ -73,7 +73,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
         })
       }
       aria-label={`Copy: ${label}`}
-      className="shrink-0 rounded-md border border-border px-3 py-1.5 text-sm hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+      className="inline-flex min-h-11 shrink-0 items-center rounded-[10px] border border-joat-gold px-4 text-sm font-medium text-joat-gold transition-colors hover:bg-joat-gold hover:text-joat-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-joat-gold"
     >
       <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
     </button>
@@ -86,10 +86,10 @@ function CopyList({ items }: { items: { label: string; text: string }[] }) {
       {items.map((d) => (
         <li
           key={d.label}
-          className="flex items-start justify-between gap-4 rounded-lg border border-border bg-card p-4"
+          className="flex items-start justify-between gap-4 rounded-[12px] border border-joat-border bg-joat-surface p-4 transition-colors duration-300 hover:border-joat-gold"
         >
           <div className="min-w-0">
-            <p className="text-sm font-semibold">{d.label}</p>
+            <p className="font-gilda text-[19px] text-joat-cream">{d.label}</p>
             <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{d.text}</p>
           </div>
           <CopyButton text={d.text} label={d.label} />
@@ -105,6 +105,7 @@ const asPosts = (posts: string[]) =>
 function Resources() {
   return (
     <Page
+      eyebrow="Resources"
       title="Ambassador resources"
       intro="Your welcome pack: how to get started, how to disclose, ready-to-use posts and brand assets."
     >
@@ -175,7 +176,7 @@ function Resources() {
           Drawalet letter-tracing app for Android and iOS, and an online shop. Commission is earned
           on eligible purchases from the Amare shop.
         </p>
-        <p className="rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+        <p className="rounded-[10px] border border-joat-gold bg-joat-gold/10 px-4 py-3 text-sm text-joat-cream">
           <strong>Speak to parents, not children.</strong> Aim all promotion at parents and other
           adults. Never direct referral links or sales messages at children, or place them inside
           content made for children.
@@ -197,16 +198,16 @@ function Resources() {
 
       <Section title="Do and don't">
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg border border-border bg-card p-4">
-            <h3 className="font-semibold text-emerald-800">Do</h3>
+          <div className="rounded-[12px] border border-joat-border bg-joat-surface p-5">
+            <h3 className="font-gilda text-[22px] font-normal text-joat-gold">Do</h3>
             <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
               {DOS.map((d) => (
                 <li key={d}>{d}</li>
               ))}
             </ul>
           </div>
-          <div className="rounded-lg border border-border bg-card p-4">
-            <h3 className="font-semibold text-red-800">Don't</h3>
+          <div className="rounded-[12px] border border-joat-border bg-joat-surface p-5">
+            <h3 className="font-gilda text-[22px] font-normal text-joat-cream">Don't</h3>
             <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
               {DONTS.map((d) => (
                 <li key={d}>{d}</li>
@@ -223,17 +224,20 @@ function Resources() {
               src: joatLogo,
               name: "JOAT Global logo",
               file: "joat-global-logo.png",
-              bg: "bg-white",
+              bg: "bg-joat-black",
             },
             {
               src: amarePlanet,
               name: "Amare's Big Planet logo",
               file: "amares-big-planet-logo.webp",
-              bg: "bg-[#2a2a6e]",
+              bg: "bg-joat-black",
             },
           ].map((a) => (
-            <figure key={a.name} className="rounded-lg border border-border bg-card p-4">
-              <div className={`flex h-32 items-center justify-center rounded-md ${a.bg}`}>
+            <figure
+              key={a.name}
+              className="rounded-[12px] border border-joat-border bg-joat-surface p-4 transition-colors duration-300 hover:border-joat-gold"
+            >
+              <div className={`flex h-32 items-center justify-center rounded-[10px] ${a.bg}`}>
                 <img src={a.src} alt={a.name} className="max-h-24 object-contain" />
               </div>
               <figcaption className="mt-3 flex items-center justify-between text-sm">
