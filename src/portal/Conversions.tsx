@@ -3,16 +3,18 @@ import { ErrorNote, Loading } from "./ui";
 import { formatDay, formatMoney, holdNote } from "./money";
 
 const STATUS: Record<ConversionRow["status"], { label: string; style: string }> = {
-  verified: { label: "Verified", style: "bg-emerald-100 text-emerald-900" },
-  awaiting_payment: { label: "Awaiting payment", style: "bg-amber-100 text-amber-900" },
-  disputed: { label: "Payment disputed", style: "bg-amber-100 text-amber-900" },
-  reversed: { label: "Reversed", style: "bg-zinc-200 text-zinc-800" },
+  verified: { label: "Verified", style: "bg-joat-gold text-joat-black" },
+  awaiting_payment: { label: "Awaiting payment", style: "bg-joat-brown text-joat-cream" },
+  disputed: { label: "Payment disputed", style: "border border-joat-error text-joat-cream" },
+  reversed: { label: "Reversed", style: "border border-joat-border text-joat-body" },
 };
 
 export function ConversionStatus({ status }: { status: ConversionRow["status"] }) {
   const s = STATUS[status];
   return (
-    <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${s.style}`}>{s.label}</span>
+    <span className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium ${s.style}`}>
+      {s.label}
+    </span>
   );
 }
 

@@ -10,7 +10,7 @@ import {
   usePrograms,
   type MembershipStatus,
 } from "../account";
-import { ErrorNote, Loading, Page, StatusBadge } from "../ui";
+import { ErrorNote, Loading, Page, StatusBadge, buttonClass, dangerButtonClass } from "../ui";
 import { ProgrammeLinks } from "../Links";
 import { MyConversions } from "../Conversions";
 import { AmbassadorOverview } from "../AmbassadorOverview";
@@ -19,6 +19,7 @@ import {
   BookOpen,
   LayoutDashboard,
   Link2,
+  LogOut,
   Receipt,
   Settings,
   ShieldCheck,
@@ -51,7 +52,7 @@ function Dashboard() {
   if (account.isLoading) return <Loading label="Loading your account" />;
   if (account.error)
     return (
-      <Page title="Dashboard">
+      <Page eyebrow="Dashboard" title="Dashboard">
         <ErrorNote>We couldn't load your account. Refresh the page to try again.</ErrorNote>
       </Page>
     );
@@ -106,7 +107,7 @@ function Dashboard() {
             {section === "payouts" && <PayoutSettings />}
             {section === "programmes" && (
               <section className="rounded-2xl border border-border bg-card p-5">
-                <h2 className="text-lg font-semibold">Your programs</h2>
+                <h2 className="text-[26px] leading-[32px]">Your programs</h2>
                 <ul className="mt-3 divide-y divide-border">
                   {memberships.map((m) => (
                     <li
@@ -145,7 +146,7 @@ function Dashboard() {
     );
 
   return (
-    <Page title="Dashboard" intro={<>Signed in as {session.user.email}</>}>
+    <Page eyebrow="Dashboard" title="Dashboard" intro={<>Signed in as {session.user.email}</>}>
       {staff.length > 0 && (
         <p className="text-sm">
           You have a staff role. Go to the{" "}
@@ -225,10 +226,7 @@ function Dashboard() {
 
 function ApplyLink({ label = "Apply now" }: { label?: string }) {
   return (
-    <Link
-      to="/apply"
-      className="mt-4 inline-block rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-    >
+    <Link to="/apply" className={`mt-4 ${buttonClass}`}>
       {label}
     </Link>
   );
@@ -253,7 +251,7 @@ function LeaveProgramme({ programId, name }: { programId: string; name: string }
       <button
         type="button"
         onClick={() => setConfirming(true)}
-        className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+        className="min-h-11 text-sm text-muted-foreground underline-offset-4 hover:text-joat-cream hover:underline"
       >
         Leave program
       </button>
@@ -266,14 +264,15 @@ function LeaveProgramme({ programId, name }: { programId: string; name: string }
           type="button"
           disabled={leave.isPending}
           onClick={() => leave.mutate()}
-          className="rounded-md bg-red-700 px-3 py-1.5 text-white hover:bg-red-800 disabled:opacity-60"
+          className={dangerButtonClass}
         >
+          <LogOut className="h-4 w-4" aria-hidden="true" />
           {leave.isPending ? "Leaving…" : "Yes, leave"}
         </button>
         <button
           type="button"
           onClick={() => setConfirming(false)}
-          className="rounded-md border border-border px-3 py-1.5"
+          className="min-h-11 rounded-[10px] border border-border px-4 py-2 hover:border-joat-gold"
         >
           Cancel
         </button>
@@ -292,7 +291,7 @@ const SECTIONS: { id: SectionId; label: string; icon: LucideIcon }[] = [
   { id: "programmes", label: "Programs", icon: Settings },
 ];
 
-/** Navy sidebar layout for ambassadors, modelled on the affiliate dashboard design. */
+/** Sidebar layout for ambassadors, modelled on the affiliate dashboard design. */
 function AmbassadorShell({
   name,
   email,
@@ -306,12 +305,12 @@ function AmbassadorShell({
 }) {
   const [section, setSection] = useState<SectionId>("overview");
   const item =
-    "flex items-center gap-2.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm transition-colors";
+    "flex min-h-11 items-center gap-2.5 whitespace-nowrap rounded-[10px] px-3 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-joat-gold";
   return (
-    <div className="flex min-h-full flex-col bg-slate-100 md:flex-row">
+    <div className="flex min-h-full flex-col bg-joat-black md:flex-row">
       <nav
         aria-label="Dashboard"
-        className="flex gap-1 overflow-x-auto bg-[#0f2a5f] p-2 text-white md:w-56 md:shrink-0 md:flex-col md:p-3"
+        className="flex gap-1 overflow-x-auto border-b border-joat-border bg-joat-black-alt p-2 text-joat-cream md:w-60 md:shrink-0 md:flex-col md:border-b-0 md:border-r md:p-3"
       >
         {SECTIONS.map((s) => (
           <button
@@ -319,26 +318,34 @@ function AmbassadorShell({
             type="button"
             aria-current={section === s.id ? "page" : undefined}
             onClick={() => setSection(s.id)}
-            className={`${item} ${section === s.id ? "bg-white/15 font-medium" : "text-white/75 hover:bg-white/10"}`}
+            className={`${item} ${section === s.id ? "bg-joat-gold font-medium text-joat-black" : "text-joat-body hover:bg-joat-surface hover:text-joat-cream"}`}
           >
             <s.icon className="h-4 w-4" aria-hidden="true" />
             {s.label}
           </button>
         ))}
-        <Link to="/resources" className={`${item} text-white/75 hover:bg-white/10`}>
+        <Link
+          to="/resources"
+          className={`${item} text-joat-body hover:bg-joat-surface hover:text-joat-cream`}
+        >
           <BookOpen className="h-4 w-4" aria-hidden="true" />
           Resources
         </Link>
         {isStaff && (
-          <Link to="/admin" className={`${item} text-white/75 hover:bg-white/10`}>
+          <Link
+            to="/admin"
+            className={`${item} text-joat-body hover:bg-joat-surface hover:text-joat-cream`}
+          >
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             Admin
           </Link>
         )}
       </nav>
-      <div className="min-w-0 flex-1 space-y-4 p-4 sm:p-6">
+      <div className="min-w-0 flex-1 space-y-5 p-4 sm:p-8">
         <header className="flex flex-wrap items-center justify-between gap-2">
-          <h1 className="text-xl font-semibold">{SECTIONS.find((s) => s.id === section)!.label}</h1>
+          <h1 className="text-[34px] leading-[40px] sm:text-[42px] sm:leading-[48px]">
+            {SECTIONS.find((s) => s.id === section)!.label}
+          </h1>
           <p className="min-w-0 break-all text-sm text-muted-foreground">
             {name} · {email}
           </p>

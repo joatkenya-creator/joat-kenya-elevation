@@ -372,3 +372,7 @@ html.portal input[type="radio"] {
     background-position: -100% 0;
   }
 }
+/* Tables: cream column headers on every portal table. */
+html.portal th {
+  color: var(--color-joat-cream);
+}

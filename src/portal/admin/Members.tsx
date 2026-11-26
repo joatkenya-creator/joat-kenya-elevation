@@ -8,7 +8,8 @@ import {
   type MembershipStatus,
 } from "../account";
 import { downloadCsv } from "../csv";
-import { ErrorNote, Loading, StatusBadge, inputClass } from "../ui";
+import { Ban, X } from "lucide-react";
+import { ErrorNote, Loading, StatusBadge, dangerButtonClass, inputClass } from "../ui";
 import {
   formatDate,
   isWebLink,
@@ -326,8 +327,9 @@ function ReviewActions({ member }: { member: MemberRow }) {
               type="button"
               disabled={review.isPending || !reason.trim()}
               onClick={() => run(asking, reason.trim())}
-              className="rounded-md bg-red-700 px-3 py-1.5 text-sm text-white hover:bg-red-800 disabled:opacity-60"
+              className={dangerButtonClass}
             >
+              <X className="h-4 w-4" aria-hidden="true" />
               {asking === "rejected" ? "Confirm rejection" : "Confirm suspension"}
             </button>
             <button
@@ -402,7 +404,7 @@ function LinkRow({ link, canAct }: { link: AdminLink; canAct: boolean }) {
           <span className="font-mono">{link.destination_path}</span>
           {link.campaign && <span className="text-muted-foreground"> · {link.campaign}</span>}
           {link.status === "disabled" && (
-            <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-900">
+            <span className="ml-2 rounded-full border border-joat-error text-joat-cream px-2 py-0.5 text-xs">
               Disabled
             </span>
           )}
@@ -444,8 +446,9 @@ function LinkRow({ link, canAct }: { link: AdminLink; canAct: boolean }) {
                   { onSuccess: () => setAsking(false) },
                 )
               }
-              className="rounded-md bg-red-700 px-3 py-1 text-xs text-white hover:bg-red-800 disabled:opacity-60"
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-[10px] border border-joat-error px-3 text-xs font-medium text-joat-cream transition-colors hover:bg-joat-error/15 disabled:opacity-60"
             >
+              <Ban className="h-3.5 w-3.5 text-joat-error" aria-hidden="true" />
               Confirm disable
             </button>
             <button

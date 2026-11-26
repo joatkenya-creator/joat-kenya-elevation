@@ -93,9 +93,11 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
   const total = clicks.data!.filter((c) => c.program_id === program.id).length;
 
   return (
-    <section className="space-y-4 rounded-lg border border-border bg-card p-5">
+    <section className="space-y-4 rounded-2xl border border-border bg-card p-5 sm:p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h3 className="text-lg font-semibold">Your {program.name} links</h3>
+        <h3 className="font-gilda text-[24px] font-normal text-joat-cream">
+          Your {program.name} links
+        </h3>
         <p className="text-sm text-muted-foreground">
           {total} {total === 1 ? "click" : "clicks"} in the last {DAYS} days
         </p>
@@ -115,7 +117,7 @@ export function ProgrammeLinks(props: { userId: string; publicCode: string; prog
         />
       )}
 
-      <ul className="divide-y divide-border rounded-md border border-border">
+      <ul className="divide-y divide-border rounded-[12px] border border-border bg-joat-black">
         <LinkItem
           label="Home page"
           url={referralUrl(program, props.publicCode)}
@@ -165,7 +167,7 @@ function LinkItem(props: {
         <p className="break-all text-sm font-medium">
           {props.label}
           {props.disabled && (
-            <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-900">
+            <span className="ml-2 rounded-full border border-joat-error text-joat-cream px-2 py-0.5 text-xs">
               Disabled by the partner team
             </span>
           )}
@@ -178,9 +180,10 @@ function LinkItem(props: {
           <button
             type="button"
             onClick={() => void copy()}
-            className="rounded-md border border-border px-3 py-1.5 text-sm hover:bg-muted"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-[10px] bg-joat-gold px-4 py-2 text-sm font-medium text-joat-black transition-colors hover:bg-joat-gold-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-joat-gold"
             aria-live="polite"
           >
+            <Copy className="h-4 w-4" aria-hidden="true" />
             {copied ? "Copied" : "Copy link"}
           </button>
         )}
@@ -340,7 +343,7 @@ function ShareControl(props: { url: string; message: (url: string) => string; la
               aria-label={`Share on ${NETWORK_LABEL[n]}`}
               title={`Share on ${NETWORK_LABEL[n]}`}
               onClick={(e) => void onNetwork(n, e)}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border hover:bg-muted"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border text-joat-cream transition-colors hover:border-joat-gold hover:text-joat-gold"
             >
               <Icon className="h-4 w-4" aria-hidden="true" />
             </a>
@@ -358,9 +361,9 @@ function CodeCard(props: {
 }) {
   const [copied, setCopied] = useState(false);
   return (
-    <div className="space-y-3 rounded-md border border-border bg-muted/40 p-4">
-      <p className="text-sm font-medium">Your ambassador code</p>
-      <p className="font-mono text-3xl font-bold tracking-widest">{props.code}</p>
+    <div className="space-y-3 rounded-[12px] border border-joat-gold bg-joat-black p-5">
+      <p className="text-sm font-medium text-joat-cream">Your ambassador code</p>
+      <p className="font-mono text-3xl font-bold tracking-widest text-joat-gold">{props.code}</p>
       <p className="text-sm text-muted-foreground">
         People who type the website address themselves can enter this code on the website or in the
         shop cart, so the sale is still credited to you.
@@ -376,7 +379,7 @@ function CodeCard(props: {
             setCopied(ok);
             if (ok) setTimeout(() => setCopied(false), 2000);
           }}
-          className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm hover:bg-muted"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-[10px] bg-joat-gold px-4 py-2 text-sm font-medium text-joat-black transition-colors hover:bg-joat-gold-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-joat-gold"
         >
           <Copy className="h-4 w-4" aria-hidden="true" />
           {copied ? "Copied" : "Copy code"}

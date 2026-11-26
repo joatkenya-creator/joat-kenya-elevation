@@ -159,7 +159,7 @@ export function Reports({ programName }: { programName: (id: string) => string }
                       {r.flags.map((f) => (
                         <span
                           key={f}
-                          className="rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-900"
+                          className="rounded-full border border-joat-error text-joat-cream px-2 py-0.5 text-xs"
                         >
                           {f}
                         </span>

@@ -4,7 +4,8 @@ import { supabase } from "@/lib/supabase";
 import { friendlyError, isFinance, type Account } from "../account";
 import { downloadCsv } from "../csv";
 import { approxLocal, formatMoney, useLocalRate } from "../money";
-import { ErrorNote, Loading, buttonClass, inputClass } from "../ui";
+import { X } from "lucide-react";
+import { ErrorNote, Loading, buttonClass, dangerButtonClass, inputClass } from "../ui";
 import { formatDate, useMembers } from "./data";
 
 // Monthly payouts in USD: the payouts manager creates a batch, reviews and
@@ -32,10 +33,10 @@ type Payee = {
 };
 
 const STATUS_STYLE: Record<Batch["status"], string> = {
-  draft: "bg-amber-100 text-amber-900",
-  approved: "bg-sky-100 text-sky-900",
-  paid: "bg-emerald-100 text-emerald-900",
-  cancelled: "bg-zinc-200 text-zinc-800",
+  draft: "bg-joat-brown text-joat-cream",
+  approved: "border border-joat-gold text-joat-gold",
+  paid: "bg-joat-gold text-joat-black",
+  cancelled: "border border-joat-border text-joat-body",
 };
 
 function usePayoutData() {
@@ -241,7 +242,7 @@ function BatchCard({
           </label>
           <button
             type="button"
-            className="rounded-md bg-red-700 px-3 py-2 text-sm text-white"
+            className={dangerButtonClass}
             disabled={rpc.isPending}
             onClick={() =>
               rpc.mutate({
@@ -250,6 +251,7 @@ function BatchCard({
               })
             }
           >
+            <X className="h-4 w-4" aria-hidden="true" />
             Cancel batch
           </button>
           <button
@@ -282,7 +284,7 @@ function BatchCard({
                 )}
               </span>
               {p.paid_reference ? (
-                <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs text-emerald-900">
+                <span className="rounded-full bg-joat-gold px-2.5 py-0.5 text-xs text-joat-black">
                   Paid · {p.paid_reference}
                 </span>
               ) : batch.status === "approved" ? (

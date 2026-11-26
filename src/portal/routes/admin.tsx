@@ -94,8 +94,9 @@ function AdminHome({
   ];
 
   return (
-    <div className="min-h-full bg-muted/40">
-      <div className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6">
+    <div className="min-h-full bg-joat-black">
+      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6">
+        <h1 className="text-[34px] leading-[40px] sm:text-[42px] sm:leading-[48px]">Admin</h1>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div
             role="tablist"
@@ -111,7 +112,7 @@ function AdminHome({
                 aria-selected={tab === t.id}
                 aria-controls={`panel-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-sm ${tab === t.id ? "bg-zinc-900 font-medium text-white" : "text-muted-foreground hover:text-foreground"}`}
+                className={`shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-sm ${tab === t.id ? "bg-joat-gold font-medium text-joat-black" : "text-muted-foreground hover:text-foreground"}`}
               >
                 {t.label}
               </button>

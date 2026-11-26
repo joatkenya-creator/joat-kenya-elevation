@@ -13,7 +13,8 @@ import { ACTION_LABEL } from "./labels";
 // 14-day mini bars, ambassador mix, recent activity, what needs attention, and
 // a card per ambassador.
 
-const ACCENT = "#E8603C";
+// JOAT gold (joat-gold); inactive sparkline bars use joat-border.
+const ACCENT = "#c9a227";
 const DAYS = 14;
 
 /** Counts per day for the last DAYS days, oldest first. */
@@ -71,7 +72,7 @@ function Spark({ values }: { values: number[] }) {
           className="w-[3px] rounded-sm"
           style={{
             height: `${Math.max(8, (v / max) * 100)}%`,
-            background: i === values.length - 1 ? ACCENT : "#d4d4d8",
+            background: i === values.length - 1 ? ACCENT : "#4a3626",
           }}
         />
       ))}
@@ -312,8 +313,7 @@ export function Overview({
           <button
             type="button"
             onClick={() => onOpen("queue")}
-            className="rounded-lg px-4 py-2 text-sm font-medium text-white"
-            style={{ background: ACCENT }}
+            className="min-h-11 rounded-[10px] bg-joat-gold px-4 py-2 text-sm font-medium text-joat-black hover:bg-joat-gold-hover"
           >
             Review applications{pending.length > 0 && ` (${pending.length})`}
           </button>
@@ -382,11 +382,11 @@ export function Overview({
                   </div>
                   <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <span
-                      className={`flex items-center gap-1 rounded-full border px-2 py-0.5 ${flags.length ? "border-red-200 text-red-800" : "border-border"}`}
+                      className={`flex items-center gap-1 rounded-full border px-2 py-0.5 ${flags.length ? "border-joat-error text-joat-cream" : "border-border"}`}
                       title={flags.join(" · ") || undefined}
                     >
                       <span
-                        className={`h-1.5 w-1.5 rounded-full ${flags.length ? "bg-red-600" : "bg-emerald-600"}`}
+                        className={`h-1.5 w-1.5 rounded-full ${flags.length ? "bg-joat-error" : "bg-joat-gold"}`}
                       />
                       {flags.length ? "Review" : "Healthy"}
                     </span>

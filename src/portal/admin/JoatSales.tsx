@@ -5,6 +5,7 @@ import { canManage, friendlyError, isFinance, type Account } from "../account";
 import { ConversionStatus } from "../Conversions";
 import { useConversions } from "../conversions-data";
 import { MONEY_PATTERN, formatDay, formatMoney, holdNote } from "../money";
+import { X } from "lucide-react";
 import { ErrorNote, Loading, buttonClass, inputClass } from "../ui";
 import { useMembers } from "./data";
 
@@ -203,7 +204,7 @@ export function JoatSales({ staff, userId }: { staff: Account["staff"]; userId: 
                         {nameOf(e.profile_id)}
                       </p>
                       {e.self_referral && (
-                        <p className="mt-1 text-sm font-medium text-red-800">
+                        <p className="mt-1 border-l-2 border-joat-error pl-2 text-sm font-medium text-joat-cream">
                           Flag: the client's email matches the ambassador's own account.
                         </p>
                       )}
@@ -426,9 +427,9 @@ function NewInvoice({ engagementId }: { engagementId: string }) {
 }
 
 const PAYMENT_STYLE: Record<Payment["status"], string> = {
-  recorded: "bg-amber-100 text-amber-900",
-  confirmed: "bg-emerald-100 text-emerald-900",
-  rejected: "bg-zinc-200 text-zinc-800",
+  recorded: "bg-joat-brown text-joat-cream",
+  confirmed: "bg-joat-gold text-joat-black",
+  rejected: "border border-joat-error text-joat-cream",
 };
 const PAYMENT_LABEL: Record<Payment["status"], string> = {
   recorded: "Awaiting confirmation",
@@ -610,8 +611,9 @@ function ReviewPayment({ payment }: { payment: Payment }) {
           onClick={() =>
             review.mutate({ p_payment_id: payment.id, p_confirm: false, p_note: note })
           }
-          className="rounded-md bg-red-700 px-2 py-1 text-xs text-white disabled:opacity-60"
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-[10px] border border-joat-error px-3 text-xs font-medium text-joat-cream transition-colors hover:bg-joat-error/15 disabled:opacity-60"
         >
+          <X className="h-3.5 w-3.5 text-joat-error" aria-hidden="true" />
           Reject
         </button>
         <button type="button" onClick={() => setRejecting(false)} className="text-xs underline">

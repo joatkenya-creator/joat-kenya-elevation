@@ -1,4 +1,12 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import {
+  Coins,
+  MousePointerClick,
+  ShoppingBag,
+  TrendingDown,
+  TrendingUp,
+  Wallet,
+} from "lucide-react";
 import {
   Area,
   AreaChart,
@@ -21,10 +29,25 @@ import { ErrorNote, Loading } from "./ui";
 // traffic and sales over time, monthly earnings, and a commission summary.
 
 const DAY = 86_400_000;
-const BLUE = "#2563eb";
-const GREEN = "#16a34a";
+// JOAT palette: gold and cream series on the dark surface (tokens in src/styles.css).
+const BLUE = "#c9a227"; // clicks / revenue: joat-gold
+const GREEN = "#f5efe6"; // sales / commission: joat-cream
 // One colour per programme in the "All programs" charts.
-const PROGRAM_COLORS = ["#2563eb", "#E8603C", "#7c3aed", "#0891b2"];
+const PROGRAM_COLORS = ["#c9a227", "#f5efe6", "#8c7a66", "#e0bc4a"];
+const AXIS = { fontSize: 11, fill: "#cbbba6" };
+const GRID = "#4a3626";
+const TOOLTIP = {
+  contentStyle: {
+    background: "#1a130e",
+    border: "1px solid #4a3626",
+    borderRadius: 10,
+    color: "#f5efe6",
+  },
+  labelStyle: { color: "#f5efe6" },
+  itemStyle: { color: "#cbbba6" },
+  cursor: { fill: "rgba(201,162,39,0.08)", stroke: "#4a3626" },
+};
+const LEGEND = { fontSize: 12, color: "#cbbba6" };
 
 /** Sum exact decimal strings per currency, in cents. */
 function byCurrency(rows: { currency: string | null; amount: string }[]) {
@@ -47,28 +70,52 @@ function change(now: number, before: number) {
   return `${pct > 0 ? "+" : ""}${pct}%`;
 }
 
-function Kpi({ label, value, delta }: { label: string; value: string; delta?: string | null }) {
+/** Vendo-style stat card: gold icon chip, big value, muted label; trend shown with an arrow. */
+function Kpi({
+  label,
+  value,
+  delta,
+  icon,
+}: {
+  label: string;
+  value: string;
+  delta?: string | null;
+  icon: ReactNode;
+}) {
+  const down = delta?.startsWith("-");
   return (
-    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-      <p className="text-xs font-medium text-muted-foreground">{label}</p>
-      <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
-        <span className="min-w-0 break-words text-2xl font-semibold tabular-nums">{value}</span>
+    <div className="flex flex-col gap-3 rounded-[20px] border border-border bg-card p-5 transition-colors duration-300 hover:border-joat-gold">
+      <span
+        aria-hidden
+        className="flex h-11 w-11 items-center justify-center rounded-full bg-joat-gold text-joat-black [&_svg]:h-5 [&_svg]:w-5"
+      >
+        {icon}
+      </span>
+      <p className="flex flex-wrap items-baseline gap-x-2">
+        <span className="min-w-0 break-words font-gilda text-[30px] leading-[1.1] tabular-nums text-joat-cream">
+          {value}
+        </span>
         {delta && (
-          <span
-            className={`text-xs font-medium ${delta.startsWith("-") ? "text-red-700" : "text-emerald-700"}`}
-          >
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-joat-cream">
+            {down ? (
+              <TrendingDown className="h-3.5 w-3.5 text-joat-body" aria-hidden="true" />
+            ) : (
+              <TrendingUp className="h-3.5 w-3.5 text-joat-gold" aria-hidden="true" />
+            )}
             {delta}
+            <span className="sr-only">compared with the previous 30 days</span>
           </span>
         )}
       </p>
+      <p className="text-sm text-muted-foreground">{label}</p>
     </div>
   );
 }
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="min-w-0 rounded-xl border border-border bg-card p-4 shadow-sm">
-      <h3 className="text-sm font-semibold">{title}</h3>
+    <section className="min-w-0 rounded-[20px] border border-border bg-card p-5">
+      <h3 className="text-sm font-semibold text-joat-cream">{title}</h3>
       <div className="mt-3">{children}</div>
     </section>
   );
@@ -211,13 +258,23 @@ export function AmbassadorOverview({
       )}
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <Kpi
+          icon={<MousePointerClick />}
           label="Clicks (30 days)"
           value={String(clicks30)}
           delta={change(clicks30, clicksPrev)}
         />
-        <Kpi label="Sales (30 days)" value={String(sales30)} delta={change(sales30, salesPrev)} />
-        <Kpi label="Commission earned" value={showTotals(earned, local)} />
-        <Kpi label={`Paid to you${allPrograms}`} value={showTotals(paid, local)} />
+        <Kpi
+          icon={<ShoppingBag />}
+          label="Sales (30 days)"
+          value={String(sales30)}
+          delta={change(sales30, salesPrev)}
+        />
+        <Kpi icon={<Coins />} label="Commission earned" value={showTotals(earned, local)} />
+        <Kpi
+          icon={<Wallet />}
+          label={`Paid to you${allPrograms}`}
+          value={showTotals(paid, local)}
+        />
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[2fr_1.3fr_1fr]">
@@ -225,11 +282,11 @@ export function AmbassadorOverview({
           <div className="h-56">
             <ResponsiveContainer>
               <AreaChart data={traffic} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="day" tick={{ fontSize: 11 }} interval={1} />
-                <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
-                <Tooltip />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={GRID} />
+                <XAxis dataKey="day" tick={AXIS} stroke={GRID} interval={1} />
+                <YAxis allowDecimals={false} tick={AXIS} stroke={GRID} />
+                <Tooltip {...TOOLTIP} />
+                <Legend wrapperStyle={LEGEND} />
                 {clickSeries.map((c) => (
                   <Area
                     key={c.key}
@@ -259,11 +316,11 @@ export function AmbassadorOverview({
           <div className="h-56">
             <ResponsiveContainer>
               <BarChart data={months} margin={{ top: 5, right: 5, left: -15, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 11 }} />
-                <Tooltip />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={GRID} />
+                <XAxis dataKey="month" tick={AXIS} stroke={GRID} />
+                <YAxis tick={AXIS} stroke={GRID} />
+                <Tooltip {...TOOLTIP} />
+                <Legend wrapperStyle={LEGEND} />
                 {split
                   ? programIds.map((id, i) => (
                       <Bar
@@ -312,7 +369,7 @@ export function AmbassadorOverview({
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[560px] text-left text-sm">
-              <thead className="text-xs uppercase tracking-wide text-muted-foreground">
+              <thead className="text-xs uppercase tracking-wide text-joat-cream">
                 <tr>
                   <th className="py-2">Date</th>
                   <th className="py-2">Program</th>

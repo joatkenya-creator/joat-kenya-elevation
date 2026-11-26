@@ -89,7 +89,7 @@ export function ShopOrders() {
                     <td className="p-3">
                       {nameOf(c.profile_id)}
                       {flagged.has(c.reference) && (
-                        <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-900">
+                        <span className="ml-2 rounded-full border border-joat-error text-joat-cream px-2 py-0.5 text-xs">
                           Own purchase?
                         </span>
                       )}
