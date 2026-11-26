@@ -9,11 +9,46 @@ import {
   ErrorNote,
   GoogleButton,
   Loading,
-  Page,
+  OrDivider,
+  PageHero,
   PasswordInput,
   buttonClass,
   inputClass,
 } from "../ui";
+
+const STEPS = ["Apply", "Get approved", "Share your link & code", "Earn on verified sales"];
+
+/** The four Process steps as a small horizontal stepper; this page is step 1. */
+function Stepper() {
+  return (
+    <ol aria-label="How it works" className="grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+      {STEPS.map((s, i) => (
+        <li
+          key={s}
+          aria-current={i === 0 ? "step" : undefined}
+          className={`flex items-center gap-2.5 rounded-[12px] border px-3 py-2.5 text-sm ${
+            i === 0
+              ? "border-joat-gold bg-joat-gold/10 text-joat-cream"
+              : "border-joat-border text-joat-body"
+          }`}
+        >
+          <span
+            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
+              i === 0 ? "bg-joat-gold text-joat-black" : "border border-joat-border"
+            }`}
+          >
+            {i + 1}
+          </span>
+          {s}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+const card =
+  "mx-auto w-full max-w-2xl rounded-[20px] border border-joat-border bg-joat-surface p-6 sm:p-9";
+const legend = "font-gilda text-[24px] font-normal text-joat-cream";
 
 export const Route = createFileRoute("/apply")({
   head: () => ({ meta: [{ title: "Apply | JOAT Global Partners" }] }),
@@ -24,20 +59,26 @@ function Apply() {
   const { session, loading } = useSession();
   if (loading) return <Loading />;
   return (
-    <Page
-      title="Apply to become an ambassador"
-      intro="Free to join. No purchase required. You earn only on verified sales to customers you refer yourself."
-    >
-      {session ? (
-        <ApplicationForm
-          userId={session.user.id}
-          email={session.user.email ?? ""}
-          googleName={session.user.user_metadata?.full_name ?? ""}
-        />
-      ) : (
-        <CreateAccount />
-      )}
-    </Page>
+    <>
+      <PageHero
+        eyebrow="Apply"
+        title="Apply to become an ambassador"
+        intro="Free to join. No purchase required. You earn only on verified sales to customers you refer yourself."
+      >
+        <Stepper />
+      </PageHero>
+      <div className="px-5 py-12 sm:px-10 lg:py-16">
+        {session ? (
+          <ApplicationForm
+            userId={session.user.id}
+            email={session.user.email ?? ""}
+            googleName={session.user.user_metadata?.full_name ?? ""}
+          />
+        ) : (
+          <CreateAccount />
+        )}
+      </div>
+    </>
   );
 }
 
@@ -69,8 +110,8 @@ function CreateAccount() {
 
   if (checkInbox)
     return (
-      <section className="max-w-lg rounded-lg border border-border bg-card p-6" role="status">
-        <h2 className="text-lg font-semibold">Check your inbox</h2>
+      <section className={card} role="status">
+        <h2 className="text-[28px] leading-[34px]">Check your inbox</h2>
         <p className="mt-2 text-muted-foreground">
           We've sent a confirmation link to <strong>{email.trim()}</strong>. Click it to confirm
           your email, and you'll come back here to fill in your application.
@@ -86,8 +127,8 @@ function CreateAccount() {
     );
 
   return (
-    <section className="max-w-sm">
-      <h2 className="text-lg font-semibold">Step 1: Create your account</h2>
+    <section className={`${card} max-w-[480px]`}>
+      <h2 className="text-[28px] leading-[34px]">Step 1: Create your account</h2>
       <p className="mt-1 text-sm text-muted-foreground">
         Already have one?{" "}
         <Link to="/login" className="text-primary underline">
@@ -98,8 +139,8 @@ function CreateAccount() {
       <div className="mt-5">
         <GoogleButton next="/apply" label="Sign up with Google" />
       </div>
-      <p className="mt-4 text-center text-xs text-muted-foreground">or use your email</p>
-      <form onSubmit={submit} className="mt-4 space-y-4">
+      <OrDivider>or use your email</OrDivider>
+      <form onSubmit={submit} className="space-y-4">
         <Field id="signup-email" label="Email">
           <input
             id="signup-email"
@@ -130,7 +171,7 @@ function CreateAccount() {
           />
         </Field>
         {error && <ErrorNote>{error}</ErrorNote>}
-        <button type="submit" className={buttonClass} disabled={busy}>
+        <button type="submit" className={`${buttonClass} w-full`} disabled={busy}>
           {busy ? "Creating account…" : "Create account"}
         </button>
       </form>
@@ -186,8 +227,8 @@ function ApplicationForm({
 
   if (available.length === 0)
     return (
-      <section className="rounded-lg border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">Nothing to apply for right now</h2>
+      <section className={card}>
+        <h2 className="text-[28px] leading-[34px]">Nothing to apply for right now</h2>
         <p className="mt-2 text-muted-foreground">
           Either applications aren't open yet, or you've already applied to every open program. Your
           applications are on your{" "}
@@ -243,9 +284,9 @@ function ApplicationForm({
     setChosen((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
 
   return (
-    <form onSubmit={submit} className="max-w-2xl space-y-8" noValidate>
+    <form onSubmit={submit} className={`${card} space-y-10`} noValidate>
       <fieldset className="space-y-3">
-        <legend className="text-lg font-semibold">Programs</legend>
+        <legend className={legend}>Programs</legend>
         <p className="text-sm text-muted-foreground">
           Choose one or both. Each reviews you separately.
         </p>
@@ -255,17 +296,17 @@ function ApplicationForm({
           return (
             <label
               key={p.id}
-              className={`flex items-start gap-3 rounded-lg border border-border bg-card p-4 ${blocked ? "opacity-60" : "cursor-pointer"}`}
+              className={`flex min-h-11 items-start gap-3 rounded-[12px] border border-joat-border bg-joat-black p-4 transition-colors has-[:checked]:border-joat-gold has-[:checked]:bg-joat-gold/10 ${blocked ? "opacity-60" : "cursor-pointer hover:border-joat-gold"}`}
             >
               <input
                 type="checkbox"
-                className="mt-1 h-4 w-4"
+                className="mt-0.5 h-5 w-5 shrink-0"
                 disabled={blocked}
                 checked={chosen.includes(p.id)}
                 onChange={() => toggle(p.id)}
               />
               <span>
-                <span className="font-medium">{p.name}</span>
+                <span className="font-medium text-joat-cream">{p.name}</span>
                 {blocked && (
                   <span className="block text-sm text-muted-foreground">
                     {st && ACTIVE_STATUSES.includes(st)
@@ -280,7 +321,7 @@ function ApplicationForm({
       </fieldset>
 
       <fieldset className="space-y-4">
-        <legend className="text-lg font-semibold">About you</legend>
+        <legend className={legend}>About you</legend>
         <Field id="full-name" label="Full name">
           <input
             id="full-name"
@@ -327,7 +368,7 @@ function ApplicationForm({
       </fieldset>
 
       <fieldset className="space-y-4">
-        <legend className="text-lg font-semibold">Your audience and experience (optional)</legend>
+        <legend className={legend}>Your audience and experience (optional)</legend>
         <Field id="audience" label="Who would you share these brands with?">
           <textarea
             id="audience"
@@ -363,7 +404,7 @@ function ApplicationForm({
       </fieldset>
 
       <fieldset className="space-y-3">
-        <legend className="text-lg font-semibold">Agreements</legend>
+        <legend className={legend}>Agreements</legend>
         <Check checked={terms} onChange={setTerms}>
           I have read the{" "}
           <Link to="/terms" target="_blank" className="text-primary underline">
@@ -385,7 +426,7 @@ function ApplicationForm({
       </fieldset>
 
       {error && <ErrorNote>{error}</ErrorNote>}
-      <button type="submit" className={buttonClass} disabled={busy}>
+      <button type="submit" className={`${buttonClass} w-full sm:w-auto`} disabled={busy}>
         {busy ? "Sending…" : "Submit application"}
       </button>
     </form>
@@ -395,7 +436,7 @@ function ApplicationForm({
 function Field({ id, label, children }: { id: string; label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1">
-      <label htmlFor={id} className="text-sm text-muted-foreground">
+      <label htmlFor={id} className="text-sm text-joat-body">
         {label}
       </label>
       {children}
@@ -409,10 +450,10 @@ function Check(props: {
   children: React.ReactNode;
 }) {
   return (
-    <label className="flex cursor-pointer items-start gap-3 text-sm">
+    <label className="flex min-h-11 cursor-pointer items-start gap-3 py-1 text-[15px] leading-[24px] text-joat-body">
       <input
         type="checkbox"
-        className="mt-0.5 h-4 w-4"
+        className="mt-0.5 h-5 w-5 shrink-0"
         checked={props.checked}
         onChange={(e) => props.onChange(e.target.checked)}
       />

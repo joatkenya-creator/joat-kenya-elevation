@@ -1,5 +1,6 @@
 import { useState, type ComponentProps, type ReactNode } from "react";
 import { AlertCircle, Eye, EyeOff } from "lucide-react";
+import joatLogo from "@/assets/joat-logo.png";
 import { supabase } from "@/lib/supabase";
 import type { MembershipStatus, Program } from "./account";
 
@@ -225,5 +226,40 @@ export function GoogleButton({
       </svg>
       {label}
     </button>
+  );
+}
+
+/** Centred sign-in / sign-up card on near-black with a faint gold glow, logo on top. */
+export function AuthCard({
+  title,
+  intro,
+  children,
+}: {
+  title: string;
+  intro?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <section className="relative overflow-hidden px-5 py-12 sm:py-20">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_45%_55%_at_50%_0%,color-mix(in_srgb,var(--color-joat-gold)_18%,transparent),transparent_70%)]"
+      />
+      <div className="relative mx-auto w-full max-w-[440px] rounded-[20px] border border-joat-border bg-joat-surface p-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)] sm:p-9">
+        <img src={joatLogo} alt="JOAT Global" className="mx-auto h-12 w-12 object-contain" />
+        <h1 className="mt-4 text-center text-[34px] leading-[40px]">{title}</h1>
+        {intro && <p className="mt-2 text-center text-[15px] text-joat-body">{intro}</p>}
+        <div className="mt-7">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+/** "or use your email" divider between the Google button and the email form. */
+export function OrDivider({ children }: { children: ReactNode }) {
+  return (
+    <p className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.14em] text-joat-body before:h-px before:flex-1 before:bg-joat-border after:h-px after:flex-1 after:bg-joat-border">
+      {children}
+    </p>
   );
 }

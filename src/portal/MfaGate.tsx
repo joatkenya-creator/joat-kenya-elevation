@@ -55,18 +55,19 @@ export function MfaGate({ onPassed }: { onPassed: () => void }) {
   if (!factor) return <Loading label="Preparing two-factor sign-in" />;
 
   return (
-    <div className="max-w-md rounded-lg border border-border bg-card p-6">
-      <h2 className="text-xl font-semibold">Two-factor sign-in required</h2>
+    <div className="mx-auto max-w-md rounded-[20px] border border-joat-border bg-joat-surface p-6 sm:p-9">
+      <h2 className="text-[28px] leading-[34px]">Two-factor sign-in required</h2>
       {factor.qr ? (
         <>
           <p className="mt-2 text-sm text-muted-foreground">
             Staff accounts need an authenticator app (Google Authenticator, Microsoft Authenticator,
             1Password or similar). Scan this code, then enter the 6-digit code the app shows.
           </p>
+          {/* white backing keeps the QR code scannable */}
           <img
             src={factor.qr}
             alt="QR code for your authenticator app"
-            className="mt-4 h-44 w-44 rounded bg-white p-2"
+            className="mt-4 h-44 w-44 rounded-[10px] bg-white p-2"
           />
           <p className="mt-2 text-xs text-muted-foreground break-all">
             Can't scan? Enter this key instead: <code className="font-mono">{factor.secret}</code>
@@ -78,7 +79,7 @@ export function MfaGate({ onPassed }: { onPassed: () => void }) {
         </p>
       )}
       <form onSubmit={verify} className="mt-5 space-y-3">
-        <label htmlFor="mfa-code" className="text-xs text-muted-foreground">
+        <label htmlFor="mfa-code" className="text-sm text-joat-body">
           6-digit code
         </label>
         <input
@@ -92,7 +93,11 @@ export function MfaGate({ onPassed }: { onPassed: () => void }) {
           onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
         />
         {error && <ErrorNote>{error}</ErrorNote>}
-        <button type="submit" className={buttonClass} disabled={busy || code.length !== 6}>
+        <button
+          type="submit"
+          className={`${buttonClass} w-full`}
+          disabled={busy || code.length !== 6}
+        >
           {busy ? "Checking…" : "Verify"}
         </button>
       </form>

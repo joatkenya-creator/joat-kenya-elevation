@@ -2,7 +2,16 @@ import { useState } from "react";
 import { Link, Navigate, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useSession } from "@/lib/auth";
 import { isPasswordRecovery, supabase } from "@/lib/supabase";
-import { ErrorNote, GoogleButton, Page, PasswordInput, buttonClass, inputClass } from "../ui";
+import {
+  AuthCard,
+  ErrorNote,
+  GoogleButton,
+  OrDivider,
+  PasswordInput,
+  buttonClass,
+  inputClass,
+  linkClass,
+} from "../ui";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -53,14 +62,12 @@ function SignInForm() {
   };
 
   return (
-    <Page title="Sign in" intro="Sign in to your ambassador or staff account.">
-      <div className="max-w-sm">
-        <GoogleButton next="/dashboard" />
-        <p className="my-4 text-center text-xs text-muted-foreground">or sign in with email</p>
-      </div>
-      <form onSubmit={signIn} className="max-w-sm space-y-4">
+    <AuthCard title="Sign in" intro="Sign in to your ambassador or staff account.">
+      <GoogleButton next="/dashboard" />
+      <OrDivider>or sign in with email</OrDivider>
+      <form onSubmit={signIn} className="space-y-4">
         <div className="space-y-1">
-          <label htmlFor="email" className="text-xs text-muted-foreground">
+          <label htmlFor="email" className="text-sm text-joat-body">
             Email
           </label>
           <input
@@ -74,7 +81,7 @@ function SignInForm() {
           />
         </div>
         <div className="space-y-1">
-          <label htmlFor="password" className="text-xs text-muted-foreground">
+          <label htmlFor="password" className="text-sm text-joat-body">
             Password
           </label>
           <PasswordInput
@@ -87,31 +94,34 @@ function SignInForm() {
         </div>
         {error && <ErrorNote>{error}</ErrorNote>}
         {notice && (
-          <p role="status" className="text-sm text-muted-foreground">
+          <p
+            role="status"
+            className="rounded-[10px] border border-joat-gold bg-joat-gold/10 px-4 py-3 text-sm text-joat-cream"
+          >
             {notice}
           </p>
         )}
-        <div className="flex flex-wrap items-center gap-4">
-          <button type="submit" className={buttonClass} disabled={busy}>
-            {busy ? "Signing in…" : "Sign in"}
-          </button>
+        <button type="submit" className={`${buttonClass} w-full`} disabled={busy}>
+          {busy ? "Signing in…" : "Sign in"}
+        </button>
+        <div className="flex justify-center">
           <button
             type="button"
             onClick={() => void reset()}
-            className="text-sm text-primary underline-offset-4 hover:underline"
+            className={`min-h-11 px-2 text-sm ${linkClass}`}
           >
             Forgot password
           </button>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="border-t border-joat-border pt-5 text-center text-sm text-joat-body">
           New to the program?{" "}
-          <Link to="/apply" className="text-primary underline">
+          <Link to="/apply" className={linkClass}>
             Create an account and apply
           </Link>
           .
         </p>
       </form>
-    </Page>
+    </AuthCard>
   );
 }
 
@@ -136,10 +146,10 @@ function SetNewPassword({ onDone }: { onDone: () => void }) {
   };
 
   return (
-    <Page title="Set a new password">
-      <form onSubmit={save} className="max-w-sm space-y-4">
+    <AuthCard title="Set a new password">
+      <form onSubmit={save} className="space-y-4">
         <div className="space-y-1">
-          <label htmlFor="new-password" className="text-xs text-muted-foreground">
+          <label htmlFor="new-password" className="text-sm text-joat-body">
             New password
           </label>
           <PasswordInput
@@ -150,7 +160,7 @@ function SetNewPassword({ onDone }: { onDone: () => void }) {
           />
         </div>
         <div className="space-y-1">
-          <label htmlFor="confirm-password" className="text-xs text-muted-foreground">
+          <label htmlFor="confirm-password" className="text-sm text-joat-body">
             Confirm new password
           </label>
           <PasswordInput
@@ -161,10 +171,10 @@ function SetNewPassword({ onDone }: { onDone: () => void }) {
           />
         </div>
         {error && <ErrorNote>{error}</ErrorNote>}
-        <button type="submit" className={buttonClass} disabled={busy}>
+        <button type="submit" className={`${buttonClass} w-full`} disabled={busy}>
           {busy ? "Saving…" : "Save password"}
         </button>
       </form>
-    </Page>
+    </AuthCard>
   );
 }
