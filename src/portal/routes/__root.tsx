@@ -1,5 +1,6 @@
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import { MotionConfig } from "framer-motion";
 import {
   HeadContent,
   Outlet,
@@ -49,22 +50,24 @@ function Root() {
   const isApp = APP_PAGES.some((p) => path === p || path.startsWith(`${p}/`));
   return (
     <QueryClientProvider client={queryClient}>
-      <HeadContent />
-      <div className="flex min-h-screen flex-col bg-joat-black font-inter-tight text-joat-body">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-joat-gold focus:px-3 focus:py-2 focus:text-joat-black"
-        >
-          Skip to content
-        </a>
-        {!isLanding && <Navbar variant={isApp ? "sticky" : "static"} />}
-        <main id="main" className="flex-1">
-          <Outlet />
-        </main>
-        {!isLanding && (isApp ? <SlimFooter /> : <SiteFooter />)}
-      </div>
-      <Toaster position="bottom-center" theme="dark" />
-      <IdleTimeout userId={session?.user.id} loading={loading} />
+      <MotionConfig reducedMotion="user">
+        <HeadContent />
+        <div className="flex min-h-screen flex-col bg-joat-black font-inter-tight text-joat-body">
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-joat-gold focus:px-3 focus:py-2 focus:text-joat-black"
+          >
+            Skip to content
+          </a>
+          {!isLanding && <Navbar variant={isApp ? "sticky" : "static"} />}
+          <main id="main" className="flex-1">
+            <Outlet />
+          </main>
+          {!isLanding && (isApp ? <SlimFooter /> : <SiteFooter />)}
+        </div>
+        <Toaster position="bottom-center" theme="dark" />
+        <IdleTimeout userId={session?.user.id} loading={loading} />
+      </MotionConfig>
     </QueryClientProvider>
   );
 }
