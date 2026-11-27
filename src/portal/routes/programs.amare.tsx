@@ -35,6 +35,10 @@ function ParentsPanel() {
         other adults. Don't direct referral links or sales messages at children, and don't place
         them inside content made for children.
       </p>
+      <p className="m-0 max-w-[400px] text-[15px] leading-[24px] text-joat-cream">
+        Describe it as welcoming to autistic and neurodivergent children. Don't claim it treats,
+        cures or improves any condition.
+      </p>
     </div>
   );
 }
@@ -72,7 +76,8 @@ function AmareProgram() {
           ),
           body: (
             <>
-              Amare's Big Planet is a children's learning brand. See the{" "}
+              Amare's Big Planet is a children's learning brand made for every child, including
+              children on the autism spectrum and other neurodivergent children. See the{" "}
               <a
                 href={AMARE_SITE_URL}
                 rel="noopener"

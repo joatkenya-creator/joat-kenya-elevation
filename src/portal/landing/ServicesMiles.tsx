@@ -22,7 +22,7 @@ type Card = {
 };
 
 const W = 460;
-const H = 370;
+const H = 400;
 const CARDS: Card[] = [
   {
     id: "joat",
@@ -38,7 +38,7 @@ const CARDS: Card[] = [
     id: "amare",
     to: "/programs/amare",
     title: "Amare's Big Planet",
-    text: "Recommend Amare's Big Planet, a children's learning brand with songs, videos, the Drawalet letter-tracing app and an online shop, to parents and families.",
+    text: "Recommend Amare's Big Planet, a children's learning brand for every child, including autistic and other neurodivergent children, with songs, videos, the Drawalet letter-tracing app and an online shop, to parents and families.",
     basis: "8% of eligible net product sales from the Amare shop, rising to 10% as you grow.",
     icon: BookOpen,
     x: 1600 - 70 - W,

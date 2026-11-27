@@ -155,7 +155,7 @@ function AboutMobile({ c }: { c: AboutContent }) {
       </div>
       <div className="px-[20px] pt-[56px] sm:px-[40px]">
         <Intro c={c} mobile />
-        <Reveal delay={150} className="mt-[32px] h-[260px] sm:h-[320px]">
+        <Reveal delay={150} className="mt-[32px]">
           {c.aside ?? <BrandPanel />}
         </Reveal>
       </div>

@@ -173,8 +173,13 @@ function Resources() {
       <Section title="Amare's Big Planet: talking points">
         <p>
           Amare's Big Planet is a children's learning brand: educational songs and videos, the
-          Drawalet letter-tracing app for Android and iOS, and an online shop. Commission is earned
-          on eligible purchases from the Amare shop.
+          Drawalet letter-tracing app for Android and iOS, and an online shop. It's made for every
+          child, including children on the autism spectrum and other neurodivergent children.
+          Commission is earned on eligible purchases from the Amare shop.
+        </p>
+        <p>
+          Describe it as welcoming to autistic and neurodivergent children. Don't claim it treats,
+          cures or improves any condition: only make claims that appear on the official website.
         </p>
         <p className="rounded-[10px] border border-joat-gold bg-joat-gold/10 px-4 py-3 text-sm text-joat-cream">
           <strong>Speak to parents, not children.</strong> Aim all promotion at parents and other
